@@ -31,19 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Head));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.num6 = new System.Windows.Forms.Label();
+            this.Num6 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.num4 = new System.Windows.Forms.Label();
+            this.Num4 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.num1 = new System.Windows.Forms.Label();
+            this.Num1 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.num3 = new System.Windows.Forms.Label();
+            this.Num3 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.num5 = new System.Windows.Forms.Label();
+            this.Num5 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.num7 = new System.Windows.Forms.Label();
+            this.Num7 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.num2 = new System.Windows.Forms.Label();
+            this.Num2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Title1 = new System.Windows.Forms.Label();
@@ -82,7 +82,6 @@
             this.LoadFromButton = new System.Windows.Forms.Button();
             this.SaveScreenButton = new System.Windows.Forms.Button();
             this.DevelopModeButton = new System.Windows.Forms.Button();
-            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.tableLayoutPanel.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel11.SuspendLayout();
@@ -114,7 +113,6 @@
             this.tableLayoutPanel.ColumnCount = 2;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.Controls.Add(this.panel13, 0, 5);
             this.tableLayoutPanel.Controls.Add(this.panel11, 0, 3);
             this.tableLayoutPanel.Controls.Add(this.panel9, 0, 0);
@@ -139,13 +137,13 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(675, 490);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(701, 490);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // panel13
             // 
             this.panel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.panel13.Controls.Add(this.num6);
+            this.panel13.Controls.Add(this.Num6);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(0, 350);
             this.panel13.Margin = new System.Windows.Forms.Padding(0);
@@ -153,23 +151,23 @@
             this.panel13.Size = new System.Drawing.Size(70, 70);
             this.panel13.TabIndex = 9;
             // 
-            // num6
+            // Num6
             // 
-            this.num6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.num6.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.num6.ForeColor = System.Drawing.Color.OliveDrab;
-            this.num6.Location = new System.Drawing.Point(0, 0);
-            this.num6.Margin = new System.Windows.Forms.Padding(0);
-            this.num6.Name = "num6";
-            this.num6.Size = new System.Drawing.Size(70, 70);
-            this.num6.TabIndex = 1;
-            this.num6.Text = "6";
-            this.num6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Num6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Num6.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Num6.ForeColor = System.Drawing.Color.OliveDrab;
+            this.Num6.Location = new System.Drawing.Point(0, 0);
+            this.Num6.Margin = new System.Windows.Forms.Padding(0);
+            this.Num6.Name = "Num6";
+            this.Num6.Size = new System.Drawing.Size(70, 70);
+            this.Num6.TabIndex = 1;
+            this.Num6.Text = "6";
+            this.Num6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel11
             // 
             this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.panel11.Controls.Add(this.num4);
+            this.panel11.Controls.Add(this.Num4);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel11.Location = new System.Drawing.Point(0, 210);
             this.panel11.Margin = new System.Windows.Forms.Padding(0);
@@ -177,23 +175,23 @@
             this.panel11.Size = new System.Drawing.Size(70, 70);
             this.panel11.TabIndex = 7;
             // 
-            // num4
+            // Num4
             // 
-            this.num4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.num4.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.num4.ForeColor = System.Drawing.Color.OliveDrab;
-            this.num4.Location = new System.Drawing.Point(0, 0);
-            this.num4.Margin = new System.Windows.Forms.Padding(0);
-            this.num4.Name = "num4";
-            this.num4.Size = new System.Drawing.Size(70, 70);
-            this.num4.TabIndex = 1;
-            this.num4.Text = "4";
-            this.num4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Num4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Num4.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Num4.ForeColor = System.Drawing.Color.OliveDrab;
+            this.Num4.Location = new System.Drawing.Point(0, 0);
+            this.Num4.Margin = new System.Windows.Forms.Padding(0);
+            this.Num4.Name = "Num4";
+            this.Num4.Size = new System.Drawing.Size(70, 70);
+            this.Num4.TabIndex = 1;
+            this.Num4.Text = "4";
+            this.Num4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel9
             // 
             this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel9.Controls.Add(this.num1);
+            this.panel9.Controls.Add(this.Num1);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Margin = new System.Windows.Forms.Padding(0);
@@ -201,23 +199,23 @@
             this.panel9.Size = new System.Drawing.Size(70, 70);
             this.panel9.TabIndex = 5;
             // 
-            // num1
+            // Num1
             // 
-            this.num1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.num1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.num1.ForeColor = System.Drawing.Color.OliveDrab;
-            this.num1.Location = new System.Drawing.Point(0, 0);
-            this.num1.Margin = new System.Windows.Forms.Padding(0);
-            this.num1.Name = "num1";
-            this.num1.Size = new System.Drawing.Size(70, 70);
-            this.num1.TabIndex = 0;
-            this.num1.Text = "1";
-            this.num1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Num1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Num1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Num1.ForeColor = System.Drawing.Color.OliveDrab;
+            this.Num1.Location = new System.Drawing.Point(0, 0);
+            this.Num1.Margin = new System.Windows.Forms.Padding(0);
+            this.Num1.Name = "Num1";
+            this.Num1.Size = new System.Drawing.Size(70, 70);
+            this.Num1.TabIndex = 0;
+            this.Num1.Text = "1";
+            this.Num1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel8.Controls.Add(this.num3);
+            this.panel8.Controls.Add(this.Num3);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 140);
             this.panel8.Margin = new System.Windows.Forms.Padding(0);
@@ -225,23 +223,23 @@
             this.panel8.Size = new System.Drawing.Size(70, 70);
             this.panel8.TabIndex = 4;
             // 
-            // num3
+            // Num3
             // 
-            this.num3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.num3.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.num3.ForeColor = System.Drawing.Color.OliveDrab;
-            this.num3.Location = new System.Drawing.Point(0, 0);
-            this.num3.Margin = new System.Windows.Forms.Padding(0);
-            this.num3.Name = "num3";
-            this.num3.Size = new System.Drawing.Size(70, 70);
-            this.num3.TabIndex = 1;
-            this.num3.Text = "3";
-            this.num3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Num3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Num3.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Num3.ForeColor = System.Drawing.Color.OliveDrab;
+            this.Num3.Location = new System.Drawing.Point(0, 0);
+            this.Num3.Margin = new System.Windows.Forms.Padding(0);
+            this.Num3.Name = "Num3";
+            this.Num3.Size = new System.Drawing.Size(70, 70);
+            this.Num3.TabIndex = 1;
+            this.Num3.Text = "3";
+            this.Num3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel7.Controls.Add(this.num5);
+            this.panel7.Controls.Add(this.Num5);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 280);
             this.panel7.Margin = new System.Windows.Forms.Padding(0);
@@ -249,23 +247,23 @@
             this.panel7.Size = new System.Drawing.Size(70, 70);
             this.panel7.TabIndex = 3;
             // 
-            // num5
+            // Num5
             // 
-            this.num5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.num5.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.num5.ForeColor = System.Drawing.Color.OliveDrab;
-            this.num5.Location = new System.Drawing.Point(0, 0);
-            this.num5.Margin = new System.Windows.Forms.Padding(0);
-            this.num5.Name = "num5";
-            this.num5.Size = new System.Drawing.Size(70, 70);
-            this.num5.TabIndex = 1;
-            this.num5.Text = "5";
-            this.num5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Num5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Num5.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Num5.ForeColor = System.Drawing.Color.OliveDrab;
+            this.Num5.Location = new System.Drawing.Point(0, 0);
+            this.Num5.Margin = new System.Windows.Forms.Padding(0);
+            this.Num5.Name = "Num5";
+            this.Num5.Size = new System.Drawing.Size(70, 70);
+            this.Num5.TabIndex = 1;
+            this.Num5.Text = "5";
+            this.Num5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel6.Controls.Add(this.num7);
+            this.panel6.Controls.Add(this.Num7);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(0, 420);
             this.panel6.Margin = new System.Windows.Forms.Padding(0);
@@ -273,23 +271,23 @@
             this.panel6.Size = new System.Drawing.Size(70, 70);
             this.panel6.TabIndex = 3;
             // 
-            // num7
+            // Num7
             // 
-            this.num7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.num7.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.num7.ForeColor = System.Drawing.Color.OliveDrab;
-            this.num7.Location = new System.Drawing.Point(0, 0);
-            this.num7.Margin = new System.Windows.Forms.Padding(0);
-            this.num7.Name = "num7";
-            this.num7.Size = new System.Drawing.Size(70, 70);
-            this.num7.TabIndex = 1;
-            this.num7.Text = "7";
-            this.num7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Num7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Num7.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Num7.ForeColor = System.Drawing.Color.OliveDrab;
+            this.Num7.Location = new System.Drawing.Point(0, 0);
+            this.Num7.Margin = new System.Windows.Forms.Padding(0);
+            this.Num7.Name = "Num7";
+            this.Num7.Size = new System.Drawing.Size(70, 70);
+            this.Num7.TabIndex = 1;
+            this.Num7.Text = "7";
+            this.Num7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.panel2.Controls.Add(this.num2);
+            this.panel2.Controls.Add(this.Num2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 70);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
@@ -297,18 +295,18 @@
             this.panel2.Size = new System.Drawing.Size(70, 70);
             this.panel2.TabIndex = 1;
             // 
-            // num2
+            // Num2
             // 
-            this.num2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.num2.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.num2.ForeColor = System.Drawing.Color.OliveDrab;
-            this.num2.Location = new System.Drawing.Point(0, 0);
-            this.num2.Margin = new System.Windows.Forms.Padding(0);
-            this.num2.Name = "num2";
-            this.num2.Size = new System.Drawing.Size(70, 70);
-            this.num2.TabIndex = 1;
-            this.num2.Text = "2";
-            this.num2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Num2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Num2.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Num2.ForeColor = System.Drawing.Color.OliveDrab;
+            this.Num2.Location = new System.Drawing.Point(0, 0);
+            this.Num2.Margin = new System.Windows.Forms.Padding(0);
+            this.Num2.Name = "Num2";
+            this.Num2.Size = new System.Drawing.Size(70, 70);
+            this.Num2.TabIndex = 1;
+            this.Num2.Text = "2";
+            this.Num2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
@@ -320,12 +318,12 @@
             this.panel1.Location = new System.Drawing.Point(70, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(630, 70);
+            this.panel1.Size = new System.Drawing.Size(631, 70);
             this.panel1.TabIndex = 0;
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(535, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(561, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(70, 70);
@@ -342,10 +340,12 @@
             this.Title1.Margin = new System.Windows.Forms.Padding(0);
             this.Title1.Name = "Title1";
             this.Title1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.Title1.Size = new System.Drawing.Size(630, 20);
+            this.Title1.Size = new System.Drawing.Size(631, 20);
             this.Title1.TabIndex = 1;
+            this.Title1.Tag = "1";
             this.Title1.Text = "=";
             this.Title1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Title1.Click += new System.EventHandler(this.Title_Click);
             // 
             // Work1
             // 
@@ -357,10 +357,12 @@
             this.Work1.Margin = new System.Windows.Forms.Padding(0);
             this.Work1.Name = "Work1";
             this.Work1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.Work1.Size = new System.Drawing.Size(630, 50);
+            this.Work1.Size = new System.Drawing.Size(631, 50);
             this.Work1.TabIndex = 0;
+            this.Work1.Tag = "1";
             this.Work1.Text = "-";
             this.Work1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Work1.Click += new System.EventHandler(this.Work_Click);
             // 
             // panel14
             // 
@@ -373,12 +375,12 @@
             this.panel14.Margin = new System.Windows.Forms.Padding(0);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel14.Size = new System.Drawing.Size(630, 70);
+            this.panel14.Size = new System.Drawing.Size(631, 70);
             this.panel14.TabIndex = 10;
             // 
             // pictureBox6
             // 
-            this.pictureBox6.Location = new System.Drawing.Point(535, 0);
+            this.pictureBox6.Location = new System.Drawing.Point(561, 0);
             this.pictureBox6.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(70, 70);
@@ -394,10 +396,12 @@
             this.Title6.Location = new System.Drawing.Point(10, 0);
             this.Title6.Margin = new System.Windows.Forms.Padding(0);
             this.Title6.Name = "Title6";
-            this.Title6.Size = new System.Drawing.Size(620, 20);
+            this.Title6.Size = new System.Drawing.Size(621, 20);
             this.Title6.TabIndex = 3;
+            this.Title6.Tag = "6";
             this.Title6.Text = "=";
             this.Title6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Title6.Click += new System.EventHandler(this.Title_Click);
             // 
             // Work6
             // 
@@ -408,10 +412,12 @@
             this.Work6.Location = new System.Drawing.Point(10, 20);
             this.Work6.Margin = new System.Windows.Forms.Padding(0);
             this.Work6.Name = "Work6";
-            this.Work6.Size = new System.Drawing.Size(620, 50);
+            this.Work6.Size = new System.Drawing.Size(621, 50);
             this.Work6.TabIndex = 2;
+            this.Work6.Tag = "6";
             this.Work6.Text = "-";
             this.Work6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Work6.Click += new System.EventHandler(this.Work_Click);
             // 
             // panel4
             // 
@@ -424,12 +430,12 @@
             this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel4.Size = new System.Drawing.Size(630, 70);
+            this.panel4.Size = new System.Drawing.Size(631, 70);
             this.panel4.TabIndex = 3;
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(535, 0);
+            this.pictureBox5.Location = new System.Drawing.Point(561, 0);
             this.pictureBox5.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(70, 70);
@@ -445,10 +451,12 @@
             this.Title5.Location = new System.Drawing.Point(10, 0);
             this.Title5.Margin = new System.Windows.Forms.Padding(0);
             this.Title5.Name = "Title5";
-            this.Title5.Size = new System.Drawing.Size(620, 20);
+            this.Title5.Size = new System.Drawing.Size(621, 20);
             this.Title5.TabIndex = 3;
+            this.Title5.Tag = "5";
             this.Title5.Text = "=";
             this.Title5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Title5.Click += new System.EventHandler(this.Title_Click);
             // 
             // Work5
             // 
@@ -459,10 +467,12 @@
             this.Work5.Location = new System.Drawing.Point(10, 20);
             this.Work5.Margin = new System.Windows.Forms.Padding(0);
             this.Work5.Name = "Work5";
-            this.Work5.Size = new System.Drawing.Size(620, 50);
+            this.Work5.Size = new System.Drawing.Size(621, 50);
             this.Work5.TabIndex = 2;
+            this.Work5.Tag = "5";
             this.Work5.Text = "-";
             this.Work5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Work5.Click += new System.EventHandler(this.Work_Click);
             // 
             // panel5
             // 
@@ -475,12 +485,12 @@
             this.panel5.Margin = new System.Windows.Forms.Padding(0);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel5.Size = new System.Drawing.Size(630, 70);
+            this.panel5.Size = new System.Drawing.Size(631, 70);
             this.panel5.TabIndex = 4;
             // 
             // pictureBox7
             // 
-            this.pictureBox7.Location = new System.Drawing.Point(535, 0);
+            this.pictureBox7.Location = new System.Drawing.Point(561, 0);
             this.pictureBox7.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(70, 70);
@@ -496,10 +506,12 @@
             this.Title7.Location = new System.Drawing.Point(10, 0);
             this.Title7.Margin = new System.Windows.Forms.Padding(0);
             this.Title7.Name = "Title7";
-            this.Title7.Size = new System.Drawing.Size(620, 20);
+            this.Title7.Size = new System.Drawing.Size(621, 20);
             this.Title7.TabIndex = 3;
+            this.Title7.Tag = "7";
             this.Title7.Text = "=";
             this.Title7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Title7.Click += new System.EventHandler(this.Title_Click);
             // 
             // Work7
             // 
@@ -510,10 +522,12 @@
             this.Work7.Location = new System.Drawing.Point(10, 20);
             this.Work7.Margin = new System.Windows.Forms.Padding(0);
             this.Work7.Name = "Work7";
-            this.Work7.Size = new System.Drawing.Size(620, 50);
+            this.Work7.Size = new System.Drawing.Size(621, 50);
             this.Work7.TabIndex = 2;
+            this.Work7.Tag = "7";
             this.Work7.Text = "-";
             this.Work7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Work7.Click += new System.EventHandler(this.Work_Click);
             // 
             // panel12
             // 
@@ -526,12 +540,12 @@
             this.panel12.Margin = new System.Windows.Forms.Padding(0);
             this.panel12.Name = "panel12";
             this.panel12.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel12.Size = new System.Drawing.Size(630, 70);
+            this.panel12.Size = new System.Drawing.Size(631, 70);
             this.panel12.TabIndex = 8;
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(535, 0);
+            this.pictureBox4.Location = new System.Drawing.Point(561, 0);
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(70, 70);
@@ -547,10 +561,12 @@
             this.Title4.Location = new System.Drawing.Point(10, 0);
             this.Title4.Margin = new System.Windows.Forms.Padding(0);
             this.Title4.Name = "Title4";
-            this.Title4.Size = new System.Drawing.Size(620, 20);
+            this.Title4.Size = new System.Drawing.Size(621, 20);
             this.Title4.TabIndex = 3;
+            this.Title4.Tag = "4";
             this.Title4.Text = "=";
             this.Title4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Title4.Click += new System.EventHandler(this.Title_Click);
             // 
             // Work4
             // 
@@ -561,10 +577,12 @@
             this.Work4.Location = new System.Drawing.Point(10, 20);
             this.Work4.Margin = new System.Windows.Forms.Padding(0);
             this.Work4.Name = "Work4";
-            this.Work4.Size = new System.Drawing.Size(620, 50);
+            this.Work4.Size = new System.Drawing.Size(621, 50);
             this.Work4.TabIndex = 2;
+            this.Work4.Tag = "4";
             this.Work4.Text = "-";
             this.Work4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Work4.Click += new System.EventHandler(this.Work_Click);
             // 
             // panel3
             // 
@@ -577,12 +595,12 @@
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel3.Size = new System.Drawing.Size(630, 70);
+            this.panel3.Size = new System.Drawing.Size(631, 70);
             this.panel3.TabIndex = 2;
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(535, 0);
+            this.pictureBox3.Location = new System.Drawing.Point(561, 0);
             this.pictureBox3.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(70, 70);
@@ -598,10 +616,12 @@
             this.Title3.Location = new System.Drawing.Point(10, 0);
             this.Title3.Margin = new System.Windows.Forms.Padding(0);
             this.Title3.Name = "Title3";
-            this.Title3.Size = new System.Drawing.Size(620, 20);
+            this.Title3.Size = new System.Drawing.Size(621, 20);
             this.Title3.TabIndex = 3;
+            this.Title3.Tag = "3";
             this.Title3.Text = "=";
             this.Title3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Title3.Click += new System.EventHandler(this.Title_Click);
             // 
             // Work3
             // 
@@ -612,10 +632,12 @@
             this.Work3.Location = new System.Drawing.Point(10, 20);
             this.Work3.Margin = new System.Windows.Forms.Padding(0);
             this.Work3.Name = "Work3";
-            this.Work3.Size = new System.Drawing.Size(620, 50);
+            this.Work3.Size = new System.Drawing.Size(621, 50);
             this.Work3.TabIndex = 2;
+            this.Work3.Tag = "3";
             this.Work3.Text = "-";
             this.Work3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Work3.Click += new System.EventHandler(this.Work_Click);
             // 
             // panel10
             // 
@@ -628,12 +650,12 @@
             this.panel10.Margin = new System.Windows.Forms.Padding(0);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel10.Size = new System.Drawing.Size(630, 70);
+            this.panel10.Size = new System.Drawing.Size(631, 70);
             this.panel10.TabIndex = 6;
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(535, 0);
+            this.pictureBox2.Location = new System.Drawing.Point(561, 0);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(70, 70);
@@ -649,11 +671,12 @@
             this.Title2.Location = new System.Drawing.Point(10, 0);
             this.Title2.Margin = new System.Windows.Forms.Padding(0);
             this.Title2.Name = "Title2";
-            this.Title2.Size = new System.Drawing.Size(620, 20);
+            this.Title2.Size = new System.Drawing.Size(621, 20);
             this.Title2.TabIndex = 2;
+            this.Title2.Tag = "2";
             this.Title2.Text = "=";
             this.Title2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Title2.Click += new System.EventHandler(this.Title2_Click);
+            this.Title2.Click += new System.EventHandler(this.Title_Click);
             // 
             // Work2
             // 
@@ -664,10 +687,12 @@
             this.Work2.Location = new System.Drawing.Point(10, 20);
             this.Work2.Margin = new System.Windows.Forms.Padding(0);
             this.Work2.Name = "Work2";
-            this.Work2.Size = new System.Drawing.Size(620, 50);
+            this.Work2.Size = new System.Drawing.Size(621, 50);
             this.Work2.TabIndex = 1;
+            this.Work2.Tag = "2";
             this.Work2.Text = "-";
             this.Work2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Work2.Click += new System.EventHandler(this.Work_Click);
             // 
             // panel15
             // 
@@ -833,20 +858,12 @@
             this.DevelopModeButton.UseVisualStyleBackColor = false;
             this.DevelopModeButton.Click += new System.EventHandler(this.DevelopModeButton_Click);
             // 
-            // vScrollBar1
-            // 
-            this.vScrollBar1.Location = new System.Drawing.Point(700, 117);
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(25, 490);
-            this.vScrollBar1.TabIndex = 3;
-            // 
             // Head
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1182, 633);
-            this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.panel15);
             this.Controls.Add(this.tableLayoutPanel);
@@ -857,7 +874,7 @@
             this.MinimumSize = new System.Drawing.Size(1200, 680);
             this.Name = "Head";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "To do list";
+            this.Text = "Список ";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
@@ -927,13 +944,13 @@
         private System.Windows.Forms.Label Title2;
         private System.Windows.Forms.Label Work2;
         private System.Windows.Forms.Label DateText;
-        private System.Windows.Forms.Label num6;
-        private System.Windows.Forms.Label num4;
-        private System.Windows.Forms.Label num1;
-        private System.Windows.Forms.Label num3;
-        private System.Windows.Forms.Label num5;
-        private System.Windows.Forms.Label num7;
-        private System.Windows.Forms.Label num2;
+        private System.Windows.Forms.Label Num6;
+        private System.Windows.Forms.Label Num4;
+        private System.Windows.Forms.Label Num1;
+        private System.Windows.Forms.Label Num3;
+        private System.Windows.Forms.Label Num5;
+        private System.Windows.Forms.Label Num7;
+        private System.Windows.Forms.Label Num2;
         private System.Windows.Forms.Button SettingsButton;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox6;
@@ -942,7 +959,6 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.VScrollBar vScrollBar1;
     }
 }
 

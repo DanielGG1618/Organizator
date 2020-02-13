@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LessonSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LessonSelectForm.Designer.cs">
+      <DependentUpon>LessonSelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -77,6 +83,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="LessonSelectForm.resx">
+      <DependentUpon>LessonSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Head.resx">
       <DependentUpon>Head.cs</DependentUpon>
     </EmbeddedResource>

@@ -29,3 +29,4 @@ D:\Даниел\Organizer\Organizer\bin\Debug\Organizer.pdb
 D:\Даниел\Organizer\Organizer\obj\Debug\Organizer.Properties.Resources.resources
 D:\Даниел\Organizer\Organizer\obj\Debug\Organizer.Settings.resources
 D:\Даниел\Organizer\Organizer\obj\Debug\Organizer.TaskForm.resources
+D:\Даниел\Organizer\Organizer\obj\Debug\Organizer.LessonSelectForm.resources
