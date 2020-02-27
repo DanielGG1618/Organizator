@@ -201,7 +201,6 @@
             // 
             // Num1
             // 
-            this.Num1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Num1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Num1.ForeColor = System.Drawing.Color.OliveDrab;
             this.Num1.Location = new System.Drawing.Point(0, 0);
@@ -211,6 +210,7 @@
             this.Num1.TabIndex = 0;
             this.Num1.Text = "1";
             this.Num1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Num1.Visible = false;
             // 
             // panel8
             // 

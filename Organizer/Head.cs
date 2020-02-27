@@ -12,26 +12,34 @@ namespace Organizer
 {
     public partial class Head : Form
     {
-        static DateTime[] HOLYDAYS = new DateTime[0];
-        static int[] LESSONS_COUNT = new int[7] { 6, 7, 7, 6, 7, 0, 0 };
-        static int daysInYear = 273, year = 19;
+        private static DateTime[] HOLYDAYS = new DateTime[6] { new DateTime(1, 2, 22), new DateTime(1, 2, 23), new DateTime(1, 2, 24),
+                                                               new DateTime(1, 3, 7),  new DateTime(1, 3, 8),  new DateTime(1, 3, 9) };
 
-        bool developmentMode;
-        DateTime dateTime;
-        int lessonsCount, dayNum;
+        private static int[] LESSONS_COUNT = new int[7] { 6, 7, 7, 6, 7, 0, 0 };
+        private static int daysInYear = 273, year = 19;
 
-        Lesson[] lessons = new Lesson[8];
-        Day[] days;
+        private bool developmentMode;
+        private DateTime dateTime;
+        private int lessonsCount, dayNum;
+
+        private Lesson[] lessons = new Lesson[7];
+        private Day[] days;
+
+        private Label numLabel, titleLabel, workLabel;
 
         public Head()
         {
-            if (DateTime.IsLeapYear(2000 + year + 1))
+            if (DateTime.IsLeapYear(2001 + year))
                 daysInYear++;
             
             days = new Day[daysInYear];
 
             for (int i = 0; i < daysInYear; i++)
                 days[i] = new Day(i, year);
+
+            numLabel = new Label();
+            titleLabel = new Label();
+            workLabel = new Label();
 
             InitializeComponent();
         }
@@ -40,36 +48,48 @@ namespace Organizer
         {
             dateTime = DateTime.Today;
 
-            dayNum = 1;//dateTime - new DateTime(2000 + year1, 9, 1);
+            dayNum = 100;//dateTime - new DateTime(2000 + year, 9, 1);
             
-
             lessonsCount = days[dayNum].lessonsCount;
 
-            lessons[1] = new Lesson(Num1, Title1, Work1);
+            for (int i = 0; i < lessonsCount; i++)
+            {
+                lessons[i] = new Lesson(numLabel, titleLabel, workLabel, i + 1);
+                
+                Controls.Add(lessons[i].numLabel);
+                Controls.Add(lessons[i].titleLabel);
+                Controls.Add(lessons[i].workLabel);
+            }
+
+            /*lessons[1] = new Lesson(Num1, Title1, Work1);
             lessons[2] = new Lesson(Num2, Title2, Work2);
             lessons[3] = new Lesson(Num3, Title3, Work3);
             lessons[4] = new Lesson(Num4, Title4, Work4);
             lessons[5] = new Lesson(Num5, Title5, Work5);
             lessons[6] = new Lesson(Num6, Title6, Work6);
-            lessons[7] = new Lesson(Num7, Title7, Work7);
+            lessons[7] = new Lesson(Num7, Title7, Work7);*/
 
-            Refresh();
+            LessonsRefresh();
         }
 
-        struct Lesson
+        private struct Lesson
         {
-            public Label numText, titleText, workText;
+            public Label numLabel, titleLabel, workLabel;
 
-            public Lesson(Label _numText, Label _titleText, Label _workText)
+            public Lesson(Label _numLabel, Label _titleLabel, Label _workLabel, int _num)
             {
-                numText = _numText;
-                titleText = _titleText;
-                workText = _workText;
-                numText.Text = workText.Tag.ToString();
+                numLabel = _numLabel;
+                numLabel.Text = _num.ToString();
+                numLabel.Location = new Point(24, 117);
+                numLabel.Size = new Size(70, 70);
+
+                titleLabel = _titleLabel;
+
+                workLabel = _workLabel;
             }
         }
 
-        public struct Day
+        private struct Day
         {
             public DateTime date;
 
@@ -85,7 +105,8 @@ namespace Organizer
 
                 for (int i = 0; i < HOLYDAYS.Length; i++)
                 {
-                    if (date == HOLYDAYS[i])
+                    if (date == HOLYDAYS[i] ||
+                       (HOLYDAYS[i].Year == 1 && date.Day == HOLYDAYS[i].Day && date.Month == HOLYDAYS[i].Month))
                         isWorking = false;
                 }
 
@@ -93,23 +114,18 @@ namespace Organizer
             }
         }
 
-        private void Refresh()
+        private void LessonsRefresh()
         {
             lessonsCount = days[dayNum].lessonsCount;
 
-            for (int i = 7; i > lessonsCount; i--)
+            for (int i = 6; i >= lessonsCount; i--)
             {
-                lessons[i].numText.Visible = false;
-                lessons[i].titleText.Visible = false;
-                lessons[i].workText.Visible = false;
+                lessons[i].numLabel.Visible = false;
+                lessons[i].titleLabel.Visible = false;
+                lessons[i].workLabel.Visible = false;
             }
 
             DateText.Text = dateTime.Day.ToString("00") + "." + dateTime.Month.ToString("00") + "." + dateTime.Year;
-        }
-
-        private void DateTimeMinus(DateTime a, DateTime b)
-        {
-            //тут разность 2 DateTime a-b
         }
 
         private void DevelopModeButton_Click(object sender, EventArgs e)
@@ -141,7 +157,7 @@ namespace Organizer
         {
             dateTime = dateTime.AddDays(-1);
             dayNum--;
-            Refresh();
+            LessonsRefresh();
         }
         
         private void SettingsButton_Click(object sender, EventArgs e)
@@ -165,7 +181,7 @@ namespace Organizer
         {
             dateTime = dateTime.AddDays(1);
             dayNum++;
-            Refresh();
+            LessonsRefresh();
         }
 
         private void Work_Click(object sender, EventArgs e)
