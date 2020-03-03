@@ -82,6 +82,7 @@
             this.LoadFromButton = new System.Windows.Forms.Button();
             this.SaveScreenButton = new System.Windows.Forms.Button();
             this.DevelopModeButton = new System.Windows.Forms.Button();
+            this.lessonsPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel11.SuspendLayout();
@@ -127,7 +128,7 @@
             this.tableLayoutPanel.Controls.Add(this.panel12, 1, 3);
             this.tableLayoutPanel.Controls.Add(this.panel3, 1, 2);
             this.tableLayoutPanel.Controls.Add(this.panel10, 1, 1);
-            this.tableLayoutPanel.Location = new System.Drawing.Point(24, 117);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(24, 312);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 7;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
@@ -137,7 +138,7 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(701, 490);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(701, 295);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // panel13
@@ -858,12 +859,21 @@
             this.DevelopModeButton.UseVisualStyleBackColor = false;
             this.DevelopModeButton.Click += new System.EventHandler(this.DevelopModeButton_Click);
             // 
+            // lessonsPanel
+            // 
+            this.lessonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.lessonsPanel.Location = new System.Drawing.Point(24, 112);
+            this.lessonsPanel.Name = "lessonsPanel";
+            this.lessonsPanel.Size = new System.Drawing.Size(700, 171);
+            this.lessonsPanel.TabIndex = 3;
+            // 
             // Head
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1182, 633);
+            this.Controls.Add(this.lessonsPanel);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.panel15);
             this.Controls.Add(this.tableLayoutPanel);
@@ -875,7 +885,7 @@
             this.Name = "Head";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Список ";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.Head_Load);
             this.tableLayoutPanel.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
@@ -959,6 +969,7 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Panel lessonsPanel;
     }
 }
 

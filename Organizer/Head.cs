@@ -44,30 +44,39 @@ namespace Organizer
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Head_Load(object sender, EventArgs e)
         {
             dateTime = DateTime.Today;
 
-            dayNum = 100;//dateTime - new DateTime(2000 + year, 9, 1);
+            dayNum = DateToNum(DateSubtract(dateTime, new DateTime(2000 + year, 9, 1)));
             
             lessonsCount = days[dayNum].lessonsCount;
 
+            int y = 0;
             for (int i = 0; i < lessonsCount; i++)
             {
                 lessons[i] = new Lesson(numLabel, titleLabel, workLabel, i + 1);
-                
-                Controls.Add(lessons[i].numLabel);
-                Controls.Add(lessons[i].titleLabel);
-                Controls.Add(lessons[i].workLabel);
+
+                lessons[i].numLabel.Location = new Point(0, y);
+
+                lessons[i].titleLabel.Location = new Point(70, y);
+                lessons[i].titleLabel.Font = new Font("Microsoft Sans Serif", 12);
+                lessons[i].titleLabel.ForeColor = Color.White;
+
+                lessons[i].workLabel.Location = new Point(70, y + 20);
+                lessons[i].workLabel.Font = new Font("Microsoft Sans Serif", 12);
+                lessons[i].workLabel.ForeColor = Color.White;
+
+                lessonsPanel.Controls.Add(lessons[i].numLabel);
+                lessonsPanel.Controls.Add(lessons[i].titleLabel);
+                lessonsPanel.Controls.Add(lessons[i].workLabel);
+
+                y += 70;
             }
 
-            /*lessons[1] = new Lesson(Num1, Title1, Work1);
-            lessons[2] = new Lesson(Num2, Title2, Work2);
-            lessons[3] = new Lesson(Num3, Title3, Work3);
-            lessons[4] = new Lesson(Num4, Title4, Work4);
-            lessons[5] = new Lesson(Num5, Title5, Work5);
-            lessons[6] = new Lesson(Num6, Title6, Work6);
-            lessons[7] = new Lesson(Num7, Title7, Work7);*/
+            lessons[0].titleLabel.Text = "Физика";
+            lessons[0].workLabel.Text = "Скачай электричество";
+            lessons[1].titleLabel.Text = "Математика";
 
             LessonsRefresh();
         }
@@ -80,12 +89,13 @@ namespace Organizer
             {
                 numLabel = _numLabel;
                 numLabel.Text = _num.ToString();
-                numLabel.Location = new Point(24, 117);
                 numLabel.Size = new Size(70, 70);
 
                 titleLabel = _titleLabel;
+                titleLabel.Size = new Size(621, 20);
 
                 workLabel = _workLabel;
+                workLabel.Size = new Size(621, 50);
             }
         }
 
@@ -96,10 +106,10 @@ namespace Organizer
             public bool isWorking;
             public int lessonsCount, num;
 
-            public Day(int _num, int year)
+            public Day(int _num, int _year)
             {
                 num = _num;
-                date = new DateTime(2000 + year, 9, 1).AddDays(num);
+                date = new DateTime(2000 + _year, 9, 1).AddDays(num);
 
                 isWorking = date.DayOfWeek != DayOfWeek.Sunday && date.DayOfWeek != DayOfWeek.Saturday;
 
@@ -112,6 +122,25 @@ namespace Organizer
 
                 lessonsCount = LESSONS_COUNT[(int)date.DayOfWeek];
             }
+        }
+
+        private DateTime DateSubtract(DateTime a, DateTime b)
+        {
+            return DateTime.FromBinary(a.ToBinary() - b.ToBinary());
+        }
+
+        private int DateToNum(DateTime a)
+        {
+            int num = 0;
+
+            for (int i = 1; i < a.Month; i++)
+                num += DateTime.DaysInMonth(1, i);
+
+            num += a.Day;
+
+            num--; //так нада
+
+            return num;
         }
 
         private void LessonsRefresh()
