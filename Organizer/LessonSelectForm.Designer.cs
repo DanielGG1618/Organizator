@@ -30,6 +30,8 @@
         {
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.LessonLabel = new System.Windows.Forms.Label();
+            this.Done = new System.Windows.Forms.Button();
+            this.Cancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -40,9 +42,21 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.IntegralHeight = false;
             this.comboBox1.Items.AddRange(new object[] {
-            "adsasd",
-            "dasda",
-            "qsd "});
+            "Алгебра",
+            "Англикий язык",
+            "Биология",
+            "География",
+            "Геометрия",
+            "История",
+            "Литература",
+            "Немецкий язык",
+            "ОБЖ",
+            "Обществознание",
+            "Русский язык",
+            "Технология",
+            "Физика",
+            "Физкультура",
+            "Химия"});
             this.comboBox1.Location = new System.Drawing.Point(19, 53);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.comboBox1.Name = "comboBox1";
@@ -62,19 +76,44 @@
             this.LessonLabel.TabIndex = 4;
             this.LessonLabel.Text = " Урок №n";
             // 
+            // Done
+            // 
+            this.Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Done.Location = new System.Drawing.Point(123, 149);
+            this.Done.Name = "Done";
+            this.Done.Size = new System.Drawing.Size(90, 33);
+            this.Done.TabIndex = 5;
+            this.Done.Text = "готово";
+            this.Done.UseVisualStyleBackColor = true;
+            this.Done.Click += new System.EventHandler(this.DoneClick);
+            // 
+            // Cancel
+            // 
+            this.Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Cancel.Location = new System.Drawing.Point(19, 149);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(90, 33);
+            this.Cancel.TabIndex = 5;
+            this.Cancel.Text = "отмена";
+            this.Cancel.UseVisualStyleBackColor = true;
+            this.Cancel.Click += new System.EventHandler(this.CancelClick);
+            // 
             // LessonSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(232, 203);
+            this.Controls.Add(this.Cancel);
+            this.Controls.Add(this.Done);
             this.Controls.Add(this.LessonLabel);
             this.Controls.Add(this.comboBox1);
             this.MaximumSize = new System.Drawing.Size(250, 250);
             this.MinimumSize = new System.Drawing.Size(250, 250);
             this.Name = "LessonSelectForm";
             this.Text = "    ";
-            this.Load += new System.EventHandler(this.LessonSelectForm_Load);
             this.ResumeLayout(false);
 
         }
@@ -83,5 +122,7 @@
 
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label LessonLabel;
+        private System.Windows.Forms.Button Done;
+        private System.Windows.Forms.Button Cancel;
     }
 }

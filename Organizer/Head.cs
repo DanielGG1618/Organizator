@@ -25,8 +25,6 @@ namespace Organizer
         private Lesson[] lessons = new Lesson[7];
         private Day[] days;
 
-        private Label numLabel, titleLabel, workLabel;
-
         public Head()
         {
             if (DateTime.IsLeapYear(2001 + year))
@@ -36,10 +34,6 @@ namespace Organizer
 
             for (int i = 0; i < daysInYear; i++)
                 days[i] = new Day(i, year);
-
-            numLabel = new Label();
-            titleLabel = new Label();
-            workLabel = new Label();
 
             InitializeComponent();
         }
@@ -51,19 +45,30 @@ namespace Organizer
             dayNum = DateToNum(DateSubtract(dateTime, new DateTime(2000 + year, 9, 1)));
             
             lessonsCount = days[dayNum].lessonsCount;
+            lessonsPanel.Controls.Clear();
 
             int y = 0;
             for (int i = 0; i < lessonsCount; i++)
             {
-                lessons[i] = new Lesson(numLabel, titleLabel, workLabel, i + 1);
+                lessons[i] = new Lesson(i + 1);
 
                 lessons[i].numLabel.Location = new Point(0, y);
-
+                lessons[i].numLabel.Size = new Size(70, 70);
+                lessons[i].numLabel.TextAlign = ContentAlignment.MiddleCenter;
+                lessons[i].numLabel.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
+                lessons[i].numLabel.Text = (i + 1).ToString();
+                
                 lessons[i].titleLabel.Location = new Point(70, y);
+                lessons[i].titleLabel.Tag = (i + 1).ToString();
+                lessons[i].titleLabel.Click += TitleClick;
+                lessons[i].titleLabel.TextAlign = ContentAlignment.MiddleLeft;
                 lessons[i].titleLabel.Font = new Font("Microsoft Sans Serif", 12);
                 lessons[i].titleLabel.ForeColor = Color.White;
 
                 lessons[i].workLabel.Location = new Point(70, y + 20);
+                lessons[i].workLabel.Tag = (i + 1).ToString();
+                lessons[i].workLabel.Click += WorkClick;
+                lessons[i].workLabel.TextAlign = ContentAlignment.MiddleLeft;
                 lessons[i].workLabel.Font = new Font("Microsoft Sans Serif", 12);
                 lessons[i].workLabel.ForeColor = Color.White;
 
@@ -73,9 +78,8 @@ namespace Organizer
 
                 y += 70;
             }
-
-            lessons[0].titleLabel.Text = "Физика";
             lessons[0].workLabel.Text = "Скачай электричество";
+            lessons[0].titleLabel.Text = "Физика";
             lessons[1].titleLabel.Text = "Математика";
 
             LessonsRefresh();
@@ -95,6 +99,18 @@ namespace Organizer
                 titleLabel.Size = new Size(621, 20);
 
                 workLabel = _workLabel;
+                workLabel.Size = new Size(621, 50);
+            }
+            public Lesson(int _num)
+            {
+                numLabel = new Label();
+                numLabel.Text = _num.ToString();
+                numLabel.Size = new Size(70, 70);
+
+                titleLabel = new Label();
+                titleLabel.Size = new Size(621, 20);
+
+                workLabel = new Label();
                 workLabel.Size = new Size(621, 50);
             }
         }
@@ -146,6 +162,13 @@ namespace Organizer
         private void LessonsRefresh()
         {
             lessonsCount = days[dayNum].lessonsCount;
+
+            for (int i = 0; i < lessonsCount; i++)
+            {
+                lessons[i].numLabel.Visible = true;
+                lessons[i].titleLabel.Visible = true;
+                lessons[i].workLabel.Visible = true;
+            }
 
             for (int i = 6; i >= lessonsCount; i--)
             {
@@ -213,16 +236,17 @@ namespace Organizer
             LessonsRefresh();
         }
 
-        private void Work_Click(object sender, EventArgs e)
+        private void WorkClick(object sender, EventArgs e)
         {
-            Label work = (Label)sender;
-            LessonSelectForm form = new LessonSelectForm(work.Tag.ToString());
-            form.Show();
+            
         }
 
-        private void Title_Click(object sender, EventArgs e)
+        private void TitleClick(object sender, EventArgs e)
         {
-            Work_Click(sender, e);
+            Label title = (Label)sender;
+            LessonSelectForm form = new LessonSelectForm(title.Tag.ToString());
+            form.ShowDialog();
+            title.Text = form.lesson;
         }
     }
 }

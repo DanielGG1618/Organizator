@@ -12,20 +12,28 @@ namespace Organizer
 {
     public partial class LessonSelectForm : Form
     {
+        public string lesson;  
+
         public LessonSelectForm(string num)
         {
             InitializeComponent();
             LessonLabel.Text = "Урок №" + num;
         }
 
-        private void LessonSelectForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
+        }
 
+        private void DoneClick(object sender, EventArgs e)
+        {
+            lesson = comboBox1.Text;
+            Close();
+        }
+
+        private void CancelClick(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
