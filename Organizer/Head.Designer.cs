@@ -210,6 +210,7 @@
             // 
             // lessonsPanel
             // 
+            this.lessonsPanel.AutoScroll = true;
             this.lessonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.lessonsPanel.Location = new System.Drawing.Point(24, 112);
             this.lessonsPanel.Name = "lessonsPanel";

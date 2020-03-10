@@ -15,21 +15,24 @@ namespace Organizer
         private static DateTime[] HOLYDAYS = new DateTime[6] { new DateTime(1, 2, 22), new DateTime(1, 2, 23), new DateTime(1, 2, 24),
                                                                new DateTime(1, 3, 7),  new DateTime(1, 3, 8),  new DateTime(1, 3, 9) };
 
+        private const int CELL_SIZE = 70;
+
         private static int[] LESSONS_COUNT = new int[7] { 6, 7, 7, 6, 7, 0, 0 };
         private static int daysInYear = 273, year = 19;
 
-        private bool developmentMode;
         private DateTime dateTime;
         private int lessonsCount, dayNum;
 
         private Lesson[] lessons = new Lesson[7];
         private Day[] days;
 
+        public static List<Work> Works = new List<Work>();
+
         public Head()
         {
             if (DateTime.IsLeapYear(2001 + year))
                 daysInYear++;
-            
+
             days = new Day[daysInYear];
 
             for (int i = 0; i < daysInYear; i++)
@@ -40,43 +43,28 @@ namespace Organizer
 
         private void Head_Load(object sender, EventArgs e)
         {
+            Lesson.LoadSamples();
+
             dateTime = DateTime.Today;
 
             dayNum = DateToNum(DateSubtract(dateTime, new DateTime(2000 + year, 9, 1)));
-            
+
             lessonsCount = days[dayNum].lessonsCount;
             lessonsPanel.Controls.Clear();
 
-            int y = 0;
-            for (int i = 0; i < lessonsCount; i++)
+            for (int i = 0; i < 7; i++)
             {
                 lessons[i] = new Lesson(i + 1);
 
-                lessons[i].numLabel.Location = new Point(0, y);
-                lessons[i].numLabel.Size = new Size(70, 70);
-                lessons[i].numLabel.TextAlign = ContentAlignment.MiddleCenter;
-                lessons[i].numLabel.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
-                lessons[i].numLabel.Text = (i + 1).ToString();
-                
-                lessons[i].titleLabel.Location = new Point(70, y);
-                lessons[i].titleLabel.Tag = (i + 1).ToString();
-                lessons[i].titleLabel.Click += TitleClick;
-                lessons[i].titleLabel.TextAlign = ContentAlignment.MiddleLeft;
-                lessons[i].titleLabel.Font = new Font("Microsoft Sans Serif", 12);
-                lessons[i].titleLabel.ForeColor = Color.White;
-
-                lessons[i].workLabel.Location = new Point(70, y + 20);
-                lessons[i].workLabel.Tag = (i + 1).ToString();
                 lessons[i].workLabel.Click += WorkClick;
-                lessons[i].workLabel.TextAlign = ContentAlignment.MiddleLeft;
-                lessons[i].workLabel.Font = new Font("Microsoft Sans Serif", 12);
-                lessons[i].workLabel.ForeColor = Color.White;
+                lessons[i].titleLabel.Click += TitleClick;
 
-                lessonsPanel.Controls.Add(lessons[i].numLabel);
-                lessonsPanel.Controls.Add(lessons[i].titleLabel);
-                lessonsPanel.Controls.Add(lessons[i].workLabel);
-
-                y += 70;
+                if (i < lessonsCount)
+                {
+                    lessonsPanel.Controls.Add(lessons[i].numLabel);
+                    lessonsPanel.Controls.Add(lessons[i].titleLabel);
+                    lessonsPanel.Controls.Add(lessons[i].workLabel);
+                }
             }
             lessons[0].workLabel.Text = "Скачай электричество";
             lessons[0].titleLabel.Text = "Физика";
@@ -87,32 +75,52 @@ namespace Organizer
 
         private struct Lesson
         {
+            private static Label NUM_SAMPLE;
+            private static Label TITLE_SAMPLE;
+            private static Label WORK_SAPMLE;
             public Label numLabel, titleLabel, workLabel;
 
-            public Lesson(Label _numLabel, Label _titleLabel, Label _workLabel, int _num)
+            public static void LoadSamples()
             {
-                numLabel = _numLabel;
-                numLabel.Text = _num.ToString();
-                numLabel.Size = new Size(70, 70);
+                NUM_SAMPLE = new Label();
+                TITLE_SAMPLE = new Label();
+                WORK_SAPMLE = new Label();
 
-                titleLabel = _titleLabel;
-                titleLabel.Size = new Size(621, 20);
+                NUM_SAMPLE.Size = new Size(CELL_SIZE, CELL_SIZE);
+                NUM_SAMPLE.TextAlign = ContentAlignment.MiddleCenter;
+                NUM_SAMPLE.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
 
-                workLabel = _workLabel;
-                workLabel.Size = new Size(621, 50);
+                TITLE_SAMPLE.Size = new Size(621, (int)(CELL_SIZE * 2 / 7f));
+                TITLE_SAMPLE.TextAlign = ContentAlignment.MiddleLeft;
+                TITLE_SAMPLE.Font = new Font("Microsoft Sans Serif", 12);
+                TITLE_SAMPLE.ForeColor = Color.White;
+
+                WORK_SAPMLE.Size = new Size(621, (int)(CELL_SIZE * 5 / 7f));
+                WORK_SAPMLE.TextAlign = ContentAlignment.MiddleLeft;
+                WORK_SAPMLE.Font = new Font("Microsoft Sans Serif", 12);
+                WORK_SAPMLE.ForeColor = Color.White;
             }
-            public Lesson(int _num)
+
+            public Lesson(int num)
             {
-                numLabel = new Label();
-                numLabel.Text = _num.ToString();
-                numLabel.Size = new Size(70, 70);
+                LoadSamples();
+                numLabel = NUM_SAMPLE;
+                numLabel.Text = num.ToString();
+                numLabel.Location = new Point(0, CELL_SIZE * (num - 1));
 
-                titleLabel = new Label();
-                titleLabel.Size = new Size(621, 20);
+                titleLabel = TITLE_SAMPLE;
+                titleLabel.Tag = num.ToString();
+                titleLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1));
 
-                workLabel = new Label();
-                workLabel.Size = new Size(621, 50);
+                workLabel = WORK_SAPMLE;
+                workLabel.Tag = num.ToString();
+                workLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1) + (int)(CELL_SIZE * 2 / 7f));
             }
+        }
+
+        public struct Work
+        {
+
         }
 
         private struct Day
@@ -154,7 +162,7 @@ namespace Organizer
 
             num += a.Day;
 
-            num--; //так нада
+            num -= 2; //так нада
 
             return num;
         }
