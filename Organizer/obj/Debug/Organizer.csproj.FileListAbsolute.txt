@@ -39,7 +39,6 @@ C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debu
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.HelpForm.resources
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.Properties.Resources.resources
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.Settings.resources
-C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.TaskForm.resources
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.csproj.GenerateResource.cache
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.exe
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.pdb

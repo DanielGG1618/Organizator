@@ -18,6 +18,8 @@ namespace Organizer
         {
             InitializeComponent();
             LessonLabel.Text = "Урок №" + num;
+
+            comboBox1.Text = comboBox1.Items[0].ToString();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

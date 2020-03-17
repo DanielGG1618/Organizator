@@ -12,6 +12,9 @@ namespace Organizer
 {
     public partial class Head : Form
     {
+        public static Color ProjectColor = Color.OliveDrab;
+        public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48)}; 
+
         private static DateTime[] HOLYDAYS = new DateTime[6] { new DateTime(1, 2, 22), new DateTime(1, 2, 23), new DateTime(1, 2, 24),
                                                                new DateTime(1, 3, 7),  new DateTime(1, 3, 8),  new DateTime(1, 3, 9) };
 
@@ -19,7 +22,14 @@ namespace Organizer
 
         private const int CELL_SIZE = 70;
 
-        private static int[] LESSONS_COUNT = new int[7] { 6, 7, 7, 6, 7, 0, 0 };
+        private static int[] LESSONS_COUNT = new int[7];
+        private static string[,] LESSONS = new string[7, 8] {{ null, null, null, null, null, null, null, null },
+                                                             { "Физкультура", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null, null },
+                                                             { "История", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null },
+                                                             { "Технология", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null },
+                                                             { "Физкультура", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null, null },
+                                                             { "Англиский язык", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "Информатика", null },
+                                                             { null, null, null, null, null, null, null, null }};
         private static int daysInYear = 273, year = 19;
 
         private DateTime dateTime;
@@ -30,8 +40,19 @@ namespace Organizer
 
         public static List<Work>[] Works;
 
+        private bool editMode;
+
         public Head()
         {
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                    if (LESSONS[i, j] == null)
+                    {
+                        LESSONS_COUNT[i] = j;
+                        break;
+                    }
+            }
             MAX_LESSONS_COUNT = LESSONS_COUNT.Max();
 
             Lessons = new Lesson[MAX_LESSONS_COUNT];
@@ -101,7 +122,8 @@ namespace Organizer
 
                 NUM_SAMPLE.Size = new Size(CELL_SIZE, CELL_SIZE);
                 NUM_SAMPLE.TextAlign = ContentAlignment.MiddleCenter;
-                NUM_SAMPLE.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
+                NUM_SAMPLE.Font = new Font("Microsoft Sans Serif", 36, FontStyle.Bold);
+                NUM_SAMPLE.ForeColor = ProjectColor;
 
                 TITLE_SAMPLE.Size = new Size(630, (int)(CELL_SIZE * 2 / 7f));//
                 TITLE_SAMPLE.TextAlign = ContentAlignment.MiddleLeft;
@@ -120,14 +142,17 @@ namespace Organizer
                 numLabel = NUM_SAMPLE;
                 numLabel.Text = num.ToString();
                 numLabel.Location = new Point(0, CELL_SIZE * (num - 1));
+                numLabel.BackColor = GRAY[num % 2];
 
                 titleLabel = TITLE_SAMPLE;
                 titleLabel.Tag = num.ToString();
                 titleLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1));
+                titleLabel.BackColor = GRAY[(num + 1) % 2];
 
                 workLabel = WORK_SAPMLE;
                 workLabel.Tag = num.ToString();
                 workLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1) + (int)(CELL_SIZE * 2 / 7f));
+                workLabel.BackColor = GRAY[(num + 1) % 2];
             }
         }
 
@@ -174,7 +199,7 @@ namespace Organizer
                         isWorking = false;
                 }
 
-                lessonsCount = LESSONS_COUNT[(int)date.DayOfWeek];
+                lessonsCount = isWorking ? LESSONS_COUNT[(int)date.DayOfWeek] : 0;
             }
         }
 
@@ -192,7 +217,7 @@ namespace Organizer
 
             num += a.Day;
 
-            num -= 2; //так нада
+            num--; //так нада
 
             return num;
         }
@@ -204,6 +229,8 @@ namespace Organizer
             for (int i = 0; i < lessonsCount; i++)
             {
                 ReloadWorkLabel(i);
+
+                Lessons[i].titleLabel.Text = LESSONS[(int)days[dayNum].date.DayOfWeek, i];
 
                 Lessons[i].numLabel.Visible = true;
                 Lessons[i].titleLabel.Visible = true;
@@ -231,7 +258,7 @@ namespace Organizer
 
         private void DevelopModeButton_Click(object sender, EventArgs e)
         {
-            InDevelop();
+            editMode = !editMode;
         }
 
         private void SaveScreenButton_Click(object sender, EventArgs e)
@@ -261,13 +288,27 @@ namespace Organizer
 
             while (!days[dayNum].isWorking)
             {
-                dateTime = dateTime.AddDays(1);
+                dateTime = dateTime.AddDays(-1);
                 dayNum--;
             }
 
             LessonsRefresh();
         }
-        
+
+        private void DatePlusButton_Click(object sender, EventArgs e)
+        {
+            dateTime = dateTime.AddDays(1);
+            dayNum++;
+
+            while (!days[dayNum].isWorking)
+            {
+                dateTime = dateTime.AddDays(1);
+                dayNum++;
+            }
+
+            LessonsRefresh();
+        }
+
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             Settings settings = new Settings();
@@ -279,26 +320,6 @@ namespace Organizer
             MessageBox.Show("Кнопка в разработке", "Эrrоr");
         }
 
-        private void Title2_Click(object sender, EventArgs e)
-        {
-            TaskForm f = new TaskForm("Физика", "Проводники");
-            f.Show();
-        }
-
-        private void DatePlusButton_Click(object sender, EventArgs e)
-        {
-            dateTime = dateTime.AddDays(1);
-            dayNum++;
-
-            while(!days[dayNum].isWorking)
-            {
-                dateTime = dateTime.AddDays(1);
-                dayNum++;
-            }
-
-            LessonsRefresh();
-        }
-
         private void WorkClick(object sender, EventArgs e)
         {
             
@@ -306,11 +327,14 @@ namespace Organizer
 
         private void TitleClick(object sender, EventArgs e)
         {
-            Label title = (Label)sender;
-            LessonSelectForm form = new LessonSelectForm(title.Tag.ToString());
-            form.ShowDialog();
-            if (form.lesson != null)
-                title.Text = form.lesson;
+            if (editMode)
+            {
+                Label title = (Label)sender;
+                LessonSelectForm form = new LessonSelectForm(title.Tag.ToString());
+                form.ShowDialog();
+                if (form.lesson != null)
+                    title.Text = form.lesson;
+            }
         }
     }
 }
