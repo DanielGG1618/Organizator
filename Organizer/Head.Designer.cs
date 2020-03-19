@@ -38,7 +38,7 @@
             this.SaveToButton = new System.Windows.Forms.Button();
             this.LoadFromButton = new System.Windows.Forms.Button();
             this.SaveScreenButton = new System.Windows.Forms.Button();
-            this.DevelopModeButton = new System.Windows.Forms.Button();
+            this.EditModeButton = new System.Windows.Forms.Button();
             this.lessonsPanel = new System.Windows.Forms.Panel();
             this.panel15.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -109,7 +109,7 @@
             this.tableLayoutPanel2.Controls.Add(this.SaveToButton, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.LoadFromButton, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.SaveScreenButton, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.DevelopModeButton, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.EditModeButton, 0, 3);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(743, 13);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 5;
@@ -190,22 +190,22 @@
             this.SaveScreenButton.UseVisualStyleBackColor = false;
             this.SaveScreenButton.Click += new System.EventHandler(this.SaveScreenButton_Click);
             // 
-            // DevelopModeButton
+            // EditModeButton
             // 
-            this.DevelopModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.DevelopModeButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.DevelopModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DevelopModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DevelopModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DevelopModeButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.DevelopModeButton.Location = new System.Drawing.Point(0, 367);
-            this.DevelopModeButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.DevelopModeButton.Name = "DevelopModeButton";
-            this.DevelopModeButton.Size = new System.Drawing.Size(427, 99);
-            this.DevelopModeButton.TabIndex = 4;
-            this.DevelopModeButton.Text = "Режим редактирования";
-            this.DevelopModeButton.UseVisualStyleBackColor = false;
-            this.DevelopModeButton.Click += new System.EventHandler(this.DevelopModeButton_Click);
+            this.EditModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.EditModeButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.EditModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EditModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EditModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.EditModeButton.ForeColor = System.Drawing.Color.OliveDrab;
+            this.EditModeButton.Location = new System.Drawing.Point(0, 367);
+            this.EditModeButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.EditModeButton.Name = "EditModeButton";
+            this.EditModeButton.Size = new System.Drawing.Size(427, 99);
+            this.EditModeButton.TabIndex = 4;
+            this.EditModeButton.Text = "Режим редактирования";
+            this.EditModeButton.UseVisualStyleBackColor = false;
+            this.EditModeButton.Click += new System.EventHandler(this.EditModeButton_Click);
             // 
             // lessonsPanel
             // 
@@ -245,7 +245,7 @@
         private System.Windows.Forms.Button DatePlusButton;
         private System.Windows.Forms.Button DateMinusButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Button DevelopModeButton;
+        private System.Windows.Forms.Button EditModeButton;
         private System.Windows.Forms.Button SaveToButton;
         private System.Windows.Forms.Button LoadFromButton;
         private System.Windows.Forms.Button SaveScreenButton;

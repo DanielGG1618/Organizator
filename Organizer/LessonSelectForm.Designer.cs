@@ -43,15 +43,17 @@
             this.comboBox1.IntegralHeight = false;
             this.comboBox1.Items.AddRange(new object[] {
             "Алгебра",
-            "Англикий язык",
+            "Английский язык",
             "Биология",
             "География",
             "Геометрия",
+            "Информатика",
             "История",
             "Литература",
             "Немецкий язык",
             "ОБЖ",
             "Обществознание",
+            "Родной язык",
             "Русский язык",
             "Технология",
             "Физика",
@@ -68,7 +70,7 @@
             // LessonLabel
             // 
             this.LessonLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LessonLabel.ForeColor = System.Drawing.SystemColors.Window;
+            this.LessonLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.LessonLabel.Location = new System.Drawing.Point(19, 14);
             this.LessonLabel.Margin = new System.Windows.Forms.Padding(10);
             this.LessonLabel.Name = "LessonLabel";
@@ -80,6 +82,7 @@
             // 
             this.Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Done.ForeColor = System.Drawing.SystemColors.WindowText;
             this.Done.Location = new System.Drawing.Point(123, 149);
             this.Done.Name = "Done";
             this.Done.Size = new System.Drawing.Size(90, 33);
@@ -92,6 +95,7 @@
             // 
             this.Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Cancel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.Cancel.Location = new System.Drawing.Point(19, 149);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(90, 33);
@@ -105,7 +109,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(232, 203);
+            this.ClientSize = new System.Drawing.Size(232, 208);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Done);
             this.Controls.Add(this.LessonLabel);

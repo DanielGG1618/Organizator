@@ -42,3 +42,16 @@ C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debu
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.csproj.GenerateResource.cache
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.exe
 C:\Users\user\Desktop\ненужная папка\Organizator\Organizer\obj\Debug\Organizer.pdb
+E:\Git folder\Organizator\Organizer\bin\Debug\Organizer.exe.config
+E:\Git folder\Organizator\Organizer\bin\Debug\Organizer.exe
+E:\Git folder\Organizator\Organizer\bin\Debug\Organizer.pdb
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.csprojAssemblyReference.cache
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.LessonSelectForm.resources
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.Head.resources
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.HelpForm.resources
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.Properties.Resources.resources
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.Settings.resources
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.csproj.GenerateResource.cache
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.csproj.CoreCompileInputs.cache
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.exe
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.pdb

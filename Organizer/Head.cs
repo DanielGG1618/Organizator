@@ -36,6 +36,7 @@ namespace Organizer
         private int lessonsCount, dayNum;
 
         public static Lesson[] Lessons;
+        private Lesson[] editModeLessonsBackup;
         private Day[] days;
 
         public static List<Work>[] Works;
@@ -99,10 +100,6 @@ namespace Organizer
                 lessonsPanel.Controls.Add(Lessons[i].titleLabel);
                 lessonsPanel.Controls.Add(Lessons[i].workLabel);
             }
-
-            Lessons[0].workLabel.Text = "Скачай электричество";
-            Lessons[0].titleLabel.Text = "Физика";
-            Lessons[1].titleLabel.Text = "Математика";
 
             LessonsRefresh();
         }
@@ -256,9 +253,21 @@ namespace Organizer
                     Lessons[num].workLabel.Text += value + " ";
         }
 
-        private void DevelopModeButton_Click(object sender, EventArgs e)
+        private void EditModeButton_Click(object sender, EventArgs e)
         {
             editMode = !editMode;
+            EditModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
+
+            if (editMode)
+                editModeLessonsBackup = Lessons;
+
+            else
+            {
+                DialogResult result = MessageBox.Show("Сохранить изменения?", "Режим редактирования", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.No)
+                    Lessons = editModeLessonsBackup;
+            }
         }
 
         private void SaveScreenButton_Click(object sender, EventArgs e)
@@ -283,21 +292,29 @@ namespace Organizer
 
         private void DateMinusButton_Click(object sender, EventArgs e)
         {
-            dateTime = dateTime.AddDays(-1);
-            dayNum--;
-
-            while (!days[dayNum].isWorking)
+            if (!editMode)
             {
                 dateTime = dateTime.AddDays(-1);
                 dayNum--;
+
+                while (!days[dayNum].isWorking)
+                {
+                    dateTime = dateTime.AddDays(-1);
+                    dayNum--;
+                }
+
+                LessonsRefresh();
             }
 
-            LessonsRefresh();
+            else
+                MessageBox.Show("Не работает в режиме редактирования");
         }
 
         private void DatePlusButton_Click(object sender, EventArgs e)
         {
-            dateTime = dateTime.AddDays(1);
+            if (!editMode)
+            {
+                dateTime = dateTime.AddDays(1);
             dayNum++;
 
             while (!days[dayNum].isWorking)
@@ -307,6 +324,10 @@ namespace Organizer
             }
 
             LessonsRefresh();
+            }
+
+                else
+                    MessageBox.Show("Не работает в режиме редактирования");
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
@@ -317,7 +338,7 @@ namespace Organizer
 
         private void InDevelop()
         {
-            MessageBox.Show("Кнопка в разработке", "Эrrоr");
+            MessageBox.Show("Кнопка в разработке", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void WorkClick(object sender, EventArgs e)
@@ -331,8 +352,10 @@ namespace Organizer
             {
                 Label title = (Label)sender;
                 LessonSelectForm form = new LessonSelectForm(title.Tag.ToString());
+
                 form.ShowDialog();
-                if (form.lesson != null)
+
+                if (!string.IsNullOrEmpty(form.lesson))
                     title.Text = form.lesson;
             }
         }
