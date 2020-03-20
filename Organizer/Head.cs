@@ -93,12 +93,13 @@ namespace Organizer
             {
                 Lessons[i] = new Lesson(i + 1);
 
-                Lessons[i].workLabel.Click += WorkClick;
-                Lessons[i].titleLabel.Click += TitleClick;
+                Lessons[i].WorkLabel.Click += WorkClick;
+                Lessons[i].TitleLabel.Click += TitleClick;
 
-                lessonsPanel.Controls.Add(Lessons[i].numLabel);
-                lessonsPanel.Controls.Add(Lessons[i].titleLabel);
-                lessonsPanel.Controls.Add(Lessons[i].workLabel);
+                lessonsPanel.Controls.Add(Lessons[i].AddWorkButton);
+                lessonsPanel.Controls.Add(Lessons[i].NumLabel);
+                lessonsPanel.Controls.Add(Lessons[i].TitleLabel);
+                lessonsPanel.Controls.Add(Lessons[i].WorkLabel);
             }
 
             LessonsRefresh();
@@ -109,13 +110,17 @@ namespace Organizer
             private static Label NUM_SAMPLE;
             private static Label TITLE_SAMPLE;
             private static Label WORK_SAPMLE;
-            public Label numLabel, titleLabel, workLabel;
+            private static Button ADD_WORK_BUTTON;
+
+            public Label NumLabel, TitleLabel, WorkLabel;
+            public Button AddWorkButton;
 
             public static void LoadSamples()
             {
                 NUM_SAMPLE = new Label();
                 TITLE_SAMPLE = new Label();
                 WORK_SAPMLE = new Label();
+                ADD_WORK_BUTTON = new Button();
 
                 NUM_SAMPLE.Size = new Size(CELL_SIZE, CELL_SIZE);
                 NUM_SAMPLE.TextAlign = ContentAlignment.MiddleCenter;
@@ -131,25 +136,38 @@ namespace Organizer
                 WORK_SAPMLE.TextAlign = ContentAlignment.MiddleLeft;
                 WORK_SAPMLE.Font = new Font("Microsoft Sans Serif", 12);
                 WORK_SAPMLE.ForeColor = Color.White;
+
+                ADD_WORK_BUTTON.Size = new Size(CELL_SIZE - 20, CELL_SIZE - 20);//
+                ADD_WORK_BUTTON.FlatStyle = FlatStyle.Flat;
+                ADD_WORK_BUTTON.TextAlign = ContentAlignment.MiddleCenter;
+                ADD_WORK_BUTTON.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
+                ADD_WORK_BUTTON.ForeColor = Color.LimeGreen;
+                ADD_WORK_BUTTON.Text = "+";
+                ADD_WORK_BUTTON.Visible = false;
             }
 
             public Lesson(int num)
             {
                 LoadSamples();
-                numLabel = NUM_SAMPLE;
-                numLabel.Text = num.ToString();
-                numLabel.Location = new Point(0, CELL_SIZE * (num - 1));
-                numLabel.BackColor = GRAY[num % 2];
+                NumLabel = NUM_SAMPLE;
+                NumLabel.Text = num.ToString();
+                NumLabel.Location = new Point(0, CELL_SIZE * (num - 1));
+                NumLabel.BackColor = GRAY[num % 2];
 
-                titleLabel = TITLE_SAMPLE;
-                titleLabel.Tag = num.ToString();
-                titleLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1));
-                titleLabel.BackColor = GRAY[(num + 1) % 2];
+                TitleLabel = TITLE_SAMPLE;
+                TitleLabel.Tag = num.ToString();
+                TitleLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1));
+                TitleLabel.BackColor = GRAY[(num + 1) % 2];
 
-                workLabel = WORK_SAPMLE;
-                workLabel.Tag = num.ToString();
-                workLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1) + (int)(CELL_SIZE * 2 / 7f));
-                workLabel.BackColor = GRAY[(num + 1) % 2];
+                WorkLabel = WORK_SAPMLE;
+                WorkLabel.Tag = num.ToString();
+                WorkLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1) + (int)(CELL_SIZE * 2 / 7f));
+                WorkLabel.BackColor = GRAY[(num + 1) % 2];
+
+                AddWorkButton = ADD_WORK_BUTTON;
+                AddWorkButton.Tag = num.ToString();
+                AddWorkButton.Location = new Point(570 + CELL_SIZE, CELL_SIZE * (num - 1) + 10);
+                AddWorkButton.BackColor = GRAY[(num + 1) % 2];
             }
         }
 
@@ -227,18 +245,18 @@ namespace Organizer
             {
                 ReloadWorkLabel(i);
 
-                Lessons[i].titleLabel.Text = LESSONS[(int)days[dayNum].date.DayOfWeek, i];
+                Lessons[i].TitleLabel.Text = LESSONS[(int)days[dayNum].date.DayOfWeek, i];
 
-                Lessons[i].numLabel.Visible = true;
-                Lessons[i].titleLabel.Visible = true;
-                Lessons[i].workLabel.Visible = true;
+                Lessons[i].NumLabel.Visible = true;
+                Lessons[i].TitleLabel.Visible = true;
+                Lessons[i].WorkLabel.Visible = true;
             }
 
             for (int i = 6; i >= lessonsCount; i--)
             {
-                Lessons[i].numLabel.Visible = false;
-                Lessons[i].titleLabel.Visible = false;
-                Lessons[i].workLabel.Visible = false;
+                Lessons[i].NumLabel.Visible = false;
+                Lessons[i].TitleLabel.Visible = false;
+                Lessons[i].WorkLabel.Visible = false;
             }
 
             DateText.Text = dateTime.Day.ToString("00") + "." + dateTime.Month.ToString("00") + "." + dateTime.Year;
@@ -246,28 +264,37 @@ namespace Organizer
 
         public void ReloadWorkLabel(int num)
         {
-            Lessons[num].workLabel.Text = "";
+            Lessons[num].WorkLabel.Text = "";
 
             foreach (Work work in Works[num])
                 foreach (string value in work.Values)
-                    Lessons[num].workLabel.Text += value + " ";
+                    Lessons[num].WorkLabel.Text += value + " ";
         }
 
         private void EditModeButton_Click(object sender, EventArgs e)
         {
             editMode = !editMode;
-            EditModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
-
+            
             if (editMode)
+            {
                 editModeLessonsBackup = Lessons;
+            }
 
             else
             {
-                DialogResult result = MessageBox.Show("Сохранить изменения?", "Режим редактирования", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("Сохранить изменения?", "Режим редактирования", MessageBoxButtons.YesNoCancel);
 
                 if (result == DialogResult.No)
                     Lessons = editModeLessonsBackup;
+
+                else if (result == DialogResult.Cancel)
+                    editMode = true;
             }
+
+            EditModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
+
+            for (int i = 0; i < lessonsCount; i++)
+                Lessons[i].AddWorkButton.Visible = editMode;
         }
 
         private void SaveScreenButton_Click(object sender, EventArgs e)

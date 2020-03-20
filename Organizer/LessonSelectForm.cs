@@ -21,7 +21,7 @@ namespace Organizer
 
             Head.Lesson lesson = Head.Lessons[Convert.ToInt32(num) - 1];
 
-            comboBox1.Text = lesson.titleLabel.Text;
+            comboBox1.Text = lesson.TitleLabel.Text;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
