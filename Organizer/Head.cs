@@ -70,7 +70,7 @@ namespace Organizer
             for (int i = 0; i < daysInYear; i++)
                 days[i] = new Day(i, year);
 
-            Work work = new Work("qwerg", new string[2] { "fadsfa", "dasasd" });
+            Work work = new Work("qwerg");
             work.Values.Add("asdasf");
             work.Values.Add("12345");
             Works[0].Add(work);
@@ -95,6 +95,7 @@ namespace Organizer
 
                 Lessons[i].WorkLabel.Click += WorkClick;
                 Lessons[i].TitleLabel.Click += TitleClick;
+                Lessons[i].AddWorkButton.Click += AddWorkButtonClick;
 
                 lessonsPanel.Controls.Add(Lessons[i].AddWorkButton);
                 lessonsPanel.Controls.Add(Lessons[i].NumLabel);
@@ -176,20 +177,30 @@ namespace Organizer
             public string Type;
             public List<string> Values;
 
+            public string Result;
+
             public Work(string type)
             {
                 Type = type;
 
                 Values = new List<string>();
+
+                Result = "";
             }
 
-            public Work(string type, string[] values)
+            public Work(string type, List<string> values)
             {
                 Type = type;
 
-                Values = new List<string>();
-                for(int i = 0; i < values.Length; i++)
-                    Values.Add(values[i]);
+                Values = values;
+
+                Result = "";
+            }
+
+            public void LoadResult()
+            {
+                foreach (string value in Values)
+                    Result += value + " ";
             }
         }
 
@@ -277,7 +288,16 @@ namespace Organizer
             
             if (editMode)
             {
-                editModeLessonsBackup = Lessons;
+                editModeLessonsBackup = new Lesson[7];
+
+                for (int i = 0; i < lessonsCount; i++)
+                {
+                    editModeLessonsBackup[i].TitleLabel = new Label();
+                    editModeLessonsBackup[i].TitleLabel.Text = Lessons[i].TitleLabel.Text;
+
+                    editModeLessonsBackup[i].WorkLabel = new Label();
+                    editModeLessonsBackup[i].WorkLabel.Text = Lessons[i].WorkLabel.Text;
+                }
             }
 
             else
@@ -285,7 +305,14 @@ namespace Organizer
                 DialogResult result = MessageBox.Show("Сохранить изменения?", "Режим редактирования", MessageBoxButtons.YesNoCancel);
 
                 if (result == DialogResult.No)
-                    Lessons = editModeLessonsBackup;
+                {
+                    for (int i = 0; i < lessonsCount; i++)
+                    {
+                        Lessons[i].TitleLabel.Text = editModeLessonsBackup[i].TitleLabel.Text;
+
+                        Lessons[i].WorkLabel.Text = editModeLessonsBackup[i].WorkLabel.Text;
+                    }
+                }
 
                 else if (result == DialogResult.Cancel)
                     editMode = true;
@@ -342,19 +369,19 @@ namespace Organizer
             if (!editMode)
             {
                 dateTime = dateTime.AddDays(1);
-            dayNum++;
-
-            while (!days[dayNum].isWorking)
-            {
-                dateTime = dateTime.AddDays(1);
                 dayNum++;
+
+                while (!days[dayNum].isWorking)
+                {
+                    dateTime = dateTime.AddDays(1);
+                    dayNum++;
+                }
+
+                LessonsRefresh();
             }
 
-            LessonsRefresh();
-            }
-
-                else
-                    MessageBox.Show("Не работает в режиме редактирования");
+            else
+                MessageBox.Show("Не работает в режиме редактирования");
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
@@ -380,11 +407,23 @@ namespace Organizer
                 Label title = (Label)sender;
                 LessonSelectForm form = new LessonSelectForm(title.Tag.ToString());
 
-                form.ShowDialog();
-
-                if (!string.IsNullOrEmpty(form.lesson))
+                if (form.ShowDialog() == DialogResult.OK)
                     title.Text = form.lesson;
             }
+        }
+
+        private void AddWorkButtonClick(object sender, EventArgs e)
+        {
+            Button addWorkButton = (Button)sender;
+            WorkAddForm form = new WorkAddForm(addWorkButton.Tag.ToString());
+
+            int num = Convert.ToInt32(addWorkButton.Tag) - 1;
+
+            if (form.ShowDialog() == DialogResult.OK)
+                foreach(var work in form.Works)
+                    Works[num].Add(work);
+
+            ReloadWorkLabel(num);
         }
     }
 }

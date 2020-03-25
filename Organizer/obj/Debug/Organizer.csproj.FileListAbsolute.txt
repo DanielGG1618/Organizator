@@ -55,3 +55,4 @@ E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.csproj.GenerateResource.
 E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.csproj.CoreCompileInputs.cache
 E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.exe
 E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.pdb
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.WorkAddForm.resources

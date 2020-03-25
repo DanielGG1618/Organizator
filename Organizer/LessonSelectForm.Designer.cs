@@ -65,7 +65,7 @@
             this.comboBox1.Size = new System.Drawing.Size(194, 33);
             this.comboBox1.Sorted = true;
             this.comboBox1.TabIndex = 3;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // LessonLabel
             // 
@@ -81,6 +81,7 @@
             // Done
             // 
             this.Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Done.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Done.ForeColor = System.Drawing.SystemColors.WindowText;
             this.Done.Location = new System.Drawing.Point(123, 149);
@@ -89,11 +90,11 @@
             this.Done.TabIndex = 5;
             this.Done.Text = "готово";
             this.Done.UseVisualStyleBackColor = true;
-            this.Done.Click += new System.EventHandler(this.DoneClick);
             // 
             // Cancel
             // 
             this.Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Cancel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.Cancel.Location = new System.Drawing.Point(19, 149);
@@ -102,7 +103,6 @@
             this.Cancel.TabIndex = 5;
             this.Cancel.Text = "отмена";
             this.Cancel.UseVisualStyleBackColor = true;
-            this.Cancel.Click += new System.EventHandler(this.CancelClick);
             // 
             // LessonSelectForm
             // 

@@ -24,20 +24,9 @@ namespace Organizer
             comboBox1.Text = lesson.TitleLabel.Text;
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void DoneClick(object sender, EventArgs e)
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             lesson = comboBox1.Text;
-            Close();
-        }
-
-        private void CancelClick(object sender, EventArgs e)
-        {
-            Close();
         }
     }
 }
