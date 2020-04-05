@@ -18,11 +18,11 @@ namespace Organizer
         private static DateTime[] HOLYDAYS = new DateTime[6] { new DateTime(1, 2, 22), new DateTime(1, 2, 23), new DateTime(1, 2, 24),
                                                                new DateTime(1, 3, 7),  new DateTime(1, 3, 8),  new DateTime(1, 3, 9) };
 
-        private static int MAX_LESSONS_COUNT = 0;
+        private static byte MAX_LESSONS_COUNT = 0;
 
-        private const int CELL_SIZE = 70;
+        private const byte CELL_SIZE = 70;
 
-        private static int[] LESSONS_COUNT = new int[7];
+        private static byte[] LESSONS_COUNT = new byte[7];
         private static string[,] LESSONS = new string[7, 8] {{ null, null, null, null, null, null, null, null },
                                                              { "Физкультура", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null, null },
                                                              { "История", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null },
@@ -30,14 +30,15 @@ namespace Organizer
                                                              { "Физкультура", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null, null },
                                                              { "Англиский язык", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "Информатика", null },
                                                              { null, null, null, null, null, null, null, null }};
-        private static int daysInYear = 273, year = 19;
+        private static short daysInYear = 273;
+        private static byte year = 19;
 
-        private DateTime dateTime;
-        private int lessonsCount, dayNum;
+        private DateTime date, startPoint;
+        private int lessonsCount;
 
         public static Lesson[] Lessons;
         private Lesson[] editModeLessonsBackup;
-        private Day[] days;
+        private Dictionary<DateTime, Day> days = new Dictionary<DateTime, Day>();
 
         public static List<Work>[] Works;
 
@@ -45,15 +46,22 @@ namespace Organizer
 
         public Head()
         {
-            for (int i = 0; i < 7; i++)
+            startPoint = new DateTime(2000 + year, 9, 1);
+            startPoint = startPoint.ToLocalTime();
+            startPoint = startPoint.Date;
+
+            for (byte i = 0; i < 7; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (byte j = 0; j < 10; j++)
+                {
                     if (LESSONS[i, j] == null)
                     {
                         LESSONS_COUNT[i] = j;
                         break;
                     }
+                }
             }
+
             MAX_LESSONS_COUNT = LESSONS_COUNT.Max();
 
             Lessons = new Lesson[MAX_LESSONS_COUNT];
@@ -62,13 +70,11 @@ namespace Organizer
             if (DateTime.IsLeapYear(2001 + year))
                 daysInYear++;
 
-            days = new Day[daysInYear];
-
             for (int i = 0; i < MAX_LESSONS_COUNT; i++)
                 Works[i] = new List<Work>();
 
             for (int i = 0; i < daysInYear; i++)
-                days[i] = new Day(i, year);
+                days.Add(startPoint.AddDays(i), new Day(i, 2000 + year));
 
             Work work = new Work("qwerg");
             work.Values.Add("asdasf");
@@ -82,11 +88,13 @@ namespace Organizer
         {
             Lesson.LoadSamples();
 
-            dateTime = DateTime.Today;
+            date = DateTime.Today;
 
-            dayNum = DateToNum(DateSubtract(dateTime, new DateTime(2000 + year, 9, 1)));
+            do
+                date = date.AddDays(1);
+            while (!days[date].isWorking);
 
-            lessonsCount = days[dayNum].lessonsCount;
+            lessonsCount = days[date].lessonsCount;
             lessonsPanel.Controls.Clear();
 
             for(int i = 0; i < MAX_LESSONS_COUNT; i++)
@@ -250,13 +258,13 @@ namespace Organizer
 
         private void LessonsRefresh()
         {
-            lessonsCount = days[dayNum].lessonsCount;
+            lessonsCount = days[date].lessonsCount;
 
             for (int i = 0; i < lessonsCount; i++)
             {
                 ReloadWorkLabel(i);
 
-                Lessons[i].TitleLabel.Text = LESSONS[(int)days[dayNum].date.DayOfWeek, i];
+                Lessons[i].TitleLabel.Text = LESSONS[(int)days[date].date.DayOfWeek, i];
 
                 Lessons[i].NumLabel.Visible = true;
                 Lessons[i].TitleLabel.Visible = true;
@@ -270,7 +278,7 @@ namespace Organizer
                 Lessons[i].WorkLabel.Visible = false;
             }
 
-            DateText.Text = dateTime.Day.ToString("00") + "." + dateTime.Month.ToString("00") + "." + dateTime.Year;
+            DateText.Text = date.Day.ToString("00") + "." + date.Month.ToString("00") + "." + date.Year;
         }
 
         public void ReloadWorkLabel(int num)
@@ -348,14 +356,9 @@ namespace Organizer
         {
             if (!editMode)
             {
-                dateTime = dateTime.AddDays(-1);
-                dayNum--;
-
-                while (!days[dayNum].isWorking)
-                {
-                    dateTime = dateTime.AddDays(-1);
-                    dayNum--;
-                }
+                do
+                    date = date.AddDays(-1);
+                while (!days[date].isWorking);
 
                 LessonsRefresh();
             }
@@ -368,14 +371,9 @@ namespace Organizer
         {
             if (!editMode)
             {
-                dateTime = dateTime.AddDays(1);
-                dayNum++;
-
-                while (!days[dayNum].isWorking)
-                {
-                    dateTime = dateTime.AddDays(1);
-                    dayNum++;
-                }
+                do
+                    date = date.AddDays(1);
+                while (!days[date].isWorking);
 
                 LessonsRefresh();
             }
