@@ -12,11 +12,11 @@ namespace Organizer
 {
     public partial class WorkAddForm : Form
     {
-        public List<Head.Work> Works = new List<Head.Work>();
+        public List<Work> Works = new List<Work>();
 
         public WorkAddForm(string num)
         {
-            Works.Add(new Head.Work(""));
+            Works.Add(new Work(""));
             InitializeComponent();
         }
 
@@ -60,7 +60,7 @@ namespace Organizer
             {
                 List<string> values = new List<string>(AddTextBox.Text.Split(new string[2] { ",", " " }, StringSplitOptions.RemoveEmptyEntries));
 
-                Head.Work work = new Head.Work(TypeSelector.Text, values);
+                Work work = new Work(TypeSelector.Text, values);
 
                 Works.Add(work);
 

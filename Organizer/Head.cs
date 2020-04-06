@@ -14,17 +14,16 @@ namespace Organizer
     public partial class Head : Form
     {
         public static Color ProjectColor = Color.OliveDrab;
-        public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48)}; 
+        public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48)};
 
-        private static DateTime[] HOLYDAYS = new DateTime[6] { new DateTime(1, 2, 22), new DateTime(1, 2, 23), new DateTime(1, 2, 24),
-                                                               new DateTime(1, 3, 7),  new DateTime(1, 3, 8),  new DateTime(1, 3, 9) };
-
+        public static List<DateTime> Holydays = new List<DateTime>(new DateTime[6] { new DateTime(4, 2, 22), new DateTime(4, 2, 23), new DateTime(4, 2, 24),
+                                                                   new DateTime(4, 3, 7),  new DateTime(4, 3, 8),  new DateTime(4, 3, 9) });
         private static int MAX_LESSONS_COUNT = 0;
 
         private const int CELL_SIZE = 70;
 
-        private static int[] LessonsCount = new int[7];
-        private static string[][] Schedule;
+        public static int[] LessonsCount = new int[7];
+        public static string[][] Schedule;
 
         private static short daysInYear = 273;
         private static int year = 19;
@@ -77,8 +76,6 @@ namespace Organizer
 
         private void Head_Load(object sender, EventArgs e)
         {
-            Lesson.LoadSamples();
-
             date = DateTime.Today;
 
             do
@@ -90,7 +87,7 @@ namespace Organizer
 
             for(int i = 0; i < MAX_LESSONS_COUNT; i++)
             {
-                Lessons[i] = new Lesson(i + 1);
+                Lessons[i] = new Lesson(i + 1, CELL_SIZE, ProjectColor);
 
                 Lessons[i].WorkLabel.Click += WorkClick;
                 Lessons[i].TitleLabel.Click += TitleClick;
@@ -121,148 +118,6 @@ namespace Organizer
                 if (array.Count > MAX_LESSONS_COUNT)
                     MAX_LESSONS_COUNT = array.Count;
             }
-        }
-
-        public struct Lesson
-        {
-            private static Label NUM_SAMPLE;
-            private static Label TITLE_SAMPLE;
-            private static Label WORK_SAPMLE;
-            private static Button ADD_WORK_BUTTON;
-
-            public Label NumLabel, TitleLabel, WorkLabel;
-            public Button AddWorkButton;
-
-            public static void LoadSamples()
-            {
-                NUM_SAMPLE = new Label();
-                TITLE_SAMPLE = new Label();
-                WORK_SAPMLE = new Label();
-                ADD_WORK_BUTTON = new Button();
-
-                NUM_SAMPLE.Size = new Size(CELL_SIZE, CELL_SIZE);
-                NUM_SAMPLE.TextAlign = ContentAlignment.MiddleCenter;
-                NUM_SAMPLE.Font = new Font("Microsoft Sans Serif", 36, FontStyle.Bold);
-                NUM_SAMPLE.ForeColor = ProjectColor;
-
-                TITLE_SAMPLE.Size = new Size(630, (int)(CELL_SIZE * 2 / 7f));//
-                TITLE_SAMPLE.TextAlign = ContentAlignment.MiddleLeft;
-                TITLE_SAMPLE.Font = new Font("Microsoft Sans Serif", 12);
-                TITLE_SAMPLE.ForeColor = Color.White;
-
-                WORK_SAPMLE.Size = new Size(630, (int)(CELL_SIZE * 5 / 7f));//
-                WORK_SAPMLE.TextAlign = ContentAlignment.MiddleLeft;
-                WORK_SAPMLE.Font = new Font("Microsoft Sans Serif", 12);
-                WORK_SAPMLE.ForeColor = Color.White;
-
-                ADD_WORK_BUTTON.Size = new Size(CELL_SIZE - 20, CELL_SIZE - 20);//
-                ADD_WORK_BUTTON.FlatStyle = FlatStyle.Flat;
-                ADD_WORK_BUTTON.TextAlign = ContentAlignment.MiddleCenter;
-                ADD_WORK_BUTTON.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
-                ADD_WORK_BUTTON.ForeColor = Color.LimeGreen;
-                ADD_WORK_BUTTON.Text = "+";
-                ADD_WORK_BUTTON.Visible = false;
-            }
-
-            public Lesson(int num)
-            {
-                LoadSamples();
-                NumLabel = NUM_SAMPLE;
-                NumLabel.Text = num.ToString();
-                NumLabel.Location = new Point(0, CELL_SIZE * (num - 1));
-                NumLabel.BackColor = GRAY[num % 2];
-
-                TitleLabel = TITLE_SAMPLE;
-                TitleLabel.Tag = num.ToString();
-                TitleLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1));
-                TitleLabel.BackColor = GRAY[(num + 1) % 2];
-
-                WorkLabel = WORK_SAPMLE;
-                WorkLabel.Tag = num.ToString();
-                WorkLabel.Location = new Point(CELL_SIZE, CELL_SIZE * (num - 1) + (int)(CELL_SIZE * 2 / 7f));
-                WorkLabel.BackColor = GRAY[(num + 1) % 2];
-
-                AddWorkButton = ADD_WORK_BUTTON;
-                AddWorkButton.Tag = num.ToString();
-                AddWorkButton.Location = new Point(570 + CELL_SIZE, CELL_SIZE * (num - 1) + 10);
-                AddWorkButton.BackColor = GRAY[(num + 1) % 2];
-            }
-        }
-
-        public struct Work
-        {
-            public string Type;
-            public List<string> Values;
-
-            public string Result;
-
-            public Work(string type)
-            {
-                Type = type;
-
-                Values = new List<string>();
-
-                Result = "";
-            }
-
-            public Work(string type, List<string> values)
-            {
-                Type = type;
-
-                Values = values;
-
-                Result = "";
-            }
-
-            public void LoadResult()
-            {
-                foreach (string value in Values)
-                    Result += value + " ";
-            }
-        }
-
-        public struct Day
-        {
-            public DateTime date;
-
-            public bool isWorking;
-            public int lessonsCount, num;
-
-            public Day(int _num, int _year)
-            {
-                num = _num;
-                date = new DateTime(2000 + _year, 9, 1).AddDays(num);
-
-                isWorking = date.DayOfWeek != DayOfWeek.Sunday && date.DayOfWeek != DayOfWeek.Saturday;
-
-                for (int i = 0; i < HOLYDAYS.Length; i++)
-                {
-                    if (date == HOLYDAYS[i] ||
-                       (HOLYDAYS[i].Year == 1 && date.Day == HOLYDAYS[i].Day && date.Month == HOLYDAYS[i].Month))
-                        isWorking = false;
-                }
-
-                lessonsCount = isWorking ? LessonsCount[(int)date.DayOfWeek] : 0;
-            }
-        }
-
-        private DateTime DateSubtract(DateTime a, DateTime b)
-        {
-            return DateTime.FromBinary(a.ToBinary() - b.ToBinary());
-        }
-
-        private int DateToNum(DateTime a)
-        {
-            int num = 0;
-
-            for (int i = 1; i < a.Month; i++)
-                num += DateTime.DaysInMonth(1, i);
-
-            num += a.Day;
-
-            num--; //так нада
-
-            return num;
         }
 
         private void LessonsRefresh()
@@ -431,6 +286,124 @@ namespace Organizer
                     Works[num].Add(work);
 
             ReloadWorkLabel(num);
+        }
+    }
+
+    public struct Lesson
+    {
+        public Label NumLabel, TitleLabel, WorkLabel;
+        public Button AddWorkButton;
+
+        public void LoadWithSamples(int cellSize, Color color)
+        {
+            NumLabel.Size = new Size(cellSize, cellSize);
+            NumLabel.TextAlign = ContentAlignment.MiddleCenter;
+            NumLabel.Font = new Font("Microsoft Sans Serif", 36, FontStyle.Bold);
+            NumLabel.ForeColor = color;
+
+            TitleLabel.Size = new Size(630, (int)(cellSize * 2 / 7f));//
+            TitleLabel.TextAlign = ContentAlignment.MiddleLeft;
+            TitleLabel.Font = new Font("Microsoft Sans Serif", 12);
+            TitleLabel.ForeColor = Color.White;
+
+            WorkLabel.Size = new Size(630, (int)(cellSize * 5 / 7f));//
+            WorkLabel.TextAlign = ContentAlignment.MiddleLeft;
+            WorkLabel.Font = new Font("Microsoft Sans Serif", 12);
+            WorkLabel.ForeColor = Color.White;
+
+            AddWorkButton.Size = new Size(cellSize - 20, cellSize - 20);//
+            AddWorkButton.FlatStyle = FlatStyle.Flat;
+            AddWorkButton.TextAlign = ContentAlignment.MiddleCenter;
+            AddWorkButton.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
+            AddWorkButton.ForeColor = Color.LimeGreen;
+            AddWorkButton.Text = "+";
+            AddWorkButton.Visible = false;
+        }
+
+        public Lesson(int num, int cellSize, Color color)
+        {
+            NumLabel = new Label();
+            TitleLabel = new Label();
+            WorkLabel = new Label();
+            AddWorkButton = new Button();
+
+            LoadWithSamples(cellSize, color);
+
+            NumLabel.Text = num.ToString();
+            NumLabel.Location = new Point(0, cellSize * (num - 1));
+            NumLabel.BackColor = Head.GRAY[num % 2];
+
+            TitleLabel.Tag = num.ToString();
+            TitleLabel.Location = new Point(cellSize, cellSize * (num - 1));
+            TitleLabel.BackColor = Head.GRAY[(num + 1) % 2];
+
+            WorkLabel.Tag = num.ToString();
+            WorkLabel.Location = new Point(cellSize, cellSize * (num - 1) + (int)(cellSize * 2 / 7f));
+            WorkLabel.BackColor = Head.GRAY[(num + 1) % 2];
+
+            AddWorkButton.Tag = num.ToString();
+            AddWorkButton.Location = new Point(570 + cellSize, cellSize * (num - 1) + 10);
+            AddWorkButton.BackColor = Head.GRAY[(num + 1) % 2];
+        }
+    }
+
+    public struct Work
+    {
+        public string Type;
+        public List<string> Values;
+
+        public string Result;
+
+        public Work(string type)
+        {
+            Type = type;
+
+            Values = new List<string>();
+
+            Result = "";
+        }
+
+        public Work(string type, List<string> values)
+        {
+            Type = type;
+
+            Values = values;
+
+            Result = "";
+        }
+
+        public void LoadResult()
+        {
+            foreach (string value in Values)
+                Result += value + " ";
+        }
+    }
+
+    public struct Day
+    {
+        public DateTime date;
+
+        public bool isWorking;
+        public int lessonsCount, num;
+
+        public Day(int _num, int _year)
+        {
+            num = _num;
+            date = new DateTime(_year, 9, 1).AddDays(num);
+
+            isWorking = date.DayOfWeek != DayOfWeek.Sunday && date.DayOfWeek != DayOfWeek.Saturday;
+
+            if (isWorking &&
+               (Head.Holydays.Contains<DateTime>(date) ||
+                Head.Holydays.Contains<DateTime>(new DateTime(4, date.Month, date.Day))))
+                isWorking = false;
+
+            lessonsCount = isWorking ? Head.LessonsCount[(int)date.DayOfWeek] : 0;
+        }
+
+        public static DateTime DateSubtract(DateTime a, DateTime b)
+        {
+            return DateTime.FromBinary(a.ToBinary() - b.ToBinary());
         }
     }
 }

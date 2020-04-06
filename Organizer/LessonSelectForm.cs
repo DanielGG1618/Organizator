@@ -19,7 +19,7 @@ namespace Organizer
             InitializeComponent();
             LessonLabel.Text = "Урок №" + num;
 
-            Head.Lesson lesson = Head.Lessons[Convert.ToInt32(num) - 1];
+            Lesson lesson = Head.Lessons[Convert.ToInt32(num) - 1];
 
             comboBox1.Text = lesson.TitleLabel.Text;
         }
