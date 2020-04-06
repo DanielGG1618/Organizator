@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Organizer
 {
@@ -18,20 +19,14 @@ namespace Organizer
         private static DateTime[] HOLYDAYS = new DateTime[6] { new DateTime(1, 2, 22), new DateTime(1, 2, 23), new DateTime(1, 2, 24),
                                                                new DateTime(1, 3, 7),  new DateTime(1, 3, 8),  new DateTime(1, 3, 9) };
 
-        private static byte MAX_LESSONS_COUNT = 0;
+        private static int MAX_LESSONS_COUNT = 0;
 
-        private const byte CELL_SIZE = 70;
+        private const int CELL_SIZE = 70;
 
-        private static byte[] LESSONS_COUNT = new byte[7];
-        private static string[,] LESSONS = new string[7, 8] {{ null, null, null, null, null, null, null, null },
-                                                             { "Физкультура", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null, null },
-                                                             { "История", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null },
-                                                             { "Технология", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null },
-                                                             { "Физкультура", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", null, null },
-                                                             { "Англиский язык", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "какой-то урок", "Информатика", null },
-                                                             { null, null, null, null, null, null, null, null }};
-        private static short daysInYear = 273;
-        private static byte year = 19;
+        private static int[] LESSONS_COUNT = new int[7];
+        private static string[][] Schedule;
+
+        private static int year = 19;
 
         private DateTime date, startPoint;
         private int lessonsCount;
@@ -46,20 +41,15 @@ namespace Organizer
 
         public Head()
         {
+            LoadFiles();
+
             startPoint = new DateTime(2000 + year, 9, 1);
             startPoint = startPoint.ToLocalTime();
             startPoint = startPoint.Date;
 
-            for (byte i = 0; i < 7; i++)
+            for (int i = 0; i < Schedule.Length; i++)
             {
-                for (byte j = 0; j < 10; j++)
-                {
-                    if (LESSONS[i, j] == null)
-                    {
-                        LESSONS_COUNT[i] = j;
-                        break;
-                    }
-                }
+                LESSONS_COUNT[i] = Schedule[i].Length;
             }
 
             MAX_LESSONS_COUNT = LESSONS_COUNT.Max();
@@ -112,6 +102,24 @@ namespace Organizer
             }
 
             LessonsRefresh();
+        }
+
+        private void LoadFiles()
+        {
+            string[] schedule = File.ReadAllLines("Lessons.txt", Encoding.Default);
+
+            Schedule = new string[schedule.Length][];
+
+            for (int i = 0; i < schedule.Length; i++)
+            {
+                List<string> array = new List<string>(schedule[i].Split(new string[2] { ", ", ": " }, StringSplitOptions.RemoveEmptyEntries));
+                array.RemoveAt(0);
+
+                Schedule[i] = array.ToArray();
+
+                if (array.Count > MAX_LESSONS_COUNT)
+                    MAX_LESSONS_COUNT = array.Count;
+            }
         }
 
         public struct Lesson
@@ -264,7 +272,7 @@ namespace Organizer
             {
                 ReloadWorkLabel(i);
 
-                Lessons[i].TitleLabel.Text = LESSONS[(int)days[date].date.DayOfWeek, i];
+                Lessons[i].TitleLabel.Text = Schedule[(int)days[date].date.DayOfWeek][i];
 
                 Lessons[i].NumLabel.Visible = true;
                 Lessons[i].TitleLabel.Visible = true;

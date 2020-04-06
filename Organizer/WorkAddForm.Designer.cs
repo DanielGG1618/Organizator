@@ -41,10 +41,10 @@ partial class WorkAddForm
             // 
             // comboBox1
             // 
-            this.TypeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.TypeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((int)(32)))), ((int)(((int)(32)))), ((int)(((int)(32)))));
             this.TypeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TypeSelector.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TypeSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TypeSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((int)(204)));
             this.TypeSelector.ForeColor = System.Drawing.Color.White;
             this.TypeSelector.FormattingEnabled = true;
             this.TypeSelector.IntegralHeight = false;
@@ -62,7 +62,7 @@ partial class WorkAddForm
             // 
             // ResultLabel
             // 
-            this.ResultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ResultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((int)(204)));
             this.ResultLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ResultLabel.Location = new System.Drawing.Point(19, 14);
             this.ResultLabel.Margin = new System.Windows.Forms.Padding(10);
@@ -77,7 +77,7 @@ partial class WorkAddForm
             this.Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Done.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Done.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((int)(204)));
             this.Done.ForeColor = System.Drawing.Color.OliveDrab;
             this.Done.Location = new System.Drawing.Point(244, 149);
             this.Done.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
@@ -93,7 +93,7 @@ partial class WorkAddForm
             this.Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((int)(204)));
             this.Cancel.ForeColor = System.Drawing.Color.OliveDrab;
             this.Cancel.Location = new System.Drawing.Point(19, 149);
             this.Cancel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
@@ -106,9 +106,9 @@ partial class WorkAddForm
             // 
             // AddTextBox
             // 
-            this.AddTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.AddTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((int)(48)))), ((int)(((int)(48)))), ((int)(((int)(48)))));
             this.AddTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.AddTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AddTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((int)(204)));
             this.AddTextBox.ForeColor = System.Drawing.Color.White;
             this.AddTextBox.Location = new System.Drawing.Point(115, 105);
             this.AddTextBox.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
@@ -177,7 +177,7 @@ partial class WorkAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((int)(32)))), ((int)(((int)(32)))), ((int)(((int)(32)))));
             this.ClientSize = new System.Drawing.Size(482, 208);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button3);
