@@ -16,8 +16,10 @@ namespace Organizer
         public static Color ProjectColor = Color.OliveDrab;
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48)};
 
-        public static List<DateTime> Holydays = new List<DateTime>(new DateTime[6] { new DateTime(4, 2, 22), new DateTime(4, 2, 23), new DateTime(4, 2, 24),
-                                                                   new DateTime(4, 3, 7),  new DateTime(4, 3, 8),  new DateTime(4, 3, 9) });
+        public static List<DateTime> PrimaryHolydays = new List<DateTime>();
+        public static List<DateTime> SecondaryHolydays = new List<DateTime>();
+        public static List<DateTime> ThisYearHolydays = new List<DateTime>();
+
         private static int MAX_LESSONS_COUNT = 0;
 
         private const int CELL_SIZE = 70;
@@ -28,7 +30,7 @@ namespace Organizer
         private static short daysInYear = 273;
         private static int year = 19;
 
-        private DateTime date, startPoint;
+        private DateTime date, firstDay, lastDay;
         private int lessonsCount;
 
         public static Lesson[] Lessons;
@@ -43,9 +45,13 @@ namespace Organizer
         {
             LoadFiles();
 
-            startPoint = new DateTime(2000 + year, 9, 1);
-            startPoint = startPoint.ToLocalTime();
-            startPoint = startPoint.Date;
+            firstDay = new DateTime(2000 + year, 9, 1);
+            firstDay = firstDay.ToLocalTime();
+            firstDay = firstDay.Date;
+
+            lastDay = new DateTime(2001 + year, 5, 31);
+            lastDay = lastDay.ToLocalTime();
+            lastDay = lastDay.Date;
 
             for (int i = 0; i < Schedule.Length; i++)
             {
@@ -64,7 +70,7 @@ namespace Organizer
                 Works[i] = new List<Work>();
 
             for (int i = 0; i < daysInYear; i++)
-                days.Add(startPoint.AddDays(i), new Day(i, 2000 + year));
+                days.Add(firstDay.AddDays(i), new Day(i, 2000 + year));
 
             Work work = new Work("qwerg");
             work.Values.Add("asdasf");
@@ -80,9 +86,9 @@ namespace Organizer
 
             do
                 date = date.AddDays(1);
-            while (!days[date].isWorking);
+            while (!days[date].IsWorking);
 
-            lessonsCount = days[date].lessonsCount;
+            lessonsCount = days[date].LessonsCount;
             lessonsPanel.Controls.Clear();
 
             for(int i = 0; i < MAX_LESSONS_COUNT; i++)
@@ -118,17 +124,63 @@ namespace Organizer
                 if (array.Count > MAX_LESSONS_COUNT)
                     MAX_LESSONS_COUNT = array.Count;
             }
+
+            string[] holydays = File.ReadAllLines("Holydays.txt");
+
+            foreach (var day in holydays)
+            {
+                string[] holyday = day.Split(new string[1] { " type: " }, StringSplitOptions.None);
+
+                if (holyday[1] == "primary")
+                {
+                    string[] dayMonth = holyday[0].Split('.');
+
+                    DateTime date = new DateTime(4, Convert.ToInt32(dayMonth[1]), Convert.ToInt32(dayMonth[0]));
+
+                    PrimaryHolydays.Add(new DateTime(4, Convert.ToInt32(dayMonth[1]), Convert.ToInt32(dayMonth[0])));
+                }
+
+                else if (holyday[1] == "secondary")
+                {
+                    string[] startFinish = holyday[0].Split('-');
+
+                    string[] startDayMonth = startFinish[0].Split('.');
+                    string[] finishDayMonth = startFinish.Length > 1 ? startFinish[1].Split('.') : startDayMonth;
+
+                    for (DateTime dayToAdd = new DateTime(4, Convert.ToInt32(startDayMonth[1]), Convert.ToInt32(startDayMonth[0]));
+                        dayToAdd <= new DateTime(4, Convert.ToInt32(finishDayMonth[1]), Convert.ToInt32(finishDayMonth[0]));
+                        dayToAdd = dayToAdd.AddDays(1))
+                    {
+                        SecondaryHolydays.Add(dayToAdd);
+                    }
+                }
+
+                else if (holyday[1] == "this year")
+                {
+                    string[] startFinish = holyday[0].Split('-');
+
+                    string[] startDayMonthYear = startFinish[0].Split('.');
+                    string[] finishDayMonthYear = startFinish.Length > 1 ? startFinish[1].Split('.') : startDayMonthYear;
+
+                    for (DateTime dayToAdd = new DateTime(Convert.ToInt32(startDayMonthYear[2]), Convert.ToInt32(startDayMonthYear[1]), Convert.ToInt32(startDayMonthYear[0]));
+                        dayToAdd <= new DateTime(Convert.ToInt32(finishDayMonthYear[2]), Convert.ToInt32(finishDayMonthYear[1]), Convert.ToInt32(finishDayMonthYear[0]));
+                        dayToAdd = dayToAdd.AddDays(1))
+                    {
+                        ThisYearHolydays.Add(dayToAdd);
+                    }
+                }
+            }
         }
 
         private void LessonsRefresh()
         {
-            lessonsCount = days[date].lessonsCount;
+            lessonsCount = days[date].LessonsCount;
 
             for (int i = 0; i < lessonsCount; i++)
             {
                 ReloadWorkLabel(i);
 
-                Lessons[i].TitleLabel.Text = Schedule[(int)days[date].date.DayOfWeek][i];
+                Lessons[i].TitleLabel.Text = Schedule[(int)days[date].Date.DayOfWeek][i];
 
                 Lessons[i].NumLabel.Visible = true;
                 Lessons[i].TitleLabel.Visible = true;
@@ -221,8 +273,13 @@ namespace Organizer
             if (!editMode)
             {
                 do
+                {
                     date = date.AddDays(-1);
-                while (!days[date].isWorking);
+
+                    if (date < firstDay)
+                        date = lastDay;
+                }
+                while (!days[date].IsWorking);
 
                 LessonsRefresh();
             }
@@ -236,8 +293,13 @@ namespace Organizer
             if (!editMode)
             {
                 do
+                {
                     date = date.AddDays(1);
-                while (!days[date].isWorking);
+
+                    if (date > lastDay)
+                        date = firstDay;
+                }
+                while (!days[date].IsWorking);
 
                 LessonsRefresh();
             }
@@ -381,24 +443,55 @@ namespace Organizer
 
     public struct Day
     {
-        public DateTime date;
+        public DateTime Date;
+        private DateTime generalViewDate;
 
-        public bool isWorking;
-        public int lessonsCount, num;
+        public bool IsWorking;
+        public int LessonsCount, Num;
 
-        public Day(int _num, int _year)
+        public Day(int num, int year)
         {
-            num = _num;
-            date = new DateTime(_year, 9, 1).AddDays(num);
+            Num = num;
+            Date = new DateTime(year, 9, 1).AddDays(Num);
+            generalViewDate = new DateTime(4, Date.Month, Date.Day);
 
-            isWorking = date.DayOfWeek != DayOfWeek.Sunday && date.DayOfWeek != DayOfWeek.Saturday;
+            IsWorking = Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday;
 
-            if (isWorking &&
-               (Head.Holydays.Contains<DateTime>(date) ||
-                Head.Holydays.Contains<DateTime>(new DateTime(4, date.Month, date.Day))))
-                isWorking = false;
+            if (IsWorking)
+            {
+                /*if (Head.PrimaryHolydays.Contains<DateTime>(generalViewDate))
+                {
+                    IsWorking = false;
+                }
 
-            lessonsCount = isWorking ? Head.LessonsCount[(int)date.DayOfWeek] : 0;
+                else if (Head.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
+                         Head.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))
+                {
+                    IsWorking = false;
+                }
+
+                if (Head.SecondaryHolydays.Contains<DateTime>(generalViewDate))
+                {
+                    IsWorking = false;
+                }
+
+                if (Head.ThisYearHolydays.Contains<DateTime>(Date))
+                {
+                    IsWorking = false;
+                }*/
+
+                IsWorking = !(Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                              (!Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
+                              (Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+                              Head.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+
+                              Head.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                              Head.ThisYearHolydays.Contains<DateTime>(Date));
+            }
+
+            LessonsCount = IsWorking ? Head.LessonsCount[(int)Date.DayOfWeek] : 0;
         }
 
         public static DateTime DateSubtract(DateTime a, DateTime b)
