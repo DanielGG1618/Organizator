@@ -23,9 +23,10 @@ namespace Organizer
 
         private const int CELL_SIZE = 70;
 
-        private static int[] LESSONS_COUNT = new int[7];
+        private static int[] LessonsCount = new int[7];
         private static string[][] Schedule;
 
+        private static short daysInYear = 273;
         private static int year = 19;
 
         private DateTime date, startPoint;
@@ -49,10 +50,10 @@ namespace Organizer
 
             for (int i = 0; i < Schedule.Length; i++)
             {
-                LESSONS_COUNT[i] = Schedule[i].Length;
+                LessonsCount[i] = Schedule[i].Length;
             }
 
-            MAX_LESSONS_COUNT = LESSONS_COUNT.Max();
+            MAX_LESSONS_COUNT = LessonsCount.Max();
 
             Lessons = new Lesson[MAX_LESSONS_COUNT];
             Works = new List<Work>[MAX_LESSONS_COUNT];
@@ -241,7 +242,7 @@ namespace Organizer
                         isWorking = false;
                 }
 
-                lessonsCount = isWorking ? LESSONS_COUNT[(int)date.DayOfWeek] : 0;
+                lessonsCount = isWorking ? LessonsCount[(int)date.DayOfWeek] : 0;
             }
         }
 
