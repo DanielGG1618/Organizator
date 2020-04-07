@@ -14,7 +14,7 @@ namespace Organizer
     public partial class Head : Form
     {
         public static Color ProjectColor = Color.OliveDrab;
-        public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48)};
+        public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
         public static List<DateTime> PrimaryHolydays = new List<DateTime>();
         public static List<DateTime> SecondaryHolydays = new List<DateTime>();
@@ -91,7 +91,7 @@ namespace Organizer
             lessonsCount = days[date].LessonsCount;
             lessonsPanel.Controls.Clear();
 
-            for(int i = 0; i < MAX_LESSONS_COUNT; i++)
+            for (int i = 0; i < MAX_LESSONS_COUNT; i++)
             {
                 Lessons[i] = new Lesson(i + 1, CELL_SIZE, ProjectColor);
 
@@ -209,7 +209,7 @@ namespace Organizer
         private void EditModeButton_Click(object sender, EventArgs e)
         {
             editMode = !editMode;
-            
+
             if (editMode)
             {
                 editModeLessonsBackup = new Lesson[7];
@@ -266,7 +266,7 @@ namespace Organizer
         private void ChangesButton_Click(object sender, EventArgs e)
         {
             InDevelop();
-        } 
+        }
 
         private void DateMinusButton_Click(object sender, EventArgs e)
         {
@@ -311,7 +311,14 @@ namespace Organizer
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             Settings settings = new Settings();
-            settings.Show();
+            settings.ShowDialog();
+
+            UpdateLanguage(Settings.ActiveLanguage);
+        }
+
+        private void UpdateLanguage(string language)
+        {
+            MessageBox.Show(language);
         }
 
         private void InDevelop()

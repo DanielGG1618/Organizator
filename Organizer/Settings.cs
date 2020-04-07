@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,37 +13,82 @@ namespace Organizer
 {
     public partial class Settings : Form
     {
-        private Dictionary<string, string> ru_RU = new Dictionary<string, string>(), en_US = new Dictionary<string, string>();
+        public static Dictionary<string, Dictionary<string, string>> Languages = new Dictionary<string, Dictionary<string, string>>();
+
+        public static string ActiveLanguage; 
+
+        public List<Control> LocalizationControls = new List<Control>();
+
+        private static bool firstLoad = true;
 
         public Settings()
         {
+            if (firstLoad)
+            {
+                firstLoad = false;
+
+                LoadLanguage();
+
+                Dictionary<string, string> english = new Dictionary<string, string>(),
+                                           russian = new Dictionary<string, string>();
+
+                english.Add("label1", "label1");
+                english.Add("label2", "label2");
+                english.Add("Language", "English");
+                english.Add("Add", "Add");
+
+                russian.Add("label1", "лейбл1");
+                russian.Add("label2", "лейбл2");
+                russian.Add("Language", "Русский");
+                russian.Add("Add", "Добавить");
+
+                Languages.Add("English", english);
+                Languages.Add("Русский", russian);
+            }
+
             InitializeComponent();
         }
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            en_US.Add("label1", "label1");
-            en_US.Add("label2", "label2");
-            en_US.Add("language", "Английский");
+            FormClosing += SaveLanguage;
 
-            ru_RU.Add("label1", "лейбл1");
-            ru_RU.Add("label2", "лейбл2");
-            ru_RU.Add("language", "Russian");
+            LocalizationControls.AddRange(new Control[4] { label1, label2, languageSelector, AddHolyday });
 
-            languageSelector.SelectedIndex = 0;
+            languageSelector.Text = ActiveLanguage;
+
+            UpdateLanguage();
+        }
+
+        private void HolydayTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (holydayTypeComboBox.Text == "Первичные")
+            {
+
+            }
         }
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (languageSelector.Text == "Английский")
+            ActiveLanguage = languageSelector.Text;
+            languagePict.Image = Image.FromFile("Language images/" + ActiveLanguage + ".png");
+        }
+
+        private void LoadLanguage()
+        {
+            ActiveLanguage = File.ReadAllText("Save.txt");
+        }
+
+        private void SaveLanguage(object sender, EventArgs e)
+        {
+            File.WriteAllText("Save.txt", ActiveLanguage);
+        }
+
+        private void UpdateLanguage()
+        {
+            foreach (var control in LocalizationControls)
             {
-                label1.Text = en_US["label1"];
-                label2.Text = en_US["label2"];
-            }
-            else
-            {
-                label1.Text = ru_RU["label1"];
-                label2.Text = ru_RU["label2"];
+                control.Text = Languages[ActiveLanguage][control.AccessibleName.ToString()];
             }
         }
     }
