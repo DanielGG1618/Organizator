@@ -227,9 +227,9 @@
             this.Controls.Add(this.panel15);
             this.ForeColor = System.Drawing.Color.OliveDrab;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(1200, 700);
+            this.MaximumSize = new System.Drawing.Size(1200, 659);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1200, 618);
+            this.MinimumSize = new System.Drawing.Size(1200, 659);
             this.Name = "Head";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Список ";

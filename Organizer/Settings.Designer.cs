@@ -35,11 +35,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.AddHolyday = new System.Windows.Forms.Button();
             this.holydayStartPicker = new System.Windows.Forms.DateTimePicker();
-            this.holyday = new System.Windows.Forms.DateTimePicker();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.holydayFinishPicker = new System.Windows.Forms.DateTimePicker();
+            this.fromLabel = new System.Windows.Forms.Label();
+            this.toLabel = new System.Windows.Forms.Label();
             this.holydayTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.pickersPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.languagePict)).BeginInit();
+            this.pickersPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // languageSelector
@@ -101,7 +103,7 @@
             this.AddHolyday.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.AddHolyday.Cursor = System.Windows.Forms.Cursors.Default;
             this.AddHolyday.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AddHolyday.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AddHolyday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AddHolyday.ForeColor = System.Drawing.Color.OliveDrab;
             this.AddHolyday.Location = new System.Drawing.Point(19, 377);
             this.AddHolyday.Margin = new System.Windows.Forms.Padding(10);
@@ -110,6 +112,7 @@
             this.AddHolyday.TabIndex = 4;
             this.AddHolyday.Text = "Добавить";
             this.AddHolyday.UseVisualStyleBackColor = false;
+            this.AddHolyday.Click += new System.EventHandler(this.AddHolyday_Click);
             // 
             // holydayStartPicker
             // 
@@ -122,47 +125,51 @@
             this.holydayStartPicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.holydayStartPicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.holydayStartPicker.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.holydayStartPicker.Location = new System.Drawing.Point(207, 377);
+            this.holydayStartPicker.Location = new System.Drawing.Point(0, 0);
             this.holydayStartPicker.Name = "holydayStartPicker";
             this.holydayStartPicker.Size = new System.Drawing.Size(138, 28);
             this.holydayStartPicker.TabIndex = 7;
             this.holydayStartPicker.Value = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
+            this.holydayStartPicker.ValueChanged += new System.EventHandler(this.HolydayStartPicker_ValueChanged);
             // 
-            // holyday
+            // holydayFinishPicker
             // 
-            this.holyday.AllowDrop = true;
-            this.holyday.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.holyday.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.holyday.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.holyday.Location = new System.Drawing.Point(207, 412);
-            this.holyday.Name = "holyday";
-            this.holyday.Size = new System.Drawing.Size(138, 28);
-            this.holyday.TabIndex = 7;
-            this.holyday.Value = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
+            this.holydayFinishPicker.AllowDrop = true;
+            this.holydayFinishPicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.holydayFinishPicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.holydayFinishPicker.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.holydayFinishPicker.Location = new System.Drawing.Point(0, 34);
+            this.holydayFinishPicker.Name = "holydayFinishPicker";
+            this.holydayFinishPicker.Size = new System.Drawing.Size(138, 28);
+            this.holydayFinishPicker.TabIndex = 7;
+            this.holydayFinishPicker.Value = new System.DateTime(2019, 9, 1, 0, 0, 0, 0);
+            this.holydayFinishPicker.ValueChanged += new System.EventHandler(this.HolydayFinishPicker_ValueChanged);
             // 
-            // label3
+            // fromLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(168, 377);
-            this.label3.Margin = new System.Windows.Forms.Padding(0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 25);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "От";
+            this.fromLabel.AccessibleName = "From";
+            this.fromLabel.AutoSize = true;
+            this.fromLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.fromLabel.ForeColor = System.Drawing.Color.White;
+            this.fromLabel.Location = new System.Drawing.Point(168, 377);
+            this.fromLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.fromLabel.Name = "fromLabel";
+            this.fromLabel.Size = new System.Drawing.Size(39, 25);
+            this.fromLabel.TabIndex = 8;
+            this.fromLabel.Text = "От";
             // 
-            // label4
+            // toLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(168, 412);
-            this.label4.Margin = new System.Windows.Forms.Padding(0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 25);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "До";
+            this.toLabel.AccessibleName = "To";
+            this.toLabel.AutoSize = true;
+            this.toLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.toLabel.ForeColor = System.Drawing.Color.White;
+            this.toLabel.Location = new System.Drawing.Point(168, 412);
+            this.toLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.toLabel.Name = "toLabel";
+            this.toLabel.Size = new System.Drawing.Size(40, 25);
+            this.toLabel.TabIndex = 8;
+            this.toLabel.Text = "До";
             // 
             // holydayTypeComboBox
             // 
@@ -180,29 +187,38 @@
             this.holydayTypeComboBox.TabIndex = 9;
             this.holydayTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.HolydayTypeComboBox_SelectedIndexChanged);
             // 
+            // pickersPanel
+            // 
+            this.pickersPanel.Controls.Add(this.holydayStartPicker);
+            this.pickersPanel.Controls.Add(this.holydayFinishPicker);
+            this.pickersPanel.Location = new System.Drawing.Point(207, 377);
+            this.pickersPanel.Name = "pickersPanel";
+            this.pickersPanel.Size = new System.Drawing.Size(138, 62);
+            this.pickersPanel.TabIndex = 10;
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(798, 458);
+            this.Controls.Add(this.pickersPanel);
             this.Controls.Add(this.holydayTypeComboBox);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.holyday);
-            this.Controls.Add(this.holydayStartPicker);
+            this.Controls.Add(this.toLabel);
+            this.Controls.Add(this.fromLabel);
             this.Controls.Add(this.AddHolyday);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.languagePict);
             this.Controls.Add(this.languageSelector);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(816, 500);
+            this.MaximumSize = new System.Drawing.Size(816, 800);
             this.MinimumSize = new System.Drawing.Size(816, 500);
             this.Name = "Settings";
             this.Text = "Настройки";
             this.Load += new System.EventHandler(this.Settings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.languagePict)).EndInit();
+            this.pickersPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,9 +232,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button AddHolyday;
         private System.Windows.Forms.DateTimePicker holydayStartPicker;
-        private System.Windows.Forms.DateTimePicker holyday;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DateTimePicker holydayFinishPicker;
+        private System.Windows.Forms.Label fromLabel;
+        private System.Windows.Forms.Label toLabel;
         private System.Windows.Forms.ComboBox holydayTypeComboBox;
+        private System.Windows.Forms.Panel pickersPanel;
     }
 }

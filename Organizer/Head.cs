@@ -20,12 +20,12 @@ namespace Organizer
         public static List<DateTime> SecondaryHolydays = new List<DateTime>();
         public static List<DateTime> ThisYearHolydays = new List<DateTime>();
 
-        private static int MAX_LESSONS_COUNT = 0;
+        public static int MaxLessonsCount;
 
-        private const int CELL_SIZE = 70;
+        public static int CellSize = 70;
 
-        public static int[] LessonsCount = new int[7];
         public static string[][] Schedule;
+        public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
 
         private static short daysInYear = 273;
         private static int year = 19;
@@ -36,8 +36,6 @@ namespace Organizer
         public static Lesson[] Lessons;
         private Lesson[] editModeLessonsBackup;
         private Dictionary<DateTime, Day> days = new Dictionary<DateTime, Day>();
-
-        public static List<Work>[] Works;
 
         private bool editMode;
 
@@ -53,47 +51,42 @@ namespace Organizer
             lastDay = lastDay.ToLocalTime();
             lastDay = lastDay.Date;
 
-            for (int i = 0; i < Schedule.Length; i++)
-            {
-                LessonsCount[i] = Schedule[i].Length;
-            }
-
-            MAX_LESSONS_COUNT = LessonsCount.Max();
-
-            Lessons = new Lesson[MAX_LESSONS_COUNT];
-            Works = new List<Work>[MAX_LESSONS_COUNT];
-
-            if (DateTime.IsLeapYear(2001 + year))
-                daysInYear++;
-
-            for (int i = 0; i < MAX_LESSONS_COUNT; i++)
-                Works[i] = new List<Work>();
-
             for (int i = 0; i < daysInYear; i++)
                 days.Add(firstDay.AddDays(i), new Day(i, 2000 + year));
+            
+            foreach (var lessons in Schedule)
+            {
+                if (lessons.Length > MaxLessonsCount)
+                    MaxLessonsCount = lessons.Length;
+            }
 
-            Work work = new Work("qwerg");
-            work.Values.Add("asdasf");
-            work.Values.Add("12345");
-            Works[0].Add(work);
+            CellSize = 490 / MaxLessonsCount;
 
-            InitializeComponent();
-        }
-
-        private void Head_Load(object sender, EventArgs e)
-        {
             date = DateTime.Today;
 
             do
                 date = date.AddDays(1);
             while (!days[date].IsWorking);
 
-            lessonsCount = days[date].LessonsCount;
+            if (DateTime.IsLeapYear(2001 + year))
+                daysInYear++;
+
+            editModeLessonsBackup = new Lesson[MaxLessonsCount];
+            for(int i = 0; i < MaxLessonsCount;  i++)
+                editModeLessonsBackup[i] = new Lesson(i + 1, CellSize, ProjectColor);
+
+            InitializeComponent();
+        }
+
+        private void Head_Load(object sender, EventArgs e)
+        {
             lessonsPanel.Controls.Clear();
 
-            for (int i = 0; i < MAX_LESSONS_COUNT; i++)
+            Lessons = new Lesson[MaxLessonsCount];
+
+            for (int i = 0; i < MaxLessonsCount; i++)
             {
-                Lessons[i] = new Lesson(i + 1, CELL_SIZE, ProjectColor);
+                Lessons[i] = new Lesson(i + 1, CellSize, ProjectColor);
 
                 Lessons[i].WorkLabel.Click += WorkClick;
                 Lessons[i].TitleLabel.Click += TitleClick;
@@ -120,16 +113,13 @@ namespace Organizer
                 array.RemoveAt(0);
 
                 Schedule[i] = array.ToArray();
-
-                if (array.Count > MAX_LESSONS_COUNT)
-                    MAX_LESSONS_COUNT = array.Count;
             }
 
             string[] holydays = File.ReadAllLines("Holydays.txt");
 
             foreach (var day in holydays)
             {
-                string[] holyday = day.Split(new string[1] { " type: " }, StringSplitOptions.None);
+                string[] holyday = day.Split(new string[1] { " type: " }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (holyday[1] == "primary")
                 {
@@ -162,48 +152,54 @@ namespace Organizer
                     string[] startDayMonthYear = startFinish[0].Split('.');
                     string[] finishDayMonthYear = startFinish.Length > 1 ? startFinish[1].Split('.') : startDayMonthYear;
 
-                    for (DateTime dayToAdd = new DateTime(Convert.ToInt32(startDayMonthYear[2]), Convert.ToInt32(startDayMonthYear[1]), Convert.ToInt32(startDayMonthYear[0]));
-                        dayToAdd <= new DateTime(Convert.ToInt32(finishDayMonthYear[2]), Convert.ToInt32(finishDayMonthYear[1]), Convert.ToInt32(finishDayMonthYear[0]));
+                    for (DateTime dayToAdd = new DateTime(2000 + Convert.ToInt32(startDayMonthYear[2]), Convert.ToInt32(startDayMonthYear[1]), Convert.ToInt32(startDayMonthYear[0]));
+                        dayToAdd <= new DateTime(2000 + Convert.ToInt32(finishDayMonthYear[2]), Convert.ToInt32(finishDayMonthYear[1]), Convert.ToInt32(finishDayMonthYear[0]));
                         dayToAdd = dayToAdd.AddDays(1))
                     {
                         ThisYearHolydays.Add(dayToAdd);
                     }
                 }
             }
+
+            string[] lessonsDefaultWorks = File.ReadAllLines("Lessons default work.txt", Encoding.Default);
+
+            LessonsDefaultWork.Clear();
+
+            foreach (var lessonsDefaultWork in lessonsDefaultWorks)
+            {
+                string[] keyValue = lessonsDefaultWork.Split(new string[] { ": " }, StringSplitOptions.None);
+
+                LessonsDefaultWork.Add(keyValue[0], keyValue[1]);
+            }
         }
 
         private void LessonsRefresh()
         {
-            lessonsCount = days[date].LessonsCount;
+            for (int i = 0; i < days[date].Lessons.Length; i++)
+                Lessons[i].CopyFrom(days[date].Lessons[i]);
+
+            lessonsCount = Schedule[(int)date.DayOfWeek].Length;
 
             for (int i = 0; i < lessonsCount; i++)
             {
-                ReloadWorkLabel(i);
+                Lessons[i].LoadWithSamples(CellSize, ProjectColor);
+                Lessons[i].ReloadLocation(CellSize);
 
-                Lessons[i].TitleLabel.Text = Schedule[(int)days[date].Date.DayOfWeek][i];
-
-                Lessons[i].NumLabel.Visible = true;
-                Lessons[i].TitleLabel.Visible = true;
-                Lessons[i].WorkLabel.Visible = true;
+                WorkRefresh(i);
             }
 
-            for (int i = 6; i >= lessonsCount; i--)
-            {
-                Lessons[i].NumLabel.Visible = false;
-                Lessons[i].TitleLabel.Visible = false;
-                Lessons[i].WorkLabel.Visible = false;
-            }
+            for (int i = MaxLessonsCount - 1; i >= lessonsCount; i--)
+                Lessons[i].TurnOff();
 
             DateText.Text = date.Day.ToString("00") + "." + date.Month.ToString("00") + "." + date.Year;
         }
 
-        public void ReloadWorkLabel(int num)
+        public void WorkRefresh(int num)
         {
             Lessons[num].WorkLabel.Text = "";
-
-            foreach (Work work in Works[num])
-                foreach (string value in work.Values)
-                    Lessons[num].WorkLabel.Text += value + " ";
+            
+            foreach (var work in Lessons[num].WorkList)
+                Lessons[num].WorkLabel.Text = work.Value;
         }
 
         private void EditModeButton_Click(object sender, EventArgs e)
@@ -212,16 +208,8 @@ namespace Organizer
 
             if (editMode)
             {
-                editModeLessonsBackup = new Lesson[7];
-
                 for (int i = 0; i < lessonsCount; i++)
-                {
-                    editModeLessonsBackup[i].TitleLabel = new Label();
-                    editModeLessonsBackup[i].TitleLabel.Text = Lessons[i].TitleLabel.Text;
-
-                    editModeLessonsBackup[i].WorkLabel = new Label();
-                    editModeLessonsBackup[i].WorkLabel.Text = Lessons[i].WorkLabel.Text;
-                }
+                    editModeLessonsBackup[i].CopyFrom(Lessons[i]);
             }
 
             else
@@ -232,14 +220,18 @@ namespace Organizer
                 {
                     for (int i = 0; i < lessonsCount; i++)
                     {
-                        Lessons[i].TitleLabel.Text = editModeLessonsBackup[i].TitleLabel.Text;
-
-                        Lessons[i].WorkLabel.Text = editModeLessonsBackup[i].WorkLabel.Text;
+                        Lessons[i].CopyFrom(editModeLessonsBackup[i]);
                     }
                 }
 
                 else if (result == DialogResult.Cancel)
                     editMode = true;
+
+                else
+                {
+                    for(int i = 0; i < days[date].Lessons.Length; i++)
+                        days[date].Lessons[i].CopyFrom(Lessons[i]);
+                }
             }
 
             EditModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
@@ -276,7 +268,7 @@ namespace Organizer
                 {
                     date = date.AddDays(-1);
 
-                    if (date < firstDay)
+                    if (date <= firstDay)
                         date = lastDay;
                 }
                 while (!days[date].IsWorking);
@@ -296,7 +288,7 @@ namespace Organizer
                 {
                     date = date.AddDays(1);
 
-                    if (date > lastDay)
+                    if (date >= lastDay)
                         date = firstDay;
                 }
                 while (!days[date].IsWorking);
@@ -314,11 +306,12 @@ namespace Organizer
             settings.ShowDialog();
 
             UpdateLanguage(Settings.ActiveLanguage);
+            LoadFiles();
         }
 
         private void UpdateLanguage(string language)
         {
-            MessageBox.Show(language);
+            
         }
 
         private void InDevelop()
@@ -346,105 +339,17 @@ namespace Organizer
         private void AddWorkButtonClick(object sender, EventArgs e)
         {
             Button addWorkButton = (Button)sender;
-            WorkAddForm form = new WorkAddForm(addWorkButton.Tag.ToString());
+            WorkAddForm form = new WorkAddForm(Convert.ToInt32(addWorkButton.Tag));
 
             int num = Convert.ToInt32(addWorkButton.Tag) - 1;
 
+            Lessons[num].WorkList.Clear();
+
             if (form.ShowDialog() == DialogResult.OK)
                 foreach(var work in form.Works)
-                    Works[num].Add(work);
+                    Lessons[num].WorkList.Add(work.Key, work.Value);
 
-            ReloadWorkLabel(num);
-        }
-    }
-
-    public struct Lesson
-    {
-        public Label NumLabel, TitleLabel, WorkLabel;
-        public Button AddWorkButton;
-
-        public void LoadWithSamples(int cellSize, Color color)
-        {
-            NumLabel.Size = new Size(cellSize, cellSize);
-            NumLabel.TextAlign = ContentAlignment.MiddleCenter;
-            NumLabel.Font = new Font("Microsoft Sans Serif", 36, FontStyle.Bold);
-            NumLabel.ForeColor = color;
-
-            TitleLabel.Size = new Size(630, (int)(cellSize * 2 / 7f));//
-            TitleLabel.TextAlign = ContentAlignment.MiddleLeft;
-            TitleLabel.Font = new Font("Microsoft Sans Serif", 12);
-            TitleLabel.ForeColor = Color.White;
-
-            WorkLabel.Size = new Size(630, (int)(cellSize * 5 / 7f));//
-            WorkLabel.TextAlign = ContentAlignment.MiddleLeft;
-            WorkLabel.Font = new Font("Microsoft Sans Serif", 12);
-            WorkLabel.ForeColor = Color.White;
-
-            AddWorkButton.Size = new Size(cellSize - 20, cellSize - 20);//
-            AddWorkButton.FlatStyle = FlatStyle.Flat;
-            AddWorkButton.TextAlign = ContentAlignment.MiddleCenter;
-            AddWorkButton.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
-            AddWorkButton.ForeColor = Color.LimeGreen;
-            AddWorkButton.Text = "+";
-            AddWorkButton.Visible = false;
-        }
-
-        public Lesson(int num, int cellSize, Color color)
-        {
-            NumLabel = new Label();
-            TitleLabel = new Label();
-            WorkLabel = new Label();
-            AddWorkButton = new Button();
-
-            LoadWithSamples(cellSize, color);
-
-            NumLabel.Text = num.ToString();
-            NumLabel.Location = new Point(0, cellSize * (num - 1));
-            NumLabel.BackColor = Head.GRAY[num % 2];
-
-            TitleLabel.Tag = num.ToString();
-            TitleLabel.Location = new Point(cellSize, cellSize * (num - 1));
-            TitleLabel.BackColor = Head.GRAY[(num + 1) % 2];
-
-            WorkLabel.Tag = num.ToString();
-            WorkLabel.Location = new Point(cellSize, cellSize * (num - 1) + (int)(cellSize * 2 / 7f));
-            WorkLabel.BackColor = Head.GRAY[(num + 1) % 2];
-
-            AddWorkButton.Tag = num.ToString();
-            AddWorkButton.Location = new Point(570 + cellSize, cellSize * (num - 1) + 10);
-            AddWorkButton.BackColor = Head.GRAY[(num + 1) % 2];
-        }
-    }
-
-    public struct Work
-    {
-        public string Type;
-        public List<string> Values;
-
-        public string Result;
-
-        public Work(string type)
-        {
-            Type = type;
-
-            Values = new List<string>();
-
-            Result = "";
-        }
-
-        public Work(string type, List<string> values)
-        {
-            Type = type;
-
-            Values = values;
-
-            Result = "";
-        }
-
-        public void LoadResult()
-        {
-            foreach (string value in Values)
-                Result += value + " ";
+            WorkRefresh(num);
         }
     }
 
@@ -454,7 +359,9 @@ namespace Organizer
         private DateTime generalViewDate;
 
         public bool IsWorking;
-        public int LessonsCount, Num;
+        public int Num;
+
+        public Lesson[] Lessons;
 
         public Day(int num, int year)
         {
@@ -498,12 +405,122 @@ namespace Organizer
                               Head.ThisYearHolydays.Contains<DateTime>(Date));
             }
 
-            LessonsCount = IsWorking ? Head.LessonsCount[(int)Date.DayOfWeek] : 0;
+            Lessons = new Lesson[Head.Schedule[(int)Date.DayOfWeek].Length];
+
+            for (int i = 0; i < Lessons.Length; i++)
+            {
+                Lessons[i] = new Lesson(i + 1, Head.CellSize, Head.ProjectColor);
+                Lessons[i].SetTitle(Head.Schedule[(int)Date.DayOfWeek][i]);
+            }
         }
 
         public static DateTime DateSubtract(DateTime a, DateTime b)
         {
             return DateTime.FromBinary(a.ToBinary() - b.ToBinary());
+        }
+    }
+
+    public struct Lesson
+    {
+        public Label NumLabel, TitleLabel, WorkLabel;
+        public Button AddWorkButton;
+
+        public Dictionary<string, string> WorkList;
+
+        public int Num;
+        public string Title;
+
+        public void LoadWithSamples(int cellSize, Color color)
+        {
+            NumLabel.Size = new Size(50, cellSize);
+            NumLabel.TextAlign = ContentAlignment.MiddleCenter;
+            NumLabel.Font = new Font("Microsoft Sans Serif", 36, FontStyle.Bold);
+            NumLabel.ForeColor = color;
+
+            TitleLabel.Size = new Size(650, (int)(cellSize * 2 / 7f));//
+            TitleLabel.TextAlign = ContentAlignment.MiddleLeft;
+            TitleLabel.Font = new Font("Microsoft Sans Serif", 12);
+            TitleLabel.ForeColor = Color.White;
+
+            WorkLabel.Size = new Size(650, (int)(cellSize * 5 / 7f));//
+            WorkLabel.TextAlign = ContentAlignment.MiddleLeft;
+            WorkLabel.Font = new Font("Microsoft Sans Serif", 12);
+            WorkLabel.ForeColor = Color.White;
+
+            AddWorkButton.Size = new Size(cellSize - 20, cellSize - 20);//
+            AddWorkButton.FlatStyle = FlatStyle.Flat;
+            AddWorkButton.TextAlign = ContentAlignment.MiddleCenter;
+            AddWorkButton.Font = new Font("Microsoft Sans Serif", 30, FontStyle.Bold);
+            AddWorkButton.ForeColor = Color.LimeGreen;
+            AddWorkButton.Text = "+";
+            AddWorkButton.Visible = false;
+        }
+
+        public Lesson(int num, int cellSize, Color color)
+        {
+            Num = num;
+
+            NumLabel = new Label();
+            TitleLabel = new Label();
+            WorkLabel = new Label();
+            AddWorkButton = new Button();
+            WorkList = new Dictionary<string, string> { { "Default", "" } };
+            Title = "";
+
+            LoadWithSamples(cellSize, color);
+
+            NumLabel.Text = Num.ToString();
+            NumLabel.BackColor = Head.GRAY[Num % 2];
+
+            TitleLabel.Tag = Num.ToString();
+            TitleLabel.BackColor = Head.GRAY[(Num + 1) % 2];
+
+            WorkLabel.Tag = Num.ToString();
+            WorkLabel.BackColor = Head.GRAY[(Num + 1) % 2];
+
+            AddWorkButton.Tag = Num.ToString();
+            AddWorkButton.BackColor = Head.GRAY[(Num + 1) % 2];
+
+            ReloadLocation(cellSize);
+        }
+
+        public void ReloadLocation(int cellSize)
+        {
+            int positionCoef = Num - 1;
+
+            NumLabel.Location = new Point(0, cellSize * positionCoef);
+            TitleLabel.Location = new Point(50, cellSize * positionCoef);
+            WorkLabel.Location = new Point(50, cellSize * positionCoef + (int)(cellSize * 2 / 7f));
+            AddWorkButton.Location = new Point(700 - cellSize + 10, cellSize * positionCoef + 10);
+        }
+
+        public void CopyFrom(Lesson lesson)
+        {
+            Title = lesson.Title;
+            TitleLabel.Text = Title;
+
+            WorkLabel.Text = lesson.WorkLabel.Text;
+
+            WorkList.Clear();
+
+            foreach (var workList in lesson.WorkList)
+                WorkList.Add(workList.Key, workList.Value);
+        }
+
+        public void TurnOff()
+        {
+            NumLabel.ForeColor = Head.GRAY[(Num + 1) % 2];
+
+            TitleLabel.Text = "";
+            WorkLabel.Text = "";
+        }
+
+        public void SetTitle(string title)
+        {
+            Title = title;
+            TitleLabel.Text = Title;
+
+            WorkList["Default"] = Head.LessonsDefaultWork[Title];
         }
     }
 }

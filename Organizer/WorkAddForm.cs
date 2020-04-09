@@ -12,12 +12,19 @@ namespace Organizer
 {
     public partial class WorkAddForm : Form
     {
-        public List<Work> Works = new List<Work>();
+        public Dictionary<string, string> Works = new Dictionary<string, string>();
 
-        public WorkAddForm(string num)
+        public WorkAddForm(int num)
         {
-            Works.Add(new Work(""));
+            foreach(var workList in Head.Lessons[num - 1].WorkList)
+                Works.Add(workList.Key, workList.Value);
+
             InitializeComponent();
+        }
+
+        private void WorkAddForm_Load(object sender, EventArgs e)
+        {
+            ResultLabel.Text = Works["Default"];
         }
 
         private void DoneClick(object sender, EventArgs e)
@@ -41,14 +48,14 @@ namespace Organizer
 
             foreach (var work in Works)
             {
-                if (work.Type == TypeSelector.Text)
+                if (work.Key == TypeSelector.Text)
                 {
                     List<string> values = new List<string>(AddTextBox.Text.Split(new string[2] { ",", " " }, StringSplitOptions.RemoveEmptyEntries));
 
-                    work.Values.AddRange(values);
+                    foreach (var value in values)
+                        Works[work.Key] += value + " | ";
 
-                    work.LoadResult();
-                    ResultLabel.Text += work.Result;
+                    ResultLabel.Text += work.Value;
 
                     AddTextBox.Text = "";
 
@@ -58,17 +65,17 @@ namespace Organizer
 
             if (!wasAdded)
             {
-                List<string> values = new List<string>(AddTextBox.Text.Split(new string[2] { ",", " " }, StringSplitOptions.RemoveEmptyEntries));
+                string value = "";
+                foreach (var splitet in AddTextBox.Text.Split(new string[2] { ",", " " }, StringSplitOptions.RemoveEmptyEntries))
+                    value += splitet + " | ";
 
-                Work work = new Work(TypeSelector.Text, values);
+                value.Remove(value.Length - 4, 3);
 
-                Works.Add(work);
+                MessageBox.Show(value);
 
-                work.LoadResult();
-                if (ResultLabel.Text.ToLower() == "не задано")
-                    ResultLabel.Text = "";
+                Works.Add(TypeSelector.Text, value);
 
-                ResultLabel.Text += work.Result;
+                ResultLabel.Text += value;
 
                 AddTextBox.Text = "";
             }
