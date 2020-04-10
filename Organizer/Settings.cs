@@ -13,7 +13,7 @@ namespace Organizer
 {
     public partial class Settings : Form
     {
-        public static Dictionary<string, Dictionary<string, string>> Languages = new Dictionary<string, Dictionary<string, string>>();
+        public static Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>();
 
         public static string ActiveLanguage; 
 
@@ -37,15 +37,25 @@ namespace Organizer
                 english.Add("Language", "English");
                 english.Add("Add", "Add");
                 english.Add("Added", "Added");
+                english.Add("From", "From");
+                english.Add("To", "To");
+                english.Add("Primary", "Primary");
+                english.Add("Secondary", "Secondary");
+                english.Add("This year", "This year");
 
                 russian.Add("label1", "лейбл1");
                 russian.Add("label2", "лейбл2");
                 russian.Add("Language", "Русский");
                 russian.Add("Add", "Добавить");
                 russian.Add("Added", "Добавлено");
+                russian.Add("From", "От");
+                russian.Add("To", "До");
+                russian.Add("Primary", "Первичные");
+                russian.Add("Secondary", "Вторичные");
+                russian.Add("This year", "Этого года");
 
-                Languages.Add("English", english);
-                Languages.Add("Русский", russian);
+                Translations.Add("English", english);
+                Translations.Add("Русский", russian);
             }
 
             InitializeComponent();
@@ -55,7 +65,7 @@ namespace Organizer
         {
             FormClosing += SaveLanguage;
 
-            LocalizationControls.AddRange(new Control[4] { label1, label2, languageSelector, AddHolyday });
+            LocalizationControls.AddRange(new Control[6] { label1, label2, languageSelector, AddHolyday, fromLabel, toLabel });
 
             languageSelector.Text = ActiveLanguage;
             holydayTypeComboBox.SelectedIndex = 0;
@@ -65,7 +75,7 @@ namespace Organizer
 
             holydayFinishPicker.Visible = false;
 
-            holydayStartPicker.Location = new Point(0, 18);
+            holydayStartPicker.Location = new Point(0, 13);
 
             UpdateLanguage();
         }
@@ -90,9 +100,15 @@ namespace Organizer
 
         private void UpdateLanguage()
         {
+            int holydayTypeIndex = holydayTypeComboBox.SelectedIndex;
+
+            holydayTypeComboBox.Items.Clear();
+            holydayTypeComboBox.Items.AddRange(new string[3] { Translations[ActiveLanguage]["Primary"], Translations[ActiveLanguage]["Secondary"], Translations[ActiveLanguage]["This year"] });
+            holydayTypeComboBox.SelectedIndex = holydayTypeIndex;
+
             foreach (var control in LocalizationControls)
             {
-                control.Text = Languages[ActiveLanguage][control.AccessibleName.ToString()];
+                control.Text = Translations[ActiveLanguage][control.AccessibleName.ToString()];
             }
         }
 
@@ -102,33 +118,38 @@ namespace Organizer
             {
                 File.AppendAllText("Holydays.txt", HolydayToAdd() + "\r\n");
 
-                AddHolyday.AccessibleName = "Added";
-                AddHolyday.Text = Languages[ActiveLanguage][AddHolyday.AccessibleName.ToString()];
+                UpdateAddHolydayButtonStatus();
             }
         }
 
         private void HolydayStartPicker_ValueChanged(object sender, EventArgs e)
         {
             UpdateAddHolydayButtonStatus();
+
+            holydayFinishPicker.MinDate = DateTime.Parse(holydayStartPicker.Text);
         }
 
         private void HolydayFinishPicker_ValueChanged(object sender, EventArgs e)
         {
             UpdateAddHolydayButtonStatus();
+
+            holydayStartPicker.MaxDate = DateTime.Parse(holydayFinishPicker.Text);
         }
 
         private void HolydayTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateAddHolydayButtonStatus();
 
-            if (holydayTypeComboBox.Text == "Первичные")
+            if (holydayTypeComboBox.Text == Translations[ActiveLanguage]["Primary"])
             {
                 fromLabel.Visible = false;
                 toLabel.Visible = false;
 
                 holydayFinishPicker.Visible = false;
 
-                holydayStartPicker.Location = new Point(0, 18);
+                holydayStartPicker.Location = new Point(0, 13);
+
+                addHolydayPanel.Size = new Size(295, 91);
             }
 
             else
@@ -138,26 +159,32 @@ namespace Organizer
 
                 holydayFinishPicker.Visible = true;
 
-                holydayStartPicker.Location = new Point(0, 0);
+                holydayStartPicker.Location = Point.Empty;
+
+                addHolydayPanel.Size = new Size(358,91);
             }
         }
-
+        
         private bool CanAdd()
         {
-            string[] holydays = File.ReadAllLines("Holydays.txt");
-
-            return !holydays.Contains(HolydayToAdd());
+            return !File.ReadAllLines("Holydays.txt").Contains(HolydayToAdd());
         }
 
         private void UpdateAddHolydayButtonStatus()
         {
             if (CanAdd())
+            {
                 AddHolyday.AccessibleName = "Add";
+                AddHolyday.ForeColor = Head.ProjectColor;
+            }
 
             else
+            {
                 AddHolyday.AccessibleName = "Added";
+                AddHolyday.ForeColor = Head.GRAY[0];
+            }
 
-            AddHolyday.Text = Languages[ActiveLanguage][AddHolyday.AccessibleName.ToString()];
+            AddHolyday.Text = Translations[ActiveLanguage][AddHolyday.AccessibleName.ToString()];
         }
 
         private string HolydayToAdd()
@@ -189,6 +216,21 @@ namespace Organizer
             }
 
             return holydayToAdd;
+        }
+
+        private void FromLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AddHolydayPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

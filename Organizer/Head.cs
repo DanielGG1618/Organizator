@@ -125,8 +125,6 @@ namespace Organizer
                 {
                     string[] dayMonth = holyday[0].Split('.');
 
-                    DateTime date = new DateTime(4, Convert.ToInt32(dayMonth[1]), Convert.ToInt32(dayMonth[0]));
-
                     PrimaryHolydays.Add(new DateTime(4, Convert.ToInt32(dayMonth[1]), Convert.ToInt32(dayMonth[0])));
                 }
 
