@@ -16,15 +16,22 @@ namespace Organizer
 
         public WorkAddForm(int num)
         {
-            foreach(var workList in Head.Lessons[num - 1].WorkList)
+            foreach (var workList in Head.Lessons[num - 1].WorkList)
                 Works.Add(workList.Key, workList.Value);
-
+    
             InitializeComponent();
         }
 
         private void WorkAddForm_Load(object sender, EventArgs e)
         {
-            ResultLabel.Text = Works["Default"];
+            TypeSelector.SelectedIndex = 0;
+
+            if (Works.Count > 1)
+            {
+                RefreshResult();
+            }
+            else
+                ResultLabel.Text = Works["Default"];
         }
 
         private void DoneClick(object sender, EventArgs e)
@@ -44,40 +51,68 @@ namespace Organizer
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            bool wasAdded = false;
+            if (Works.ContainsKey(TypeSelector.Text))
+            {
+                switch(TypeSelector.Text)
+                {
+                    case "На страницах":
+                        Works[TypeSelector.Text] += ", с ";
+                        break;
+
+                    case "Параграфы":
+                        Works[TypeSelector.Text] += ", §";
+                        break;
+
+                    case "Номера":
+                        Works[TypeSelector.Text] += ", №";
+                        break;
+                }
+
+                Works[TypeSelector.Text] += AddTextBox.Text;
+            }
+
+            else
+            {
+                string textToAdd = "";
+
+                switch (TypeSelector.Text)
+                {
+                    case "На страницах":
+                        textToAdd += "с ";
+                        break;
+
+                    case "Параграфы":
+                        textToAdd += "§";
+                        break;
+
+                    case "Номера":
+                        textToAdd += "№";
+                        break;
+                }
+
+                textToAdd += AddTextBox.Text;
+
+                Works.Add(TypeSelector.Text, textToAdd);
+            }
+
+            RefreshResult();
+
+            AddTextBox.Text = "";
+        }
+
+        private void RefreshResult()
+        {
+            ResultLabel.Text = "";
 
             foreach (var work in Works)
             {
-                if (work.Key == TypeSelector.Text)
-                {
-                    List<string> values = new List<string>(AddTextBox.Text.Split(new string[2] { ",", " " }, StringSplitOptions.RemoveEmptyEntries));
-
-                    foreach (var value in values)
-                        Works[work.Key] += value + " | ";
-
+                if (work.Key != "Default")
+                { 
                     ResultLabel.Text += work.Value;
 
-                    AddTextBox.Text = "";
-
-                    wasAdded = true;
+                    if (!work.Equals(Works.Last()))
+                        ResultLabel.Text += " | ";
                 }
-            }
-
-            if (!wasAdded)
-            {
-                string value = "";
-                foreach (var splitet in AddTextBox.Text.Split(new string[2] { ",", " " }, StringSplitOptions.RemoveEmptyEntries))
-                    value += splitet + " | ";
-
-                value.Remove(value.Length - 4, 3);
-
-                MessageBox.Show(value);
-
-                Works.Add(TypeSelector.Text, value);
-
-                ResultLabel.Text += value;
-
-                AddTextBox.Text = "";
             }
         }
     }

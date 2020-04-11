@@ -181,7 +181,7 @@ namespace Organizer
             for (int i = 0; i < lessonsCount; i++)
             {
                 Lessons[i].LoadWithSamples(CellSize, ProjectColor);
-                Lessons[i].ReloadLocation(CellSize);
+                Lessons[i].UpdateLocation(CellSize);
 
                 WorkRefresh(i);
             }
@@ -192,12 +192,23 @@ namespace Organizer
             DateText.Text = date.Day.ToString("00") + "." + date.Month.ToString("00") + "." + date.Year;
         }
 
-        public void WorkRefresh(int num)
+        public static void WorkRefresh(int num)
         {
-            Lessons[num].WorkLabel.Text = "";
-            
-            foreach (var work in Lessons[num].WorkList)
-                Lessons[num].WorkLabel.Text = work.Value;
+            if (Lessons[num].WorkList.Count > 1)
+            {
+                Lessons[num].WorkLabel.Text = "";
+
+                foreach (var work in Lessons[num].WorkList)
+                {
+                    if (work.Key != "Default")
+                    {
+                        Lessons[num].WorkLabel.Text += work.Value;
+
+                        if (!work.Equals(Lessons[num].WorkList.Last()))
+                            Lessons[num].WorkLabel.Text += " | ";
+                    }
+                }
+            }
         }
 
         private void EditModeButton_Click(object sender, EventArgs e)
@@ -207,7 +218,9 @@ namespace Organizer
             if (editMode)
             {
                 for (int i = 0; i < lessonsCount; i++)
+                {
                     editModeLessonsBackup[i].CopyFrom(Lessons[i]);
+                }
             }
 
             else
@@ -235,7 +248,10 @@ namespace Organizer
             EditModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
 
             for (int i = 0; i < lessonsCount; i++)
+            {
                 Lessons[i].AddWorkButton.Visible = editMode;
+                Lessons[i].UpdateSizes(CellSize, editMode);
+            }
         }
 
         private void SaveScreenButton_Click(object sender, EventArgs e)
@@ -326,28 +342,29 @@ namespace Organizer
         {
             if (editMode)
             {
-                Label title = (Label)sender;
-                LessonSelectForm form = new LessonSelectForm(title.Tag.ToString());
+                int num = Convert.ToInt32(((Label)sender).Tag);
+                LessonSelectForm form = new LessonSelectForm(num);
 
                 if (form.ShowDialog() == DialogResult.OK)
-                    title.Text = form.lesson;
+                    Lessons[num - 1].SetTitle(form.lesson);
             }
         }
 
         private void AddWorkButtonClick(object sender, EventArgs e)
         {
-            Button addWorkButton = (Button)sender;
-            WorkAddForm form = new WorkAddForm(Convert.ToInt32(addWorkButton.Tag));
+            int num = Convert.ToInt32(((Button)sender).Tag);
 
-            int num = Convert.ToInt32(addWorkButton.Tag) - 1;
-
-            Lessons[num].WorkList.Clear();
+            WorkAddForm form = new WorkAddForm(num);
 
             if (form.ShowDialog() == DialogResult.OK)
-                foreach(var work in form.Works)
-                    Lessons[num].WorkList.Add(work.Key, work.Value);
+            {
+                Lessons[num - 1].WorkList.Clear();
 
-            WorkRefresh(num);
+                foreach (var work in form.Works)
+                    Lessons[num - 1].WorkList.Add(work.Key, work.Value);
+            }
+
+            WorkRefresh(num - 1);
         }
     }
 
@@ -479,10 +496,10 @@ namespace Organizer
             AddWorkButton.Tag = Num.ToString();
             AddWorkButton.BackColor = Head.GRAY[(Num + 1) % 2];
 
-            ReloadLocation(cellSize);
+            UpdateLocation(cellSize);
         }
 
-        public void ReloadLocation(int cellSize)
+        public void UpdateLocation(int cellSize)
         {
             int positionCoef = Num - 1;
 
@@ -490,6 +507,13 @@ namespace Organizer
             TitleLabel.Location = new Point(50, cellSize * positionCoef);
             WorkLabel.Location = new Point(50, cellSize * positionCoef + (int)(cellSize * 2 / 7f));
             AddWorkButton.Location = new Point(700 - cellSize + 10, cellSize * positionCoef + 10);
+        }
+
+        public void UpdateSizes(int cellSize, bool editMode)
+        {
+            TitleLabel.Size = new Size(650 - (editMode ? cellSize : 0), (int)(cellSize * 2 / 7f));//
+
+            WorkLabel.Size = new Size(650 - (editMode ? cellSize : 0), (int)(cellSize * 5 / 7f));//
         }
 
         public void CopyFrom(Lesson lesson)
@@ -519,6 +543,7 @@ namespace Organizer
             TitleLabel.Text = Title;
 
             WorkList["Default"] = Head.LessonsDefaultWork[Title];
+            if (WorkList.Count == 1) WorkLabel.Text = WorkList["Default"];
         }
     }
 }

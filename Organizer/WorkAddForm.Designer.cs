@@ -62,6 +62,9 @@ partial class WorkAddForm
             // 
             // ResultLabel
             // 
+            this.ResultLabel.AllowDrop = true;
+            this.ResultLabel.AutoEllipsis = true;
+            this.ResultLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ResultLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.ResultLabel.Location = new System.Drawing.Point(19, 14);
@@ -70,6 +73,7 @@ partial class WorkAddForm
             this.ResultLabel.Size = new System.Drawing.Size(444, 29);
             this.ResultLabel.TabIndex = 4;
             this.ResultLabel.Text = "Не задано";
+            this.ResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ResultLabel.Click += new System.EventHandler(this.ResultLabel_Click);
             // 
             // Done

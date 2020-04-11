@@ -119,6 +119,7 @@
             this.MinimumSize = new System.Drawing.Size(250, 250);
             this.Name = "LessonSelectForm";
             this.Text = "    ";
+            this.Load += new System.EventHandler(this.LessonSelectForm_Load);
             this.ResumeLayout(false);
 
         }

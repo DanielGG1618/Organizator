@@ -14,19 +14,22 @@ namespace Organizer
     {
         public string lesson;  
 
-        public LessonSelectForm(string num)
+        public LessonSelectForm(int num)
         {
             InitializeComponent();
             LessonLabel.Text = "Урок №" + num;
 
-            Lesson lesson = Head.Lessons[Convert.ToInt32(num) - 1];
-
-            comboBox1.Text = lesson.TitleLabel.Text;
+            comboBox1.Text = Head.Lessons[num - 1].TitleLabel.Text;
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             lesson = comboBox1.Text;
+        }
+
+        private void LessonSelectForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
