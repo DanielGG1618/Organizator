@@ -63,6 +63,16 @@ namespace Organizer.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _0 {
+            get {
+                object obj = ResourceManager.GetObject("0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Cкрепка {
             get {
                 object obj = ResourceManager.GetObject("Cкрепка", resourceCulture);
@@ -86,6 +96,16 @@ namespace Organizer.Properties {
         internal static System.Drawing.Bitmap rus {
             get {
                 object obj = ResourceManager.GetObject("rus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap start {
+            get {
+                object obj = ResourceManager.GetObject("start", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

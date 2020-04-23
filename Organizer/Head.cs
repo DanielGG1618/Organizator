@@ -262,15 +262,14 @@ namespace Organizer
         private void LoadFromButton_Click(object sender, EventArgs e)
         {
             InDevelop();
+
+            //System.Net.WebClient wc = new System.Net.WebClient();
+            //wc.DownloadFileAsync(new Uri("https://www.xeroxscanners.com/downloads/Manuals/XMS/PDF_Converter_Pro_Quick_Reference_Guide.RU.pdf"), "file.pdf");
         }
 
         private void SaveToButton_Click(object sender, EventArgs e)
         {
-            InDevelop();
-        }
-
-        private void ChangesButton_Click(object sender, EventArgs e)
-        {
+            timer.Enabled = true;
             InDevelop();
         }
 
@@ -336,6 +335,25 @@ namespace Organizer
         private void WorkClick(object sender, EventArgs e)
         {
             
+        }
+
+        private int time;
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            time++;
+            if (time >= 25)// * 60)
+            {
+                time = 0;
+                timer.Enabled = false;
+                MessageBox.Show("время вышло");
+            }
+        }
+
+        private void TimerButton_Click(object sender, EventArgs e)
+        {
+            TimerForm form = new TimerForm();
+            form.Show();
         }
 
         private void TitleClick(object sender, EventArgs e)

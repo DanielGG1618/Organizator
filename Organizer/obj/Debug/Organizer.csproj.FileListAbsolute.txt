@@ -56,3 +56,4 @@ E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.csproj.CoreCompileInputs
 E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.exe
 E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.pdb
 E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.WorkAddForm.resources
+E:\Git folder\Organizator\Organizer\obj\Debug\Organizer.TimerForm.resources
