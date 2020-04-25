@@ -284,6 +284,7 @@
             this.MinimumSize = new System.Drawing.Size(512, 490);
             this.Name = "TimerForm";
             this.Text = "Таймер";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveFiles);
             this.Load += new System.EventHandler(this.TimerForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

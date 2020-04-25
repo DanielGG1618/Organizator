@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
@@ -248,15 +250,43 @@ namespace Organizer
             EditModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
 
             for (int i = 0; i < lessonsCount; i++)
-            {
                 Lessons[i].AddWorkButton.Visible = editMode;
+
+            for (int i = 0; i < MaxLessonsCount; i++)
                 Lessons[i].UpdateSizes(CellSize, editMode);
-            }
         }
 
         private void SaveScreenButton_Click(object sender, EventArgs e)
         {
             InDevelop();
+
+            MailAddress fromMailAddress = new MailAddress("DanielGGdebug@gmail.com", "Твое имя");
+            MailAddress toAddress = new MailAddress("daniel.gevorgyan25@gmail.com");
+
+            using (MailMessage mailMessage = new MailMessage(fromMailAddress, toAddress))
+            using (SmtpClient smtpClient = new SmtpClient())
+            {
+                mailMessage.Subject = "Привет";
+
+                foreach (var day in days)
+                {
+                    foreach (var lesson in day.Value.Lessons)
+                    {
+                        mailMessage.Body += Environment.NewLine + lesson.Num + lesson.Title;
+                    }
+
+                    mailMessage.Body += Environment.NewLine;
+                }
+
+                smtpClient.Host = "smtp.gmail.com";
+                smtpClient.Port = 587;
+                smtpClient.EnableSsl = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential(fromMailAddress.Address,                                                                "debugfancraft");
+
+                smtpClient.Send(mailMessage);
+            }
         }
 
         private void LoadFromButton_Click(object sender, EventArgs e)

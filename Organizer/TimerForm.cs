@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +16,7 @@ namespace Organizer
         private Image[] timerImages = new Image[24];
         private Image pause, start;
         private bool started, work = true, pauseInEnd, counter;
-        private int time, targetTime, workTime = 25 * 60, breakTime = 5 * 60, worksCount;
+        private int time, targetTime, workTime = 25 * 60, breakTime = 5 * 60, worksCount = 1;
         
         public TimerForm()
         {
@@ -52,12 +53,31 @@ namespace Organizer
         private void LoadFiles()
         {
             for(int i = 0; i < timerImages.Length; i++)
-            {
                 timerImages[i] = Image.FromFile("Timer images/" + i + ".png");
-            }
 
             start = Image.FromFile("Timer images/start.png");
             pause = Image.FromFile("Timer images/pause.png");
+
+            string[] timerSave = File.ReadAllLines("TimerSave.txt");
+
+            workTime = int.Parse(timerSave[0]) * 60;
+            breakTime = int.Parse(timerSave[1]) * 60;
+            pauseInEnd = bool.Parse(timerSave[2]);
+            counter = bool.Parse(timerSave[3]);
+            worksCount = File.GetLastAccessTime("TimerSave.txt").Date == DateTime.Today ? int.Parse(timerSave[4]) : 1;
+        }
+
+        private void SaveFiles(object sender, FormClosingEventArgs e)
+        {
+            string[] timerSave = new string[5];
+
+            timerSave[0] = (workTime / 60).ToString();
+            timerSave[1] = (breakTime / 60).ToString();
+            timerSave[2] = pauseInEnd.ToString();
+            timerSave[3] = counter.ToString();
+            timerSave[4] = worksCount.ToString();
+
+            File.WriteAllLines("TimerSave.txt", timerSave);
         }
 
         private void WorkTextBox_TextChanged(object sender, EventArgs e)
@@ -154,18 +174,18 @@ namespace Organizer
             settingsButton.ForeColor = settings ? Color.LimeGreen : Head.ProjectColor;
             startPause.Visible = !settings;
 
-            workLabel.Text = (workTime * 60).ToString();
-            breakLabel.Text = (breakTime * 60).ToString();
+            workTextBox.Text = (workTime / 60).ToString();
+            breakTextBox.Text = (breakTime / 60).ToString();
 
             pauseCheckBox.Checked = pauseInEnd;
             couterCheckBox.Checked = counter;
 
-            workLabel.Visible = settings;
-            breakLabel.Visible = settings;
-            workTextBox.Visible = settings;
-            breakTextBox.Visible = settings;
-            pauseCheckBox.Visible = settings;
-            couterCheckBox.Visible = settings;
+            workLabel.Visible = settings;//\\//\\
+            breakLabel.Visible = settings;//\\//\\//\\
+            workTextBox.Visible = settings;//\\//\\//\\//\\
+            breakTextBox.Visible = settings;//\\//\\//\\//\\//\\
+            pauseCheckBox.Visible = settings;//\\//\\//\\//\\//\\//\\
+            couterCheckBox.Visible = settings;//\\//\\//\\//\\\//\\//\\//\\
         }
 
         private void UpdateCyclesLabel(int _worksCount, bool _counter)
