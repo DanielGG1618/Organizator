@@ -29,7 +29,6 @@ namespace Organizer
         public static string[][] Schedule;
         public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
 
-        private static short daysInYear = 273;
         private static int year = 19;
 
         private DateTime date, firstDay, lastDay;
@@ -37,14 +36,12 @@ namespace Organizer
 
         public static Lesson[] Lessons;
         private Lesson[] editModeLessonsBackup;
-        private Dictionary<DateTime, Day> days = new Dictionary<DateTime, Day>();
+        public static Dictionary<DateTime, Day> Days = new Dictionary<DateTime, Day>();
 
         private bool editMode;
 
         public Head()
         {
-            LoadFiles();
-
             firstDay = new DateTime(2000 + year, 9, 1);
             firstDay = firstDay.ToLocalTime();
             firstDay = firstDay.Date;
@@ -53,25 +50,19 @@ namespace Organizer
             lastDay = lastDay.ToLocalTime();
             lastDay = lastDay.Date;
 
-            for (int i = 0; i < daysInYear; i++)
-                days.Add(firstDay.AddDays(i), new Day(i, 2000 + year));
-            
+            LoadFiles();
+
             foreach (var lessons in Schedule)
-            {
                 if (lessons.Length > MaxLessonsCount)
                     MaxLessonsCount = lessons.Length;
-            }
 
             CellSize = 490 / MaxLessonsCount;
 
             date = DateTime.Today;
-
+            
             do
                 date = date.AddDays(1);
-            while (!days[date].IsWorking);
-
-            if (DateTime.IsLeapYear(2001 + year))
-                daysInYear++;
+            while (!Days[date].IsWorking);
 
             editModeLessonsBackup = new Lesson[MaxLessonsCount];
             for(int i = 0; i < MaxLessonsCount;  i++)
@@ -117,6 +108,7 @@ namespace Organizer
                 Schedule[i] = array.ToArray();
             }
 
+
             string[] holydays = File.ReadAllLines("Holydays.txt");
 
             foreach (var day in holydays)
@@ -161,6 +153,7 @@ namespace Organizer
                 }
             }
 
+
             string[] lessonsDefaultWorks = File.ReadAllLines("Lessons default work.txt", Encoding.Default);
 
             LessonsDefaultWork.Clear();
@@ -171,22 +164,50 @@ namespace Organizer
 
                 LessonsDefaultWork.Add(keyValue[0], keyValue[1]);
             }
+
+
+            if (File.Exists("Days.txt") && !string.IsNullOrEmpty(File.ReadAllText("Days.txt")))
+            {
+                string[] days = File.ReadAllLines("Days.txt");
+
+                Days.Clear();
+
+                for (int i = 0; i < days.Length; i ++)
+                {
+                    Day day = Day.FromCSV(days[i]);
+                    Days.Add(day.Date, day);
+                }
+            }
+
+            else
+            {
+                for (int i = 0; i < 273; i++)
+                    Days.Add(firstDay.AddDays(i), new Day(i, 2000 + year));
+
+                if (DateTime.IsLeapYear(2001 + year))
+                    Days.Add(firstDay.AddDays(273), new Day(273, 2000 + year));
+            }
+        }
+
+        public void SaveFiles(object sender, FormClosingEventArgs e)
+        {
+            List<string> days = new List<string>();
+
+            foreach(var day in Days)
+                days.Add(Day.ToCSV(day.Value));
+
+            File.WriteAllLines("Days.txt", days);
         }
 
         private void LessonsRefresh()
         {
-            for (int i = 0; i < days[date].Lessons.Length; i++)
-                Lessons[i].CopyFrom(days[date].Lessons[i]);
-
-            lessonsCount = Schedule[(int)date.DayOfWeek].Length;
-
-            for (int i = 0; i < lessonsCount; i++)
+            for (int i = 0; i < Days[date].Lessons.Count; i++)//////////////////////////
             {
-                Lessons[i].LoadWithSamples(CellSize, ProjectColor);
-                Lessons[i].UpdateLocation(CellSize);
-
-                WorkRefresh(i);
+                Lessons[i].NumLabel.ForeColor = ProjectColor;
+                Lessons[i].CopyFrom(Days[date].Lessons[i]);////////////////////////////
             }
+
+            lessonsCount = Days[date].Lessons.Count;
 
             for (int i = MaxLessonsCount - 1; i >= lessonsCount; i--)
                 Lessons[i].TurnOff();
@@ -214,7 +235,7 @@ namespace Organizer
         }
 
         private void EditModeButton_Click(object sender, EventArgs e)
-        {
+        { 
             editMode = !editMode;
 
             if (editMode)
@@ -230,24 +251,20 @@ namespace Organizer
                 DialogResult result = MessageBox.Show("Сохранить изменения?", "Режим редактирования", MessageBoxButtons.YesNoCancel);
 
                 if (result == DialogResult.No)
-                {
                     for (int i = 0; i < lessonsCount; i++)
-                    {
                         Lessons[i].CopyFrom(editModeLessonsBackup[i]);
-                    }
-                }
 
                 else if (result == DialogResult.Cancel)
                     editMode = true;
 
                 else
-                {
-                    for(int i = 0; i < days[date].Lessons.Length; i++)
-                        days[date].Lessons[i].CopyFrom(Lessons[i]);
-                }
+                    for(int i = 0; i < Days[date].Lessons.Count; i++)
+                        Days[date].Lessons[i].CopyFrom(Lessons[i]);
             }
 
             EditModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
+
+            LessonsRefresh();
 
             for (int i = 0; i < lessonsCount; i++)
                 Lessons[i].AddWorkButton.Visible = editMode;
@@ -260,7 +277,7 @@ namespace Organizer
         {
             InDevelop();
 
-            MailAddress fromMailAddress = new MailAddress("DanielGGdebug@gmail.com", "Твое имя");
+            /*MailAddress fromMailAddress = new MailAddress("DanielGGdebug@gmail.com", "Твое имя");
             MailAddress toAddress = new MailAddress("daniel.gevorgyan25@gmail.com");
 
             using (MailMessage mailMessage = new MailMessage(fromMailAddress, toAddress))
@@ -268,25 +285,32 @@ namespace Organizer
             {
                 mailMessage.Subject = "Привет";
 
-                foreach (var day in days)
+                mailMessage.IsBodyHtml = true;
+
+                mailMessage.Body += File.ReadAllText("gigigi.txt", Encoding.UTF8);
+
+                /*foreach (var day in Days)
                 {
                     foreach (var lesson in day.Value.Lessons)
                     {
-                        mailMessage.Body += Environment.NewLine + lesson.Num + lesson.Title;
+                        mailMessage.Body += Environment.NewLine + lesson.Num + " " +  lesson.Title;
                     }
 
                     mailMessage.Body += Environment.NewLine;
-                }
+                }/*
+
+                File.WriteAllText("File.csv", mailMessage.Body, Encoding.UTF8);
+                mailMessage.Attachments.Add(new Attachment("File.csv"));
 
                 smtpClient.Host = "smtp.gmail.com";
                 smtpClient.Port = 587;
                 smtpClient.EnableSsl = true;
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(fromMailAddress.Address,                                                                "debugfancraft");
+                smtpClient.Credentials = new NetworkCredential(fromMailAddress.Address,                                                                "debugпароль");
 
                 smtpClient.Send(mailMessage);
-            }
+            }*/
         }
 
         private void LoadFromButton_Click(object sender, EventArgs e)
@@ -299,7 +323,6 @@ namespace Organizer
 
         private void SaveToButton_Click(object sender, EventArgs e)
         {
-            timer.Enabled = true;
             InDevelop();
         }
 
@@ -314,7 +337,7 @@ namespace Organizer
                     if (date <= firstDay)
                         date = lastDay;
                 }
-                while (!days[date].IsWorking);
+                while (!Days[date].IsWorking);
 
                 LessonsRefresh();
             }
@@ -334,7 +357,7 @@ namespace Organizer
                     if (date >= lastDay)
                         date = firstDay;
                 }
-                while (!days[date].IsWorking);
+                while (!Days[date].IsWorking);
 
                 LessonsRefresh();
             }
@@ -365,19 +388,6 @@ namespace Organizer
         private void WorkClick(object sender, EventArgs e)
         {
             
-        }
-
-        private int time;
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            time++;
-            if (time >= 25)// * 60)
-            {
-                time = 0;
-                timer.Enabled = false;
-                MessageBox.Show("время вышло");
-            }
         }
 
         private void TimerButton_Click(object sender, EventArgs e)
@@ -423,13 +433,16 @@ namespace Organizer
 
         public bool IsWorking;
         public int Num;
+        public int Year;
 
-        public Lesson[] Lessons;
+        public List<Lesson> Lessons;
 
         public Day(int num, int year)
         {
             Num = num;
-            Date = new DateTime(year, 9, 1).AddDays(Num);
+            Year = year;
+
+            Date = new DateTime(Year, 9, 1).AddDays(Num);
             generalViewDate = new DateTime(4, Date.Month, Date.Day);
 
             IsWorking = Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday;
@@ -468,13 +481,52 @@ namespace Organizer
                               Head.ThisYearHolydays.Contains<DateTime>(Date));
             }
 
-            Lessons = new Lesson[Head.Schedule[(int)Date.DayOfWeek].Length];
+            Lessons = new List<Lesson>();
 
-            for (int i = 0; i < Lessons.Length; i++)
+            for (int i = 0; i < Head.Schedule[(int)Date.DayOfWeek].Length; i++)
             {
-                Lessons[i] = new Lesson(i + 1, Head.CellSize, Head.ProjectColor);
-                Lessons[i].SetTitle(Head.Schedule[(int)Date.DayOfWeek][i]);
+                Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.ProjectColor, Head.Schedule[(int)Date.DayOfWeek][i]));
             }
+        }
+
+        public Day(int num, int year, List<Lesson> lessons)
+        {
+            this = new Day(num, year);
+
+            Lessons = new List<Lesson>();
+
+            for (int i = 0; i < lessons.Count; i++)
+                Lessons.Add(lessons[i]);
+        }
+
+        public static string ToCSV(Day day)
+        {
+            string CSV = day.Num + ", " + day.Year;
+
+            foreach (var lesson in day.Lessons)
+                CSV += "; " + Lesson.ToCSV(lesson);
+
+            return CSV;
+        }
+
+        public static Day FromCSV(string CSV)
+        {
+            Day day;
+
+            string[] dayLessons = CSV.Split(new string[1] { "; " }, StringSplitOptions.None);
+            string[] splited = dayLessons[0].Split(new string[1] { ", " }, StringSplitOptions.None);
+
+            List<Lesson> lessons = new List<Lesson>();
+
+            for (int i = 1; i < dayLessons.Length; i++)
+                lessons.Add(Lesson.FromCSV(dayLessons[i]));
+
+            for (int i = 2; i < splited.Length - 1; i++)
+                lessons.Add(Lesson.FromCSV(splited[i]));
+
+            day = new Day(int.Parse(splited[0]), int.Parse(splited[1]), lessons);
+
+            return day;
         }
 
         public static DateTime DateSubtract(DateTime a, DateTime b)
@@ -488,10 +540,9 @@ namespace Organizer
         public Label NumLabel, TitleLabel, WorkLabel;
         public Button AddWorkButton;
 
-        public Dictionary<string, string> WorkList;
-
         public int Num;
         public string Title;
+        public Dictionary<string, string> WorkList;
 
         public void LoadWithSamples(int cellSize, Color color)
         {
@@ -547,6 +598,20 @@ namespace Organizer
             UpdateLocation(cellSize);
         }
 
+        public Lesson(int num, int cellSize, Color color, string title)
+        {
+            this = new Lesson(num, cellSize, color);
+
+            SetTitle(title);
+        }
+
+        public Lesson(int num, int cellSize, Color color, string title, Dictionary<string, string> workList)
+        {
+            this = new Lesson(num, cellSize, color, title);
+
+            WorkList = workList;
+        }
+
         public void UpdateLocation(int cellSize)
         {
             int positionCoef = Num - 1;
@@ -567,12 +632,15 @@ namespace Organizer
         public void CopyFrom(Lesson lesson)
         {
             Title = lesson.Title;
+
+            if(TitleLabel == null) TitleLabel = new Label();
             TitleLabel.Text = Title;
 
+            if (WorkLabel == null) WorkLabel = new Label();
             WorkLabel.Text = lesson.WorkLabel.Text;
 
-            WorkList.Clear();
-
+            WorkList = new Dictionary<string, string>();
+            
             foreach (var workList in lesson.WorkList)
                 WorkList.Add(workList.Key, workList.Value);
         }
@@ -592,6 +660,52 @@ namespace Organizer
 
             WorkList["Default"] = Head.LessonsDefaultWork[Title];
             if (WorkList.Count == 1) WorkLabel.Text = WorkList["Default"];
+        }
+
+        public static Lesson CopyFromStatic(Lesson lesson)
+        {
+            Lesson result = new Lesson();
+
+            result.Title = lesson.Title;
+
+            result.TitleLabel = new Label();
+            result.TitleLabel.Text = result.Title;
+
+            result.WorkLabel = new Label();
+            result.WorkLabel.Text = lesson.WorkLabel.Text;
+
+            result.WorkList = new Dictionary<string, string>();
+
+            foreach (var workList in lesson.WorkList)
+                result.WorkList.Add(workList.Key, workList.Value);
+
+            return result;
+        }
+
+        public static string ToCSV(Lesson lesson)
+        {
+            string CSV = lesson.Num + ", " + lesson.Title;
+
+            foreach(var work in lesson.WorkList)
+                CSV += ", " + work.Key + ", " + work.Value;
+
+            return CSV;
+        }
+
+        public static Lesson FromCSV(string CSV)
+        {
+            Lesson lesson;
+
+            string[] splited = CSV.Split(new string[1] { ", " }, StringSplitOptions.None);
+
+            Dictionary<string, string> workList = new Dictionary<string, string>();
+
+            for (int i = 2; i < splited.Length - 1; i += 2)
+                workList.Add(splited[i], splited[i + 1]);
+
+            lesson = new Lesson(int.Parse(splited[0]), Head.CellSize, Head.ProjectColor, splited[1], workList);
+
+            return lesson;
         }
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Head));
             this.panel15 = new System.Windows.Forms.Panel();
             this.DateText = new System.Windows.Forms.Label();
@@ -40,7 +39,6 @@
             this.SaveScreenButton = new System.Windows.Forms.Button();
             this.EditModeButton = new System.Windows.Forms.Button();
             this.lessonsPanel = new System.Windows.Forms.Panel();
-            this.timer = new System.Windows.Forms.Timer(this.components);
             this.timerButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel15.SuspendLayout();
@@ -112,10 +110,10 @@
             this.SettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SettingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SettingsButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.SettingsButton.Location = new System.Drawing.Point(0, 310);
+            this.SettingsButton.Location = new System.Drawing.Point(0, 307);
             this.SettingsButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(422, 80);
+            this.SettingsButton.Size = new System.Drawing.Size(422, 79);
             this.SettingsButton.TabIndex = 6;
             this.SettingsButton.Text = "Настройки";
             this.SettingsButton.UseVisualStyleBackColor = false;
@@ -129,10 +127,10 @@
             this.SaveToButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveToButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.SaveToButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.SaveToButton.Location = new System.Drawing.Point(0, 110);
+            this.SaveToButton.Location = new System.Drawing.Point(0, 109);
             this.SaveToButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.SaveToButton.Name = "SaveToButton";
-            this.SaveToButton.Size = new System.Drawing.Size(422, 80);
+            this.SaveToButton.Size = new System.Drawing.Size(422, 79);
             this.SaveToButton.TabIndex = 2;
             this.SaveToButton.Text = "Сохранить а файл";
             this.SaveToButton.UseVisualStyleBackColor = false;
@@ -146,10 +144,10 @@
             this.LoadFromButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LoadFromButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LoadFromButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.LoadFromButton.Location = new System.Drawing.Point(0, 210);
+            this.LoadFromButton.Location = new System.Drawing.Point(0, 208);
             this.LoadFromButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.LoadFromButton.Name = "LoadFromButton";
-            this.LoadFromButton.Size = new System.Drawing.Size(422, 80);
+            this.LoadFromButton.Size = new System.Drawing.Size(422, 79);
             this.LoadFromButton.TabIndex = 1;
             this.LoadFromButton.Text = "Загрузить из файла";
             this.LoadFromButton.UseVisualStyleBackColor = false;
@@ -166,7 +164,7 @@
             this.SaveScreenButton.Location = new System.Drawing.Point(0, 10);
             this.SaveScreenButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.SaveScreenButton.Name = "SaveScreenButton";
-            this.SaveScreenButton.Size = new System.Drawing.Size(422, 80);
+            this.SaveScreenButton.Size = new System.Drawing.Size(422, 79);
             this.SaveScreenButton.TabIndex = 0;
             this.SaveScreenButton.Text = "Сохранить скриншот";
             this.SaveScreenButton.UseVisualStyleBackColor = false;
@@ -180,10 +178,10 @@
             this.EditModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.EditModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.EditModeButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.EditModeButton.Location = new System.Drawing.Point(0, 410);
+            this.EditModeButton.Location = new System.Drawing.Point(0, 406);
             this.EditModeButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.EditModeButton.Name = "EditModeButton";
-            this.EditModeButton.Size = new System.Drawing.Size(422, 80);
+            this.EditModeButton.Size = new System.Drawing.Size(422, 79);
             this.EditModeButton.TabIndex = 4;
             this.EditModeButton.Text = "Режим редактирования";
             this.EditModeButton.UseVisualStyleBackColor = false;
@@ -199,11 +197,6 @@
             this.lessonsPanel.Size = new System.Drawing.Size(700, 490);
             this.lessonsPanel.TabIndex = 3;
             // 
-            // timer
-            // 
-            this.timer.Interval = 1000;
-            this.timer.Tick += new System.EventHandler(this.Timer_Tick);
-            // 
             // timerButton
             // 
             this.timerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -212,10 +205,10 @@
             this.timerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.timerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.timerButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.timerButton.Location = new System.Drawing.Point(0, 510);
+            this.timerButton.Location = new System.Drawing.Point(0, 505);
             this.timerButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.timerButton.Name = "timerButton";
-            this.timerButton.Size = new System.Drawing.Size(422, 80);
+            this.timerButton.Size = new System.Drawing.Size(422, 85);
             this.timerButton.TabIndex = 7;
             this.timerButton.Text = "Таймер";
             this.timerButton.UseVisualStyleBackColor = false;
@@ -261,6 +254,7 @@
             this.Name = "Head";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Список ";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveFiles);
             this.Load += new System.EventHandler(this.Head_Load);
             this.panel15.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -279,7 +273,6 @@
         private System.Windows.Forms.Label DateText;
         private System.Windows.Forms.Button SettingsButton;
         private System.Windows.Forms.Panel lessonsPanel;
-        private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Button timerButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }

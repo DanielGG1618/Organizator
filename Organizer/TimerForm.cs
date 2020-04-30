@@ -58,16 +58,29 @@ namespace Organizer
             start = Image.FromFile("Timer images/start.png");
             pause = Image.FromFile("Timer images/pause.png");
 
-            string[] timerSave = File.ReadAllLines("TimerSave.txt");
+            try
+            {
+                string[] timerSave = File.ReadAllLines("TimerSave.txt");
 
-            workTime = int.Parse(timerSave[0]) * 60;
-            breakTime = int.Parse(timerSave[1]) * 60;
-            pauseInEnd = bool.Parse(timerSave[2]);
-            counter = bool.Parse(timerSave[3]);
-            worksCount = File.GetLastAccessTime("TimerSave.txt").Date == DateTime.Today ? int.Parse(timerSave[4]) : 1;
+                workTime = int.Parse(timerSave[0]) * 60;
+                breakTime = int.Parse(timerSave[1]) * 60;
+                pauseInEnd = bool.Parse(timerSave[2]);
+                counter = bool.Parse(timerSave[3]);
+                worksCount = File.GetLastAccessTime("TimerSave.txt").Date == DateTime.Today ? int.Parse(timerSave[4]) : 1;
+            }
+
+            catch
+            {
+                SaveTimer();
+            }
         }
 
         private void SaveFiles(object sender, FormClosingEventArgs e)
+        {
+            SaveTimer();
+        }
+
+        private void SaveTimer()
         {
             string[] timerSave = new string[5];
 
