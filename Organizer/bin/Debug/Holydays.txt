@@ -1,5 +1,4 @@
-01.09.04 type: primary
-01.09.04-01.09.04 type: secondary01.09.19-01.09.19 type: this year
-01.09.04-01.09.04 type: secondary
+01.09.19-01.09.19 type: this year
 08.03.04 type: primary
 17.03.20-07.04.20 type: this year
+01.05.20-31.05.20 type: this year
