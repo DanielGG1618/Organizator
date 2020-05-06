@@ -33,14 +33,13 @@
             this.DateText = new System.Windows.Forms.Label();
             this.DatePlusButton = new System.Windows.Forms.Button();
             this.DateMinusButton = new System.Windows.Forms.Button();
-            this.SettingsButton = new System.Windows.Forms.Button();
-            this.SaveToButton = new System.Windows.Forms.Button();
-            this.LoadFromButton = new System.Windows.Forms.Button();
-            this.SaveScreenButton = new System.Windows.Forms.Button();
-            this.EditModeButton = new System.Windows.Forms.Button();
+            this.settingsButton = new System.Windows.Forms.Button();
+            this.saveScreenButton = new System.Windows.Forms.Button();
+            this.editModeButton = new System.Windows.Forms.Button();
             this.lessonsPanel = new System.Windows.Forms.Panel();
             this.timerButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.feedbackButton = new System.Windows.Forms.Button();
             this.panel15.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -102,90 +101,56 @@
             this.DateMinusButton.UseVisualStyleBackColor = false;
             this.DateMinusButton.Click += new System.EventHandler(this.DateMinusButton_Click);
             // 
-            // SettingsButton
+            // settingsButton
             // 
-            this.SettingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.SettingsButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.SettingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SettingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SettingsButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.SettingsButton.Location = new System.Drawing.Point(0, 307);
-            this.SettingsButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(422, 79);
-            this.SettingsButton.TabIndex = 6;
-            this.SettingsButton.Text = "Настройки";
-            this.SettingsButton.UseVisualStyleBackColor = false;
-            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.settingsButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.settingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.settingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.settingsButton.ForeColor = System.Drawing.Color.OliveDrab;
+            this.settingsButton.Location = new System.Drawing.Point(0, 370);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(422, 100);
+            this.settingsButton.TabIndex = 6;
+            this.settingsButton.Text = "Настройки";
+            this.settingsButton.UseVisualStyleBackColor = false;
+            this.settingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
-            // SaveToButton
+            // saveScreenButton
             // 
-            this.SaveToButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.SaveToButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.SaveToButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SaveToButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveToButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SaveToButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.SaveToButton.Location = new System.Drawing.Point(0, 109);
-            this.SaveToButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.SaveToButton.Name = "SaveToButton";
-            this.SaveToButton.Size = new System.Drawing.Size(422, 79);
-            this.SaveToButton.TabIndex = 2;
-            this.SaveToButton.Text = "Сохранить а файл";
-            this.SaveToButton.UseVisualStyleBackColor = false;
-            this.SaveToButton.Click += new System.EventHandler(this.SaveToButton_Click);
+            this.saveScreenButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.saveScreenButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.saveScreenButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.saveScreenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.saveScreenButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.saveScreenButton.ForeColor = System.Drawing.Color.OliveDrab;
+            this.saveScreenButton.Location = new System.Drawing.Point(0, 10);
+            this.saveScreenButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.saveScreenButton.Name = "saveScreenButton";
+            this.saveScreenButton.Size = new System.Drawing.Size(422, 100);
+            this.saveScreenButton.TabIndex = 0;
+            this.saveScreenButton.Text = "Сохранить скриншот";
+            this.saveScreenButton.UseVisualStyleBackColor = false;
+            this.saveScreenButton.Click += new System.EventHandler(this.SaveScreenButton_Click);
             // 
-            // LoadFromButton
+            // editModeButton
             // 
-            this.LoadFromButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.LoadFromButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.LoadFromButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LoadFromButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LoadFromButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LoadFromButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.LoadFromButton.Location = new System.Drawing.Point(0, 208);
-            this.LoadFromButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.LoadFromButton.Name = "LoadFromButton";
-            this.LoadFromButton.Size = new System.Drawing.Size(422, 79);
-            this.LoadFromButton.TabIndex = 1;
-            this.LoadFromButton.Text = "Загрузить из файла";
-            this.LoadFromButton.UseVisualStyleBackColor = false;
-            this.LoadFromButton.Click += new System.EventHandler(this.LoadFromButton_Click);
-            // 
-            // SaveScreenButton
-            // 
-            this.SaveScreenButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.SaveScreenButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.SaveScreenButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SaveScreenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveScreenButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SaveScreenButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.SaveScreenButton.Location = new System.Drawing.Point(0, 10);
-            this.SaveScreenButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.SaveScreenButton.Name = "SaveScreenButton";
-            this.SaveScreenButton.Size = new System.Drawing.Size(422, 79);
-            this.SaveScreenButton.TabIndex = 0;
-            this.SaveScreenButton.Text = "Сохранить скриншот";
-            this.SaveScreenButton.UseVisualStyleBackColor = false;
-            this.SaveScreenButton.Click += new System.EventHandler(this.SaveScreenButton_Click);
-            // 
-            // EditModeButton
-            // 
-            this.EditModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.EditModeButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.EditModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.EditModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.EditModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.EditModeButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.EditModeButton.Location = new System.Drawing.Point(0, 406);
-            this.EditModeButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.EditModeButton.Name = "EditModeButton";
-            this.EditModeButton.Size = new System.Drawing.Size(422, 79);
-            this.EditModeButton.TabIndex = 4;
-            this.EditModeButton.Text = "Режим редактирования";
-            this.EditModeButton.UseVisualStyleBackColor = false;
-            this.EditModeButton.Click += new System.EventHandler(this.EditModeButton_Click);
+            this.editModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.editModeButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.editModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.editModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.editModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.editModeButton.ForeColor = System.Drawing.Color.OliveDrab;
+            this.editModeButton.Location = new System.Drawing.Point(0, 250);
+            this.editModeButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.editModeButton.Name = "editModeButton";
+            this.editModeButton.Size = new System.Drawing.Size(422, 100);
+            this.editModeButton.TabIndex = 4;
+            this.editModeButton.Text = "Режим редактирования";
+            this.editModeButton.UseVisualStyleBackColor = false;
+            this.editModeButton.Click += new System.EventHandler(this.EditModeButton_Click);
             // 
             // lessonsPanel
             // 
@@ -205,10 +170,10 @@
             this.timerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.timerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.timerButton.ForeColor = System.Drawing.Color.OliveDrab;
-            this.timerButton.Location = new System.Drawing.Point(0, 505);
+            this.timerButton.Location = new System.Drawing.Point(0, 130);
             this.timerButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.timerButton.Name = "timerButton";
-            this.timerButton.Size = new System.Drawing.Size(422, 85);
+            this.timerButton.Size = new System.Drawing.Size(422, 100);
             this.timerButton.TabIndex = 7;
             this.timerButton.Text = "Таймер";
             this.timerButton.UseVisualStyleBackColor = false;
@@ -218,25 +183,40 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.LoadFromButton, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.SettingsButton, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.EditModeButton, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.timerButton, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.SaveScreenButton, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.SaveToButton, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.feedbackButton, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.settingsButton, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.editModeButton, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.timerButton, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.saveScreenButton, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(739, 12);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(12, 3, 12, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(422, 600);
             this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // feedbackButton
+            // 
+            this.feedbackButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.feedbackButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.feedbackButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.feedbackButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.feedbackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.feedbackButton.ForeColor = System.Drawing.Color.OliveDrab;
+            this.feedbackButton.Location = new System.Drawing.Point(0, 490);
+            this.feedbackButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.feedbackButton.Name = "feedbackButton";
+            this.feedbackButton.Size = new System.Drawing.Size(422, 100);
+            this.feedbackButton.TabIndex = 8;
+            this.feedbackButton.Text = "Обратная связь";
+            this.feedbackButton.UseVisualStyleBackColor = false;
+            this.feedbackButton.Click += new System.EventHandler(this.FeedbackButton_Click);
             // 
             // Head
             // 
@@ -266,15 +246,14 @@
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.Button DatePlusButton;
         private System.Windows.Forms.Button DateMinusButton;
-        private System.Windows.Forms.Button EditModeButton;
-        private System.Windows.Forms.Button SaveToButton;
-        private System.Windows.Forms.Button LoadFromButton;
-        private System.Windows.Forms.Button SaveScreenButton;
+        private System.Windows.Forms.Button editModeButton;
+        private System.Windows.Forms.Button saveScreenButton;
         private System.Windows.Forms.Label DateText;
-        private System.Windows.Forms.Button SettingsButton;
+        private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.Panel lessonsPanel;
         private System.Windows.Forms.Button timerButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Button feedbackButton;
     }
 }
 

@@ -267,7 +267,7 @@ namespace Organizer
                         Days[date].Lessons[i].CopyFrom(Lessons[i]);
             }
 
-            EditModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
+            editModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
 
             LessonsRefresh();
 
@@ -279,54 +279,6 @@ namespace Organizer
         }
 
         private void SaveScreenButton_Click(object sender, EventArgs e)
-        {
-            InDevelop();
-
-            /*MailAddress fromMailAddress = new MailAddress("DanielGGdebug@gmail.com", "Твое имя");
-            MailAddress toAddress = new MailAddress("daniel.gevorgyan25@gmail.com");
-
-            using (MailMessage mailMessage = new MailMessage(fromMailAddress, toAddress))
-            using (SmtpClient smtpClient = new SmtpClient())
-            {
-                mailMessage.Subject = "Привет";
-
-                mailMessage.IsBodyHtml = true;
-
-                mailMessage.Body += File.ReadAllText("gigigi.txt", Encoding.UTF8);
-
-                /*foreach (var day in Days)
-                {
-                    foreach (var lesson in day.Value.Lessons)
-                    {
-                        mailMessage.Body += Environment.NewLine + lesson.Num + " " +  lesson.Title;
-                    }
-
-                    mailMessage.Body += Environment.NewLine;
-                }/*
-
-                File.WriteAllText("File.csv", mailMessage.Body, Encoding.UTF8);
-                mailMessage.Attachments.Add(new Attachment("File.csv"));
-
-                smtpClient.Host = "smtp.gmail.com";
-                smtpClient.Port = 587;
-                smtpClient.EnableSsl = true;
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(fromMailAddress.Address,                                                                "debugпароль");
-
-                smtpClient.Send(mailMessage);
-            }*/
-        }
-
-        private void LoadFromButton_Click(object sender, EventArgs e)
-        {
-            InDevelop();
-
-            //System.Net.WebClient wc = new System.Net.WebClient();
-            //wc.DownloadFileAsync(new Uri("https://www.xeroxscanners.com/downloads/Manuals/XMS/PDF_Converter_Pro_Quick_Reference_Guide.RU.pdf"), "file.pdf");
-        }
-
-        private void SaveToButton_Click(object sender, EventArgs e)
         {
             InDevelop();
         }
@@ -407,6 +359,13 @@ namespace Organizer
         private void TimerButton_Click(object sender, EventArgs e)
         {
             TimerForm form = new TimerForm();
+            form.Show();
+        }
+
+        private void FeedbackButton_Click(object sender, EventArgs e)
+        {
+            Feedback form = new Feedback();
+
             form.Show();
         }
 
