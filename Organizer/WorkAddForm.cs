@@ -43,6 +43,8 @@ namespace Organizer
                 SetDefaultResult();
                 SetRemoveMode(false);
             }
+
+            ForeColor = Head.ProjectColor;
         }
 
         private void SetDefaultResult()

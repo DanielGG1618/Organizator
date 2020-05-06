@@ -22,7 +22,7 @@ namespace Organizer
 
         private void Feedback_Load(object sender, EventArgs e)
         {
-
+            ForeColor = Head.ProjectColor;
         }
 
         private void SendButton_Click(object sender, EventArgs e)
@@ -43,9 +43,14 @@ namespace Organizer
             smtpClient.EnableSsl = true;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential(fromMailAddress.Address,                                                                "debugfancraft");
+            smtpClient.Credentials = new NetworkCredential(fromMailAddress.Address,                                                                "debugпароль");
 
             smtpClient.Send(mailMessage);
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

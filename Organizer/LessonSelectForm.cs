@@ -29,7 +29,7 @@ namespace Organizer
 
         private void LessonSelectForm_Load(object sender, EventArgs e)
         {
-
+            ForeColor = Head.ProjectColor;
         }
     }
 }

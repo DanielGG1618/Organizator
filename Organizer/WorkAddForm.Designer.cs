@@ -64,7 +64,6 @@ partial class WorkAddForm
             this.done.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.done.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.done.ForeColor = System.Drawing.Color.OliveDrab;
             this.done.Location = new System.Drawing.Point(244, 149);
             this.done.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.done.Name = "done";
@@ -79,7 +78,6 @@ partial class WorkAddForm
             this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cancel.ForeColor = System.Drawing.Color.OliveDrab;
             this.cancel.Location = new System.Drawing.Point(19, 149);
             this.cancel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.cancel.Name = "cancel";
@@ -105,7 +103,6 @@ partial class WorkAddForm
             this.addButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addButton.Font = new System.Drawing.Font("Arial Narrow", 15F, System.Drawing.FontStyle.Bold);
-            this.addButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.addButton.Location = new System.Drawing.Point(426, 99);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(37, 37);
@@ -120,7 +117,6 @@ partial class WorkAddForm
             this.leftButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.leftButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.leftButton.Font = new System.Drawing.Font("Arial Narrow", 15F, System.Drawing.FontStyle.Bold);
-            this.leftButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.leftButton.Location = new System.Drawing.Point(65, 99);
             this.leftButton.Name = "leftButton";
             this.leftButton.Size = new System.Drawing.Size(37, 37);
@@ -134,7 +130,6 @@ partial class WorkAddForm
             this.rightButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.rightButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.rightButton.Font = new System.Drawing.Font("Arial Narrow", 15F, System.Drawing.FontStyle.Bold);
-            this.rightButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.rightButton.Location = new System.Drawing.Point(383, 99);
             this.rightButton.Name = "rightButton";
             this.rightButton.Size = new System.Drawing.Size(37, 37);
@@ -160,8 +155,7 @@ partial class WorkAddForm
             // 
             // WorkAddForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(482, 208);
             this.Controls.Add(this.rightButton);
@@ -172,6 +166,7 @@ partial class WorkAddForm
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.done);
             this.Controls.Add(this.typeSelector);
+            this.ForeColor = System.Drawing.Color.OliveDrab;
             this.MaximumSize = new System.Drawing.Size(500, 250);
             this.MinimumSize = new System.Drawing.Size(500, 250);
             this.Name = "WorkAddForm";

@@ -76,7 +76,6 @@
             this.skipButton.FlatAppearance.BorderSize = 0;
             this.skipButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.skipButton.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.skipButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.skipButton.Location = new System.Drawing.Point(0, 76);
             this.skipButton.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.skipButton.Name = "skipButton";
@@ -93,7 +92,6 @@
             this.resetTimer.FlatAppearance.BorderSize = 0;
             this.resetTimer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.resetTimer.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.resetTimer.ForeColor = System.Drawing.Color.OliveDrab;
             this.resetTimer.Location = new System.Drawing.Point(0, 150);
             this.resetTimer.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.resetTimer.Name = "resetTimer";
@@ -110,7 +108,6 @@
             this.settingsButton.FlatAppearance.BorderSize = 0;
             this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.settingsButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.settingsButton.Location = new System.Drawing.Point(0, 224);
             this.settingsButton.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.settingsButton.Name = "settingsButton";
@@ -277,7 +274,7 @@
             this.Controls.Add(this.startPause);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.timerPicture);
-            this.ForeColor = System.Drawing.Color.Red;
+            this.ForeColor = System.Drawing.Color.OliveDrab;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximumSize = new System.Drawing.Size(512, 490);
             this.MinimizeBox = false;

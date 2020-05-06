@@ -36,6 +36,7 @@ namespace Organizer
 
         public static Lesson[] Lessons;
         private Lesson[] editModeLessonsBackup;
+        private List<Control> ColorControls = new List<Control>();
         public static Dictionary<DateTime, Day> Days = new Dictionary<DateTime, Day>();
 
         private bool editMode;
@@ -95,7 +96,18 @@ namespace Organizer
                 lessonsPanel.Controls.Add(Lessons[i].NumLabel);
                 lessonsPanel.Controls.Add(Lessons[i].TitleLabel);
                 lessonsPanel.Controls.Add(Lessons[i].WorkLabel);
+
+                ColorControls.Add(Lessons[i].NumLabel);
             }
+
+            foreach (Control control in tableLayoutPanel1.Controls)
+                ColorControls.Add(control);
+
+            ColorControls.Add(DatePlusButton);
+            ColorControls.Add(DateMinusButton);
+            ColorControls.Add(DateText);
+
+            SetProjectColor(ProjectColor);
 
             LessonsRefresh();
         }
@@ -157,6 +169,9 @@ namespace Organizer
                         ThisYearHolydays.Add(dayToAdd);
                     }
                 }
+
+                string[] color = File.ReadAllLines("Save.txt")[1].Split(';');
+                ProjectColor = Color.FromArgb(int.Parse(color[0]), int.Parse(color[1]), int.Parse(color[2]));
             }
 
 
@@ -328,13 +343,23 @@ namespace Organizer
             Settings settings = new Settings();
             settings.ShowDialog();
 
-            UpdateLanguage(Settings.ActiveLanguage);
+            SetProjectColor(settings.Color);
+            SetLanguage(Settings.ActiveLanguage);
             LoadFiles();
         }
 
-        private void UpdateLanguage(string language)
+        private void SetLanguage(string language)
         {
             
+        }
+
+        private void SetProjectColor(Color color)
+        {
+            ProjectColor = color;
+
+            ForeColor = ProjectColor;
+            foreach (Control control in ColorControls)
+                control.ForeColor = ProjectColor;
         }
 
         private void InDevelop()

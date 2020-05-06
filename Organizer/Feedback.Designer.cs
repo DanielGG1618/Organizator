@@ -32,10 +32,10 @@
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.message = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.sendButton = new System.Windows.Forms.Button();
-            this.Отмена = new System.Windows.Forms.Button();
+            this.Cancel = new System.Windows.Forms.Button();
+            this.message = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -85,18 +85,6 @@
             this.textBox1.Size = new System.Drawing.Size(538, 31);
             this.textBox1.TabIndex = 2;
             // 
-            // message
-            // 
-            this.message.AutoSize = true;
-            this.message.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.message.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.message.ForeColor = System.Drawing.Color.OliveDrab;
-            this.message.Location = new System.Drawing.Point(320, 93);
-            this.message.Name = "message";
-            this.message.Size = new System.Drawing.Size(169, 31);
-            this.message.TabIndex = 0;
-            this.message.Text = "Сообщение:";
-            // 
             // textBox2
             // 
             this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
@@ -122,24 +110,36 @@
             this.sendButton.UseVisualStyleBackColor = false;
             this.sendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
-            // Отмена
+            // Cancel
             // 
-            this.Отмена.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.Отмена.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Отмена.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Отмена.Location = new System.Drawing.Point(515, 499);
-            this.Отмена.Name = "Отмена";
-            this.Отмена.Size = new System.Drawing.Size(171, 47);
-            this.Отмена.TabIndex = 3;
-            this.Отмена.Text = "Отмена";
-            this.Отмена.UseVisualStyleBackColor = false;
+            this.Cancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Cancel.Location = new System.Drawing.Point(515, 499);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(171, 47);
+            this.Cancel.TabIndex = 3;
+            this.Cancel.Text = "Отмена";
+            this.Cancel.UseVisualStyleBackColor = false;
+            this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
+            // 
+            // message
+            // 
+            this.message.AutoSize = true;
+            this.message.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.message.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.message.Location = new System.Drawing.Point(320, 93);
+            this.message.Name = "message";
+            this.message.Size = new System.Drawing.Size(161, 31);
+            this.message.TabIndex = 0;
+            this.message.Text = "Сообщение";
             // 
             // Feedback
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(782, 558);
-            this.Controls.Add(this.Отмена);
+            this.Controls.Add(this.Cancel);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
@@ -164,9 +164,9 @@
         private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label message;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button sendButton;
-        private System.Windows.Forms.Button Отмена;
+        private System.Windows.Forms.Button Cancel;
+        private System.Windows.Forms.Label message;
     }
 }

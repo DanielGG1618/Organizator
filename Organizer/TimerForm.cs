@@ -30,6 +30,7 @@ namespace Organizer
         {
             UpdateCyclesLabel(worksCount, counter);
             UpdateTimeLabel(targetTime - time);
+            SetColor(Head.ProjectColor);
 
             workTextBox.Text = (workTime / 60).ToString();
             breakTextBox.Text = (breakTime / 60).ToString();
@@ -78,6 +79,15 @@ namespace Organizer
         private void SaveFiles(object sender, FormClosingEventArgs e)
         {
             SaveTimer();
+        }
+
+        private void SetColor(Color color)
+        {
+            workLabel.BackColor = color;
+            breakLabel.BackColor = color;
+
+            pauseCheckBox.BackColor = color;
+            couterCheckBox.BackColor = color;
         }
 
         private void SaveTimer()

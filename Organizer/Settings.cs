@@ -18,6 +18,7 @@ namespace Organizer
         public static string ActiveLanguage; 
 
         public List<Control> LocalizationControls = new List<Control>();
+        public Color Color;
 
         private static bool firstLoad = true;
 
@@ -27,48 +28,52 @@ namespace Organizer
             {
                 firstLoad = false;
 
-                LoadLanguage();
+                LoadFiles();
 
-                Dictionary<string, string> english = new Dictionary<string, string>(),
-                                           russian = new Dictionary<string, string>();//добавить от и до лейблы
+                Dictionary<string, string> english = new Dictionary<string, string>
+                {
+                    { "Language", "English" },
+                    { "Add", "Add" },
+                    { "Remove", "Remove" },
+                    { "From", "From" },
+                    { "To", "To" },
+                    { "Primary", "Primary" },
+                    { "Secondary", "Secondary" },
+                    { "This year", "This year" },
+                    { "Select color", "Select color" },
+                    { "Add holydays", "Add holydays"}
+                };
 
-                english.Add("label1", "label1");
-                english.Add("label2", "label2");
-                english.Add("Language", "English");
-                english.Add("Add", "Add");
-                english.Add("Added", "Added");
-                english.Add("From", "From");
-                english.Add("To", "To");
-                english.Add("Primary", "Primary");
-                english.Add("Secondary", "Secondary");
-                english.Add("This year", "This year");
-
-                russian.Add("label1", "лейбл1");
-                russian.Add("label2", "лейбл2");
-                russian.Add("Language", "Русский");
-                russian.Add("Add", "Добавить");
-                russian.Add("Added", "Добавлено");
-                russian.Add("From", "От");
-                russian.Add("To", "До");
-                russian.Add("Primary", "Первичные");
-                russian.Add("Secondary", "Вторичные");
-                russian.Add("This year", "Этого года");
+                Dictionary<string, string> russian = new Dictionary<string, string>
+                {
+                    { "Language", "Русский" },
+                    { "Add", "Добавить" },
+                    { "Remove", "Удалить" },
+                    { "From", "От" },
+                    { "To", "До" },
+                    { "Primary", "Первичные" },
+                    { "Secondary", "Вторичные" },
+                    { "This year", "Этого года" },
+                    { "Select color", "Выберите цвет" },
+                    { "Add holydays", "Добавить выходные"}
+                };
 
                 Translations.Add("English", english);
                 Translations.Add("Русский", russian);
             }
+
+            Color = Head.ProjectColor;
 
             InitializeComponent();
         }
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            FormClosing += SaveLanguage;
+            FormClosing += SaveFiles;
 
-            LocalizationControls.AddRange(new Control[6] { label1, label2, languageSelector, AddHolyday, fromLabel, toLabel });
+            LocalizationControls.AddRange(new Control[5] { languageSelector, addHolyday, fromLabel, toLabel, colorLabel });
 
             languageSelector.Text = ActiveLanguage;
-            holydayTypeComboBox.SelectedIndex = 0;
 
             fromLabel.Visible = false;
             toLabel.Visible = false;
@@ -77,7 +82,19 @@ namespace Organizer
 
             holydayStartPicker.Location = new Point(0, 13);
 
-            UpdateLanguage();
+            SetColor(Head.ProjectColor);
+            SetLanguage();
+
+            holydayTypeComboBox.SelectedIndex = 0;
+        }
+
+        private void SetColor(Color color)
+        {
+            Color = color;
+
+            holyLabel.ForeColor = color;
+            addHolyday.ForeColor = color;
+            colorPanel.BackColor = color;
         }
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -85,20 +102,20 @@ namespace Organizer
             ActiveLanguage = languageSelector.Text;
             languagePict.Image = Image.FromFile("Language images/" + ActiveLanguage + ".png");
 
-            UpdateLanguage();
+            SetLanguage();
         }
 
-        private void LoadLanguage()
+        private void LoadFiles()
         {
-            ActiveLanguage = File.ReadAllText("Save.txt");
+            ActiveLanguage = File.ReadAllLines("Save.txt")[0];
         }
 
-        private void SaveLanguage(object sender, EventArgs e)
+        private void SaveFiles(object sender, EventArgs e)
         {
-            File.WriteAllText("Save.txt", ActiveLanguage);
+            File.WriteAllLines("Save.txt", new string[2] { ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B });
         }
 
-        private void UpdateLanguage()
+        private void SetLanguage()
         {
             int holydayTypeIndex = holydayTypeComboBox.SelectedIndex;
 
@@ -117,9 +134,18 @@ namespace Organizer
             if (CanAdd())
             {
                 File.AppendAllText("Holydays.txt", HolydayToAdd() + "\r\n");
-
-                UpdateAddHolydayButtonStatus();
             }
+
+            else
+            {
+                List<string> holydays = new List<string>(File.ReadAllLines("Holydays.txt"));
+
+                holydays.Remove(HolydayToAdd());
+
+                File.WriteAllLines("Holydays.txt", holydays);
+            }
+
+            UpdateAddHolydayButtonStatus();
         }
 
         private void HolydayStartPicker_ValueChanged(object sender, EventArgs e)
@@ -173,18 +199,12 @@ namespace Organizer
         private void UpdateAddHolydayButtonStatus()
         {
             if (CanAdd())
-            {
-                AddHolyday.AccessibleName = "Add";
-                AddHolyday.ForeColor = Head.ProjectColor;
-            }
+                addHolyday.AccessibleName = "Add";
 
             else
-            {
-                AddHolyday.AccessibleName = "Added";
-                AddHolyday.ForeColor = Head.GRAY[0];
-            }
+                addHolyday.AccessibleName = "Remove";
 
-            AddHolyday.Text = Translations[ActiveLanguage][AddHolyday.AccessibleName.ToString()];
+            addHolyday.Text = Translations[ActiveLanguage][addHolyday.AccessibleName.ToString()];
         }
 
         private string HolydayToAdd()
@@ -218,19 +238,11 @@ namespace Organizer
             return holydayToAdd;
         }
 
-        private void FromLabel_Click(object sender, EventArgs e)
+        private void ColorPanel_Click(object sender, EventArgs e)
         {
+            colorDialog.ShowDialog();
 
-        }
-
-        private void ToLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AddHolydayPanel_Paint(object sender, PaintEventArgs e)
-        {
-
+            SetColor(colorDialog.Color);
         }
     }
 }
