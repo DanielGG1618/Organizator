@@ -65,7 +65,7 @@ namespace Organizer
 
             for (int i = 0; i < Head.Schedule[(int)Date.DayOfWeek].Length; i++)
             {
-                Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.ProjectColor, Head.Schedule[(int)Date.DayOfWeek][i]));
+                Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.Color, Head.Schedule[(int)Date.DayOfWeek][i]));
             }
         }
 
@@ -284,7 +284,7 @@ namespace Organizer
             for (int i = 2; i < splited.Length - 1; i += 2)
                 workList.Add(splited[i], splited[i + 1]);
 
-            lesson = new Lesson(int.Parse(splited[0]), Head.CellSize, Head.ProjectColor, splited[1], workList);
+            lesson = new Lesson(int.Parse(splited[0]), Head.CellSize, Head.Color, splited[1], workList);
 
             return lesson;
         }

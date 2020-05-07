@@ -30,7 +30,7 @@ namespace Organizer
         {
             UpdateCyclesLabel(worksCount, counter);
             UpdateTimeLabel(targetTime - time);
-            SetColor(Head.ProjectColor);
+            SetColor(Head.Color);
 
             workTextBox.Text = (workTime / 60).ToString();
             breakTextBox.Text = (breakTime / 60).ToString();
@@ -83,11 +83,9 @@ namespace Organizer
 
         private void SetColor(Color color)
         {
-            workLabel.BackColor = color;
-            breakLabel.BackColor = color;
+            BackColor = color;
 
-            pauseCheckBox.BackColor = color;
-            couterCheckBox.BackColor = color;
+            tableLayoutPanel1.ForeColor = color;
         }
 
         private void SaveTimer()
@@ -194,7 +192,7 @@ namespace Organizer
                     settings = true;
             }
 
-            settingsButton.ForeColor = settings ? Color.LimeGreen : Head.ProjectColor;
+            settingsButton.ForeColor = settings ? Color.LimeGreen : Head.Color;
             startPause.Visible = !settings;
 
             workTextBox.Text = (workTime / 60).ToString();

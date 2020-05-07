@@ -58,7 +58,6 @@
             // DateText
             // 
             this.DateText.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DateText.ForeColor = System.Drawing.Color.OliveDrab;
             this.DateText.Location = new System.Drawing.Point(70, 0);
             this.DateText.Margin = new System.Windows.Forms.Padding(70, 0, 70, 0);
             this.DateText.Name = "DateText";
@@ -74,7 +73,6 @@
             this.DatePlusButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.DatePlusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DatePlusButton.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DatePlusButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.DatePlusButton.Location = new System.Drawing.Point(630, 0);
             this.DatePlusButton.Margin = new System.Windows.Forms.Padding(0);
             this.DatePlusButton.Name = "DatePlusButton";
@@ -91,7 +89,6 @@
             this.DateMinusButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.DateMinusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DateMinusButton.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DateMinusButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.DateMinusButton.Location = new System.Drawing.Point(0, 0);
             this.DateMinusButton.Margin = new System.Windows.Forms.Padding(0);
             this.DateMinusButton.Name = "DateMinusButton";
@@ -108,7 +105,6 @@
             this.settingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.settingsButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.settingsButton.Location = new System.Drawing.Point(0, 370);
             this.settingsButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.settingsButton.Name = "settingsButton";
@@ -125,7 +121,6 @@
             this.saveScreenButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveScreenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveScreenButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.saveScreenButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.saveScreenButton.Location = new System.Drawing.Point(0, 10);
             this.saveScreenButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.saveScreenButton.Name = "saveScreenButton";
@@ -142,7 +137,6 @@
             this.editModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.editModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.editModeButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.editModeButton.Location = new System.Drawing.Point(0, 250);
             this.editModeButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.editModeButton.Name = "editModeButton";
@@ -169,7 +163,6 @@
             this.timerButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.timerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.timerButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.timerButton.Location = new System.Drawing.Point(0, 130);
             this.timerButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.timerButton.Name = "timerButton";
@@ -208,7 +201,6 @@
             this.feedbackButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.feedbackButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.feedbackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.feedbackButton.ForeColor = System.Drawing.Color.OliveDrab;
             this.feedbackButton.Location = new System.Drawing.Point(0, 490);
             this.feedbackButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.feedbackButton.Name = "feedbackButton";

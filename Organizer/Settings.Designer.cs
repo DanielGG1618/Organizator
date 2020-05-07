@@ -79,7 +79,7 @@
             this.languagePict.TabIndex = 1;
             this.languagePict.TabStop = false;
             // 
-            // AddHolyday
+            // addHolyday
             // 
             this.addHolyday.AccessibleDescription = "";
             this.addHolyday.AccessibleName = "Add";
@@ -88,10 +88,9 @@
             this.addHolyday.Cursor = System.Windows.Forms.Cursors.Default;
             this.addHolyday.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addHolyday.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.addHolyday.ForeColor = System.Drawing.Color.OliveDrab;
             this.addHolyday.Location = new System.Drawing.Point(0, 36);
             this.addHolyday.Margin = new System.Windows.Forms.Padding(10);
-            this.addHolyday.Name = "AddHolyday";
+            this.addHolyday.Name = "addHolyday";
             this.addHolyday.Size = new System.Drawing.Size(147, 55);
             this.addHolyday.TabIndex = 4;
             this.addHolyday.Text = "Добавить";
@@ -228,7 +227,6 @@
             this.holyLabel.AccessibleName = "Add holydays";
             this.holyLabel.AutoSize = true;
             this.holyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.holyLabel.ForeColor = System.Drawing.Color.OliveDrab;
             this.holyLabel.Location = new System.Drawing.Point(12, 217);
             this.holyLabel.Name = "holyLabel";
             this.holyLabel.Size = new System.Drawing.Size(268, 31);
@@ -246,6 +244,7 @@
             this.Controls.Add(this.addHolydayPanel);
             this.Controls.Add(this.languagePict);
             this.Controls.Add(this.languageSelector);
+            this.ForeColor = System.Drawing.Color.OliveDrab;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(400, 400);
             this.MinimumSize = new System.Drawing.Size(400, 400);

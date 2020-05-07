@@ -185,6 +185,7 @@
             // 
             // workLabel
             // 
+            this.workLabel.AutoSize = true;
             this.workLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.workLabel.Font = new System.Drawing.Font("Arial", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.workLabel.ForeColor = System.Drawing.Color.Black;
@@ -245,7 +246,7 @@
             this.pauseCheckBox.Size = new System.Drawing.Size(204, 40);
             this.pauseCheckBox.TabIndex = 8;
             this.pauseCheckBox.Text = "Пауза в конце";
-            this.pauseCheckBox.UseVisualStyleBackColor = true;
+            this.pauseCheckBox.UseVisualStyleBackColor = false;
             this.pauseCheckBox.Visible = false;
             // 
             // couterCheckBox
@@ -257,7 +258,7 @@
             this.couterCheckBox.Size = new System.Drawing.Size(204, 40);
             this.couterCheckBox.TabIndex = 8;
             this.couterCheckBox.Text = "Счетчик";
-            this.couterCheckBox.UseVisualStyleBackColor = true;
+            this.couterCheckBox.UseVisualStyleBackColor = false;
             this.couterCheckBox.Visible = false;
             // 
             // TimerForm

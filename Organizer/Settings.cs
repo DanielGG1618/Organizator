@@ -62,7 +62,7 @@ namespace Organizer
                 Translations.Add("Русский", russian);
             }
 
-            Color = Head.ProjectColor;
+            Color = Head.Color;
 
             InitializeComponent();
         }
@@ -82,7 +82,7 @@ namespace Organizer
 
             holydayStartPicker.Location = new Point(0, 13);
 
-            SetColor(Head.ProjectColor);
+            SetColor(Head.Color);
             SetLanguage();
 
             holydayTypeComboBox.SelectedIndex = 0;
@@ -92,8 +92,7 @@ namespace Organizer
         {
             Color = color;
 
-            holyLabel.ForeColor = color;
-            addHolyday.ForeColor = color;
+            ForeColor = color;
             colorPanel.BackColor = color;
         }
 

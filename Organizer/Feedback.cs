@@ -22,7 +22,7 @@ namespace Organizer
 
         private void Feedback_Load(object sender, EventArgs e)
         {
-            ForeColor = Head.ProjectColor;
+            ForeColor = Head.Color;
         }
 
         private void SendButton_Click(object sender, EventArgs e)

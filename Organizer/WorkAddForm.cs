@@ -44,7 +44,7 @@ namespace Organizer
                 SetRemoveMode(false);
             }
 
-            ForeColor = Head.ProjectColor;
+            ForeColor = Head.Color;
         }
 
         private void SetDefaultResult()
@@ -167,12 +167,12 @@ namespace Organizer
             if (removeMode)
             {
                 addButton.ForeColor = Head.GRAY[0];
-                removeButton.ForeColor = Head.ProjectColor;
+                removeButton.ForeColor = Head.Color;
             }
 
             else
             {
-                addButton.ForeColor = Head.ProjectColor;
+                addButton.ForeColor = Head.Color;
                 removeButton.ForeColor = Head.GRAY[0];
             }
         }

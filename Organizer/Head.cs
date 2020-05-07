@@ -15,7 +15,7 @@ namespace Organizer
 {
     public partial class Head : Form
     {
-        public static Color ProjectColor = Color.OliveDrab;
+        public static Color Color;
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
         public static List<DateTime> PrimaryHolydays = new List<DateTime>();
@@ -36,7 +36,6 @@ namespace Organizer
 
         public static Lesson[] Lessons;
         private Lesson[] editModeLessonsBackup;
-        private List<Control> ColorControls = new List<Control>();
         public static Dictionary<DateTime, Day> Days = new Dictionary<DateTime, Day>();
 
         private bool editMode;
@@ -72,7 +71,7 @@ namespace Organizer
 
             editModeLessonsBackup = new Lesson[MaxLessonsCount];
             for(int i = 0; i < MaxLessonsCount;  i++)
-                editModeLessonsBackup[i] = new Lesson(i + 1, CellSize, ProjectColor);
+                editModeLessonsBackup[i] = new Lesson(i + 1, CellSize, Color);
 
             InitializeComponent();
         }
@@ -86,7 +85,7 @@ namespace Organizer
 
             for (int i = 0; i < MaxLessonsCount; i++)
             {
-                Lessons[i] = new Lesson(i + 1, CellSize, ProjectColor);
+                Lessons[i] = new Lesson(i + 1, CellSize, Color);
 
                 Lessons[i].WorkLabel.Click += WorkClick;
                 Lessons[i].TitleLabel.Click += TitleClick;
@@ -96,18 +95,9 @@ namespace Organizer
                 lessonsPanel.Controls.Add(Lessons[i].NumLabel);
                 lessonsPanel.Controls.Add(Lessons[i].TitleLabel);
                 lessonsPanel.Controls.Add(Lessons[i].WorkLabel);
-
-                ColorControls.Add(Lessons[i].NumLabel);
             }
 
-            foreach (Control control in tableLayoutPanel1.Controls)
-                ColorControls.Add(control);
-
-            ColorControls.Add(DatePlusButton);
-            ColorControls.Add(DateMinusButton);
-            ColorControls.Add(DateText);
-
-            SetProjectColor(ProjectColor);
+            SetColor(Color);
 
             LessonsRefresh();
         }
@@ -171,7 +161,7 @@ namespace Organizer
                 }
 
                 string[] color = File.ReadAllLines("Save.txt")[1].Split(';');
-                ProjectColor = Color.FromArgb(int.Parse(color[0]), int.Parse(color[1]), int.Parse(color[2]));
+                Color = Color.FromArgb(int.Parse(color[0]), int.Parse(color[1]), int.Parse(color[2]));
             }
 
 
@@ -224,7 +214,7 @@ namespace Organizer
         {
             for (int i = 0; i < Days[date].Lessons.Count; i++)//////////////////////////
             {
-                Lessons[i].NumLabel.ForeColor = ProjectColor;
+                Lessons[i].NumLabel.ForeColor = Color;
                 Lessons[i].CopyFrom(Days[date].Lessons[i]);////////////////////////////
                 WorkRefresh(i);
             }
@@ -282,7 +272,7 @@ namespace Organizer
                         Days[date].Lessons[i].CopyFrom(Lessons[i]);
             }
 
-            editModeButton.ForeColor = editMode ? Color.LimeGreen : ProjectColor;
+            editModeButton.ForeColor = editMode ? Color.LimeGreen : Color;
 
             LessonsRefresh();
 
@@ -343,7 +333,7 @@ namespace Organizer
             Settings settings = new Settings();
             settings.ShowDialog();
 
-            SetProjectColor(settings.Color);
+            SetColor(settings.Color);
             SetLanguage(Settings.ActiveLanguage);
             LoadFiles();
         }
@@ -353,13 +343,11 @@ namespace Organizer
             
         }
 
-        private void SetProjectColor(Color color)
+        private void SetColor(Color color)
         {
-            ProjectColor = color;
+            Color = color;
 
-            ForeColor = ProjectColor;
-            foreach (Control control in ColorControls)
-                control.ForeColor = ProjectColor;
+            ForeColor = Color;
         }
 
         private void InDevelop()
