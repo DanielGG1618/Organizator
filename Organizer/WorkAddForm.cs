@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Organizer
@@ -13,6 +9,9 @@ namespace Organizer
     public partial class WorkAddForm : Form
     {
         public Dictionary<string, List<string>> WorkList = new Dictionary<string, List<string>>();
+
+        private Label selectedLabel = new Label();
+
         private bool removeMode = false;
 
         public WorkAddForm(int num)
@@ -27,35 +26,258 @@ namespace Organizer
         {
             typeSelector.SelectedIndex = 0;
 
-            if (WorkList.Count > 1)
-            {
-                RefreshResult();
-                typeSelector.Text = WorkList.ToArray()[1].Key;
-                addTextBox.Text = WorkList.ToArray()[1].Value[0];
-
-                if (typeSelector.Text != "Другое") addTextBox.Text = addTextBox.Text.Remove(0, 2);
-
-                SetRemoveMode(true);
-            }
-
-            else
-            {
-                SetDefaultResult();
-                SetRemoveMode(false);
-            }
+            RefreshResult();
 
             ForeColor = Head.Color;
         }
 
         private void SetDefaultResult()
         {
-            Controls.Add(ResultLabelSample(WorkList["Default"][0], 0, out _));
+            resultPanel.Controls.Clear();
+
+            resultPanel.Controls.Add(ResultLabelSample(WorkList["Default"][0]));
         }
 
-        private void AddButton_Click(object sender, EventArgs e)
+        private void RefreshResult()
+        {
+            resultPanel.Controls.Clear();
+
+            if (WorkList.Count > 1)
+            {
+                foreach (var works in WorkList)
+                    if (works.Key != "Default")
+                        resultPanel.Controls.AddRange(ResultLabelSampleList(works.Value.ToArray()).ToArray());
+
+                int previousX = 0;
+
+                foreach (Label label in resultPanel.Controls)
+                {
+                    bool needComma = true;
+
+                    if (WorkList.Last().Value.Last() == label.Text)
+                        needComma = false;
+
+                    if (needComma)
+                        label.Text += ',';
+
+                    label.Location = new Point(previousX, 0);
+                    previousX = label.Location.X + label.Size.Width;
+                }
+            }
+
+            else
+                SetDefaultResult();
+
+            SortLabelIndexes();
+        }
+
+        private void SetRemoveMode(bool _removeMode)
+        {
+            removeMode = _removeMode;
+
+            if (removeMode)
+            {
+                removeAddButton.Text = "-";
+
+                rightButton.Visible = true;
+                leftButton.Visible = true;
+
+                addTextBox.Location = new Point(112, 128);
+                addTextBox.Size = new Size(301, 23);
+            }
+
+            else
+            {
+                removeAddButton.Text = "+";
+
+                rightButton.Visible = false;
+                leftButton.Visible = false;
+
+                addTextBox.Location = new Point(19, 128);
+                addTextBox.Size = new Size(394, 23);
+
+                addTextBox.Text = "";
+            }
+        }
+
+        private void SortLabelIndexes()
+        {
+            for(int i = 1; i < resultPanel.Controls.Count; i++)
+            {
+                for(int j = i;
+                    j > 0 && resultPanel.Controls[j - 1].Location.X > resultPanel.Controls[j].Location.X;
+                    j--)
+                {
+                    int tabIndex = resultPanel.Controls[i].TabIndex;
+
+                    resultPanel.Controls[i].TabIndex = resultPanel.Controls[j].TabIndex;
+                    resultPanel.Controls[j].TabIndex = tabIndex;
+                }
+            }
+        }
+
+        private Label ResultLabelSample(string text)
+        {
+            Label resultLabelSample = new Label
+            {
+                AutoSize = true,
+                AllowDrop = true,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Microsoft Sans Serif", 14, FontStyle.Regular, GraphicsUnit.Point, 204),
+                ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleLeft,
+                Text = text
+            };
+
+            resultLabelSample.Click += ResultLabel_Click;
+
+            return resultLabelSample;
+        }
+
+        private List<Label> ResultLabelSampleList(string[] workList)
+        {
+            List<Label> resultLabelSampleList = new List<Label>();
+
+            for (int i = 0; i < workList.Length; i++)
+                resultLabelSampleList.Add(ResultLabelSample(workList[i]));
+
+            return resultLabelSampleList;
+        }
+
+        private void TypeSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!removeMode)
+                return;
+
+            switch (selectedLabel.Text[0])
+            {
+                case 'C':
+                    WorkList["На страницах"].Remove(selectedLabel.Text);
+
+                    if (WorkList["На страницах"].Count == 0)
+                        WorkList.Remove("На страницах");
+                    break;
+
+                case '§':
+                    WorkList["Параграфы"].Remove(selectedLabel.Text);
+
+                    if (WorkList["Параграфы"].Count == 0)
+                        WorkList.Remove("Параграфы");
+                    break;
+
+                case '№':
+                    WorkList["Номера"].Remove(selectedLabel.Text);
+
+                    if (WorkList["Номера"].Count == 0)
+                        WorkList.Remove("Номера");
+                    break;
+
+                default:
+                    WorkList["Другое"].Remove(selectedLabel.Text);
+
+                    if (WorkList["Другое"].Count == 0)
+                        WorkList.Remove("Другое");
+                    break;
+            }
+
+            if (selectedLabel.Text[0] == 'C' ||
+                selectedLabel.Text[0] == '§' ||
+                selectedLabel.Text[0] == '№')
+                selectedLabel.Text = selectedLabel.Text.Remove(0, 2);
+
+            switch (typeSelector.Text)
+            {
+                case "На страницах":
+                    selectedLabel.Text = selectedLabel.Text.Insert(0, "C ");
+                    break;
+
+                case "Параграфы":
+                    selectedLabel.Text = selectedLabel.Text.Insert(0, "§ ");
+                    break;
+
+                case "Номера":
+                    selectedLabel.Text = selectedLabel.Text.Insert(0, "№ ");
+                    break;
+            }
+
+            if (WorkList.Keys.Contains(typeSelector.Text))
+                WorkList[typeSelector.Text].Add(selectedLabel.Text);
+
+            else
+                WorkList.Add(typeSelector.Text, new List<string>(new string[1] { selectedLabel.Text }));
+
+        }
+
+        private void ResultLabel_Click(object sender, EventArgs e)
+        {
+            Label label = (Label)sender;
+
+            if (label.Text == WorkList["Default"][0])
+                return;
+
+            SetSelectedLabel(label);
+        }
+
+        private void SetSelectedLabel(Label label)
+        {
+            selectedLabel.ForeColor = Color.White;
+
+            if (selectedLabel != label)
+            {
+                selectedLabel = label;
+
+                selectedLabel.ForeColor = Head.Color;
+
+                switch (label.Text[0])
+                {
+                    case 'C':
+                        typeSelector.Text = "На страницах";
+                        break;
+
+                    case '§':
+                        typeSelector.Text = "Параграфы";
+                        break;
+
+                    case '№':
+                        typeSelector.Text = "Номера";
+                        break;
+
+                    default:
+                        typeSelector.Text = "Другое";
+                        break;
+                }
+
+                addTextBox.Text = label.Text;
+
+                if (addTextBox.Text.Last() == ',')
+                    addTextBox.Text = addTextBox.Text.Remove(addTextBox.Text.Length - 1, 1);
+
+                if (typeSelector.Text != "Другое")
+                    addTextBox.Text = addTextBox.Text.Remove(0, 2);
+
+                SetRemoveMode(true);
+            }
+
+            else
+            {
+                selectedLabel = new Label();
+
+                SetRemoveMode(false);
+
+                addTextBox.Text = "";
+            }
+        }
+
+        private void RemoveAddButton_Click(object sender, EventArgs e)
         {
             if (!removeMode)
             {
+                if (string.IsNullOrWhiteSpace(addTextBox.Text))
+                {
+                    MessageBox.Show("Вы не ввели текст", "Введите задание", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
                 string textToAdd = "";
 
                 if (WorkList.ContainsKey(typeSelector.Text))
@@ -63,20 +285,21 @@ namespace Organizer
                     switch (typeSelector.Text)
                     {
                         case "На страницах":
-                            textToAdd += "☼ с ";
+                            textToAdd += "C ";
                             break;
 
                         case "Параграфы":
-                            textToAdd += "☼ § ";
+                            textToAdd += "§ ";
                             break;
 
                         case "Номера":
-                            textToAdd += "☼ № ";
+                            textToAdd += "№ ";
                             break;
                     }
 
                     textToAdd += addTextBox.Text;
 
+                    RefreshResult();
                     WorkList[typeSelector.Text].Add(textToAdd);
                 }
 
@@ -85,7 +308,7 @@ namespace Organizer
                     switch (typeSelector.Text)
                     {
                         case "На страницах":
-                            textToAdd += "с ";
+                            textToAdd += "C ";
                             break;
 
                         case "Параграфы":
@@ -102,22 +325,18 @@ namespace Organizer
                     WorkList.Add(typeSelector.Text, new List<string>(new string[1] { textToAdd }));
                 }
 
-                RefreshResult();
-
                 addTextBox.Text = "";
+                RefreshResult();
             }
-        }
 
-        private void RemoveButton_Click(object sender, EventArgs e)
-        {
-            if (removeMode)
+            else
             {
                 string textToRemove = addTextBox.Text;
 
                 switch (typeSelector.Text)
                 {
                     case "На страницах":
-                        textToRemove = textToRemove.Insert(0, "с ");
+                        textToRemove = textToRemove.Insert(0, "C ");
                         break;
 
                     case "Параграфы":
@@ -132,80 +351,102 @@ namespace Organizer
                 WorkList[typeSelector.Text].Remove(textToRemove);
 
                 if (WorkList[typeSelector.Text].Count == 0)
-                {
                     WorkList.Remove(typeSelector.Text);
+
+                if (resultPanel.Controls.Count <= 1)
+                {
                     SetRemoveMode(false);
+
+                    RefreshResult();
                 }
 
-                RefreshResult();
+                else
+                {
+                    RefreshResult();
+
+                    try { SetSelectedLabel(resultPanel.Controls[selectedLabel.TabIndex - 1] as Label); }
+                    catch { SetSelectedLabel(resultPanel.Controls[0] as Label); }
+                }
             }
         }
 
-        private void RefreshResult()
+        private void AddTextBox_TextChanged(object sender, EventArgs e)
         {
-            foreach (Control control in Controls)
-                if (control is Label)
-                    Controls.Remove(control);
+            if (!removeMode || addTextBox.Text == WorkList["Default"][0])
+                return;
 
-            if (WorkList.Count > 1)
+            if (string.IsNullOrWhiteSpace(addTextBox.Text))
             {
-                int previousX = 0;
+                Label label = selectedLabel;
 
-                foreach (var works in WorkList)
-                    if (works.Key != "Default")
-                        Controls.AddRange(ResultLabelSampleList(works.Value.ToArray(), previousX, out previousX).ToArray());
+                SetSelectedLabel(selectedLabel);
+                SetSelectedLabel(label);
+
+                RemoveAddButton_Click(sender, e);
+
+                return;
             }
 
-            else
-                SetDefaultResult();
-        }
+            bool haveComma = selectedLabel.Text != WorkList[typeSelector.Text].Last();
 
-        private void SetRemoveMode(bool _removeMode)
-        {
-            removeMode = _removeMode;
-
-            if (removeMode)
+            for (int i = 0; i < WorkList[typeSelector.Text].Count; i++)
             {
-                addButton.ForeColor = Head.GRAY[0];
-                removeButton.ForeColor = Head.Color;
+                if (WorkList[typeSelector.Text][i] == selectedLabel.Text.Remove(selectedLabel.Text.Length - 1, haveComma ? 1 : 0))
+                {
+                    switch (typeSelector.Text)
+                    {
+                        case "На страницах":
+                            WorkList[typeSelector.Text][i] = addTextBox.Text.Insert(0, "C ");
+                            break;
+
+                        case "Параграфы":
+                            WorkList[typeSelector.Text][i] = addTextBox.Text.Insert(0, "§ ");
+                            break;
+
+                        case "Номера":
+                            WorkList[typeSelector.Text][i] = addTextBox.Text.Insert(0, "№ ");
+                            break;
+
+                        default:
+                            WorkList[typeSelector.Text][i] = addTextBox.Text;
+                            break;
+                    }
+
+                    RefreshResult();
+
+                    foreach (Label label in resultPanel.Controls)
+                    {
+                        if (WorkList[typeSelector.Text][i] == label.Text.Remove(label.Text.Length - 1, haveComma ? 1 : 0))
+                        {
+                            selectedLabel = label;
+
+                            selectedLabel.ForeColor = Head.Color;
+                        }
+                    }
+                }
             }
-
-            else
-            {
-                addButton.ForeColor = Head.Color;
-                removeButton.ForeColor = Head.GRAY[0];
-            }
         }
 
-        private Label ResultLabelSample(string text, int previousX, out int thisX)
+        private void LeftButton_Click(object sender, EventArgs e)
         {
-            Label resultLabelSample = new Label
-            {
-                AllowDrop = true,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Microsoft Sans Serif", 14, FontStyle.Regular, GraphicsUnit.Point, 204),
-                ForeColor = Color.White,
-                Location = new Point(previousX + 19, 14),
-                Size = new Size(444, 29),
-                TextAlign = ContentAlignment.MiddleLeft,
-                Text = text
-            };
+            if (!removeMode || resultPanel.Controls.Count == 1)
+                return;
 
-            thisX = resultLabelSample.Location.X + resultLabelSample.Size.Width;
+            SortLabelIndexes();
 
-            return resultLabelSample;
-        }
+            try { SetSelectedLabel(resultPanel.Controls[selectedLabel.TabIndex - 1] as Label); }
+            catch { SetSelectedLabel(resultPanel.Controls[resultPanel.Controls.Count - 1] as Label); }
+        }   
 
-        private List<Label> ResultLabelSampleList(string[] workList, int previousX, out int thisX)
+        private void RightButton_Click(object sender, EventArgs e)
         {
-            List<Label> resultLabelSampleList = new List<Label>();
+            if (!removeMode || resultPanel.Controls.Count == 1)
+                return;
 
-            for (int i = 0; i < workList.Length; i++)
-                resultLabelSampleList.Add(ResultLabelSample(workList[i], previousX, out previousX));
+            SortLabelIndexes();
 
-            thisX = previousX;
-            return resultLabelSampleList;
+            try { SetSelectedLabel(resultPanel.Controls[selectedLabel.TabIndex + 1] as Label); }
+            catch { SetSelectedLabel(resultPanel.Controls[0] as Label); }
         }
-
     }
 }

@@ -37,18 +37,18 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cycleLabel = new System.Windows.Forms.Label();
-            this.timerPicture = new System.Windows.Forms.PictureBox();
-            this.startPause = new System.Windows.Forms.PictureBox();
             this.workLabel = new System.Windows.Forms.Label();
             this.breakLabel = new System.Windows.Forms.Label();
             this.workTextBox = new System.Windows.Forms.TextBox();
             this.breakTextBox = new System.Windows.Forms.TextBox();
             this.pauseCheckBox = new System.Windows.Forms.CheckBox();
             this.couterCheckBox = new System.Windows.Forms.CheckBox();
+            this.startPause = new System.Windows.Forms.PictureBox();
+            this.timerPicture = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.timerPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.startPause)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.timerPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // timer
@@ -158,31 +158,6 @@
             this.cycleLabel.Text = "цикл №0";
             this.cycleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // timerPicture
-            // 
-            this.timerPicture.BackColor = System.Drawing.Color.Transparent;
-            this.timerPicture.Image = global::Organizer.Properties.Resources._0;
-            this.timerPicture.Location = new System.Drawing.Point(9, 9);
-            this.timerPicture.Margin = new System.Windows.Forms.Padding(0);
-            this.timerPicture.Name = "timerPicture";
-            this.timerPicture.Padding = new System.Windows.Forms.Padding(25, 20, 0, 0);
-            this.timerPicture.Size = new System.Drawing.Size(270, 300);
-            this.timerPicture.TabIndex = 0;
-            this.timerPicture.TabStop = false;
-            // 
-            // startPause
-            // 
-            this.startPause.BackColor = System.Drawing.Color.Transparent;
-            this.startPause.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.startPause.Image = global::Organizer.Properties.Resources.start;
-            this.startPause.Location = new System.Drawing.Point(181, 314);
-            this.startPause.Name = "startPause";
-            this.startPause.Size = new System.Drawing.Size(150, 128);
-            this.startPause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.startPause.TabIndex = 5;
-            this.startPause.TabStop = false;
-            this.startPause.Click += new System.EventHandler(this.StartPause_Click);
-            // 
             // workLabel
             // 
             this.workLabel.AutoSize = true;
@@ -261,6 +236,31 @@
             this.couterCheckBox.UseVisualStyleBackColor = false;
             this.couterCheckBox.Visible = false;
             // 
+            // startPause
+            // 
+            this.startPause.BackColor = System.Drawing.Color.Transparent;
+            this.startPause.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.startPause.Image = global::Organizer.Properties.Resources.start;
+            this.startPause.Location = new System.Drawing.Point(181, 314);
+            this.startPause.Name = "startPause";
+            this.startPause.Size = new System.Drawing.Size(150, 128);
+            this.startPause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.startPause.TabIndex = 5;
+            this.startPause.TabStop = false;
+            this.startPause.Click += new System.EventHandler(this.StartPause_Click);
+            // 
+            // timerPicture
+            // 
+            this.timerPicture.BackColor = System.Drawing.Color.Transparent;
+            this.timerPicture.Image = global::Organizer.Properties.Resources._0;
+            this.timerPicture.Location = new System.Drawing.Point(9, 9);
+            this.timerPicture.Margin = new System.Windows.Forms.Padding(0);
+            this.timerPicture.Name = "timerPicture";
+            this.timerPicture.Padding = new System.Windows.Forms.Padding(25, 20, 0, 0);
+            this.timerPicture.Size = new System.Drawing.Size(270, 300);
+            this.timerPicture.TabIndex = 0;
+            this.timerPicture.TabStop = false;
+            // 
             // TimerForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -286,8 +286,8 @@
             this.Load += new System.EventHandler(this.TimerForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.timerPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.startPause)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.timerPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

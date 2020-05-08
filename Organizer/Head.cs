@@ -104,19 +104,56 @@ namespace Organizer
 
         private void LoadFiles()
         {
-            string[] schedule = File.ReadAllLines("Lessons.txt", Encoding.Default);
+            LoadSchedule();
 
-            Schedule = new string[schedule.Length][];
+            LoadHolydays();
 
-            for (int i = 0; i < schedule.Length; i++)
+            LoadDefaultWorks();
+
+            LoadDays();
+        }
+
+        private void LoadDays()
+        {
+            if (File.Exists("Days.txt") && !string.IsNullOrEmpty(File.ReadAllText("Days.txt")))
             {
-                List<string> array = new List<string>(schedule[i].Split(new string[2] { ", ", ": " }, StringSplitOptions.RemoveEmptyEntries));
-                array.RemoveAt(0);
+                string[] days = File.ReadAllLines("Days.txt");
 
-                Schedule[i] = array.ToArray();
+                Days.Clear();
+
+                for (int i = 0; i < days.Length; i++)
+                {
+                    Day day = Day.FromCSV(days[i]);
+                    Days.Add(day.Date, day);
+                }
             }
 
+            else
+            {
+                for (int i = 0; i < 273; i++)
+                    Days.Add(firstDay.AddDays(i), new Day(i, 2000 + year));
 
+                if (DateTime.IsLeapYear(2001 + year))
+                    Days.Add(firstDay.AddDays(273), new Day(273, 2000 + year));
+            }
+        }
+
+        private static void LoadDefaultWorks()
+        {
+            string[] lessonsDefaultWorks = File.ReadAllLines("Lessons default work.txt", Encoding.Default);
+
+            LessonsDefaultWork.Clear();
+
+            foreach (var lessonsDefaultWork in lessonsDefaultWorks)
+            {
+                string[] keyValue = lessonsDefaultWork.Split(new string[] { ": " }, StringSplitOptions.None);
+
+                LessonsDefaultWork.Add(keyValue[0], keyValue[1]);
+            }
+        }
+
+        private static void LoadHolydays()
+        {
             string[] holydays = File.ReadAllLines("Holydays.txt");
 
             foreach (var day in holydays)
@@ -163,40 +200,20 @@ namespace Organizer
                 string[] color = File.ReadAllLines("Save.txt")[1].Split(';');
                 Color = Color.FromArgb(int.Parse(color[0]), int.Parse(color[1]), int.Parse(color[2]));
             }
+        }
 
+        private static void LoadSchedule()
+        {
+            string[] schedule = File.ReadAllLines("Lessons.txt", Encoding.Default);
 
-            string[] lessonsDefaultWorks = File.ReadAllLines("Lessons default work.txt", Encoding.Default);
+            Schedule = new string[schedule.Length][];
 
-            LessonsDefaultWork.Clear();
-
-            foreach (var lessonsDefaultWork in lessonsDefaultWorks)
+            for (int i = 0; i < schedule.Length; i++)
             {
-                string[] keyValue = lessonsDefaultWork.Split(new string[] { ": " }, StringSplitOptions.None);
+                List<string> array = new List<string>(schedule[i].Split(new string[2] { ", ", ": " }, StringSplitOptions.RemoveEmptyEntries));
+                array.RemoveAt(0);
 
-                LessonsDefaultWork.Add(keyValue[0], keyValue[1]);
-            }
-
-
-            if (File.Exists("Days.txt") && !string.IsNullOrEmpty(File.ReadAllText("Days.txt")))
-            {
-                string[] days = File.ReadAllLines("Days.txt");
-
-                Days.Clear();
-
-                for (int i = 0; i < days.Length; i ++)
-                {
-                    Day day = Day.FromCSV(days[i]);
-                    Days.Add(day.Date, day);
-                }
-            }
-
-            else
-            {
-                for (int i = 0; i < 273; i++)
-                    Days.Add(firstDay.AddDays(i), new Day(i, 2000 + year));
-
-                if (DateTime.IsLeapYear(2001 + year))
-                    Days.Add(firstDay.AddDays(273), new Day(273, 2000 + year));
+                Schedule[i] = array.ToArray();
             }
         }
 
@@ -235,9 +252,9 @@ namespace Organizer
 
                 foreach (var work in Lessons[num].WorkList)
                     if (work.Key != "Default")
-                        Lessons[num].WorkLabel.Text += work.Value.Replace('☼', ',') + " | ";
+                        Lessons[num].WorkLabel.Text += work.Value.Replace("☼", ", ") + ", ";
 
-                Lessons[num].WorkLabel.Text = Lessons[num].WorkLabel.Text.Remove(Lessons[num].WorkLabel.Text.Length - 2, 2);
+                Lessons[num].WorkLabel.Text = Lessons[num].WorkLabel.Text.Remove(Lessons[num].WorkLabel.Text.Length - 2, 2); 
             }
 
             else
@@ -249,12 +266,8 @@ namespace Organizer
             editMode = !editMode;
 
             if (editMode)
-            {
                 for (int i = 0; i < lessonsCount; i++)
-                {
                     editModeLessonsBackup[i].CopyFrom(Lessons[i]);
-                }
-            }
 
             else
             {
@@ -272,7 +285,7 @@ namespace Organizer
                         Days[date].Lessons[i].CopyFrom(Lessons[i]);
             }
 
-            editModeButton.ForeColor = editMode ? Color.LimeGreen : Color;
+            editModeButton.ForeColor = editMode ? Color.LimeGreen : new Color();
 
             LessonsRefresh();
 
@@ -335,7 +348,7 @@ namespace Organizer
 
             SetColor(settings.Color);
             SetLanguage(Settings.ActiveLanguage);
-            LoadFiles();
+            LoadHolydays();
         }
 
         private void SetLanguage(string language)
@@ -348,6 +361,10 @@ namespace Organizer
             Color = color;
 
             ForeColor = Color;
+
+            foreach (var lesson in Lessons)
+                if(lesson.Enabled)
+                    lesson.NumLabel.ForeColor = Color;
         }
 
         private void InDevelop()
@@ -372,6 +389,7 @@ namespace Organizer
         private void TimerButton_Click(object sender, EventArgs e)
         {
             TimerForm form = new TimerForm();
+
             form.Show();
         }
 
@@ -409,7 +427,9 @@ namespace Organizer
                     Lessons[num - 1].WorkList.Add(work.Key, "");
 
                     foreach (var text in work.Value)
-                        Lessons[num - 1].WorkList[work.Key] += text;
+                        Lessons[num - 1].WorkList[work.Key] += text + '☼';
+
+                    Lessons[num - 1].WorkList[work.Key] = Lessons[num - 1].WorkList[work.Key].Remove(Lessons[num - 1].WorkList[work.Key].Length - 1, 1);
                 }
 
                 WorkRefresh(num - 1);

@@ -159,5 +159,8 @@
   <ItemGroup>
     <None Include="bin\Debug\Timer images\start.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Timer images\pause.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -124,6 +124,8 @@ namespace Organizer
         public string Title;
         public Dictionary<string, string> WorkList;
 
+        public bool Enabled;
+
         public void LoadWithSamples(int cellSize, Color color)
         {
             NumLabel.Size = new Size(50, cellSize);
@@ -159,6 +161,7 @@ namespace Organizer
             WorkLabel = new Label();
             AddWorkButton = new Button();
             WorkList = new Dictionary<string, string> { { "Default", "" } };
+            Enabled = true;
             Title = "";
 
             LoadWithSamples(cellSize, color);
@@ -232,6 +235,7 @@ namespace Organizer
 
             TitleLabel.Text = "";
             WorkLabel.Text = "";
+            Enabled = false;
         }
 
         public void SetTitle(string title)
@@ -239,8 +243,11 @@ namespace Organizer
             Title = title;
             TitleLabel.Text = Title;
 
-            WorkList["Default"] = Head.LessonsDefaultWork[Title];
-            if (WorkList.Count == 1) WorkLabel.Text = WorkList["Default"];
+            try { WorkList["Default"] = Head.LessonsDefaultWork[Title]; }
+            catch { WorkList["Default"] = "Не задано"; }
+
+            if (WorkList.Count == 1)
+                WorkLabel.Text = WorkList["Default"];
         }
 
         public static Lesson CopyFromStatic(Lesson lesson)

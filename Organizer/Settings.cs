@@ -71,7 +71,7 @@ namespace Organizer
         {
             FormClosing += SaveFiles;
 
-            LocalizationControls.AddRange(new Control[5] { languageSelector, addHolyday, fromLabel, toLabel, colorLabel });
+            LocalizationControls.AddRange(new Control[6] { languageSelector, addHolyday, fromLabel, toLabel, colorLabel, holyLabel });
 
             languageSelector.Text = ActiveLanguage;
 
