@@ -100,6 +100,7 @@
             // 
             // settingsButton
             // 
+            this.settingsButton.AccessibleName = "Settings";
             this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.settingsButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.settingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -116,6 +117,7 @@
             // 
             // saveScreenButton
             // 
+            this.saveScreenButton.AccessibleName = "Save screen";
             this.saveScreenButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.saveScreenButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.saveScreenButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -132,6 +134,7 @@
             // 
             // editModeButton
             // 
+            this.editModeButton.AccessibleName = "Edit mode";
             this.editModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.editModeButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.editModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -158,6 +161,7 @@
             // 
             // timerButton
             // 
+            this.timerButton.AccessibleName = "Timer";
             this.timerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.timerButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.timerButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -196,6 +200,7 @@
             // 
             // feedbackButton
             // 
+            this.feedbackButton.AccessibleName = "Feedback";
             this.feedbackButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.feedbackButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.feedbackButton.Dock = System.Windows.Forms.DockStyle.Fill;

@@ -1,11 +1,11 @@
-Английский язык: Повторить правила
-Биология: Повторить последний §
-География: Повторить последний §
-Геометрия: Повторить правила
-История: Повторить последний §
-Немецкий язык: Повторить правила
-Обществознание: повторить последний §
-Русский язык: повторить правила
-Физика: повторить последний §
-Физкультура: спортивная форма
-Химия: повторить последний §
+English language: Repeat the rules
+Biology: Repeat the last §
+Geography: Repeat the last §
+Geometry: Repeat the rules
+History: Repeat the last §
+German language: Repeat the rules
+Social studies: Repeat the last §
+Russian language: Repeat the rules
+Physics: Repeat the last §
+Physical education: Sports form
+Chemistry: Repeat the last §

@@ -29,6 +29,10 @@ namespace Organizer
         public static string[][] Schedule;
         public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
 
+        public static Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>();
+
+        public static string ActiveLanguage;
+
         private static int year = 19;
 
         private DateTime date, firstDay, lastDay;
@@ -36,6 +40,7 @@ namespace Organizer
 
         public static Lesson[] Lessons;
         private Lesson[] editModeLessonsBackup;
+        public List<Control> LocalizationControls = new List<Control>();
         public static Dictionary<DateTime, Day> Days = new Dictionary<DateTime, Day>();
 
         private bool editMode;
@@ -87,7 +92,6 @@ namespace Organizer
             {
                 Lessons[i] = new Lesson(i + 1, CellSize, Color);
 
-                Lessons[i].WorkLabel.Click += WorkClick;
                 Lessons[i].TitleLabel.Click += TitleClick;
                 Lessons[i].AddWorkButton.Click += AddWorkButtonClick;
 
@@ -95,15 +99,26 @@ namespace Organizer
                 lessonsPanel.Controls.Add(Lessons[i].NumLabel);
                 lessonsPanel.Controls.Add(Lessons[i].TitleLabel);
                 lessonsPanel.Controls.Add(Lessons[i].WorkLabel);
+
+                LocalizationControls.Add(Lessons[i].TitleLabel);
+                LocalizationControls.Add(Lessons[i].WorkLabel);
             }
 
+            foreach (Button button in tableLayoutPanel1.Controls)
+                LocalizationControls.Add(button);
+
             SetColor(Color);
+            SetLanguage(ActiveLanguage);
 
             LessonsRefresh();
         }
 
         private void LoadFiles()
         {
+            LoadSave();
+
+            LoadTranslations();
+
             LoadSchedule();
 
             LoadHolydays();
@@ -111,6 +126,38 @@ namespace Organizer
             LoadDefaultWorks();
 
             LoadDays();
+        }
+
+        private void LoadTranslations()
+        {
+            Dictionary<string, string> english = new Dictionary<string, string>();
+
+            Dictionary<string, string> russian = new Dictionary<string, string>();
+
+            string[] englishStr = File.ReadAllLines("Translations\\English.csv");
+            string[] russianStr = File.ReadAllLines("Translations\\Русский.csv", Encoding.GetEncoding(1251));
+
+            for (int i = 0; i < englishStr.Length; i ++)
+            {
+                string[] englishWord = englishStr[i].Split(';');
+                string[] russianWord = russianStr[i].Split(';');
+
+                english.Add(englishWord[0], englishWord[1]);
+                russian.Add(russianWord[0], russianWord[1]);
+            }
+
+            Translations.Add("English", english);
+            Translations.Add("Русский", russian);
+        }
+
+        private void LoadSave()
+        {
+            string[] save = File.ReadAllLines("Save.txt");
+
+            ActiveLanguage = save[0];
+
+            string[] color = save[1].Split(';');
+            Color = Color.FromArgb(int.Parse(color[0]), int.Parse(color[1]), int.Parse(color[2]));
         }
 
         private void LoadDays()
@@ -138,7 +185,7 @@ namespace Organizer
             }
         }
 
-        private static void LoadDefaultWorks()
+        private void LoadDefaultWorks()
         {
             string[] lessonsDefaultWorks = File.ReadAllLines("Lessons default work.txt", Encoding.Default);
 
@@ -152,7 +199,7 @@ namespace Organizer
             }
         }
 
-        private static void LoadHolydays()
+        private void LoadHolydays()
         {
             string[] holydays = File.ReadAllLines("Holydays.txt");
 
@@ -196,13 +243,10 @@ namespace Organizer
                         ThisYearHolydays.Add(dayToAdd);
                     }
                 }
-
-                string[] color = File.ReadAllLines("Save.txt")[1].Split(';');
-                Color = Color.FromArgb(int.Parse(color[0]), int.Parse(color[1]), int.Parse(color[2]));
             }
         }
 
-        private static void LoadSchedule()
+        private void LoadSchedule()
         {
             string[] schedule = File.ReadAllLines("Lessons.txt", Encoding.Default);
 
@@ -244,7 +288,7 @@ namespace Organizer
             DateText.Text = date.Day.ToString("00") + "." + date.Month.ToString("00") + "." + date.Year;
         }
 
-        public static void WorkRefresh(int num)
+        public void WorkRefresh(int num)
         {
             if (Lessons[num].WorkList.Count > 1)
             {
@@ -254,11 +298,11 @@ namespace Organizer
                     if (work.Key != "Default")
                         Lessons[num].WorkLabel.Text += work.Value.Replace("☼", ", ") + ", ";
 
-                Lessons[num].WorkLabel.Text = Lessons[num].WorkLabel.Text.Remove(Lessons[num].WorkLabel.Text.Length - 2, 2); 
+                Lessons[num].WorkLabel.Text = Lessons[num].WorkLabel.Text.Remove(Lessons[num].WorkLabel.Text.Length - 2, 2);
             }
 
             else
-                Lessons[num].WorkLabel.Text = Lessons[num].WorkList["Default"];
+                Lessons[num].SetTitle(Lessons[num].Title);
         }
 
         private void EditModeButton_Click(object sender, EventArgs e)
@@ -347,13 +391,18 @@ namespace Organizer
             settings.ShowDialog();
 
             SetColor(settings.Color);
-            SetLanguage(Settings.ActiveLanguage);
+            SetLanguage(ActiveLanguage);
             LoadHolydays();
         }
 
         private void SetLanguage(string language)
         {
-            
+            foreach (var control in LocalizationControls)
+                if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
+                    control.Text = Translations[language][control.AccessibleName];
+
+            for(int i = 0; i < lessonsCount; i++)
+                WorkRefresh(i);
         }
 
         private void SetColor(Color color)
@@ -379,11 +428,6 @@ namespace Organizer
 
             else
                 DateMinusButton_Click(sender, e);
-        }
-
-        private void WorkClick(object sender, EventArgs e)
-        {
-            
         }
 
         private void TimerButton_Click(object sender, EventArgs e)

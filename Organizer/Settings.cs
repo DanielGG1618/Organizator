@@ -13,55 +13,11 @@ namespace Organizer
 {
     public partial class Settings : Form
     {
-        public static Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>();
-
-        public static string ActiveLanguage; 
-
         public List<Control> LocalizationControls = new List<Control>();
         public Color Color;
 
-        private static bool firstLoad = true;
-
         public Settings()
         {
-            if (firstLoad)
-            {
-                firstLoad = false;
-
-                LoadFiles();
-
-                Dictionary<string, string> english = new Dictionary<string, string>
-                {
-                    { "Language", "English" },
-                    { "Add", "Add" },
-                    { "Remove", "Remove" },
-                    { "From", "From" },
-                    { "To", "To" },
-                    { "Primary", "Primary" },
-                    { "Secondary", "Secondary" },
-                    { "This year", "This year" },
-                    { "Select color", "Select color" },
-                    { "Add holydays", "Add holydays"}
-                };
-
-                Dictionary<string, string> russian = new Dictionary<string, string>
-                {
-                    { "Language", "Русский" },
-                    { "Add", "Добавить" },
-                    { "Remove", "Удалить" },
-                    { "From", "От" },
-                    { "To", "До" },
-                    { "Primary", "Первичные" },
-                    { "Secondary", "Вторичные" },
-                    { "This year", "Этого года" },
-                    { "Select color", "Выберите цвет" },
-                    { "Add holydays", "Добавить выходные"}
-                };
-
-                Translations.Add("English", english);
-                Translations.Add("Русский", russian);
-            }
-
             Color = Head.Color;
 
             InitializeComponent();
@@ -73,7 +29,7 @@ namespace Organizer
 
             LocalizationControls.AddRange(new Control[6] { languageSelector, addHolyday, fromLabel, toLabel, colorLabel, holyLabel });
 
-            languageSelector.Text = ActiveLanguage;
+            languageSelector.Text = Head.ActiveLanguage;
 
             fromLabel.Visible = false;
             toLabel.Visible = false;
@@ -98,20 +54,15 @@ namespace Organizer
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ActiveLanguage = languageSelector.Text;
-            languagePict.Image = Image.FromFile("Language images/" + ActiveLanguage + ".png");
+            Head.ActiveLanguage = languageSelector.Text;
+            languagePict.Image = Image.FromFile("Language images/" + Head.ActiveLanguage + ".png");
 
             SetLanguage();
         }
 
-        private void LoadFiles()
-        {
-            ActiveLanguage = File.ReadAllLines("Save.txt")[0];
-        }
-
         private void SaveFiles(object sender, EventArgs e)
         {
-            File.WriteAllLines("Save.txt", new string[2] { ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B });
+            File.WriteAllLines("Save.txt", new string[2] { Head.ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B });
         }
 
         private void SetLanguage()
@@ -119,13 +70,11 @@ namespace Organizer
             int holydayTypeIndex = holydayTypeComboBox.SelectedIndex;
 
             holydayTypeComboBox.Items.Clear();
-            holydayTypeComboBox.Items.AddRange(new string[3] { Translations[ActiveLanguage]["Primary"], Translations[ActiveLanguage]["Secondary"], Translations[ActiveLanguage]["This year"] });
+            holydayTypeComboBox.Items.AddRange(new string[3] { Head.Translations[Head.ActiveLanguage]["Primary"], Head.Translations[Head.ActiveLanguage]["Secondary"], Head.Translations[Head.ActiveLanguage]["This year"] });
             holydayTypeComboBox.SelectedIndex = holydayTypeIndex;
 
             foreach (var control in LocalizationControls)
-            {
-                control.Text = Translations[ActiveLanguage][control.AccessibleName.ToString()];
-            }
+                control.Text = Head.Translations[Head.ActiveLanguage][control.AccessibleName];
         }
 
         private void AddHolyday_Click(object sender, EventArgs e)
@@ -165,7 +114,7 @@ namespace Organizer
         {
             UpdateAddHolydayButtonStatus();
 
-            if (holydayTypeComboBox.Text == Translations[ActiveLanguage]["Primary"])
+            if (holydayTypeComboBox.Text == Head.Translations[Head.ActiveLanguage]["Primary"])
             {
                 fromLabel.Visible = false;
                 toLabel.Visible = false;
@@ -203,7 +152,7 @@ namespace Organizer
             else
                 addHolyday.AccessibleName = "Remove";
 
-            addHolyday.Text = Translations[ActiveLanguage][addHolyday.AccessibleName.ToString()];
+            addHolyday.Text = Head.Translations[Head.ActiveLanguage][addHolyday.AccessibleName];
         }
 
         private string HolydayToAdd()

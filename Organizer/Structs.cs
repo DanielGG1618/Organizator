@@ -9,7 +9,7 @@ namespace Organizer
     public struct Day
     {
         public DateTime Date;
-        private DateTime generalViewDate;
+        private readonly DateTime generalViewDate;
 
         public bool IsWorking;
         public int Num;
@@ -64,9 +64,7 @@ namespace Organizer
             Lessons = new List<Lesson>();
 
             for (int i = 0; i < Head.Schedule[(int)Date.DayOfWeek].Length; i++)
-            {
                 Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.Color, Head.Schedule[(int)Date.DayOfWeek][i]));
-            }
         }
 
         public Day(int num, int year, List<Lesson> lessons)
@@ -241,28 +239,39 @@ namespace Organizer
         public void SetTitle(string title)
         {
             Title = title;
-            TitleLabel.Text = Title;
+            
+            TitleLabel.AccessibleName = Title;
+            TitleLabel.Text = Head.Translations[Head.ActiveLanguage][TitleLabel.AccessibleName];
 
             try { WorkList["Default"] = Head.LessonsDefaultWork[Title]; }
-            catch { WorkList["Default"] = "Не задано"; }
+            catch { WorkList["Default"] = "Isn't set"; }
 
             if (WorkList.Count == 1)
-                WorkLabel.Text = WorkList["Default"];
+            {
+                WorkLabel.AccessibleName = WorkList["Default"];
+
+                WorkLabel.Text = Head.Translations[Head.ActiveLanguage][WorkLabel.AccessibleName];
+            }
+
+            else
+                WorkLabel.AccessibleName = "";
         }
 
         public static Lesson CopyFromStatic(Lesson lesson)
         {
-            Lesson result = new Lesson();
+            Lesson result = new Lesson
+            {
+                Title = lesson.Title,
 
-            result.Title = lesson.Title;
+                WorkLabel = new Label(),
+                TitleLabel = new Label(),
 
-            result.TitleLabel = new Label();
+                WorkList = new Dictionary<string, string>()
+            };
+
             result.TitleLabel.Text = result.Title;
 
-            result.WorkLabel = new Label();
             result.WorkLabel.Text = lesson.WorkLabel.Text;
-
-            result.WorkList = new Dictionary<string, string>();
 
             foreach (var workList in lesson.WorkList)
                 result.WorkList.Add(workList.Key, workList.Value);
@@ -282,8 +291,6 @@ namespace Organizer
 
         public static Lesson FromCSV(string CSV)
         {
-            Lesson lesson;
-
             string[] splited = CSV.Split(new string[1] { "╫ " }, StringSplitOptions.None);
 
             Dictionary<string, string> workList = new Dictionary<string, string>();
@@ -291,9 +298,7 @@ namespace Organizer
             for (int i = 2; i < splited.Length - 1; i += 2)
                 workList.Add(splited[i], splited[i + 1]);
 
-            lesson = new Lesson(int.Parse(splited[0]), Head.CellSize, Head.Color, splited[1], workList);
-
-            return lesson;
+            return new Lesson(int.Parse(splited[0]), Head.CellSize, Head.Color, splited[1], workList);
         }
     }
 }
