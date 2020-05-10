@@ -13,6 +13,8 @@ namespace Organizer
 {
     public partial class TimerForm : Form
     {
+        public List<Control> LocalizationControls = new List<Control>();
+
         private Image[] timerImages = new Image[24];
         private Image pause, start;
         private bool started, work = true, pauseInEnd, counter;
@@ -30,10 +32,22 @@ namespace Organizer
         {
             UpdateCyclesLabel(worksCount, counter);
             UpdateTimeLabel(targetTime - time);
+
             SetColor(Head.Color);
+            SetLanguage(Head.ActiveLanguage);
 
             workTextBox.Text = (workTime / 60).ToString();
             breakTextBox.Text = (breakTime / 60).ToString();
+        }
+
+        private void SetLanguage(string language)
+        {
+            LocalizationControls.AddRange(new Control[] { resetTimer, settingsButton, workLabel, restLabel, pauseCheckBox, couterCheckBox, this });
+
+            foreach (Control control in LocalizationControls)
+                control.Text = Head.Translations[language][control.AccessibleName];
+
+            skipButton.Text = Head.Translations[language]["Skip"] + " " + (work ? Head.Translations[language]["work"] : Head.Translations[language]["rest"]);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -140,7 +154,7 @@ namespace Organizer
             time = -1;
 
             work = !work;
-            skipButton.Text = "Пропустить " + (work ? "работу" : "отдых");
+            skipButton.Text = Head.Translations[Head.ActiveLanguage]["Skip"] + " " + (work ? Head.Translations[Head.ActiveLanguage]["work"] : Head.Translations[Head.ActiveLanguage]["rest"]);
 
             targetTime = work ? workTime : breakTime;
 
@@ -172,7 +186,9 @@ namespace Organizer
 
             if (!settings)
             {
-                DialogResult result = MessageBox.Show("Сохранить изменения?", "Настройки таймера", MessageBoxButtons.YesNoCancel);
+                YesNoCancelDialog dialog = new YesNoCancelDialog(Head.Translations[Head.ActiveLanguage]["Timer settings"]);
+
+                DialogResult result = dialog.ShowDialog();
 
                 if (result == DialogResult.Yes)
                 {
@@ -201,17 +217,17 @@ namespace Organizer
             pauseCheckBox.Checked = pauseInEnd;
             couterCheckBox.Checked = counter;
 
-            workLabel.Visible = settings;//\\//\\
-            breakLabel.Visible = settings;//\\//\\//\\
-            workTextBox.Visible = settings;//\\//\\//\\//\\
-            breakTextBox.Visible = settings;//\\//\\//\\//\\//\\
-            pauseCheckBox.Visible = settings;//\\//\\//\\//\\//\\//\\
-            couterCheckBox.Visible = settings;//\\//\\//\\//\\\//\\//\\//\\
+            workLabel.Visible = settings;
+            restLabel.Visible = settings;
+            workTextBox.Visible = settings;
+            breakTextBox.Visible = settings;
+            pauseCheckBox.Visible = settings;
+            couterCheckBox.Visible = settings;
         }
 
         private void UpdateCyclesLabel(int _worksCount, bool _counter)
         {
-            cycleLabel.Text = "цикл №" + _worksCount;
+            cycleLabel.Text = Head.Translations[Head.ActiveLanguage]["Сycle"] + " №" + _worksCount;
 
             if(_counter)
             {

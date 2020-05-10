@@ -38,7 +38,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.cycleLabel = new System.Windows.Forms.Label();
             this.workLabel = new System.Windows.Forms.Label();
-            this.breakLabel = new System.Windows.Forms.Label();
+            this.restLabel = new System.Windows.Forms.Label();
             this.workTextBox = new System.Windows.Forms.TextBox();
             this.breakTextBox = new System.Windows.Forms.TextBox();
             this.pauseCheckBox = new System.Windows.Forms.CheckBox();
@@ -87,6 +87,7 @@
             // 
             // resetTimer
             // 
+            this.resetTimer.AccessibleName = "Reset timer";
             this.resetTimer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.resetTimer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resetTimer.FlatAppearance.BorderSize = 0;
@@ -103,6 +104,7 @@
             // 
             // settingsButton
             // 
+            this.settingsButton.AccessibleName = "Settings";
             this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.settingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsButton.FlatAppearance.BorderSize = 0;
@@ -155,11 +157,12 @@
             this.cycleLabel.Name = "cycleLabel";
             this.cycleLabel.Size = new System.Drawing.Size(194, 35);
             this.cycleLabel.TabIndex = 9;
-            this.cycleLabel.Text = "цикл №0";
+            this.cycleLabel.Text = "Цикл №0";
             this.cycleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // workLabel
             // 
+            this.workLabel.AccessibleName = "Work time";
             this.workLabel.AutoSize = true;
             this.workLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.workLabel.Font = new System.Drawing.Font("Arial", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -171,18 +174,19 @@
             this.workLabel.Text = "Время работы";
             this.workLabel.Visible = false;
             // 
-            // breakLabel
+            // restLabel
             // 
-            this.breakLabel.AutoSize = true;
-            this.breakLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.breakLabel.Font = new System.Drawing.Font("Arial", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.breakLabel.ForeColor = System.Drawing.Color.Black;
-            this.breakLabel.Location = new System.Drawing.Point(12, 392);
-            this.breakLabel.Name = "breakLabel";
-            this.breakLabel.Size = new System.Drawing.Size(216, 33);
-            this.breakLabel.TabIndex = 6;
-            this.breakLabel.Text = "Время отдыха";
-            this.breakLabel.Visible = false;
+            this.restLabel.AccessibleName = "Rest time";
+            this.restLabel.AutoSize = true;
+            this.restLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.restLabel.Font = new System.Drawing.Font("Arial", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.restLabel.ForeColor = System.Drawing.Color.Black;
+            this.restLabel.Location = new System.Drawing.Point(12, 392);
+            this.restLabel.Name = "restLabel";
+            this.restLabel.Size = new System.Drawing.Size(216, 33);
+            this.restLabel.TabIndex = 6;
+            this.restLabel.Text = "Время отдыха";
+            this.restLabel.Visible = false;
             // 
             // workTextBox
             // 
@@ -214,6 +218,7 @@
             // 
             // pauseCheckBox
             // 
+            this.pauseCheckBox.AccessibleName = "Pause in end";
             this.pauseCheckBox.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
             this.pauseCheckBox.ForeColor = System.Drawing.Color.Black;
             this.pauseCheckBox.Location = new System.Drawing.Point(286, 334);
@@ -226,6 +231,7 @@
             // 
             // couterCheckBox
             // 
+            this.couterCheckBox.AccessibleName = "Counter";
             this.couterCheckBox.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
             this.couterCheckBox.ForeColor = System.Drawing.Color.Black;
             this.couterCheckBox.Location = new System.Drawing.Point(286, 389);
@@ -263,6 +269,7 @@
             // 
             // TimerForm
             // 
+            this.AccessibleName = "Timer";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.OliveDrab;
             this.ClientSize = new System.Drawing.Size(494, 448);
@@ -270,7 +277,7 @@
             this.Controls.Add(this.pauseCheckBox);
             this.Controls.Add(this.breakTextBox);
             this.Controls.Add(this.workTextBox);
-            this.Controls.Add(this.breakLabel);
+            this.Controls.Add(this.restLabel);
             this.Controls.Add(this.workLabel);
             this.Controls.Add(this.startPause);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -303,7 +310,7 @@
         private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox startPause;
-        private System.Windows.Forms.Label breakLabel;
+        private System.Windows.Forms.Label restLabel;
         private System.Windows.Forms.TextBox workTextBox;
         private System.Windows.Forms.TextBox breakTextBox;
         private System.Windows.Forms.CheckBox pauseCheckBox;

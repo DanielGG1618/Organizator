@@ -63,32 +63,34 @@ partial class WorkAddForm
             // 
             // done
             // 
+            this.done.AccessibleName = "Done";
             this.done.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.done.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.done.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.done.Location = new System.Drawing.Point(244, 169);
             this.done.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.done.Name = "done";
             this.done.Size = new System.Drawing.Size(219, 33);
             this.done.TabIndex = 5;
-            this.done.Text = "готово";
+            this.done.Text = "Готово";
             this.done.UseVisualStyleBackColor = true;
             // 
             // cancel
             // 
+            this.cancel.AccessibleName = "Cancel";
             this.cancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cancel.Location = new System.Drawing.Point(19, 169);
             this.cancel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(219, 33);
             this.cancel.TabIndex = 5;
-            this.cancel.Text = "отмена";
+            this.cancel.Text = "Отмена";
             this.cancel.UseVisualStyleBackColor = true;
             // 
             // addTextBox

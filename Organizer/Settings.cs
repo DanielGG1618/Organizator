@@ -27,8 +27,6 @@ namespace Organizer
         {
             FormClosing += SaveFiles;
 
-            LocalizationControls.AddRange(new Control[6] { languageSelector, addHolyday, fromLabel, toLabel, colorLabel, holyLabel });
-
             languageSelector.Text = Head.ActiveLanguage;
 
             fromLabel.Visible = false;
@@ -39,7 +37,7 @@ namespace Organizer
             holydayStartPicker.Location = new Point(0, 13);
 
             SetColor(Head.Color);
-            SetLanguage();
+            SetLanguage(Head.ActiveLanguage);
 
             holydayTypeComboBox.SelectedIndex = 0;
         }
@@ -57,7 +55,7 @@ namespace Organizer
             Head.ActiveLanguage = languageSelector.Text;
             languagePict.Image = Image.FromFile("Language images/" + Head.ActiveLanguage + ".png");
 
-            SetLanguage();
+            SetLanguage(Head.ActiveLanguage);
         }
 
         private void SaveFiles(object sender, EventArgs e)
@@ -65,8 +63,10 @@ namespace Organizer
             File.WriteAllLines("Save.txt", new string[2] { Head.ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B });
         }
 
-        private void SetLanguage()
+        private void SetLanguage(string language)
         {
+            LocalizationControls.AddRange(new Control[] { languageSelector, addHolyday, fromLabel, toLabel, colorLabel, holyLabel, this });
+
             int holydayTypeIndex = holydayTypeComboBox.SelectedIndex;
 
             holydayTypeComboBox.Items.Clear();
@@ -74,7 +74,7 @@ namespace Organizer
             holydayTypeComboBox.SelectedIndex = holydayTypeIndex;
 
             foreach (var control in LocalizationControls)
-                control.Text = Head.Translations[Head.ActiveLanguage][control.AccessibleName];
+                control.Text = Head.Translations[language][control.AccessibleName];
         }
 
         private void AddHolyday_Click(object sender, EventArgs e)

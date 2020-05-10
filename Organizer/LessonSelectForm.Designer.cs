@@ -28,93 +28,95 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.LessonLabel = new System.Windows.Forms.Label();
-            this.Done = new System.Windows.Forms.Button();
-            this.Cancel = new System.Windows.Forms.Button();
+            this.comboBox = new System.Windows.Forms.ComboBox();
+            this.lessonLabel = new System.Windows.Forms.Label();
+            this.done = new System.Windows.Forms.Button();
+            this.cancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // comboBox
             // 
-            this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox1.ForeColor = System.Drawing.Color.White;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.IntegralHeight = false;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Алгебра",
-            "Английский язык",
-            "Биология",
-            "География",
-            "Геометрия",
-            "Информатика",
-            "История",
-            "Литература",
-            "Музыка",
-            "Немецкий язык",
-            "ОБЖ",
-            "Обществознание",
-            "Родной язык",
-            "Русский язык",
-            "Технология",
-            "Физика",
-            "Физкультура",
-            "Химия"});
-            this.comboBox1.Location = new System.Drawing.Point(19, 53);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(194, 33);
-            this.comboBox1.Sorted = true;
-            this.comboBox1.TabIndex = 3;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
+            this.comboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBox.ForeColor = System.Drawing.Color.White;
+            this.comboBox.FormattingEnabled = true;
+            this.comboBox.IntegralHeight = false;
+            this.comboBox.Items.AddRange(new object[] {
+            "Algebra",
+            "Biology",
+            "Chemistry",
+            "English language",
+            "Geography",
+            "Geometry",
+            "German language",
+            "History",
+            "Informatics",
+            "Life safety",
+            "Literature",
+            "Music",
+            "Native language",
+            "Physical education",
+            "Physics",
+            "Russian language",
+            "Social studies",
+            "Technology"});
+            this.comboBox.Location = new System.Drawing.Point(19, 53);
+            this.comboBox.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
+            this.comboBox.Name = "comboBox";
+            this.comboBox.Size = new System.Drawing.Size(194, 33);
+            this.comboBox.Sorted = true;
+            this.comboBox.TabIndex = 3;
+            this.comboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
-            // LessonLabel
+            // lessonLabel
             // 
-            this.LessonLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LessonLabel.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.LessonLabel.Location = new System.Drawing.Point(19, 14);
-            this.LessonLabel.Margin = new System.Windows.Forms.Padding(10);
-            this.LessonLabel.Name = "LessonLabel";
-            this.LessonLabel.Size = new System.Drawing.Size(194, 29);
-            this.LessonLabel.TabIndex = 4;
-            this.LessonLabel.Text = " Урок №n";
+            this.lessonLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lessonLabel.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.lessonLabel.Location = new System.Drawing.Point(19, 14);
+            this.lessonLabel.Margin = new System.Windows.Forms.Padding(10);
+            this.lessonLabel.Name = "lessonLabel";
+            this.lessonLabel.Size = new System.Drawing.Size(194, 29);
+            this.lessonLabel.TabIndex = 4;
+            this.lessonLabel.Text = " Урок №n";
             // 
-            // Done
+            // done
             // 
-            this.Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Done.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.Done.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Done.Location = new System.Drawing.Point(123, 149);
-            this.Done.Name = "Done";
-            this.Done.Size = new System.Drawing.Size(90, 33);
-            this.Done.TabIndex = 5;
-            this.Done.Text = "готово";
-            this.Done.UseVisualStyleBackColor = true;
+            this.done.AccessibleName = "Done";
+            this.done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.done.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.done.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.done.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.done.Location = new System.Drawing.Point(123, 149);
+            this.done.Name = "done";
+            this.done.Size = new System.Drawing.Size(90, 33);
+            this.done.TabIndex = 5;
+            this.done.Text = "Готово";
+            this.done.UseVisualStyleBackColor = true;
             // 
-            // Cancel
+            // cancel
             // 
-            this.Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Cancel.Location = new System.Drawing.Point(19, 149);
-            this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(90, 33);
-            this.Cancel.TabIndex = 5;
-            this.Cancel.Text = "отмена";
-            this.Cancel.UseVisualStyleBackColor = true;
+            this.cancel.AccessibleName = "Cancel";
+            this.cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cancel.Location = new System.Drawing.Point(19, 149);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(90, 33);
+            this.cancel.TabIndex = 5;
+            this.cancel.Text = "Отмена";
+            this.cancel.UseVisualStyleBackColor = true;
             // 
             // LessonSelectForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(232, 208);
-            this.Controls.Add(this.Cancel);
-            this.Controls.Add(this.Done);
-            this.Controls.Add(this.LessonLabel);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cancel);
+            this.Controls.Add(this.done);
+            this.Controls.Add(this.lessonLabel);
+            this.Controls.Add(this.comboBox);
             this.ForeColor = System.Drawing.Color.OliveDrab;
             this.MaximumSize = new System.Drawing.Size(250, 250);
             this.MinimumSize = new System.Drawing.Size(250, 250);
@@ -127,9 +129,9 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label LessonLabel;
-        private System.Windows.Forms.Button Done;
-        private System.Windows.Forms.Button Cancel;
+        private System.Windows.Forms.ComboBox comboBox;
+        private System.Windows.Forms.Label lessonLabel;
+        private System.Windows.Forms.Button done;
+        private System.Windows.Forms.Button cancel;
     }
 }

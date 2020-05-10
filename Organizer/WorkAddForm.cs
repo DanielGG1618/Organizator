@@ -9,6 +9,7 @@ namespace Organizer
     public partial class WorkAddForm : Form
     {
         public Dictionary<string, List<string>> WorkList = new Dictionary<string, List<string>>();
+        public List<Control> LocalizationControls = new List<Control>();
 
         private Label selectedLabel = new Label();
 
@@ -26,16 +27,30 @@ namespace Organizer
         {
             typeSelector.SelectedIndex = 0;
 
+            LocalizationControls.AddRange(new Control[2] { cancel, done });
+
             RefreshResult();
 
             ForeColor = Head.Color;
+
+            SetLanguage(Head.ActiveLanguage);
+        }
+
+        private void SetLanguage(string language)
+        {
+            typeSelector.Items.Clear();
+            typeSelector.Items.AddRange(new string[4] { Head.Translations[Head.ActiveLanguage]["Other"], Head.Translations[Head.ActiveLanguage]["On pages"], Head.Translations[Head.ActiveLanguage]["Numbers"], Head.Translations[Head.ActiveLanguage]["Paragraphs"] });
+            typeSelector.SelectedIndex = 0;
+
+            foreach (var control in LocalizationControls)
+                control.Text = Head.Translations[language][control.AccessibleName];
         }
 
         private void SetDefaultResult()
         {
             resultPanel.Controls.Clear();
 
-            resultPanel.Controls.Add(ResultLabelSample(WorkList["Default"][0]));
+            resultPanel.Controls.Add(ResultLabelSample(Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]]));
         }
 
         private void RefreshResult()
@@ -146,37 +161,49 @@ namespace Organizer
 
         private void TypeSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (typeSelector.Text == Head.Translations[Head.ActiveLanguage]["On pages"])
+                typeSelector.AccessibleName = "On pages";
+
+            else if (typeSelector.Text == Head.Translations[Head.ActiveLanguage]["Paragraphs"])
+                typeSelector.AccessibleName = "Paragraphs";
+
+            else if (typeSelector.Text == Head.Translations[Head.ActiveLanguage]["Numbers"])
+                typeSelector.AccessibleName = "Numbers";
+
+            else
+                typeSelector.AccessibleName = "Other";
+
             if (!removeMode)
                 return;
 
             switch (selectedLabel.Text[0])
             {
                 case 'C':
-                    WorkList["На страницах"].Remove(selectedLabel.Text);
+                    WorkList["On pages"].Remove(selectedLabel.Text);
 
-                    if (WorkList["На страницах"].Count == 0)
-                        WorkList.Remove("На страницах");
+                    if (WorkList["On pages"].Count == 0)
+                        WorkList.Remove("On pages");
                     break;
 
                 case '§':
-                    WorkList["Параграфы"].Remove(selectedLabel.Text);
+                    WorkList["Paragraphs"].Remove(selectedLabel.Text);
 
-                    if (WorkList["Параграфы"].Count == 0)
-                        WorkList.Remove("Параграфы");
+                    if (WorkList["Paragraphs"].Count == 0)
+                        WorkList.Remove("Paragraphs");
                     break;
 
                 case '№':
-                    WorkList["Номера"].Remove(selectedLabel.Text);
+                    WorkList["Numbers"].Remove(selectedLabel.Text);
 
-                    if (WorkList["Номера"].Count == 0)
-                        WorkList.Remove("Номера");
+                    if (WorkList["Numbers"].Count == 0)
+                        WorkList.Remove("Numbers");
                     break;
 
                 default:
-                    WorkList["Другое"].Remove(selectedLabel.Text);
+                    WorkList["Other"].Remove(selectedLabel.Text);
 
-                    if (WorkList["Другое"].Count == 0)
-                        WorkList.Remove("Другое");
+                    if (WorkList["Other"].Count == 0)
+                        WorkList.Remove("Other");
                     break;
             }
 
@@ -185,26 +212,26 @@ namespace Organizer
                 selectedLabel.Text[0] == '№')
                 selectedLabel.Text = selectedLabel.Text.Remove(0, 2);
 
-            switch (typeSelector.Text)
+            switch (typeSelector.AccessibleName)
             {
-                case "На страницах":
+                case "On pages":
                     selectedLabel.Text = selectedLabel.Text.Insert(0, "C ");
                     break;
 
-                case "Параграфы":
+                case "Paragraphs":
                     selectedLabel.Text = selectedLabel.Text.Insert(0, "§ ");
                     break;
 
-                case "Номера":
+                case "Numbers":
                     selectedLabel.Text = selectedLabel.Text.Insert(0, "№ ");
                     break;
             }
 
-            if (WorkList.Keys.Contains(typeSelector.Text))
-                WorkList[typeSelector.Text].Add(selectedLabel.Text);
+            if (WorkList.Keys.Contains(typeSelector.AccessibleName))
+                WorkList[typeSelector.AccessibleName].Add(selectedLabel.Text);
 
             else
-                WorkList.Add(typeSelector.Text, new List<string>(new string[1] { selectedLabel.Text }));
+                WorkList.Add(typeSelector.AccessibleName, new List<string>(new string[1] { selectedLabel.Text }));
 
         }
 
@@ -212,7 +239,7 @@ namespace Organizer
         {
             Label label = (Label)sender;
 
-            if (label.Text == WorkList["Default"][0])
+            if (label.Text == Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]])
                 return;
 
             SetSelectedLabel(label);
@@ -231,19 +258,19 @@ namespace Organizer
                 switch (label.Text[0])
                 {
                     case 'C':
-                        typeSelector.Text = "На страницах";
+                        typeSelector.AccessibleName = "On pages";
                         break;
 
                     case '§':
-                        typeSelector.Text = "Параграфы";
+                        typeSelector.AccessibleName = "Paragraphs";
                         break;
 
                     case '№':
-                        typeSelector.Text = "Номера";
+                        typeSelector.AccessibleName = "Numbers";
                         break;
 
                     default:
-                        typeSelector.Text = "Другое";
+                        typeSelector.AccessibleName = "Other";
                         break;
                 }
 
@@ -252,7 +279,7 @@ namespace Organizer
                 if (addTextBox.Text.Last() == ',')
                     addTextBox.Text = addTextBox.Text.Remove(addTextBox.Text.Length - 1, 1);
 
-                if (typeSelector.Text != "Другое")
+                if (typeSelector.AccessibleName != "Other")
                     addTextBox.Text = addTextBox.Text.Remove(0, 2);
 
                 SetRemoveMode(true);
@@ -280,19 +307,19 @@ namespace Organizer
 
                 string textToAdd = "";
 
-                if (WorkList.ContainsKey(typeSelector.Text))
+                if (WorkList.ContainsKey(typeSelector.AccessibleName))
                 {
-                    switch (typeSelector.Text)
+                    switch (typeSelector.AccessibleName)
                     {
-                        case "На страницах":
+                        case "On pages":
                             textToAdd += "C ";
                             break;
 
-                        case "Параграфы":
+                        case "Paragraphs":
                             textToAdd += "§ ";
                             break;
 
-                        case "Номера":
+                        case "Numbers":
                             textToAdd += "№ ";
                             break;
                     }
@@ -300,29 +327,29 @@ namespace Organizer
                     textToAdd += addTextBox.Text;
 
                     RefreshResult();
-                    WorkList[typeSelector.Text].Add(textToAdd);
+                    WorkList[typeSelector.AccessibleName].Add(textToAdd);
                 }
 
                 else
                 {
-                    switch (typeSelector.Text)
+                    switch (typeSelector.AccessibleName)
                     {
-                        case "На страницах":
+                        case "On pages":
                             textToAdd += "C ";
                             break;
 
-                        case "Параграфы":
+                        case "Paragraphs":
                             textToAdd += "§ ";
                             break;
 
-                        case "Номера":
+                        case "Numbers":
                             textToAdd += "№ ";
                             break;
                     }
 
                     textToAdd += addTextBox.Text;
 
-                    WorkList.Add(typeSelector.Text, new List<string>(new string[1] { textToAdd }));
+                    WorkList.Add(typeSelector.AccessibleName, new List<string>(new string[1] { textToAdd }));
                 }
 
                 addTextBox.Text = "";
@@ -333,25 +360,25 @@ namespace Organizer
             {
                 string textToRemove = addTextBox.Text;
 
-                switch (typeSelector.Text)
+                switch (typeSelector.AccessibleName)
                 {
-                    case "На страницах":
+                    case "On pages":
                         textToRemove = textToRemove.Insert(0, "C ");
                         break;
 
-                    case "Параграфы":
+                    case "Paragraphs":
                         textToRemove = textToRemove.Insert(0, "§ ");
                         break;
 
-                    case "Номера":
+                    case "Numbers":
                         textToRemove = textToRemove.Insert(0, "№ ");
                         break;
                 }
 
-                WorkList[typeSelector.Text].Remove(textToRemove);
+                WorkList[typeSelector.AccessibleName].Remove(textToRemove);
 
-                if (WorkList[typeSelector.Text].Count == 0)
-                    WorkList.Remove(typeSelector.Text);
+                if (WorkList[typeSelector.AccessibleName].Count == 0)
+                    WorkList.Remove(typeSelector.AccessibleName);
 
                 if (resultPanel.Controls.Count <= 1)
                 {
@@ -372,7 +399,7 @@ namespace Organizer
 
         private void AddTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (!removeMode || addTextBox.Text == WorkList["Default"][0])
+            if (!removeMode || addTextBox.Text == Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]])
                 return;
 
             if (string.IsNullOrWhiteSpace(addTextBox.Text))
@@ -387,28 +414,28 @@ namespace Organizer
                 return;
             }
 
-            bool haveComma = selectedLabel.Text != WorkList[typeSelector.Text].Last();
+            bool haveComma = selectedLabel.Text != WorkList[typeSelector.AccessibleName].Last();
 
-            for (int i = 0; i < WorkList[typeSelector.Text].Count; i++)
+            for (int i = 0; i < WorkList[typeSelector.AccessibleName].Count; i++)
             {
-                if (WorkList[typeSelector.Text][i] == selectedLabel.Text.Remove(selectedLabel.Text.Length - 1, haveComma ? 1 : 0))
+                if (WorkList[typeSelector.AccessibleName][i] == selectedLabel.Text.Remove(selectedLabel.Text.Length - 1, haveComma ? 1 : 0))
                 {
-                    switch (typeSelector.Text)
+                    switch (typeSelector.AccessibleName)
                     {
-                        case "На страницах":
-                            WorkList[typeSelector.Text][i] = addTextBox.Text.Insert(0, "C ");
+                        case "On pages":
+                            WorkList[typeSelector.AccessibleName][i] = addTextBox.Text.Insert(0, "C ");
                             break;
 
-                        case "Параграфы":
-                            WorkList[typeSelector.Text][i] = addTextBox.Text.Insert(0, "§ ");
+                        case "Paragraphs":
+                            WorkList[typeSelector.AccessibleName][i] = addTextBox.Text.Insert(0, "§ ");
                             break;
 
-                        case "Номера":
-                            WorkList[typeSelector.Text][i] = addTextBox.Text.Insert(0, "№ ");
+                        case "Numbers":
+                            WorkList[typeSelector.AccessibleName][i] = addTextBox.Text.Insert(0, "№ ");
                             break;
 
                         default:
-                            WorkList[typeSelector.Text][i] = addTextBox.Text;
+                            WorkList[typeSelector.AccessibleName][i] = addTextBox.Text;
                             break;
                     }
 
@@ -416,7 +443,7 @@ namespace Organizer
 
                     foreach (Label label in resultPanel.Controls)
                     {
-                        if (WorkList[typeSelector.Text][i] == label.Text.Remove(label.Text.Length - 1, haveComma ? 1 : 0))
+                        if (WorkList[typeSelector.AccessibleName][i] == label.Text.Remove(label.Text.Length - 1, haveComma ? 1 : 0))
                         {
                             selectedLabel = label;
 

@@ -315,7 +315,9 @@ namespace Organizer
 
             else
             {
-                DialogResult result = MessageBox.Show("Сохранить изменения?", "Режим редактирования", MessageBoxButtons.YesNoCancel);
+                YesNoCancelDialog dialog = new YesNoCancelDialog(Translations[ActiveLanguage]["Edit mode"]);
+
+                DialogResult result = dialog.ShowDialog();
 
                 if (result == DialogResult.No)
                     for (int i = 0; i < lessonsCount; i++)
@@ -347,46 +349,52 @@ namespace Organizer
 
         private void DateMinusButton_Click(object sender, EventArgs e)
         {
-            if (!editMode)
+            if (editMode)
             {
-                do
-                {
-                    date = date.AddDays(-1);
-
-                    if (date <= firstDay)
-                        date = lastDay;
-                }
-                while (!Days[date].IsWorking);
-
-                LessonsRefresh();
+                NoEditMode();
+                return;
             }
 
-            else
-                MessageBox.Show("Не работает в режиме редактирования");
+            do
+            {
+                date = date.AddDays(-1);
+
+                if (date <= firstDay)
+                    date = lastDay;
+            }
+            while (!Days[date].IsWorking);
+
+            LessonsRefresh();
         }
 
         private void DatePlusButton_Click(object sender, EventArgs e)
         {
-            if (!editMode)
+            if (editMode)
             {
-                do
-                {
-                    date = date.AddDays(1);
-
-                    if (date >= lastDay)
-                        date = firstDay;
-                }
-                while (!Days[date].IsWorking);
-
-                LessonsRefresh();
+                NoEditMode();
+                return;
             }
 
-            else
-                MessageBox.Show("Не работает в режиме редактирования");
+            do
+            {
+                date = date.AddDays(1);
+
+                if (date >= lastDay)
+                    date = firstDay;
+            }
+            while (!Days[date].IsWorking);
+
+            LessonsRefresh();
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
+            if(editMode)
+            {
+                NoEditMode();
+                return;
+            }
+
             Settings settings = new Settings();
             settings.ShowDialog();
 
@@ -418,7 +426,12 @@ namespace Organizer
 
         private void InDevelop()
         {
-            MessageBox.Show("Кнопка в разработке", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(Translations[ActiveLanguage]["In the develop"], "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private static void NoEditMode()
+        {
+            MessageBox.Show(Translations[ActiveLanguage]["Doesn't work in edit mode"], "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void LessonsPanelMouseWheel(object sender, MouseEventArgs e)
@@ -452,7 +465,7 @@ namespace Organizer
                 LessonSelectForm form = new LessonSelectForm(num);
 
                 if (form.ShowDialog() == DialogResult.OK)
-                    Lessons[num - 1].SetTitle(form.lesson);
+                    Lessons[num - 1].SetTitle(form.Lesson);
             }
         }
 
