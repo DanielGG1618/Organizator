@@ -67,7 +67,7 @@
             this.comboBox.Size = new System.Drawing.Size(194, 33);
             this.comboBox.Sorted = true;
             this.comboBox.TabIndex = 3;
-            this.comboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
+            this.comboBox.SelectedIndexChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
             // 
             // lessonLabel
             // 
@@ -79,6 +79,7 @@
             this.lessonLabel.Size = new System.Drawing.Size(194, 29);
             this.lessonLabel.TabIndex = 4;
             this.lessonLabel.Text = " Урок №n";
+            this.lessonLabel.Click += new System.EventHandler(this.LessonLabel_Click);
             // 
             // done
             // 

@@ -94,6 +94,8 @@ namespace Organizer
                 Lessons[i] = new Lesson(i + 1, CellSize, Color);
 
                 Lessons[i].TitleLabel.Click += TitleClick;
+                Lessons[i].TitleLabel.MouseMove += TitleMouseMove;
+
                 Lessons[i].AddWorkButton.Click += AddWorkButtonClick;
 
                 lessonsPanel.Controls.Add(Lessons[i].AddWorkButton);
@@ -484,14 +486,22 @@ namespace Organizer
 
         private void TitleClick(object sender, EventArgs e)
         {
-            if (editMode)
-            {
-                int num = Convert.ToInt32(((Label)sender).Tag);
-                LessonSelectForm form = new LessonSelectForm(num);
+            if (!editMode)
+                return;
 
-                if (form.ShowDialog() == DialogResult.OK)
-                    Lessons[num - 1].SetTitle(form.Lesson);
-            }
+            int num = Convert.ToInt32(((Label)sender).Tag);
+            LessonSelectForm form = new LessonSelectForm(num);
+
+            if (form.ShowDialog() == DialogResult.OK)
+                Lessons[num - 1].SetTitle(form.Lesson);
+        }
+
+        private void TitleMouseMove(object sender, EventArgs e)
+        {
+            if (!editMode)
+                return;
+
+            Cursor.Current = Cursors.Hand;
         }
 
         private void AddWorkButtonClick(object sender, EventArgs e)

@@ -144,7 +144,8 @@ namespace Organizer
                 Text = text
             };
 
-            resultLabelSample.Click += ResultLabel_Click;
+            resultLabelSample.Click += ResultLabelClick;
+            resultLabelSample.MouseMove += ResultLabelMouseMove;
 
             return resultLabelSample;
         }
@@ -235,7 +236,7 @@ namespace Organizer
 
         }
 
-        private void ResultLabel_Click(object sender, EventArgs e)
+        private void ResultLabelClick(object sender, EventArgs e)
         {
             Label label = (Label)sender;
 
@@ -245,15 +246,27 @@ namespace Organizer
             SetSelectedLabel(label);
         }
 
+        private void ResultLabelMouseMove(object sender, EventArgs e)
+        {
+            Label label = (Label)sender;
+
+            if (label.Text == Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]])
+                return;
+
+            Cursor.Current = Cursors.Hand;
+        }
+
         private void SetSelectedLabel(Label label)
         {
             selectedLabel.ForeColor = Color.White;
+            selectedLabel.Location = new Point(selectedLabel.Location.X, 0);
 
             if (selectedLabel != label)
             {
                 selectedLabel = label;
 
                 selectedLabel.ForeColor = Head.Color;
+                selectedLabel.Location = new Point(selectedLabel.Location.X, 3);
 
                 switch (label.Text[0])
                 {

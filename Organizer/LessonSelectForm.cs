@@ -14,6 +14,8 @@ namespace Organizer
     {
         public List<Control> LocalizationControls = new List<Control>();
 
+        private List<string> items = new List<string>();
+
         public string Lesson;
 
         public LessonSelectForm(int num)
@@ -24,10 +26,14 @@ namespace Organizer
 
         private void LessonSelectForm_Load(object sender, EventArgs e)
         {
+            foreach (string item in comboBox.Items)
+                items.Add(item);
+
             LocalizationControls.AddRange(new Control[] { done, cancel });
 
             SetColor(Head.Color);
             SetLanguage(Head.ActiveLanguage);
+
 
             comboBox.Text = Head.Lessons[int.Parse(lessonLabel.Text.Last().ToString()) - 1].TitleLabel.Text;
         }
@@ -46,9 +52,14 @@ namespace Organizer
                 control.Text = Head.Translations[language][control.AccessibleName];
         }
 
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Lesson = comboBox.Text;
-        }  
+            Lesson = items[comboBox.SelectedIndex];
+        }
+
+        private void LessonLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
