@@ -205,9 +205,9 @@ namespace Organizer
 
         public void UpdateSizes(int cellSize, bool editMode)
         {
-            TitleLabel.Size = new Size(650 - (editMode ? cellSize : 0), (int)(cellSize * 2 / 7f));//
+            TitleLabel.Size = new Size(650 - (editMode ? cellSize : 0), (int)(cellSize * 2 / 7f));
 
-            WorkLabel.Size = new Size(650 - (editMode ? cellSize : 0), (int)(cellSize * 5 / 7f));//
+            WorkLabel.Size = new Size(650 - (editMode ? cellSize : 0), (int)(cellSize * 5 / 7f));
         }
 
         public void CopyFrom(Lesson lesson)

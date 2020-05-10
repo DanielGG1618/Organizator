@@ -32,6 +32,7 @@ namespace Organizer
         public static Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>();
 
         public static string ActiveLanguage;
+        public static string[] Languages;
 
         private static int year = 19;
 
@@ -130,24 +131,22 @@ namespace Organizer
 
         private void LoadTranslations()
         {
-            Dictionary<string, string> english = new Dictionary<string, string>();
+            Languages = File.ReadAllLines("Translations\\Languages.txt");
 
-            Dictionary<string, string> russian = new Dictionary<string, string>();
-
-            string[] englishStr = File.ReadAllLines("Translations\\English.csv");
-            string[] russianStr = File.ReadAllLines("Translations\\Русский.csv", Encoding.GetEncoding(1251));
-
-            for (int i = 0; i < englishStr.Length; i ++)
+            foreach (var language in Languages)
             {
-                string[] englishWord = englishStr[i].Split(';');
-                string[] russianWord = russianStr[i].Split(';');
+                Dictionary<string, string> langDict = new Dictionary<string, string>();
 
-                english.Add(englishWord[0], englishWord[1]);
-                russian.Add(russianWord[0], russianWord[1]);
+                string[] langStr = File.ReadAllLines("Translations\\" + language + ".csv");
+
+                for (int i = 0; i < langStr.Length; i++)
+                {
+                    string[] langWord = langStr[i].Split(';');
+                    langDict.Add(langWord[0], langWord[1]);
+                }
+
+                Translations.Add(language, langDict);
             }
-
-            Translations.Add("English", english);
-            Translations.Add("Русский", russian);
         }
 
         private void LoadSave()

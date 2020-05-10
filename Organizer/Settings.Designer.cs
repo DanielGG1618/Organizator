@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
             this.languageSelector = new System.Windows.Forms.ComboBox();
-            this.languagePict = new System.Windows.Forms.PictureBox();
             this.addHolyday = new System.Windows.Forms.Button();
             this.holydayStartPicker = new System.Windows.Forms.DateTimePicker();
             this.holydayFinishPicker = new System.Windows.Forms.DateTimePicker();
@@ -43,9 +42,10 @@
             this.colorLabel = new System.Windows.Forms.Label();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.holyLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.languagePict)).BeginInit();
+            this.languagePict = new System.Windows.Forms.PictureBox();
             this.addHolydayPanel.SuspendLayout();
             this.pickersPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.languagePict)).BeginInit();
             this.SuspendLayout();
             // 
             // languageSelector
@@ -59,7 +59,8 @@
             this.languageSelector.FormattingEnabled = true;
             this.languageSelector.Items.AddRange(new object[] {
             "Русский",
-            "English"});
+            "English",
+            "Кто я am"});
             this.languageSelector.Location = new System.Drawing.Point(110, 39);
             this.languageSelector.Margin = new System.Windows.Forms.Padding(6, 30, 30, 30);
             this.languageSelector.Name = "languageSelector";
@@ -67,17 +68,6 @@
             this.languageSelector.Size = new System.Drawing.Size(200, 30);
             this.languageSelector.TabIndex = 0;
             this.languageSelector.SelectedIndexChanged += new System.EventHandler(this.LanguageSelector_SelectedIndexChanged);
-            // 
-            // languagePict
-            // 
-            this.languagePict.Image = global::Organizer.Properties.Resources.rus;
-            this.languagePict.Location = new System.Drawing.Point(15, 12);
-            this.languagePict.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
-            this.languagePict.Name = "languagePict";
-            this.languagePict.Size = new System.Drawing.Size(83, 83);
-            this.languagePict.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.languagePict.TabIndex = 1;
-            this.languagePict.TabStop = false;
             // 
             // addHolyday
             // 
@@ -233,6 +223,17 @@
             this.holyLabel.TabIndex = 14;
             this.holyLabel.Text = "Добавить выходные";
             // 
+            // languagePict
+            // 
+            this.languagePict.Image = global::Organizer.Properties.Resources.rus;
+            this.languagePict.Location = new System.Drawing.Point(15, 12);
+            this.languagePict.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            this.languagePict.Name = "languagePict";
+            this.languagePict.Size = new System.Drawing.Size(83, 83);
+            this.languagePict.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.languagePict.TabIndex = 1;
+            this.languagePict.TabStop = false;
+            // 
             // Settings
             // 
             this.AccessibleName = "Settings";
@@ -252,9 +253,9 @@
             this.Name = "Settings";
             this.Text = "Настройки";
             this.Load += new System.EventHandler(this.Settings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.languagePict)).EndInit();
             this.addHolydayPanel.ResumeLayout(false);
             this.pickersPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.languagePict)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

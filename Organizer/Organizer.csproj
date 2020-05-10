@@ -82,12 +82,6 @@
     <Compile Include="Head.Designer.cs">
       <DependentUpon>Head.cs</DependentUpon>
     </Compile>
-    <Compile Include="HelpForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HelpForm.Designer.cs">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimerForm.cs">
@@ -110,9 +104,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Head.resx">
       <DependentUpon>Head.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HelpForm.resx">
-      <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="YesNoCancelDialog.resx">
       <DependentUpon>YesNoCancelDialog.cs</DependentUpon>
