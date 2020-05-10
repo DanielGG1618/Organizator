@@ -45,7 +45,7 @@ Doesn't work in edit mode;Doesn't work in edit mode
 In the develop;In the develop
 Save changes;Save changes?
 Topic;Topic
-Сommunication;Сommunication
+Communication;Communication
 Message;Message
 Send;Send
 Skip;Skip
@@ -57,10 +57,13 @@ Pause in end;Pause in end
 Work time;Work time
 Rest time;Rest time
 Timer settings;Timer settings
-Сycle;Сycle
+Cycle;Cycle
 Lesson;Lesson
 Error;Error
 Review;Review
 I want to talk;I want to talk
 Yes;Yes
 No;No
+The language file;The language file was created successfully. You can find it on 
+Language name;Language name
+Add language;Add language

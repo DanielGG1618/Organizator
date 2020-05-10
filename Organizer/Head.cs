@@ -32,7 +32,7 @@ namespace Organizer
         public static Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>();
 
         public static string ActiveLanguage;
-        public static string[] Languages;
+        public static List<string> Languages;
 
         private static int year = 19;
 
@@ -131,13 +131,16 @@ namespace Organizer
 
         private void LoadTranslations()
         {
-            Languages = File.ReadAllLines("Translations\\Languages.txt");
+            Languages = new List<string>(File.ReadAllLines("Translations\\Languages.txt", Encoding.UTF8));
 
             foreach (var language in Languages)
             {
+                if (Translations.ContainsKey(language))
+                    continue;
+
                 Dictionary<string, string> langDict = new Dictionary<string, string>();
 
-                string[] langStr = File.ReadAllLines("Translations\\" + language + ".csv");
+                string[] langStr = File.ReadAllLines("Translations\\" + language + ".txt", Encoding.UTF8);
 
                 for (int i = 0; i < langStr.Length; i++)
                 {
@@ -151,7 +154,7 @@ namespace Organizer
 
         private void LoadSave()
         {
-            string[] save = File.ReadAllLines("Save.txt");
+            string[] save = File.ReadAllLines("Save.txt", Encoding.UTF8);
 
             ActiveLanguage = save[0];
 
@@ -169,7 +172,7 @@ namespace Organizer
 
                 for (int i = 0; i < days.Length; i++)
                 {
-                    Day day = Day.FromCSV(days[i]);
+                    Day day = Day.Fromtxt(days[i]);
                     Days.Add(day.Date, day);
                 }
             }
@@ -186,7 +189,7 @@ namespace Organizer
 
         private void LoadDefaultWorks()
         {
-            string[] lessonsDefaultWorks = File.ReadAllLines("Lessons default work.txt", Encoding.Default);
+            string[] lessonsDefaultWorks = File.ReadAllLines("Lessons default work.txt", Encoding.UTF8);
 
             LessonsDefaultWork.Clear();
 
@@ -247,7 +250,7 @@ namespace Organizer
 
         private void LoadSchedule()
         {
-            string[] schedule = File.ReadAllLines("Lessons.txt", Encoding.Default);
+            string[] schedule = File.ReadAllLines("Lessons.txt", Encoding.UTF8);
 
             Schedule = new string[schedule.Length][];
 
@@ -265,7 +268,7 @@ namespace Organizer
             List<string> days = new List<string>();
 
             foreach(var day in Days)
-                days.Add(Day.ToCSV(day.Value));
+                days.Add(Day.Totxt(day.Value));
 
             File.WriteAllLines("Days.txt", days);
         }
@@ -400,6 +403,7 @@ namespace Organizer
             SetColor(settings.Color);
             SetLanguage(ActiveLanguage);
             LoadHolydays();
+            LoadTranslations();
         }
 
         private void SetLanguage(string language)

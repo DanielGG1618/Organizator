@@ -23,6 +23,8 @@ namespace Organizer
 
         private void YesNoCancelDialog_Load(object sender, EventArgs e)
         {
+            LocalizationControls.AddRange(new Control[] { yes, no, cancel, saveChanges });
+
             SetColor(Head.Color);
             SetLanguage(Head.ActiveLanguage);
         }
@@ -34,8 +36,6 @@ namespace Organizer
 
         private void SetLanguage(string language)
         {
-            LocalizationControls.AddRange(new Control[] { yes, no, cancel, saveChanges });
-
             foreach (var control in LocalizationControls)
                 control.Text = Head.Translations[language][control.AccessibleName];
         }

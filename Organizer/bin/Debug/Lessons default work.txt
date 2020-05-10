@@ -1,11 +1,11 @@
 English language: Repeat the rules
-Biology: Repeat the last ง
-Geography: Repeat the last ง
+Biology: Repeat the last ยง
+Geography: Repeat the last ยง
 Geometry: Repeat the rules
-History: Repeat the last ง
+History: Repeat the last ยง
 German language: Repeat the rules
-Social studies: Repeat the last ง
+Social studies: Repeat the last ยง
 Russian language: Repeat the rules
-Physics: Repeat the last ง
+Physics: Repeat the last ยง
 Physical education: Sports form
-Chemistry: Repeat the last ง
+Chemistry: Repeat the last ยง

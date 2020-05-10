@@ -77,30 +77,30 @@ namespace Organizer
                 Lessons.Add(lessons[i]);
         }
 
-        public static string ToCSV(Day day)
+        public static string Totxt(Day day)
         {
-            string CSV = day.Num + "╫ " + day.Year;
+            string txt = day.Num + "╫ " + day.Year;
 
             foreach (var lesson in day.Lessons)
-                CSV += "░ " + Lesson.ToCSV(lesson);
+                txt += "░ " + Lesson.Totxt(lesson);
 
-            return CSV;
+            return txt;
         }
 
-        public static Day FromCSV(string CSV)
+        public static Day Fromtxt(string txt)
         {
             Day day;
 
-            string[] dayLessons = CSV.Split(new string[1] { "░ " }, StringSplitOptions.None);
+            string[] dayLessons = txt.Split(new string[1] { "░ " }, StringSplitOptions.None);
             string[] splited = dayLessons[0].Split(new string[1] { "╫ " }, StringSplitOptions.None);
 
             List<Lesson> lessons = new List<Lesson>();
 
             for (int i = 1; i < dayLessons.Length; i++)
-                lessons.Add(Lesson.FromCSV(dayLessons[i]));
+                lessons.Add(Lesson.Fromtxt(dayLessons[i]));
 
             for (int i = 2; i < splited.Length - 1; i++)
-                lessons.Add(Lesson.FromCSV(splited[i]));
+                lessons.Add(Lesson.Fromtxt(splited[i]));
 
             day = new Day(int.Parse(splited[0]), int.Parse(splited[1]), lessons);
 
@@ -279,19 +279,19 @@ namespace Organizer
             return result;
         }
 
-        public static string ToCSV(Lesson lesson)
+        public static string Totxt(Lesson lesson)
         {
-            string CSV = lesson.Num + "╫ " + lesson.Title;
+            string txt = lesson.Num + "╫ " + lesson.Title;
 
             foreach (var work in lesson.WorkList)
-                CSV += "╫ " + work.Key + "╫ " + work.Value;
+                txt += "╫ " + work.Key + "╫ " + work.Value;
 
-            return CSV;
+            return txt;
         }
 
-        public static Lesson FromCSV(string CSV)
+        public static Lesson Fromtxt(string txt)
         {
-            string[] splited = CSV.Split(new string[1] { "╫ " }, StringSplitOptions.None);
+            string[] splited = txt.Split(new string[1] { "╫ " }, StringSplitOptions.None);
 
             Dictionary<string, string> workList = new Dictionary<string, string>();
 

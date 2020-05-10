@@ -24,6 +24,8 @@ namespace Organizer
 
         private void LessonSelectForm_Load(object sender, EventArgs e)
         {
+            LocalizationControls.AddRange(new Control[] { done, cancel });
+
             SetColor(Head.Color);
             SetLanguage(Head.ActiveLanguage);
 
@@ -37,8 +39,6 @@ namespace Organizer
 
         private void SetLanguage(string language)
         {
-            LocalizationControls.AddRange(new Control[] { done, cancel });
-
             for (int i = 0; i < comboBox.Items.Count; i++)
                 comboBox.Items[i] = Head.Translations[language][comboBox.Items[i].ToString()];
 

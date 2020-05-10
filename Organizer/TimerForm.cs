@@ -33,6 +33,8 @@ namespace Organizer
             UpdateCyclesLabel(worksCount, counter);
             UpdateTimeLabel(targetTime - time);
 
+            LocalizationControls.AddRange(new Control[] { resetTimer, settingsButton, workLabel, restLabel, pauseCheckBox, couterCheckBox, this });
+
             SetColor(Head.Color);
             SetLanguage(Head.ActiveLanguage);
 
@@ -42,8 +44,6 @@ namespace Organizer
 
         private void SetLanguage(string language)
         {
-            LocalizationControls.AddRange(new Control[] { resetTimer, settingsButton, workLabel, restLabel, pauseCheckBox, couterCheckBox, this });
-
             foreach (Control control in LocalizationControls)
                 control.Text = Head.Translations[language][control.AccessibleName];
 
