@@ -14,7 +14,7 @@ using System.IO;
 namespace Organizer
 {
     public partial class Head : Form
-    {
+    { 
         public static Color Color;
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
@@ -344,9 +344,39 @@ namespace Organizer
                 Lessons[i].UpdateSizes(CellSize, editMode);
         }
 
+        public Bitmap GetControlScreenshot(Control control)
+        {
+            //ресайзим контрол до возможного максимума перед скриншотом
+            Size szCurrent = control.Size;
+            control.AutoSize = true;
+
+            Bitmap bmp = new Bitmap(control.Width, control.Height);//создаем картинку нужных размеров
+            control.DrawToBitmap(bmp, control.ClientRectangle);//копируем изображение нужного контрола в bmp
+
+            //возвращаем размер контрола назад
+            control.AutoSize = false;
+            control.Size = szCurrent;
+
+            return bmp;
+        }
+
         private void SaveScreenButton_Click(object sender, EventArgs e)
         {
-            InDevelop();
+            dateMinusButton.Visible = false;
+            datePlusButton.Visible = false;
+
+            Bitmap bm = GetControlScreenshot(screen);
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                bm.Save(saveFileDialog.FileName);
+
+            dateMinusButton.Visible = true;
+            datePlusButton.Visible = true;
         }
 
         private void DateMinusButton_Click(object sender, EventArgs e)

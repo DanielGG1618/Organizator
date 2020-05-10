@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Head));
             this.panel15 = new System.Windows.Forms.Panel();
             this.DateText = new System.Windows.Forms.Label();
-            this.DatePlusButton = new System.Windows.Forms.Button();
-            this.DateMinusButton = new System.Windows.Forms.Button();
+            this.datePlusButton = new System.Windows.Forms.Button();
+            this.dateMinusButton = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
             this.saveScreenButton = new System.Windows.Forms.Button();
             this.editModeButton = new System.Windows.Forms.Button();
@@ -40,17 +40,19 @@
             this.timerButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.feedbackButton = new System.Windows.Forms.Button();
+            this.screen = new System.Windows.Forms.Panel();
             this.panel15.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.screen.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel15
             // 
             this.panel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.panel15.Controls.Add(this.DateText);
-            this.panel15.Controls.Add(this.DatePlusButton);
-            this.panel15.Controls.Add(this.DateMinusButton);
-            this.panel15.Location = new System.Drawing.Point(24, 23);
+            this.panel15.Controls.Add(this.datePlusButton);
+            this.panel15.Controls.Add(this.dateMinusButton);
+            this.panel15.Location = new System.Drawing.Point(0, 0);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(700, 70);
             this.panel15.TabIndex = 1;
@@ -66,37 +68,37 @@
             this.DateText.Text = "dd.mm.yyyy";
             this.DateText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // DatePlusButton
+            // datePlusButton
             // 
-            this.DatePlusButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.datePlusButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DatePlusButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.DatePlusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DatePlusButton.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DatePlusButton.Location = new System.Drawing.Point(630, 0);
-            this.DatePlusButton.Margin = new System.Windows.Forms.Padding(0);
-            this.DatePlusButton.Name = "DatePlusButton";
-            this.DatePlusButton.Size = new System.Drawing.Size(70, 70);
-            this.DatePlusButton.TabIndex = 3;
-            this.DatePlusButton.Text = ">";
-            this.DatePlusButton.UseVisualStyleBackColor = false;
-            this.DatePlusButton.Click += new System.EventHandler(this.DatePlusButton_Click);
+            this.datePlusButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.datePlusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.datePlusButton.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.datePlusButton.Location = new System.Drawing.Point(630, 0);
+            this.datePlusButton.Margin = new System.Windows.Forms.Padding(0);
+            this.datePlusButton.Name = "datePlusButton";
+            this.datePlusButton.Size = new System.Drawing.Size(70, 70);
+            this.datePlusButton.TabIndex = 3;
+            this.datePlusButton.Text = ">";
+            this.datePlusButton.UseVisualStyleBackColor = false;
+            this.datePlusButton.Click += new System.EventHandler(this.DatePlusButton_Click);
             // 
-            // DateMinusButton
+            // dateMinusButton
             // 
-            this.DateMinusButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dateMinusButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.DateMinusButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.DateMinusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DateMinusButton.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DateMinusButton.Location = new System.Drawing.Point(0, 0);
-            this.DateMinusButton.Margin = new System.Windows.Forms.Padding(0);
-            this.DateMinusButton.Name = "DateMinusButton";
-            this.DateMinusButton.Size = new System.Drawing.Size(70, 70);
-            this.DateMinusButton.TabIndex = 2;
-            this.DateMinusButton.Text = "<";
-            this.DateMinusButton.UseVisualStyleBackColor = false;
-            this.DateMinusButton.Click += new System.EventHandler(this.DateMinusButton_Click);
+            this.dateMinusButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dateMinusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dateMinusButton.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dateMinusButton.Location = new System.Drawing.Point(0, 0);
+            this.dateMinusButton.Margin = new System.Windows.Forms.Padding(0);
+            this.dateMinusButton.Name = "dateMinusButton";
+            this.dateMinusButton.Size = new System.Drawing.Size(70, 70);
+            this.dateMinusButton.TabIndex = 2;
+            this.dateMinusButton.Text = "<";
+            this.dateMinusButton.UseVisualStyleBackColor = false;
+            this.dateMinusButton.Click += new System.EventHandler(this.DateMinusButton_Click);
             // 
             // settingsButton
             // 
@@ -153,7 +155,7 @@
             // 
             this.lessonsPanel.AutoScroll = true;
             this.lessonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.lessonsPanel.Location = new System.Drawing.Point(24, 112);
+            this.lessonsPanel.Location = new System.Drawing.Point(0, 90);
             this.lessonsPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
             this.lessonsPanel.Name = "lessonsPanel";
             this.lessonsPanel.Size = new System.Drawing.Size(700, 490);
@@ -215,14 +217,22 @@
             this.feedbackButton.UseVisualStyleBackColor = false;
             this.feedbackButton.Click += new System.EventHandler(this.FeedbackButton_Click);
             // 
+            // screen
+            // 
+            this.screen.Controls.Add(this.lessonsPanel);
+            this.screen.Controls.Add(this.panel15);
+            this.screen.Location = new System.Drawing.Point(24, 22);
+            this.screen.Name = "screen";
+            this.screen.Size = new System.Drawing.Size(700, 580);
+            this.screen.TabIndex = 9;
+            // 
             // Head
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1182, 624);
+            this.Controls.Add(this.screen);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.lessonsPanel);
-            this.Controls.Add(this.panel15);
             this.ForeColor = System.Drawing.Color.OliveDrab;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(1200, 666);
@@ -235,14 +245,15 @@
             this.Load += new System.EventHandler(this.Head_Load);
             this.panel15.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.screen.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.Button DatePlusButton;
-        private System.Windows.Forms.Button DateMinusButton;
+        private System.Windows.Forms.Button datePlusButton;
+        private System.Windows.Forms.Button dateMinusButton;
         private System.Windows.Forms.Button editModeButton;
         private System.Windows.Forms.Button saveScreenButton;
         private System.Windows.Forms.Label DateText;
@@ -251,6 +262,7 @@
         private System.Windows.Forms.Button timerButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button feedbackButton;
+        private System.Windows.Forms.Panel screen;
     }
 }
 
