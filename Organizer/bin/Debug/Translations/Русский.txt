@@ -67,3 +67,6 @@ No;Нет
 The language file;Языковой файл был успешно создан. Вы можете найти его в 
 Language name;Название языка
 Add language;Добавить язык
+Enter the task;Введите задание
+Empty task;Пустое задание
+This task has already been added;Это задание уже добавлено

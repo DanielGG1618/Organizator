@@ -300,7 +300,8 @@ namespace Organizer
 
                 foreach (var work in Lessons[num].WorkList)
                     if (work.Key != "Default")
-                        Lessons[num].WorkLabel.Text += work.Value.Replace("☼", ", ") + ", ";
+                        foreach(var text in work.Value)
+                            Lessons[num].WorkLabel.Text += WorkAddForm.Types[work.Key] + text + ", ";
 
                 Lessons[num].WorkLabel.Text = Lessons[num].WorkLabel.Text.Remove(Lessons[num].WorkLabel.Text.Length - 2, 2);
             }
@@ -512,17 +513,7 @@ namespace Organizer
 
             if (form.ShowDialog() == DialogResult.OK)
             {
-                Lessons[num - 1].WorkList.Clear();
-
-                foreach (var work in form.WorkList)
-                {
-                    Lessons[num - 1].WorkList.Add(work.Key, "");
-
-                    foreach (var text in work.Value)
-                        Lessons[num - 1].WorkList[work.Key] += text + '☼';
-
-                    Lessons[num - 1].WorkList[work.Key] = Lessons[num - 1].WorkList[work.Key].Remove(Lessons[num - 1].WorkList[work.Key].Length - 1, 1);
-                }
+                Lessons[num - 1].WorkList = form.WorkList;
 
                 WorkRefresh(num - 1);
             }

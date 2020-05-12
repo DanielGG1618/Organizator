@@ -67,3 +67,6 @@ No;Да(нет)
 The language file;Файл с языками успешно родился. Ты там это, найди его вот тут 
 Language name;Добавить язык
 Add language;Название языка
+Enter the task;Напиши чё-нить, по-братски
+Empty task;Пустовато как-то
+This task has already been added;Напиши чё-нить другое, это уже занято

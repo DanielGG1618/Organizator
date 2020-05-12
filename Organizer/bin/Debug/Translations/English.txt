@@ -67,3 +67,6 @@ No;No
 The language file;The language file was created successfully. You can find it on 
 Language name;Language name
 Add language;Add language
+Enter the task;Enter the task
+Empty task;Empty task
+This task has already been added;This task has already been added

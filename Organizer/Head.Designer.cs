@@ -240,6 +240,7 @@
             this.MinimumSize = new System.Drawing.Size(1200, 666);
             this.Name = "Head";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveFiles);
             this.Load += new System.EventHandler(this.Head_Load);

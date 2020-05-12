@@ -14,11 +14,22 @@ namespace Organizer
         private Label selectedLabel = new Label();
 
         private bool removeMode = false;
+        private bool b = false;
+        private int lastSelectedType = 0;
+
+        public static Dictionary<string, string> Types = new Dictionary<string, string>
+        {
+            { "Default", "" },
+            { "On pages", "C " },
+            { "Paragraphs", "§ " },
+            { "Numbers", "№ " },
+            { "Other", "" }
+        };
 
         public WorkAddForm(int num)
         {
             foreach (var workList in Head.Lessons[num - 1].WorkList)
-                WorkList.Add(workList.Key, workList.Value.Split('☼').ToList());
+                WorkList.Add(workList.Key, new List<string>(workList.Value));
 
             InitializeComponent();
         }
@@ -26,6 +37,7 @@ namespace Organizer
         private void WorkAddForm_Load(object sender, EventArgs e)
         {
             typeSelector.SelectedIndex = 0;
+            typeSelector.AccessibleName = "Other";
 
             LocalizationControls.AddRange(new Control[2] { cancel, done });
 
@@ -50,7 +62,7 @@ namespace Organizer
         {
             resultPanel.Controls.Clear();
 
-            resultPanel.Controls.Add(ResultLabelSample(Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]]));
+            resultPanel.Controls.Add(ResultLabelSample(Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]], "Default"));
         }
 
         private void RefreshResult()
@@ -61,23 +73,21 @@ namespace Organizer
             {
                 foreach (var works in WorkList)
                     if (works.Key != "Default")
-                        resultPanel.Controls.AddRange(ResultLabelSampleList(works.Value.ToArray()).ToArray());
+                        resultPanel.Controls.AddRange(ResultLabelSampleList(works.Value.ToArray(), works.Key).ToArray());
 
                 int previousX = 0;
 
                 foreach (Label label in resultPanel.Controls)
                 {
-                    bool needComma = true;
-
-                    if (WorkList.Last().Value.Last() == label.Text)
-                        needComma = false;
-
-                    if (needComma)
-                        label.Text += ',';
+                    label.Text += ',';
 
                     label.Location = new Point(previousX, 0);
                     previousX = label.Location.X + label.Size.Width;
                 }
+                 
+                Label lastLabel = resultPanel.Controls[resultPanel.Controls.Count - 1] as Label;
+
+                lastLabel.Text = lastLabel.Text.Remove(lastLabel.Text.Length - 1);
             }
 
             else
@@ -131,7 +141,7 @@ namespace Organizer
             }
         }
 
-        private Label ResultLabelSample(string text)
+        private Label ResultLabelSample(string text, string type)
         {
             Label resultLabelSample = new Label
             {
@@ -141,7 +151,8 @@ namespace Organizer
                 Font = new Font("Microsoft Sans Serif", 14, FontStyle.Regular, GraphicsUnit.Point, 204),
                 ForeColor = Color.White,
                 TextAlign = ContentAlignment.MiddleLeft,
-                Text = text
+                Text = Types[type] + text,
+                AccessibleName = type
             };
 
             resultLabelSample.Click += ResultLabelClick;
@@ -150,18 +161,22 @@ namespace Organizer
             return resultLabelSample;
         }
 
-        private List<Label> ResultLabelSampleList(string[] workList)
+        private List<Label> ResultLabelSampleList(string[] workList, string type)
         {
             List<Label> resultLabelSampleList = new List<Label>();
 
             for (int i = 0; i < workList.Length; i++)
-                resultLabelSampleList.Add(ResultLabelSample(workList[i]));
+                resultLabelSampleList.Add(ResultLabelSample(workList[i], type));
 
             return resultLabelSampleList;
         }
 
         private void TypeSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (lastSelectedType == typeSelector.SelectedIndex)
+                return;
+
+            #region Выставление внутренних данных
             if (typeSelector.Text == Head.Translations[Head.ActiveLanguage]["On pages"])
                 typeSelector.AccessibleName = "On pages";
 
@@ -173,67 +188,61 @@ namespace Organizer
 
             else
                 typeSelector.AccessibleName = "Other";
+            #endregion
 
-            if (!removeMode)
+
+            if (!removeMode || b)
+            {
+                lastSelectedType = typeSelector.SelectedIndex;
                 return;
-
-            switch (selectedLabel.Text[0])
-            {
-                case 'C':
-                    WorkList["On pages"].Remove(selectedLabel.Text);
-
-                    if (WorkList["On pages"].Count == 0)
-                        WorkList.Remove("On pages");
-                    break;
-
-                case '§':
-                    WorkList["Paragraphs"].Remove(selectedLabel.Text);
-
-                    if (WorkList["Paragraphs"].Count == 0)
-                        WorkList.Remove("Paragraphs");
-                    break;
-
-                case '№':
-                    WorkList["Numbers"].Remove(selectedLabel.Text);
-
-                    if (WorkList["Numbers"].Count == 0)
-                        WorkList.Remove("Numbers");
-                    break;
-
-                default:
-                    WorkList["Other"].Remove(selectedLabel.Text);
-
-                    if (WorkList["Other"].Count == 0)
-                        WorkList.Remove("Other");
-                    break;
             }
 
-            if (selectedLabel.Text[0] == 'C' ||
-                selectedLabel.Text[0] == '§' ||
-                selectedLabel.Text[0] == '№')
-                selectedLabel.Text = selectedLabel.Text.Remove(0, 2);
+            b = true;
 
-            switch (typeSelector.AccessibleName)
+            string labelType = selectedLabel.AccessibleName;
+            string currentType = typeSelector.AccessibleName;
+            string textToRemoveAdd = selectedLabel.TabIndex == resultPanel.Controls.Count - 1 ? selectedLabel.Text : selectedLabel.Text.Remove(selectedLabel.Text.Length - 1);
+
+            if (labelType != "Other")
+                textToRemoveAdd = textToRemoveAdd.Remove(0, 2);
+
+            if (WorkList.Keys.Contains(currentType) && WorkList[currentType].Contains(textToRemoveAdd))
             {
-                case "On pages":
-                    selectedLabel.Text = selectedLabel.Text.Insert(0, "C ");
-                    break;
+                typeSelector.SelectedIndex = lastSelectedType;
 
-                case "Paragraphs":
-                    selectedLabel.Text = selectedLabel.Text.Insert(0, "§ ");
-                    break;
+                MessageBox.Show(Head.Translations[Head.ActiveLanguage]["This task has already been added"],
+                                "",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                b = false;
 
-                case "Numbers":
-                    selectedLabel.Text = selectedLabel.Text.Insert(0, "№ ");
-                    break;
+                lastSelectedType = typeSelector.SelectedIndex;
+                return;
             }
 
-            if (WorkList.Keys.Contains(typeSelector.AccessibleName))
-                WorkList[typeSelector.AccessibleName].Add(selectedLabel.Text);
+            WorkList[labelType].Remove(textToRemoveAdd);
+            if (WorkList[labelType].Count == 0)
+                WorkList.Remove(labelType);
+
+            if (WorkList.Keys.Contains(currentType))
+                WorkList[currentType].Add(textToRemoveAdd);
 
             else
-                WorkList.Add(typeSelector.AccessibleName, new List<string>(new string[1] { selectedLabel.Text }));
+                WorkList.Add(currentType, new List<string>(new string[] { textToRemoveAdd }));
 
+            RefreshResult();
+            
+            foreach (Label label in resultPanel.Controls)
+            {
+                string str = label.Text.Last() == ',' ? label.Text.Remove(label.Text.Length - 1) : label.Text;
+                
+                if (label.AccessibleName != "Other")
+                    str = str.Remove(0, 2);
+
+                if (str == textToRemoveAdd)
+                    SetSelectedLabel(label);
+            }
+
+            lastSelectedType = typeSelector.SelectedIndex;
         }
 
         private void ResultLabelClick(object sender, EventArgs e)
@@ -263,31 +272,13 @@ namespace Organizer
 
             if (selectedLabel != label)
             {
+                b = true;
+
                 selectedLabel = label;
 
-                selectedLabel.ForeColor = Head.Color;
-                selectedLabel.Location = new Point(selectedLabel.Location.X, 3);
+                typeSelector.Text = Head.Translations[Head.ActiveLanguage][label.AccessibleName];
 
-                switch (label.Text[0])
-                {
-                    case 'C':
-                        typeSelector.AccessibleName = "On pages";
-                        break;
-
-                    case '§':
-                        typeSelector.AccessibleName = "Paragraphs";
-                        break;
-
-                    case '№':
-                        typeSelector.AccessibleName = "Numbers";
-                        break;
-
-                    default:
-                        typeSelector.AccessibleName = "Other";
-                        break;
-                }
-
-                addTextBox.Text = label.Text;
+                addTextBox.Text = selectedLabel.Text;
 
                 if (addTextBox.Text.Last() == ',')
                     addTextBox.Text = addTextBox.Text.Remove(addTextBox.Text.Length - 1, 1);
@@ -295,7 +286,12 @@ namespace Organizer
                 if (typeSelector.AccessibleName != "Other")
                     addTextBox.Text = addTextBox.Text.Remove(0, 2);
 
+                selectedLabel.ForeColor = Head.Color;
+                selectedLabel.Location = new Point(selectedLabel.Location.X, 3);
+
                 SetRemoveMode(true);
+
+                b = false;
             }
 
             else
@@ -314,81 +310,39 @@ namespace Organizer
             {
                 if (string.IsNullOrWhiteSpace(addTextBox.Text))
                 {
-                    MessageBox.Show("Вы не ввели текст", "Введите задание", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(Head.Translations[Head.ActiveLanguage]["Enter the task"],
+                                    Head.Translations[Head.ActiveLanguage]["Empty task"],
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
-                string textToAdd = "";
+                foreach (var strList in WorkList)
+                {
+                    foreach(string str in strList.Value)
+                    {
+                        if (addTextBox.Text == str && typeSelector.AccessibleName == strList.Key)
+                        {
+                            MessageBox.Show(Head.Translations[Head.ActiveLanguage]["This task has already been added"],
+                                            "",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                    }
+                }
 
                 if (WorkList.ContainsKey(typeSelector.AccessibleName))
-                {
-                    switch (typeSelector.AccessibleName)
-                    {
-                        case "On pages":
-                            textToAdd += "C ";
-                            break;
-
-                        case "Paragraphs":
-                            textToAdd += "§ ";
-                            break;
-
-                        case "Numbers":
-                            textToAdd += "№ ";
-                            break;
-                    }
-
-                    textToAdd += addTextBox.Text;
-
-                    RefreshResult();
-                    WorkList[typeSelector.AccessibleName].Add(textToAdd);
-                }
+                    WorkList[typeSelector.AccessibleName].Add(addTextBox.Text);
 
                 else
-                {
-                    switch (typeSelector.AccessibleName)
-                    {
-                        case "On pages":
-                            textToAdd += "C ";
-                            break;
+                    WorkList.Add(typeSelector.AccessibleName, new List<string>(new string[1] { addTextBox.Text }));
 
-                        case "Paragraphs":
-                            textToAdd += "§ ";
-                            break;
-
-                        case "Numbers":
-                            textToAdd += "№ ";
-                            break;
-                    }
-
-                    textToAdd += addTextBox.Text;
-
-                    WorkList.Add(typeSelector.AccessibleName, new List<string>(new string[1] { textToAdd }));
-                }
-
-                addTextBox.Text = "";
                 RefreshResult();
+                addTextBox.Text = "";
             }
 
             else
             {
-                string textToRemove = addTextBox.Text;
-
-                switch (typeSelector.AccessibleName)
-                {
-                    case "On pages":
-                        textToRemove = textToRemove.Insert(0, "C ");
-                        break;
-
-                    case "Paragraphs":
-                        textToRemove = textToRemove.Insert(0, "§ ");
-                        break;
-
-                    case "Numbers":
-                        textToRemove = textToRemove.Insert(0, "№ ");
-                        break;
-                }
-
-                WorkList[typeSelector.AccessibleName].Remove(textToRemove);
+                WorkList[typeSelector.AccessibleName].Remove(addTextBox.Text);
 
                 if (WorkList[typeSelector.AccessibleName].Count == 0)
                     WorkList.Remove(typeSelector.AccessibleName);
@@ -412,55 +366,35 @@ namespace Organizer
 
         private void AddTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (!removeMode || addTextBox.Text == Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]])
+            if (!removeMode || b)
                 return;
+
+            bool haveComma = selectedLabel.TabIndex != resultPanel.Controls.Count - 1;
 
             if (string.IsNullOrWhiteSpace(addTextBox.Text))
             {
-                Label label = selectedLabel;
-
-                SetSelectedLabel(selectedLabel);
-                SetSelectedLabel(label);
-
+                addTextBox.Text = selectedLabel.Text.Remove(selectedLabel.Text.Length - 1, haveComma ? 1 : 0).Remove(0, Types[selectedLabel.AccessibleName].Length);
                 RemoveAddButton_Click(sender, e);
 
                 return;
             }
 
-            bool haveComma = selectedLabel.Text != WorkList[typeSelector.AccessibleName].Last();
-
             for (int i = 0; i < WorkList[typeSelector.AccessibleName].Count; i++)
             {
-                if (WorkList[typeSelector.AccessibleName][i] == selectedLabel.Text.Remove(selectedLabel.Text.Length - 1, haveComma ? 1 : 0))
+                if (WorkList[typeSelector.AccessibleName][i] == selectedLabel.Text.Remove(selectedLabel.Text.Length - 1, haveComma ? 1 : 0).Remove(0, Types[selectedLabel.AccessibleName].Length))
                 {
-                    switch (typeSelector.AccessibleName)
-                    {
-                        case "On pages":
-                            WorkList[typeSelector.AccessibleName][i] = addTextBox.Text.Insert(0, "C ");
-                            break;
-
-                        case "Paragraphs":
-                            WorkList[typeSelector.AccessibleName][i] = addTextBox.Text.Insert(0, "§ ");
-                            break;
-
-                        case "Numbers":
-                            WorkList[typeSelector.AccessibleName][i] = addTextBox.Text.Insert(0, "№ ");
-                            break;
-
-                        default:
-                            WorkList[typeSelector.AccessibleName][i] = addTextBox.Text;
-                            break;
-                    }
+                    WorkList[typeSelector.AccessibleName][i] = addTextBox.Text;
 
                     RefreshResult();
 
                     foreach (Label label in resultPanel.Controls)
                     {
-                        if (WorkList[typeSelector.AccessibleName][i] == label.Text.Remove(label.Text.Length - 1, haveComma ? 1 : 0))
+                        if (addTextBox.Text == label.Text.Remove(label.Text.Length - 1, haveComma ? 1 : 0).Remove(0, Types[label.AccessibleName].Length))
                         {
                             selectedLabel = label;
 
                             selectedLabel.ForeColor = Head.Color;
+                            selectedLabel.Location = new Point(selectedLabel.Location.X, 3);
                         }
                     }
                 }

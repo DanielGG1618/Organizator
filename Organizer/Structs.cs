@@ -120,7 +120,7 @@ namespace Organizer
 
         public int Num;
         public string Title;
-        public Dictionary<string, string> WorkList;
+        public Dictionary<string, List<string>> WorkList;
 
         public bool Enabled;
 
@@ -158,7 +158,7 @@ namespace Organizer
             TitleLabel = new Label();
             WorkLabel = new Label();
             AddWorkButton = new Button();
-            WorkList = new Dictionary<string, string> { { "Default", "" } };
+            WorkList = new Dictionary<string, List<string>> { { "Default", new List<string>(new string[1] { "" }) } };
             Enabled = true;
             Title = "";
 
@@ -186,7 +186,7 @@ namespace Organizer
             SetTitle(title);
         }
 
-        public Lesson(int num, int cellSize, Color color, string title, Dictionary<string, string> workList)
+        public Lesson(int num, int cellSize, Color color, string title, Dictionary<string, List<string>> workList)
         {
             this = new Lesson(num, cellSize, color, title);
 
@@ -215,16 +215,17 @@ namespace Organizer
             Title = lesson.Title;
 
             if (TitleLabel == null) TitleLabel = new Label();
-            TitleLabel.Text = Title;
+            TitleLabel.AccessibleName = Title;
+            TitleLabel.Text = Head.Translations[Head.ActiveLanguage][TitleLabel.AccessibleName];
 
             if (WorkLabel == null) WorkLabel = new Label();
             WorkLabel.Text = lesson.WorkLabel.Text;
 
-            if (WorkList == null) WorkList = new Dictionary<string, string>();
+            if (WorkList == null) WorkList = new Dictionary<string, List<string>>();
             WorkList.Clear();
 
             foreach (var workList in lesson.WorkList)
-                WorkList.Add(workList.Key, workList.Value);
+                WorkList.Add(workList.Key, new List<string>(workList.Value.ToArray()));
         }
 
         public void TurnOff()
@@ -243,12 +244,12 @@ namespace Organizer
             TitleLabel.AccessibleName = Title;
             TitleLabel.Text = Head.Translations[Head.ActiveLanguage][TitleLabel.AccessibleName];
 
-            try { WorkList["Default"] = Head.LessonsDefaultWork[Title]; }
-            catch { WorkList["Default"] = "Isn't set"; }
+            try { WorkList["Default"][0] = Head.LessonsDefaultWork[Title]; }
+            catch { WorkList["Default"][0] = "Isn't set"; }
 
             if (WorkList.Count == 1)
             {
-                WorkLabel.AccessibleName = WorkList["Default"];
+                WorkLabel.AccessibleName = WorkList["Default"][0];
 
                 WorkLabel.Text = Head.Translations[Head.ActiveLanguage][WorkLabel.AccessibleName];
             }
@@ -257,34 +258,19 @@ namespace Organizer
                 WorkLabel.AccessibleName = "";
         }
 
-        public static Lesson CopyFromStatic(Lesson lesson)
-        {
-            Lesson result = new Lesson
-            {
-                Title = lesson.Title,
-
-                WorkLabel = new Label(),
-                TitleLabel = new Label(),
-
-                WorkList = new Dictionary<string, string>()
-            };
-
-            result.TitleLabel.Text = result.Title;
-
-            result.WorkLabel.Text = lesson.WorkLabel.Text;
-
-            foreach (var workList in lesson.WorkList)
-                result.WorkList.Add(workList.Key, workList.Value);
-
-            return result;
-        }
-
         public static string Totxt(Lesson lesson)
         {
             string txt = lesson.Num + "╫ " + lesson.Title;
 
             foreach (var work in lesson.WorkList)
-                txt += "╫ " + work.Key + "╫ " + work.Value;
+            {
+                txt += "╫ " + work.Key + "╫ ";
+
+                foreach (var str in work.Value)
+                    txt += str + '◘';
+
+                txt = txt.Remove(txt.Length - 1);
+            }
 
             return txt;
         }
@@ -293,10 +279,10 @@ namespace Organizer
         {
             string[] splited = txt.Split(new string[1] { "╫ " }, StringSplitOptions.None);
 
-            Dictionary<string, string> workList = new Dictionary<string, string>();
+            Dictionary<string, List<string>> workList = new Dictionary<string, List<string>>();
 
             for (int i = 2; i < splited.Length - 1; i += 2)
-                workList.Add(splited[i], splited[i + 1]);
+                workList.Add(splited[i], new List<string>(splited[i + 1].Split('◘')));
 
             return new Lesson(int.Parse(splited[0]), Head.CellSize, Head.Color, splited[1], workList);
         }
