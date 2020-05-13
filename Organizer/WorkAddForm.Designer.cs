@@ -28,6 +28,7 @@ partial class WorkAddForm
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkAddForm));
             this.typeSelector = new System.Windows.Forms.ComboBox();
             this.done = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
@@ -36,11 +37,12 @@ partial class WorkAddForm
             this.leftButton = new System.Windows.Forms.Button();
             this.rightButton = new System.Windows.Forms.Button();
             this.resultPanel = new System.Windows.Forms.Panel();
+            this.attachmentsLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // typeSelector
             // 
-            this.typeSelector.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.typeSelector.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.typeSelector.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.typeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -53,7 +55,8 @@ partial class WorkAddForm
             "Другое",
             "На страницах",
             "Номера",
-            "Параграфы"});
+            "Параграфы",
+            "Прикрепить файл"});
             this.typeSelector.Location = new System.Drawing.Point(19, 73);
             this.typeSelector.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.typeSelector.Name = "typeSelector";
@@ -95,7 +98,8 @@ partial class WorkAddForm
             // 
             // addTextBox
             // 
-            this.addTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.addTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.addTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.addTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.addTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -109,7 +113,7 @@ partial class WorkAddForm
             // 
             // removeAddButton
             // 
-            this.removeAddButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.removeAddButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.removeAddButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.removeAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -125,7 +129,7 @@ partial class WorkAddForm
             // 
             // leftButton
             // 
-            this.leftButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.leftButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.leftButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.leftButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -142,7 +146,7 @@ partial class WorkAddForm
             // 
             // rightButton
             // 
-            this.rightButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.rightButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rightButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.rightButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -159,12 +163,26 @@ partial class WorkAddForm
             // 
             // resultPanel
             // 
+            this.resultPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.resultPanel.AutoScroll = true;
             this.resultPanel.Location = new System.Drawing.Point(19, 21);
             this.resultPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 12);
             this.resultPanel.Name = "resultPanel";
             this.resultPanel.Size = new System.Drawing.Size(444, 50);
             this.resultPanel.TabIndex = 10;
+            // 
+            // attachmentsLabel
+            // 
+            this.attachmentsLabel.AccessibleName = "Attachments";
+            this.attachmentsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.attachmentsLabel.Location = new System.Drawing.Point(19, 169);
+            this.attachmentsLabel.Name = "attachmentsLabel";
+            this.attachmentsLabel.Size = new System.Drawing.Size(444, 33);
+            this.attachmentsLabel.TabIndex = 11;
+            this.attachmentsLabel.Text = "Attachments";
+            this.attachmentsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.attachmentsLabel.Visible = false;
             // 
             // WorkAddForm
             // 
@@ -179,8 +197,12 @@ partial class WorkAddForm
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.done);
             this.Controls.Add(this.typeSelector);
+            this.Controls.Add(this.attachmentsLabel);
             this.ForeColor = System.Drawing.Color.OliveDrab;
-            this.MaximumSize = new System.Drawing.Size(500, 270);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(500, 500);
             this.MinimumSize = new System.Drawing.Size(500, 270);
             this.Name = "WorkAddForm";
             this.Text = "    ";
@@ -200,5 +222,6 @@ partial class WorkAddForm
         private System.Windows.Forms.Button leftButton;
         private System.Windows.Forms.Button rightButton;
         private System.Windows.Forms.Panel resultPanel;
+        private System.Windows.Forms.Label attachmentsLabel;
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimerForm));
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.timeLabel = new System.Windows.Forms.Label();
             this.skipButton = new System.Windows.Forms.Button();
@@ -284,6 +285,7 @@
             this.Controls.Add(this.timerPicture);
             this.ForeColor = System.Drawing.Color.OliveDrab;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(512, 490);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(512, 490);

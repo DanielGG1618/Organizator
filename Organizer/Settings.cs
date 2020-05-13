@@ -105,7 +105,8 @@ namespace Organizer
         {
             UpdateAddHolydayButtonStatus();
 
-            holydayFinishPicker.MinDate = DateTime.Parse(holydayStartPicker.Text);
+            if (holydayTypeComboBox.Text != Head.Translations[Head.ActiveLanguage]["Primary"])
+                holydayFinishPicker.MinDate = DateTime.Parse(holydayStartPicker.Text);
         }
 
         private void HolydayFinishPicker_ValueChanged(object sender, EventArgs e)
@@ -121,6 +122,8 @@ namespace Organizer
 
             if (holydayTypeComboBox.Text == Head.Translations[Head.ActiveLanguage]["Primary"])
             {
+                holydayStartPicker.MaxDate = new DateTime(2090, 12, 31);
+
                 fromLabel.Visible = false;
                 toLabel.Visible = false;
 
@@ -141,6 +144,9 @@ namespace Organizer
                 holydayStartPicker.Location = Point.Empty;
 
                 addHolydayPanel.Size = new Size(358,91);
+
+                holydayFinishPicker.MinDate = DateTime.Parse(holydayStartPicker.Text);
+                holydayStartPicker.MaxDate = DateTime.Parse(holydayFinishPicker.Text);
             }
         }
         

@@ -11,7 +11,6 @@ namespace Organizer
         public DateTime Date;
         private readonly DateTime generalViewDate;
 
-        public bool IsWorking;
         public int Num;
         public int Year;
 
@@ -25,46 +24,11 @@ namespace Organizer
             Date = new DateTime(Year, 9, 1).AddDays(Num);
             generalViewDate = new DateTime(4, Date.Month, Date.Day);
 
-            IsWorking = Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday;
-
-            if (IsWorking)
-            {
-                /*if (Head.PrimaryHolydays.Contains<DateTime>(generalViewDate))
-                {
-                    IsWorking = false;
-                }
-
-                else if (Head.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
-                         Head.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))
-                {
-                    IsWorking = false;
-                }
-
-                if (Head.SecondaryHolydays.Contains<DateTime>(generalViewDate))
-                {
-                    IsWorking = false;
-                }
-
-                if (Head.ThisYearHolydays.Contains<DateTime>(Date))
-                {
-                    IsWorking = false;
-                }*/
-
-                IsWorking = !(Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
-
-                              (!Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
-                              (Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
-                              Head.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
-
-                              Head.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
-
-                              Head.ThisYearHolydays.Contains<DateTime>(Date));
-            }
-
             Lessons = new List<Lesson>();
 
-            for (int i = 0; i < Head.Schedule[(int)Date.DayOfWeek].Length; i++)
-                Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.Color, Head.Schedule[(int)Date.DayOfWeek][i]));
+            if(IsWorking())
+                for (int i = 0; i < Head.Schedule[(int)Date.DayOfWeek].Length; i++)
+                    Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.Color, Head.Schedule[(int)Date.DayOfWeek][i]));
         }
 
         public Day(int num, int year, List<Lesson> lessons)
@@ -75,6 +39,20 @@ namespace Organizer
 
             for (int i = 0; i < lessons.Count; i++)
                 Lessons.Add(lessons[i]);
+        }
+
+        public bool IsWorking()
+        {
+            return Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
+                    !(Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                    (!Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
+                    (Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    Head.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+
+                    Head.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                    Head.ThisYearHolydays.Contains<DateTime>(Date));
         }
 
         public static string Totxt(Day day)
@@ -105,11 +83,6 @@ namespace Organizer
             day = new Day(int.Parse(splited[0]), int.Parse(splited[1]), lessons);
 
             return day;
-        }
-
-        public static DateTime DateSubtract(DateTime a, DateTime b)
-        {
-            return DateTime.FromBinary(a.ToBinary() - b.ToBinary());
         }
     }
 

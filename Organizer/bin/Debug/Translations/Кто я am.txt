@@ -70,3 +70,6 @@ Add language;Название языка
 Enter the task;Напиши чё-нить, по-братски
 Empty task;Пустовато как-то
 This task has already been added;Напиши чё-нить другое, это уже занято
+Attachments;Файловые прикрепления
+Attach the file;Зафайлить прикрепление
+ToDoList;Списака заданий

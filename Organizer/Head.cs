@@ -73,7 +73,7 @@ namespace Organizer
                 if (date >= lastDay)
                     date = firstDay;
             }
-            while (!Days[date].IsWorking);
+            while (!Days[date].IsWorking());
 
             editModeLessonsBackup = new Lesson[MaxLessonsCount];
             for(int i = 0; i < MaxLessonsCount;  i++)
@@ -110,12 +110,15 @@ namespace Organizer
             foreach (Button button in tableLayoutPanel1.Controls)
                 LocalizationControls.Add(button);
 
+            LocalizationControls.Add(this);
+
             SetColor(Color);
             SetLanguage(ActiveLanguage);
 
             LessonsRefresh();
-        }
 
+        }
+            
         private void LoadFiles()
         {
             LoadSave();
@@ -205,6 +208,10 @@ namespace Organizer
 
         private void LoadHolydays()
         {
+            PrimaryHolydays.Clear();
+            SecondaryHolydays.Clear();
+            ThisYearHolydays.Clear();
+
             string[] holydays = File.ReadAllLines("Holydays.txt");
 
             foreach (var day in holydays)
@@ -325,20 +332,26 @@ namespace Organizer
                 DialogResult result = dialog.ShowDialog();
 
                 if (result == DialogResult.No)
+                {
                     for (int i = 0; i < lessonsCount; i++)
                         Lessons[i].CopyFrom(editModeLessonsBackup[i]);
+
+                    LessonsRefresh();
+                }
 
                 else if (result == DialogResult.Cancel)
                     editMode = true;
 
                 else
-                    for(int i = 0; i < Days[date].Lessons.Count; i++)
+                {
+                    for (int i = 0; i < Days[date].Lessons.Count; i++)
                         Days[date].Lessons[i].CopyFrom(Lessons[i]);
+
+                    LessonsRefresh();
+                }
             }
 
             editModeButton.ForeColor = editMode ? Color.LimeGreen : new Color();
-
-            LessonsRefresh();
 
             for (int i = 0; i < lessonsCount; i++)
                 Lessons[i].AddWorkButton.Visible = editMode;
@@ -389,7 +402,7 @@ namespace Organizer
                 if (date <= firstDay)
                     date = lastDay;
             }
-            while (!Days[date].IsWorking);
+            while (!Days[date].IsWorking());
 
             LessonsRefresh();
         }
@@ -409,7 +422,7 @@ namespace Organizer
                 if (date >= lastDay)
                     date = firstDay;
             }
-            while (!Days[date].IsWorking);
+            while (!Days[date].IsWorking());
 
             LessonsRefresh();
         }
@@ -429,6 +442,9 @@ namespace Organizer
             SetLanguage(ActiveLanguage);
             LoadHolydays();
             LoadTranslations();
+
+            DateMinusButton_Click(0, new EventArgs());
+            DatePlusButton_Click(0, new EventArgs());
         }
 
         private void SetLanguage(string language)

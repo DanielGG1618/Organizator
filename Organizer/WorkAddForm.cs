@@ -20,10 +20,10 @@ namespace Organizer
         public static Dictionary<string, string> Types = new Dictionary<string, string>
         {
             { "Default", "" },
+            { "Other", "" },
             { "On pages", "C " },
             { "Paragraphs", "§ " },
-            { "Numbers", "№ " },
-            { "Other", "" }
+            { "Numbers", "№ " }
         };
 
         public WorkAddForm(int num)
@@ -51,7 +51,11 @@ namespace Organizer
         private void SetLanguage(string language)
         {
             typeSelector.Items.Clear();
-            typeSelector.Items.AddRange(new string[4] { Head.Translations[Head.ActiveLanguage]["Other"], Head.Translations[Head.ActiveLanguage]["On pages"], Head.Translations[Head.ActiveLanguage]["Numbers"], Head.Translations[Head.ActiveLanguage]["Paragraphs"] });
+
+            foreach (var type in Types)
+                if (type.Key != "Default")
+                    typeSelector.Items.Add(Head.Translations[language][type.Key]);
+
             typeSelector.SelectedIndex = 0;
 
             foreach (var control in LocalizationControls)
@@ -176,20 +180,10 @@ namespace Organizer
             if (lastSelectedType == typeSelector.SelectedIndex)
                 return;
 
-            #region Выставление внутренних данных
-            if (typeSelector.Text == Head.Translations[Head.ActiveLanguage]["On pages"])
-                typeSelector.AccessibleName = "On pages";
-
-            else if (typeSelector.Text == Head.Translations[Head.ActiveLanguage]["Paragraphs"])
-                typeSelector.AccessibleName = "Paragraphs";
-
-            else if (typeSelector.Text == Head.Translations[Head.ActiveLanguage]["Numbers"])
-                typeSelector.AccessibleName = "Numbers";
-
-            else
-                typeSelector.AccessibleName = "Other";
-            #endregion
-
+            foreach (var type in Types)
+                if (type.Key != "Default")
+                    if (typeSelector.Text == Head.Translations[Head.ActiveLanguage][type.Key])
+                        typeSelector.AccessibleName = type.Key;
 
             if (!removeMode || b)
             {
