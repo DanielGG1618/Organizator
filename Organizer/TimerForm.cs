@@ -81,7 +81,7 @@ namespace Organizer
                 breakTime = int.Parse(timerSave[1]) * 60;
                 pauseInEnd = bool.Parse(timerSave[2]);
                 counter = bool.Parse(timerSave[3]);
-                worksCount = File.GetLastAccessTime("TimerSave.txt").Date == DateTime.Today ? int.Parse(timerSave[4]) : 1;
+                worksCount = File.GetLastWriteTime("TimerSave.txt").Date == DateTime.Today ? int.Parse(timerSave[4]) : 0;
             }
 
             catch
@@ -134,6 +134,11 @@ namespace Organizer
                 textBox.Text = textBox.Text.Remove(textBox.Text.Length - 1, 1);
                 textBox.SelectionStart = textBox.Text.Length;
             }
+        }
+
+        private void CycleLabel_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void ResetTimer_Click(object sender, EventArgs e)

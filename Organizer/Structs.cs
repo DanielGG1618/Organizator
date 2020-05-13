@@ -26,9 +26,8 @@ namespace Organizer
 
             Lessons = new List<Lesson>();
 
-            if(IsWorking())
-                for (int i = 0; i < Head.Schedule[(int)Date.DayOfWeek].Length; i++)
-                    Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.Color, Head.Schedule[(int)Date.DayOfWeek][i]));
+            for (int i = 0; i < Head.Schedule[(int)Date.DayOfWeek].Length; i++)
+                Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.Color, Head.Schedule[(int)Date.DayOfWeek][i]));
         }
 
         public Day(int num, int year, List<Lesson> lessons)

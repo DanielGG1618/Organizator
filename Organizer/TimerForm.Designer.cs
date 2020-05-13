@@ -160,6 +160,7 @@
             this.cycleLabel.TabIndex = 9;
             this.cycleLabel.Text = "Цикл №0";
             this.cycleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.cycleLabel.Click += new System.EventHandler(this.CycleLabel_Click);
             // 
             // workLabel
             // 
