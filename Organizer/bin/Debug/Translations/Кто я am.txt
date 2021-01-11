@@ -73,3 +73,11 @@ This task has already been added;Напиши чё-нить другое, это
 Attachments;Файловые прикрепления
 Attach the file;Зафайлить прикрепление
 ToDoList;Списака заданий
+Copy screen;Вырезать экранвыстрел
+Monday;Мондень
+Tuesday;Туэсдень
+Wednesday;ВВэднесдень
+Thursday;Тхурсдень
+Friday;Фридень
+Saturday;Сатурндень
+Sunday;Солнцедень

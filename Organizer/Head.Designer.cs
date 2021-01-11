@@ -37,12 +37,13 @@
             this.saveScreenButton = new System.Windows.Forms.Button();
             this.editModeButton = new System.Windows.Forms.Button();
             this.lessonsPanel = new System.Windows.Forms.Panel();
-            this.timerButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.feedbackButton = new System.Windows.Forms.Button();
+            this.screenShotPanel = new System.Windows.Forms.Panel();
+            this.copyScreen = new System.Windows.Forms.Button();
             this.screen = new System.Windows.Forms.Panel();
             this.panel15.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.screenShotPanel.SuspendLayout();
             this.screen.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,7 +80,7 @@
             this.datePlusButton.Margin = new System.Windows.Forms.Padding(0);
             this.datePlusButton.Name = "datePlusButton";
             this.datePlusButton.Size = new System.Drawing.Size(70, 70);
-            this.datePlusButton.TabIndex = 3;
+            this.datePlusButton.TabIndex = 7;
             this.datePlusButton.Text = ">";
             this.datePlusButton.UseVisualStyleBackColor = false;
             this.datePlusButton.Click += new System.EventHandler(this.DatePlusButton_Click);
@@ -95,7 +96,7 @@
             this.dateMinusButton.Margin = new System.Windows.Forms.Padding(0);
             this.dateMinusButton.Name = "dateMinusButton";
             this.dateMinusButton.Size = new System.Drawing.Size(70, 70);
-            this.dateMinusButton.TabIndex = 2;
+            this.dateMinusButton.TabIndex = 6;
             this.dateMinusButton.Text = "<";
             this.dateMinusButton.UseVisualStyleBackColor = false;
             this.dateMinusButton.Click += new System.EventHandler(this.DateMinusButton_Click);
@@ -108,11 +109,11 @@
             this.settingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.settingsButton.Location = new System.Drawing.Point(0, 370);
+            this.settingsButton.Location = new System.Drawing.Point(0, 460);
             this.settingsButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(422, 100);
-            this.settingsButton.TabIndex = 6;
+            this.settingsButton.Size = new System.Drawing.Size(422, 130);
+            this.settingsButton.TabIndex = 4;
             this.settingsButton.Text = "Настройки";
             this.settingsButton.UseVisualStyleBackColor = false;
             this.settingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
@@ -124,11 +125,11 @@
             this.saveScreenButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.saveScreenButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveScreenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveScreenButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.saveScreenButton.Location = new System.Drawing.Point(0, 10);
+            this.saveScreenButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.saveScreenButton.Location = new System.Drawing.Point(0, 0);
             this.saveScreenButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.saveScreenButton.Name = "saveScreenButton";
-            this.saveScreenButton.Size = new System.Drawing.Size(422, 100);
+            this.saveScreenButton.Size = new System.Drawing.Size(422, 130);
             this.saveScreenButton.TabIndex = 0;
             this.saveScreenButton.Text = "Сохранить скриншот";
             this.saveScreenButton.UseVisualStyleBackColor = false;
@@ -142,11 +143,11 @@
             this.editModeButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.editModeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.editModeButton.Location = new System.Drawing.Point(0, 250);
+            this.editModeButton.Location = new System.Drawing.Point(0, 310);
             this.editModeButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
             this.editModeButton.Name = "editModeButton";
-            this.editModeButton.Size = new System.Drawing.Size(422, 100);
-            this.editModeButton.TabIndex = 4;
+            this.editModeButton.Size = new System.Drawing.Size(422, 130);
+            this.editModeButton.TabIndex = 3;
             this.editModeButton.Text = "Режим редактирования";
             this.editModeButton.UseVisualStyleBackColor = false;
             this.editModeButton.Click += new System.EventHandler(this.EditModeButton_Click);
@@ -161,61 +162,52 @@
             this.lessonsPanel.Size = new System.Drawing.Size(700, 490);
             this.lessonsPanel.TabIndex = 3;
             // 
-            // timerButton
-            // 
-            this.timerButton.AccessibleName = "Timer";
-            this.timerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.timerButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.timerButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.timerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.timerButton.Location = new System.Drawing.Point(0, 130);
-            this.timerButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.timerButton.Name = "timerButton";
-            this.timerButton.Size = new System.Drawing.Size(422, 100);
-            this.timerButton.TabIndex = 7;
-            this.timerButton.Text = "Таймер";
-            this.timerButton.UseVisualStyleBackColor = false;
-            this.timerButton.Click += new System.EventHandler(this.TimerButton_Click);
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.feedbackButton, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.copyScreen, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.screenShotPanel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.settingsButton, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.editModeButton, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.timerButton, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.saveScreenButton, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(739, 12);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(12, 3, 12, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(422, 600);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
-            // feedbackButton
+            // screenShotPanel
             // 
-            this.feedbackButton.AccessibleName = "Feedback";
-            this.feedbackButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.feedbackButton.Cursor = System.Windows.Forms.Cursors.Default;
-            this.feedbackButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.feedbackButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.feedbackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.feedbackButton.Location = new System.Drawing.Point(0, 490);
-            this.feedbackButton.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
-            this.feedbackButton.Name = "feedbackButton";
-            this.feedbackButton.Size = new System.Drawing.Size(422, 100);
-            this.feedbackButton.TabIndex = 8;
-            this.feedbackButton.Text = "Обратная связь";
-            this.feedbackButton.UseVisualStyleBackColor = false;
-            this.feedbackButton.Click += new System.EventHandler(this.FeedbackButton_Click);
+            this.screenShotPanel.Controls.Add(this.saveScreenButton);
+            this.screenShotPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.screenShotPanel.Location = new System.Drawing.Point(0, 10);
+            this.screenShotPanel.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.screenShotPanel.Name = "screenShotPanel";
+            this.screenShotPanel.Size = new System.Drawing.Size(422, 130);
+            this.screenShotPanel.TabIndex = 11;
+            // 
+            // copyScreen
+            // 
+            this.copyScreen.AccessibleName = "Copy screen";
+            this.copyScreen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.copyScreen.Cursor = System.Windows.Forms.Cursors.Default;
+            this.copyScreen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.copyScreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.copyScreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.copyScreen.Location = new System.Drawing.Point(0, 160);
+            this.copyScreen.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.copyScreen.Name = "copyScreen";
+            this.copyScreen.Size = new System.Drawing.Size(422, 130);
+            this.copyScreen.TabIndex = 1;
+            this.copyScreen.Text = "Скопировать скриншот";
+            this.copyScreen.UseVisualStyleBackColor = false;
+            this.copyScreen.Click += new System.EventHandler(this.CopyScreen_Click);
             // 
             // screen
             // 
@@ -231,13 +223,12 @@
             this.AccessibleName = "ToDoList";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(1182, 624);
+            this.ClientSize = new System.Drawing.Size(1182, 619);
             this.Controls.Add(this.screen);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.ForeColor = System.Drawing.Color.OliveDrab;
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(1200, 666);
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1200, 666);
             this.Name = "Head";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -247,6 +238,7 @@
             this.Load += new System.EventHandler(this.Head_Load);
             this.panel15.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.screenShotPanel.ResumeLayout(false);
             this.screen.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -261,10 +253,10 @@
         private System.Windows.Forms.Label DateText;
         private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.Panel lessonsPanel;
-        private System.Windows.Forms.Button timerButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button feedbackButton;
         private System.Windows.Forms.Panel screen;
+        private System.Windows.Forms.Panel screenShotPanel;
+        private System.Windows.Forms.Button copyScreen;
     }
 }
 

@@ -73,3 +73,11 @@ This task has already been added;This task has already been added
 Attachments;Attachments
 Attach the file;Attach the file
 ToDoList;Task list
+Copy screen;Copy screenshot
+Monday;Monday
+Tuesday;Tuesday
+Wednesday;Wednesday
+Thursday;Thursday
+Friday;Friday
+Saturday;Saturday
+Sunday;Sunday

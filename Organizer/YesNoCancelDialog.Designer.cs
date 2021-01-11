@@ -102,7 +102,7 @@
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.no);
             this.Controls.Add(this.yes);
-            this.ForeColor = System.Drawing.Color.OliveDrab;
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.ImeMode = System.Windows.Forms.ImeMode.On;
             this.Name = "YesNoCancelDialog";

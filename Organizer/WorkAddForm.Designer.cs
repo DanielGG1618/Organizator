@@ -198,7 +198,7 @@ partial class WorkAddForm
             this.Controls.Add(this.done);
             this.Controls.Add(this.typeSelector);
             this.Controls.Add(this.attachmentsLabel);
-            this.ForeColor = System.Drawing.Color.OliveDrab;
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

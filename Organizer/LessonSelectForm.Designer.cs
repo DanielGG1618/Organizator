@@ -73,7 +73,6 @@
             // lessonLabel
             // 
             this.lessonLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lessonLabel.ForeColor = System.Drawing.SystemColors.WindowText;
             this.lessonLabel.Location = new System.Drawing.Point(19, 14);
             this.lessonLabel.Margin = new System.Windows.Forms.Padding(10);
             this.lessonLabel.Name = "lessonLabel";
@@ -114,12 +113,12 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(232, 208);
+            this.ClientSize = new System.Drawing.Size(232, 203);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.done);
             this.Controls.Add(this.lessonLabel);
             this.Controls.Add(this.comboBox);
-            this.ForeColor = System.Drawing.Color.OliveDrab;
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(250, 250);
             this.MinimumSize = new System.Drawing.Size(250, 250);

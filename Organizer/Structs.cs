@@ -12,16 +12,14 @@ namespace Organizer
         private readonly DateTime generalViewDate;
 
         public int Num;
-        public int Year;
 
         public List<Lesson> Lessons;
 
-        public Day(int num, int year)
+        public Day(int num)
         {
             Num = num;
-            Year = year;
 
-            Date = new DateTime(Year, 9, 1).AddDays(Num);
+            Date = new DateTime(2000 + Head.YEAR, 9, 1).AddDays(Num);
             generalViewDate = new DateTime(4, Date.Month, Date.Day);
 
             Lessons = new List<Lesson>();
@@ -30,9 +28,9 @@ namespace Organizer
                 Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.Color, Head.Schedule[(int)Date.DayOfWeek][i]));
         }
 
-        public Day(int num, int year, List<Lesson> lessons)
+        public Day(int num, List<Lesson> lessons)
         {
-            this = new Day(num, year);
+            this = new Day(num);
 
             Lessons = new List<Lesson>();
 
@@ -56,7 +54,7 @@ namespace Organizer
 
         public static string Totxt(Day day)
         {
-            string txt = day.Num + "╫ " + day.Year;
+            string txt = day.Num.ToString();
 
             foreach (var lesson in day.Lessons)
                 txt += "░ " + Lesson.Totxt(lesson);
@@ -79,7 +77,7 @@ namespace Organizer
             for (int i = 2; i < splited.Length - 1; i++)
                 lessons.Add(Lesson.Fromtxt(splited[i]));
 
-            day = new Day(int.Parse(splited[0]), int.Parse(splited[1]), lessons);
+            day = new Day(int.Parse(splited[0]), lessons);
 
             return day;
         }
@@ -89,12 +87,14 @@ namespace Organizer
     {
         public Label NumLabel, TitleLabel, WorkLabel;
         public Button AddWorkButton;
+        public CheckBox DoneCheckBox;
 
         public int Num;
         public string Title;
         public Dictionary<string, List<string>> WorkList;
 
         public bool Enabled;
+        public bool Done { get => DoneCheckBox.Checked; }
 
         public void LoadWithSamples(int cellSize, Color color)
         {
@@ -122,7 +122,7 @@ namespace Organizer
             AddWorkButton.Visible = false;
         }
 
-        public Lesson(int num, int cellSize, Color color)
+        public Lesson(int num, int cellSize, Color color, bool done = false)
         {
             Num = num;
 
@@ -130,6 +130,7 @@ namespace Organizer
             TitleLabel = new Label();
             WorkLabel = new Label();
             AddWorkButton = new Button();
+            DoneCheckBox = new CheckBox();
             WorkList = new Dictionary<string, List<string>> { { "Default", new List<string>(new string[1] { "" }) } };
             Enabled = true;
             Title = "";
@@ -148,19 +149,25 @@ namespace Organizer
             AddWorkButton.Tag = Num.ToString();
             AddWorkButton.BackColor = Head.GRAY[(Num + 1) % 2];
 
+            DoneCheckBox.Text = "";
+            DoneCheckBox.AutoSize = true;
+            DoneCheckBox.BackColor = Color.Transparent;
+            DoneCheckBox.Checked = done;
+            DoneCheckBox.Tag = Num.ToString();
+
             UpdateLocation(cellSize);
         }
 
-        public Lesson(int num, int cellSize, Color color, string title)
+        public Lesson(int num, int cellSize, Color color, string title, bool done = false)
         {
-            this = new Lesson(num, cellSize, color);
+            this = new Lesson(num, cellSize, color, done);
 
             SetTitle(title);
         }
 
-        public Lesson(int num, int cellSize, Color color, string title, Dictionary<string, List<string>> workList)
+        public Lesson(int num, int cellSize, Color color, string title, bool done, Dictionary<string, List<string>> workList)
         {
-            this = new Lesson(num, cellSize, color, title);
+            this = new Lesson(num, cellSize, color, title, done);
 
             WorkList = workList;
         }
@@ -173,6 +180,7 @@ namespace Organizer
             TitleLabel.Location = new Point(50, cellSize * positionCoef);
             WorkLabel.Location = new Point(50, cellSize * positionCoef + (int)(cellSize * 2 / 7f));
             AddWorkButton.Location = new Point(700 - cellSize + 10, cellSize * positionCoef + 10);
+            DoneCheckBox.Location = new Point(0, cellSize * positionCoef);
         }
 
         public void UpdateSizes(int cellSize, bool editMode)
@@ -196,6 +204,9 @@ namespace Organizer
             if (WorkList == null) WorkList = new Dictionary<string, List<string>>();
             WorkList.Clear();
 
+            if (DoneCheckBox == null) DoneCheckBox = new CheckBox();
+            DoneCheckBox.Checked = lesson.Done;
+
             foreach (var workList in lesson.WorkList)
                 WorkList.Add(workList.Key, new List<string>(workList.Value.ToArray()));
         }
@@ -206,6 +217,7 @@ namespace Organizer
 
             TitleLabel.Text = "";
             WorkLabel.Text = "";
+            DoneCheckBox.Visible = false;
             Enabled = false;
         }
 
@@ -230,9 +242,14 @@ namespace Organizer
                 WorkLabel.AccessibleName = "";
         }
 
+        public void SetDone(bool done)
+        {
+            DoneCheckBox.Checked = done;
+        }
+
         public static string Totxt(Lesson lesson)
         {
-            string txt = lesson.Num + "╫ " + lesson.Title;
+            string txt = lesson.Num + "╫ " + lesson.Title + "╫ " + lesson.Done;
 
             foreach (var work in lesson.WorkList)
             {
@@ -253,10 +270,10 @@ namespace Organizer
 
             Dictionary<string, List<string>> workList = new Dictionary<string, List<string>>();
 
-            for (int i = 2; i < splited.Length - 1; i += 2)
+            for (int i = 3; i < splited.Length - 1; i += 2)
                 workList.Add(splited[i], new List<string>(splited[i + 1].Split('◘')));
 
-            return new Lesson(int.Parse(splited[0]), Head.CellSize, Head.Color, splited[1], workList);
+            return new Lesson(int.Parse(splited[0]), Head.CellSize, Head.Color, splited[1], bool.Parse(splited[2]), workList);
         }
     }
 }

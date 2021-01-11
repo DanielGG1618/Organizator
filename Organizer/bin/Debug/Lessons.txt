@@ -1,7 +1,7 @@
 Sunday:
-Monday: Physical education, History, Geography, Algebra, Biology, Russian language
-Tuesday: History, Geometry, Chemistry, Russian language, Geography, Social studies, German language
-Wednesday: Technology, Physics, English language, Physical education, Algebra, Russian language, Literature
-Thursday: Physical education, English language, Literature, Life safety, Physics, Algebra, 
-Friday: English language, Music, Geometry, Chemistry, Biology, Native language, Informatics
+Monday: Literature, Russian language, Algebra, Geography, Physics, History
+Tuesday: Russian language, Chemistry, Biology, Native language, Physics, Social studies, English language
+Wednesday: Physical education, Literature, Algebra, Geometry, English language, History, Chemistry
+Thursday: Geometry, Russian language, Physical education, German language, Geography, Physics
+Friday: Life safety, Informatics, Physical education, English language, Algebra, Literature, Biology
 Saturday: 

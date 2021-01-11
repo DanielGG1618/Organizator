@@ -10,11 +10,12 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Media;
 
 namespace Organizer
 {
     public partial class Head : Form
-    { 
+    {
         public static Color Color;
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
@@ -34,7 +35,7 @@ namespace Organizer
         public static string ActiveLanguage;
         public static List<string> Languages;
 
-        private static int year = 19;
+        public static int YEAR = 20;
 
         private DateTime date, firstDay, lastDay;
         private int lessonsCount;
@@ -48,11 +49,11 @@ namespace Organizer
 
         public Head()
         {
-            firstDay = new DateTime(2000 + year, 9, 1);
+            firstDay = new DateTime(2000 + YEAR, 9, 1);
             firstDay = firstDay.ToLocalTime();
             firstDay = firstDay.Date;
 
-            lastDay = new DateTime(2001 + year, 5, 31);
+            lastDay = new DateTime(2001 + YEAR, 5, 31);
             lastDay = lastDay.ToLocalTime();
             lastDay = lastDay.Date;
 
@@ -76,7 +77,7 @@ namespace Organizer
             while (!Days[date].IsWorking());
 
             editModeLessonsBackup = new Lesson[MaxLessonsCount];
-            for(int i = 0; i < MaxLessonsCount;  i++)
+            for (int i = 0; i < MaxLessonsCount; i++)
                 editModeLessonsBackup[i] = new Lesson(i + 1, CellSize, Color);
 
             InitializeComponent();
@@ -98,6 +99,9 @@ namespace Organizer
 
                 Lessons[i].AddWorkButton.Click += AddWorkButtonClick;
 
+                Lessons[i].DoneCheckBox.CheckStateChanged += DoneCheckedChanged;
+
+                lessonsPanel.Controls.Add(Lessons[i].DoneCheckBox);
                 lessonsPanel.Controls.Add(Lessons[i].AddWorkButton);
                 lessonsPanel.Controls.Add(Lessons[i].NumLabel);
                 lessonsPanel.Controls.Add(Lessons[i].TitleLabel);
@@ -107,8 +111,18 @@ namespace Organizer
                 LocalizationControls.Add(Lessons[i].WorkLabel);
             }
 
-            foreach (Button button in tableLayoutPanel1.Controls)
-                LocalizationControls.Add(button);
+            foreach (Control control in tableLayoutPanel1.Controls)
+            {
+                if (control is Panel)
+                {
+                    LocalizationControls.Add(control.Controls[0]);
+                    LocalizationControls.Add(control.Controls[1]);
+
+                    continue;
+                }
+
+                LocalizationControls.Add(control);
+            }
 
             LocalizationControls.Add(this);
 
@@ -116,9 +130,8 @@ namespace Organizer
             SetLanguage(ActiveLanguage);
 
             LessonsRefresh();
-
         }
-            
+
         private void LoadFiles()
         {
             LoadSave();
@@ -185,10 +198,10 @@ namespace Organizer
             else
             {
                 for (int i = 0; i < 273; i++)
-                    Days.Add(firstDay.AddDays(i), new Day(i, 2000 + year));
+                    Days.Add(firstDay.AddDays(i), new Day(i));
 
-                if (DateTime.IsLeapYear(2001 + year))
-                    Days.Add(firstDay.AddDays(273), new Day(273, 2000 + year));
+                if (DateTime.IsLeapYear(2001 + YEAR))
+                    Days.Add(firstDay.AddDays(273), new Day(273));
             }
         }
 
@@ -276,7 +289,7 @@ namespace Organizer
         {
             List<string> days = new List<string>();
 
-            foreach(var day in Days)
+            foreach (var day in Days)
                 days.Add(Day.Totxt(day.Value));
 
             File.WriteAllLines("Days.txt", days);
@@ -284,10 +297,11 @@ namespace Organizer
 
         private void LessonsRefresh()
         {
-            for (int i = 0; i < Days[date].Lessons.Count; i++)//////////////////////////
+            for (int i = 0; i < Days[date].Lessons.Count; i++)
             {
                 Lessons[i].NumLabel.ForeColor = Color;
-                Lessons[i].CopyFrom(Days[date].Lessons[i]);////////////////////////////
+                Lessons[i].DoneCheckBox.Visible = true;
+                Lessons[i].CopyFrom(Days[date].Lessons[i]);
                 WorkRefresh(i);
             }
 
@@ -296,7 +310,7 @@ namespace Organizer
             for (int i = MaxLessonsCount - 1; i >= lessonsCount; i--)
                 Lessons[i].TurnOff();
 
-            DateText.Text = date.Day.ToString("00") + "." + date.Month.ToString("00") + "." + date.Year;
+            DateText.Text = $"{date.Day.ToString("00")}.{date.Month.ToString("00")}.{date.Year} - {Translations[ActiveLanguage][date.DayOfWeek.ToString()]}";
         }
 
         public void WorkRefresh(int num)
@@ -307,7 +321,7 @@ namespace Organizer
 
                 foreach (var work in Lessons[num].WorkList)
                     if (work.Key != "Default")
-                        foreach(var text in work.Value)
+                        foreach (var text in work.Value)
                             Lessons[num].WorkLabel.Text += WorkAddForm.Types[work.Key] + text + ", ";
 
                 Lessons[num].WorkLabel.Text = Lessons[num].WorkLabel.Text.Remove(Lessons[num].WorkLabel.Text.Length - 2, 2);
@@ -318,7 +332,7 @@ namespace Organizer
         }
 
         private void EditModeButton_Click(object sender, EventArgs e)
-        { 
+        {
             editMode = !editMode;
 
             if (editMode)
@@ -334,7 +348,7 @@ namespace Organizer
                 if (result == DialogResult.No)
                 {
                     for (int i = 0; i < lessonsCount; i++)
-                        Lessons[i].CopyFrom(editModeLessonsBackup[i]);
+                        Days[date].Lessons[i].CopyFrom(editModeLessonsBackup[i]);
 
                     LessonsRefresh();
                 }
@@ -377,6 +391,7 @@ namespace Organizer
 
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
+                FileName = date.ToString("d"),
                 Filter = "PNG|*.png|JPEG|*.jpg|BMP|*.bmp"
             };
 
@@ -429,7 +444,7 @@ namespace Organizer
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            if(editMode)
+            if (editMode)
             {
                 NoEditMode();
                 return;
@@ -453,7 +468,7 @@ namespace Organizer
                 if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
                     control.Text = Translations[language][control.AccessibleName];
 
-            for(int i = 0; i < lessonsCount; i++)
+            for (int i = 0; i < lessonsCount; i++)
                 WorkRefresh(i);
         }
 
@@ -464,7 +479,7 @@ namespace Organizer
             ForeColor = Color;
 
             foreach (var lesson in Lessons)
-                if(lesson.Enabled)
+                if (lesson.Enabled)
                     lesson.NumLabel.ForeColor = Color;
         }
 
@@ -521,6 +536,17 @@ namespace Organizer
             Cursor.Current = Cursors.Hand;
         }
 
+        private void CopyScreen_Click(object sender, EventArgs e)
+        {
+            dateMinusButton.Visible = false;
+            datePlusButton.Visible = false;
+
+            Clipboard.SetImage(GetControlScreenshot(screen));
+
+            dateMinusButton.Visible = true;
+            datePlusButton.Visible = true;
+        }
+
         private void AddWorkButtonClick(object sender, EventArgs e)
         {
             int num = Convert.ToInt32(((Button)sender).Tag);
@@ -533,6 +559,13 @@ namespace Organizer
 
                 WorkRefresh(num - 1);
             }
+        }
+
+        private void DoneCheckedChanged(object sender, EventArgs e)
+        {
+            int num = Convert.ToInt32(((CheckBox)sender).Tag);
+
+            Days[date].Lessons[num - 1].SetDone(((CheckBox)sender).Checked);
         }
     }
 }

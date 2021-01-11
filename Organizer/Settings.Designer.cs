@@ -193,7 +193,7 @@
             // colorPanel
             // 
             this.colorPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.colorPanel.BackColor = System.Drawing.Color.OliveDrab;
+            this.colorPanel.BackColor = System.Drawing.Color.White;
             this.colorPanel.Location = new System.Drawing.Point(15, 218);
             this.colorPanel.Name = "colorPanel";
             this.colorPanel.Size = new System.Drawing.Size(83, 83);
@@ -286,7 +286,7 @@
             this.AccessibleName = "Settings";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(382, 458);
+            this.ClientSize = new System.Drawing.Size(382, 453);
             this.Controls.Add(this.languageNameLabel);
             this.Controls.Add(this.languageName);
             this.Controls.Add(this.holyLabel);
@@ -296,7 +296,7 @@
             this.Controls.Add(this.addHolydayPanel);
             this.Controls.Add(this.languagePict);
             this.Controls.Add(this.languageSelector);
-            this.ForeColor = System.Drawing.Color.OliveDrab;
+            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(400, 500);
             this.MinimumSize = new System.Drawing.Size(400, 500);
