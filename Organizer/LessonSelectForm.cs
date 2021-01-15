@@ -35,7 +35,7 @@ namespace Organizer
             SetLanguage(Head.ActiveLanguage);
 
 
-            comboBox.Text = Head.Lessons[int.Parse(lessonLabel.Text.Last().ToString()) - 1].TitleLabel.Text;
+            //comboBox.Text = Head.schedule.Lessons[int.Parse(lessonLabel.Text.Last().ToString()) - 1].TitleLabel.Text;
         }
 
         private void SetColor(Color color)

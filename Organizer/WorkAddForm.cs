@@ -28,7 +28,7 @@ namespace Organizer
 
         public WorkAddForm(int num)
         {
-            foreach (var workList in Head.Lessons[num - 1].WorkList)
+            foreach (var workList in Schelude.Lessons[num - 1].WorkList)
                 WorkList.Add(workList.Key, new List<string>(workList.Value));
 
             InitializeComponent();

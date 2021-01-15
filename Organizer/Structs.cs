@@ -24,8 +24,8 @@ namespace Organizer
 
             Lessons = new List<Lesson>();
 
-            for (int i = 0; i < Head.Schedule[(int)Date.DayOfWeek].Length; i++)
-                Lessons.Add(new Lesson(i + 1, Head.CellSize, Head.Color, Head.Schedule[(int)Date.DayOfWeek][i]));
+            for (int i = 0; i < Head.Schelude[(int)Date.DayOfWeek].Length; i++)
+                Lessons.Add(new Lesson(i + 1, Schelude.CellSize, Head.Color, Head.Schelude[(int)Date.DayOfWeek][i]));
         }
 
         public Day(int num, List<Lesson> lessons)
@@ -273,7 +273,7 @@ namespace Organizer
             for (int i = 3; i < splited.Length - 1; i += 2)
                 workList.Add(splited[i], new List<string>(splited[i + 1].Split('◘')));
 
-            return new Lesson(int.Parse(splited[0]), Head.CellSize, Head.Color, splited[1], bool.Parse(splited[2]), workList);
+            return new Lesson(int.Parse(splited[0]), Schelude.CellSize, Head.Color, splited[1], bool.Parse(splited[2]), workList);
         }
     }
 }

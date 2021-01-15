@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Organizer
 {
-    public partial class Settings : Form
+    public partial class Settings : UserControl
     {
         public List<Control> LocalizationControls = new List<Control>();
         public Color Color;
@@ -25,7 +25,7 @@ namespace Organizer
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            FormClosing += SaveFiles;
+            //FormClosing += SaveFiles;
 
             languageSelector.Items.Clear();
             languageSelector.Items.AddRange(Head.Languages.ToArray());
@@ -66,6 +66,11 @@ namespace Organizer
         }
 
         private void SaveFiles(object sender, EventArgs e)
+        {
+            File.WriteAllLines("Save.txt", new string[2] { Head.ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B });
+        }
+
+        private void SaveFiles()
         {
             File.WriteAllLines("Save.txt", new string[2] { Head.ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B });
         }

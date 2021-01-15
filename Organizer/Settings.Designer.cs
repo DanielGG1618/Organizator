@@ -297,7 +297,6 @@
             this.Controls.Add(this.languagePict);
             this.Controls.Add(this.languageSelector);
             this.ForeColor = System.Drawing.Color.White;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(400, 500);
             this.MinimumSize = new System.Drawing.Size(400, 500);
             this.Name = "Settings";
