@@ -103,12 +103,12 @@ namespace Organizer
             NumLabel.Font = new Font("Microsoft Sans Serif", 36, FontStyle.Bold);
             NumLabel.ForeColor = color;
 
-            TitleLabel.Size = new Size(650, (int)(cellSize * 2 / 7f));//
+            TitleLabel.Size = new Size(700, (int)(cellSize * 2 / 7f));//
             TitleLabel.TextAlign = ContentAlignment.MiddleLeft;
             TitleLabel.Font = new Font("Microsoft Sans Serif", 12);
             TitleLabel.ForeColor = Color.White;
 
-            WorkLabel.Size = new Size(650, (int)(cellSize * 5 / 7f));//
+            WorkLabel.Size = new Size(700, (int)(cellSize * 5 / 7f));//
             WorkLabel.TextAlign = ContentAlignment.MiddleLeft;
             WorkLabel.Font = new Font("Microsoft Sans Serif", 12);
             WorkLabel.ForeColor = Color.White;

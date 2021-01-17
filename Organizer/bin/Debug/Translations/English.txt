@@ -11,7 +11,7 @@ Add holydays;Add holydays
 Save screen;Save screenshot
 Timer;Timer
 Edit mode;Edit mode
-Settings;Settings
+Options;Options
 Feedback;Feedback
 Physical education;Physical education
 History;History

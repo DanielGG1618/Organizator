@@ -66,10 +66,11 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Les
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Head.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.YesNoCancelDialog.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Properties.Resources.resources
-C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Settings.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.WorkAddForm.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.GenerateResource.cache
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.CoreCompileInputs.cache
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.exe
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.pdb
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Schelude.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.UserControlGG.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Options.resources

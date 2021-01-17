@@ -11,22 +11,18 @@ using System.Windows.Forms;
 
 namespace Organizer
 {
-    public partial class Settings : UserControl
+    public partial class Options : UserControlGG
     {
-        public List<Control> LocalizationControls = new List<Control>();
         public Color Color;
+        public bool DarkTheme = true;
 
-        public Settings()
+        public Options()
         {
-            Color = Head.Color;
-
             InitializeComponent();
         }
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            //FormClosing += SaveFiles;
-
             languageSelector.Items.Clear();
             languageSelector.Items.AddRange(Head.Languages.ToArray());
 
@@ -42,17 +38,30 @@ namespace Organizer
             LocalizationControls.AddRange(new Control[] { addHolyday, fromLabel, toLabel, colorLabel, holyLabel, languageNameLabel, addLanguage, this });
 
             SetColor(Head.Color);
+            SetTheme(Head.DarkTheme);
             SetLanguage(Head.ActiveLanguage);
 
             holydayTypeComboBox.SelectedIndex = 0;
+            themeCheckBox.Checked = Head.DarkTheme;
         }
 
-        private void SetColor(Color color)
+        public override void SetColor(Color color)
         {
             Color = color;
 
             ForeColor = color;
             colorPanel.BackColor = color;
+
+            ((Head)Form.ActiveForm).SetColor(color);
+        }
+
+        public override void SetTheme(bool darkTheme)
+        {
+            DarkTheme = darkTheme;
+
+            BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
+
+            ((Head)Form.ActiveForm).SetTheme(darkTheme);
         }
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -65,17 +74,12 @@ namespace Organizer
             SetLanguage(Head.ActiveLanguage);
         }
 
-        private void SaveFiles(object sender, EventArgs e)
+        public void SaveOptions(object sender, EventArgs e)
         {
-            File.WriteAllLines("Save.txt", new string[2] { Head.ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B });
+            File.WriteAllLines("Save.txt", new string[3] { Head.ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B, DarkTheme.ToString() });
         }
 
-        private void SaveFiles()
-        {
-            File.WriteAllLines("Save.txt", new string[2] { Head.ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B });
-        }
-
-        private void SetLanguage(string language)
+        public override void SetLanguage(string language)
         {
             int holydayTypeIndex = holydayTypeComboBox.SelectedIndex;
 
@@ -85,6 +89,8 @@ namespace Organizer
 
             foreach (var control in LocalizationControls)
                 control.Text = Head.Translations[language][control.AccessibleName];
+
+            ((Head)Form.ActiveForm).SetLanguage(language);
         }
 
         private void AddHolyday_Click(object sender, EventArgs e)
@@ -220,6 +226,11 @@ namespace Organizer
             MessageBox.Show(Head.Translations[Head.ActiveLanguage]["The language file"] + "Translations\\" + languageName.Text + ".txt");
 
             languageName.Text = "";
+        }
+
+        private void ThemeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            SetTheme(((CheckBox)sender).Checked);
         }
     }
 }

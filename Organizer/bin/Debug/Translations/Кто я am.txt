@@ -11,7 +11,7 @@ Add holydays;Добавить святойдни
 Save screen;Сохранить экранвыстрел
 Timer;Секундомер наоборот
 Edit mode;Режим бога
-Settings;Настройечки
+Options;Настройечки
 Feedback;Письмо автору
 Physical education;Ну мячики попинать
 History;Хистори

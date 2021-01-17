@@ -46,35 +46,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\FormGG.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utils\FormGG.Designer.cs">
+      <DependentUpon>FormGG.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Schelude.cs">
+    <Compile Include="UserControls\Schelude.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Schelude.Designer.cs">
+    <Compile Include="UserControls\Schelude.Designer.cs">
       <DependentUpon>Schelude.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\UserControlGG.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Utils\UserControlGG.Designer.cs">
+      <DependentUpon>UserControlGG.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="YesNoCancelDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="YesNoCancelDialog.Designer.cs">
       <DependentUpon>YesNoCancelDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Structs.cs" />
+    <Compile Include="Utils\Structs.cs" />
     <Compile Include="LessonSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LessonSelectForm.Designer.cs">
       <DependentUpon>LessonSelectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs">
-      <SubType>Form</SubType>
+    <Compile Include="UserControls\Options.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Settings.Designer.cs">
-      <DependentUpon>Settings.cs</DependentUpon>
+    <Compile Include="UserControls\Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
     </Compile>
     <Compile Include="Head.cs">
       <SubType>Form</SubType>
@@ -97,8 +110,11 @@
     <EmbeddedResource Include="Head.resx">
       <DependentUpon>Head.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Schelude.resx">
+    <EmbeddedResource Include="UserControls\Schelude.resx">
       <DependentUpon>Schelude.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utils\UserControlGG.resx">
+      <DependentUpon>UserControlGG.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="YesNoCancelDialog.resx">
       <DependentUpon>YesNoCancelDialog.cs</DependentUpon>
@@ -108,8 +124,8 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Settings.resx">
-      <DependentUpon>Settings.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorkAddForm.resx">
       <DependentUpon>WorkAddForm.cs</DependentUpon>

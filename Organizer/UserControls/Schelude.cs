@@ -11,20 +11,19 @@ using System.IO;
 
 namespace Organizer
 {
-    public partial class Schelude : UserControl
+    public partial class Schelude : UserControlGG
     {
         public static int CellSize = 70;
         public static int MaxLessonsCount = 8; 
 
-        private DateTime date, firstDay, lastDay;
-        public int LessonsCount;
-
         public static Lesson[] Lessons;
-        private Lesson[] editModeLessonsBackup;
-        public List<Control> LocalizationControls = new List<Control>();
         public static Dictionary<DateTime, Day> Days = new Dictionary<DateTime, Day>();
 
+        public int LessonsCount;
         public bool EditMode;
+
+        private Lesson[] editModeLessonsBackup;
+        private DateTime date, firstDay, lastDay;
 
         public Schelude()
         {
@@ -83,6 +82,7 @@ namespace Organizer
             LessonsRefresh();
 
             SetColor(Head.Color);
+            SetTheme(Head.DarkTheme);
         }
 
         public void DateMinusPlus()
@@ -172,14 +172,6 @@ namespace Organizer
 
             for (int i = 0; i < LessonsCount; i++)
                 Lessons[i].UpdateSizes(CellSize, EditMode);
-        }
-
-        public Bitmap GetControlScreenshot(Control control)
-        {
-            Bitmap bmp = new Bitmap(control.Width, control.Height);//создаем картинку нужных размеров
-            control.DrawToBitmap(bmp, control.ClientRectangle);//копируем изображение нужного контрола в bmp
-
-            return bmp;
         }
 
         private void LessonsPanelMouseWheel(object sender, MouseEventArgs e)
@@ -276,7 +268,7 @@ namespace Organizer
             editModeButton.Visible = false;
             dateText.Font = new Font(dateText.Font.FontFamily, 20);
 
-            Clipboard.SetImage(GetControlScreenshot(this));
+            Clipboard.SetImage(Utils.GetControlScreenshot(this));
 
             dateMinusButton.Visible = true;
             datePlusButton.Visible = true;
@@ -285,7 +277,7 @@ namespace Organizer
             dateText.Font = new Font(dateText.Font.FontFamily, 12);
         }
 
-        public void SetColor(Color color)
+        public override void SetColor(Color color)
         {
             ForeColor = color;
 
@@ -322,6 +314,16 @@ namespace Organizer
         private static void NoEditMode()
         {
             MessageBox.Show(Head.Translations[Head.ActiveLanguage]["Doesn't work in edit mode"], "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        public void SaveFiles(object sender, FormClosingEventArgs e)
+        {
+            List<string> days = new List<string>();
+
+            foreach (var day in Days)
+                days.Add(Day.Totxt(day.Value));
+
+            File.WriteAllLines("Days.txt", days);
         }
     }
 }

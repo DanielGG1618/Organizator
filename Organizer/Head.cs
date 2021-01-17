@@ -14,9 +14,10 @@ using System.Media;
 
 namespace Organizer
 {
-    public partial class Head : Form
+    public partial class Head : FormGG
     {
-        public static Color Color;
+        public static bool DarkTheme = true;
+        public static Color Color { get; private set; }
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
         public static List<DateTime> PrimaryHolydays = new List<DateTime>();
@@ -32,12 +33,15 @@ namespace Organizer
 
         public static string ActiveLanguage;
         public static List<string> Languages;
-
+        
         public static int YEAR = 20;
 
         public List<Control> LocalizationControls = new List<Control>();
 
+        private UserControlGG activeUserControl;
         private Schelude schelude;
+        private Options options;
+        private Dictionary<string, UserControlGG> userControls = new Dictionary<string, UserControlGG>();
 
         public Head()
         {
@@ -48,6 +52,14 @@ namespace Organizer
                     MaxLessonsCount = lessons.Length;
 
             schelude = new Schelude();
+            options = new Options();
+            options.Location = new Point(175, 24);
+
+            userControls.Add("schelude", schelude);
+            userControls.Add("options", options);
+
+            FormClosing += schelude.SaveFiles;
+            FormClosing += options.SaveOptions;
 
             InitializeComponent();
         }
@@ -57,10 +69,13 @@ namespace Organizer
             LocalizationControls.Add(this);
 
             SetColor(Color);
+            SetTheme(DarkTheme);
             SetLanguage(ActiveLanguage);
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(schelude);
+
+            activeUserControl = schelude;
         }
 
         private void LoadFiles()
@@ -107,6 +122,8 @@ namespace Organizer
 
             string[] color = save[1].Split(';');
             Color = Color.FromArgb(int.Parse(color[0]), int.Parse(color[1]), int.Parse(color[2]));
+
+            DarkTheme = bool.Parse(save[2]);
         }
 
         private void LoadDefaultWorks()
@@ -189,27 +206,7 @@ namespace Organizer
             }
         }
 
-        private void SettingsButton_Click(object sender, EventArgs e)
-        {
-            if (schelude.EditMode)
-            {
-                NoEditMode();
-                return;
-            }
-
-            Settings settings = new Settings();
-            mainPanel.Controls.Clear();
-            mainPanel.Controls.Add(settings);
-
-            SetColor(settings.Color);
-            SetLanguage(ActiveLanguage);
-            LoadHolydays();
-            LoadTranslations();
-
-            schelude.DateMinusPlus();
-        }
-
-        private void SetLanguage(string language)
+        public void SetLanguage(string language)
         {
             foreach (var control in LocalizationControls)
                 if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
@@ -219,11 +216,18 @@ namespace Organizer
                 schelude.WorkRefresh(i);
         }
 
-        private void SetColor(Color color)
+        public void SetColor(Color color)
         {
             Color = color;
 
             ForeColor = Color;
+        }
+
+        public void SetTheme(bool darkTheme)
+        {
+            DarkTheme = darkTheme;
+
+            BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
         }
 
         private void InDevelop()
@@ -234,6 +238,33 @@ namespace Organizer
         private static void NoEditMode()
         {
             MessageBox.Show(Translations[ActiveLanguage]["Doesn't work in edit mode"], "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                NoEditMode();
+                return;
+            }
+
+            if (activeUserControl == options)
+            {
+                LoadHolydays();
+                LoadTranslations();
+
+                schelude.DateMinusPlus();
+            }
+
+            UserControlGG userControl = userControls[e.Node.Tag.ToString()];
+
+            userControl.SetColor(Color);
+            userControl.SetTheme(DarkTheme);
+            userControl.SetLanguage(ActiveLanguage);
+
+            mainPanel.Controls.Clear();
+            mainPanel.Controls.Add(userControl);
+            activeUserControl = userControl;
         }
     }
 }

@@ -11,7 +11,7 @@ Add holydays;Добавить выходные
 Save screen;Сохранить скриншот
 Timer;Таймер
 Edit mode;Режим редактирования
-Settings;Настройки
+Options;Настройки
 Feedback;Обратная связь
 Physical education;Физкультура
 History;История

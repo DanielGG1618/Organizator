@@ -1,6 +1,6 @@
 ﻿namespace Organizer
 {
-    partial class Settings
+    partial class Options
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
             this.languageSelector = new System.Windows.Forms.ComboBox();
             this.addHolyday = new System.Windows.Forms.Button();
             this.holydayStartPicker = new System.Windows.Forms.DateTimePicker();
@@ -46,6 +45,7 @@
             this.addLanguage = new System.Windows.Forms.Button();
             this.languageName = new System.Windows.Forms.TextBox();
             this.languageNameLabel = new System.Windows.Forms.Label();
+            this.themeCheckBox = new System.Windows.Forms.CheckBox();
             this.addHolydayPanel.SuspendLayout();
             this.pickersPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.languagePict)).BeginInit();
@@ -175,7 +175,7 @@
             this.addHolydayPanel.Controls.Add(this.holydayTypeComboBox);
             this.addHolydayPanel.Controls.Add(this.addHolyday);
             this.addHolydayPanel.Controls.Add(this.toLabel);
-            this.addHolydayPanel.Location = new System.Drawing.Point(15, 355);
+            this.addHolydayPanel.Location = new System.Drawing.Point(15, 405);
             this.addHolydayPanel.Name = "addHolydayPanel";
             this.addHolydayPanel.Size = new System.Drawing.Size(358, 91);
             this.addHolydayPanel.TabIndex = 11;
@@ -194,7 +194,7 @@
             // 
             this.colorPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.colorPanel.BackColor = System.Drawing.Color.White;
-            this.colorPanel.Location = new System.Drawing.Point(15, 218);
+            this.colorPanel.Location = new System.Drawing.Point(15, 268);
             this.colorPanel.Name = "colorPanel";
             this.colorPanel.Size = new System.Drawing.Size(83, 83);
             this.colorPanel.TabIndex = 12;
@@ -207,7 +207,7 @@
             this.colorLabel.AutoSize = true;
             this.colorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.colorLabel.ForeColor = System.Drawing.Color.White;
-            this.colorLabel.Location = new System.Drawing.Point(105, 244);
+            this.colorLabel.Location = new System.Drawing.Point(105, 294);
             this.colorLabel.Name = "colorLabel";
             this.colorLabel.Size = new System.Drawing.Size(189, 29);
             this.colorLabel.TabIndex = 13;
@@ -224,7 +224,7 @@
             this.holyLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.holyLabel.AutoSize = true;
             this.holyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.holyLabel.Location = new System.Drawing.Point(12, 317);
+            this.holyLabel.Location = new System.Drawing.Point(12, 367);
             this.holyLabel.Name = "holyLabel";
             this.holyLabel.Size = new System.Drawing.Size(268, 31);
             this.holyLabel.TabIndex = 14;
@@ -245,7 +245,6 @@
             // 
             this.addLanguage.AccessibleDescription = "";
             this.addLanguage.AccessibleName = "Add language";
-            this.addLanguage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.addLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.addLanguage.Cursor = System.Windows.Forms.Cursors.Default;
             this.addLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -267,7 +266,7 @@
             this.languageName.ForeColor = System.Drawing.Color.White;
             this.languageName.Location = new System.Drawing.Point(15, 170);
             this.languageName.Name = "languageName";
-            this.languageName.Size = new System.Drawing.Size(355, 34);
+            this.languageName.Size = new System.Drawing.Size(358, 34);
             this.languageName.TabIndex = 15;
             // 
             // languageNameLabel
@@ -281,12 +280,24 @@
             this.languageNameLabel.Text = "Название языка";
             this.languageNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Settings
+            // themeCheckBox
             // 
-            this.AccessibleName = "Settings";
+            this.themeCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.themeCheckBox.ForeColor = System.Drawing.Color.White;
+            this.themeCheckBox.Location = new System.Drawing.Point(32, 210);
+            this.themeCheckBox.Name = "themeCheckBox";
+            this.themeCheckBox.Size = new System.Drawing.Size(340, 52);
+            this.themeCheckBox.TabIndex = 17;
+            this.themeCheckBox.Text = "Тёмная тема";
+            this.themeCheckBox.UseVisualStyleBackColor = true;
+            this.themeCheckBox.CheckedChanged += new System.EventHandler(this.ThemeCheckBox_CheckedChanged);
+            // 
+            // Options
+            // 
+            this.AccessibleName = "Options";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(382, 453);
+            this.Controls.Add(this.themeCheckBox);
             this.Controls.Add(this.languageNameLabel);
             this.Controls.Add(this.languageName);
             this.Controls.Add(this.holyLabel);
@@ -296,11 +307,10 @@
             this.Controls.Add(this.addHolydayPanel);
             this.Controls.Add(this.languagePict);
             this.Controls.Add(this.languageSelector);
-            this.ForeColor = System.Drawing.Color.White;
-            this.MaximumSize = new System.Drawing.Size(400, 500);
-            this.MinimumSize = new System.Drawing.Size(400, 500);
-            this.Name = "Settings";
-            this.Text = "Настройки";
+            this.MaximumSize = new System.Drawing.Size(400, 550);
+            this.MinimumSize = new System.Drawing.Size(400, 550);
+            this.Name = "Options";
+            this.Size = new System.Drawing.Size(400, 550);
             this.Load += new System.EventHandler(this.Settings_Load);
             this.addHolydayPanel.ResumeLayout(false);
             this.pickersPanel.ResumeLayout(false);
@@ -329,5 +339,6 @@
         private System.Windows.Forms.Button addLanguage;
         private System.Windows.Forms.TextBox languageName;
         private System.Windows.Forms.Label languageNameLabel;
+        private System.Windows.Forms.CheckBox themeCheckBox;
     }
 }

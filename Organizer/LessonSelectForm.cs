@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Organizer
 {
-    public partial class LessonSelectForm : Form
+    public partial class LessonSelectForm : FormGG
     {
         public List<Control> LocalizationControls = new List<Control>();
 
@@ -35,7 +35,7 @@ namespace Organizer
             SetLanguage(Head.ActiveLanguage);
 
 
-            //comboBox.Text = Head.schedule.Lessons[int.Parse(lessonLabel.Text.Last().ToString()) - 1].TitleLabel.Text;
+            comboBox.Text = Schelude.Lessons[int.Parse(lessonLabel.Text.Last().ToString()) - 1].TitleLabel.Text;
         }
 
         private void SetColor(Color color)
