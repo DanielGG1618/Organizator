@@ -21,7 +21,7 @@ namespace Organizer
         public LessonSelectForm(int num)
         {
             InitializeComponent();
-            lessonLabel.Text = Head.Translations[Head.ActiveLanguage]["Lesson"] + " №" + num;
+            lessonLabel.Text = Program.Translate("Lesson") + " №" + num;
         }
 
         private void LessonSelectForm_Load(object sender, EventArgs e)
@@ -31,8 +31,8 @@ namespace Organizer
 
             LocalizationControls.AddRange(new Control[] { done, cancel });
 
-            SetColor(Head.Color);
-            SetLanguage(Head.ActiveLanguage);
+            SetColor(Program.Color);
+            SetLanguage(Program.Language);
 
 
             comboBox.Text = Schelude.Lessons[int.Parse(lessonLabel.Text.Last().ToString()) - 1].TitleLabel.Text;
@@ -46,10 +46,10 @@ namespace Organizer
         private void SetLanguage(string language)
         {
             for (int i = 0; i < comboBox.Items.Count; i++)
-                comboBox.Items[i] = Head.Translations[language][comboBox.Items[i].ToString()];
+                comboBox.Items[i] = Program.Translate(comboBox.Items[i].ToString());
 
             foreach (var control in LocalizationControls)
-                control.Text = Head.Translations[language][control.AccessibleName];
+                control.Text = Program.Translate(control.AccessibleName);
         }
 
         private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)

@@ -25,8 +25,8 @@ namespace Organizer
         {
             LocalizationControls.AddRange(new Control[] { yes, no, cancel, saveChanges });
 
-            SetColor(Head.Color);
-            SetLanguage(Head.ActiveLanguage);
+            SetColor(Program.Color);
+            SetLanguage(Program.Language);
         }
 
         private void SetColor(Color color)
@@ -37,7 +37,7 @@ namespace Organizer
         private void SetLanguage(string language)
         {
             foreach (var control in LocalizationControls)
-                control.Text = Head.Translations[language][control.AccessibleName];
+                control.Text = Program.Translate(control.AccessibleName);
         }
     }
 }

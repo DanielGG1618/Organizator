@@ -24,9 +24,9 @@ namespace Organizer
         private void Settings_Load(object sender, EventArgs e)
         {
             languageSelector.Items.Clear();
-            languageSelector.Items.AddRange(Head.Languages.ToArray());
+            languageSelector.Items.AddRange(Program.Select("SELECT Name FROM Languages").ToArray());
 
-            languageSelector.Text = Head.ActiveLanguage;
+            languageSelector.Text = Program.Language;
 
             fromLabel.Visible = false;
             toLabel.Visible = false;
@@ -37,12 +37,12 @@ namespace Organizer
 
             LocalizationControls.AddRange(new Control[] { addHolyday, fromLabel, toLabel, colorLabel, holyLabel, languageNameLabel, addLanguage, this });
 
-            SetColor(Head.Color);
-            SetTheme(Head.DarkTheme);
-            SetLanguage(Head.ActiveLanguage);
+            SetColor(Program.Color);
+            SetTheme(Program.DarkTheme);
+            SetLanguage(Program.Language);
 
             holydayTypeComboBox.SelectedIndex = 0;
-            themeCheckBox.Checked = Head.DarkTheme;
+            themeCheckBox.Checked = Program.DarkTheme;
         }
 
         public override void SetColor(Color color)
@@ -66,17 +66,16 @@ namespace Organizer
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Head.ActiveLanguage = languageSelector.Text;
+            Program.Language = languageSelector.Text;
 
-            try { languagePict.Image = Image.FromFile("Translations\\" + Head.ActiveLanguage + ".png"); }
-            catch { languagePict.Image = Image.FromFile("Translations\\Кто я am.png"); }
+            languagePict.Image = Program.SelectImage($"SELECT Image FROM Languages WHERE Name = '{Program.Language}'");
 
-            SetLanguage(Head.ActiveLanguage);
+            SetLanguage(Program.Language);
         }
 
         public void SaveOptions(object sender, EventArgs e)
         {
-            File.WriteAllLines("Save.txt", new string[3] { Head.ActiveLanguage, Color.R + ";" + Color.G + ";" + Color.B, DarkTheme.ToString() });
+            Program.Insert($"UPDATE `Users` SET `Language` = '{Program.Language}', `Color` = '{Program.Color.ToArgb()}', `DarkTheme` = '{(Program.DarkTheme ? 1 : 0)}' WHERE `Login` = '{Program.Login}'");
         }
 
         public override void SetLanguage(string language)
@@ -84,13 +83,13 @@ namespace Organizer
             int holydayTypeIndex = holydayTypeComboBox.SelectedIndex;
 
             holydayTypeComboBox.Items.Clear();
-            holydayTypeComboBox.Items.AddRange(new string[3] { Head.Translations[language]["Primary"], Head.Translations[language]["Secondary"], Head.Translations[language]["This year"] });
+            holydayTypeComboBox.Items.AddRange(new string[3] { Program.Translate("Primary"), Program.Translate("Secondary"), Program.Translate("This year") });
             holydayTypeComboBox.SelectedIndex = holydayTypeIndex;
 
             foreach (var control in LocalizationControls)
-                control.Text = Head.Translations[language][control.AccessibleName];
+                control.Text = Program.Translate(control.AccessibleName);
 
-            ((Head)Form.ActiveForm).SetLanguage(language);
+            ((Head)Form.ActiveForm).SetLanguage();
         }
 
         private void AddHolyday_Click(object sender, EventArgs e)
@@ -116,7 +115,7 @@ namespace Organizer
         {
             UpdateAddHolydayButtonStatus();
 
-            if (holydayTypeComboBox.Text != Head.Translations[Head.ActiveLanguage]["Primary"])
+            if (holydayTypeComboBox.Text != Program.Translate("Primary"))
                 holydayFinishPicker.MinDate = DateTime.Parse(holydayStartPicker.Text);
         }
 
@@ -131,7 +130,7 @@ namespace Organizer
         {
             UpdateAddHolydayButtonStatus();
 
-            if (holydayTypeComboBox.Text == Head.Translations[Head.ActiveLanguage]["Primary"])
+            if (holydayTypeComboBox.Text == Program.Translate("Primary"))
             {
                 holydayStartPicker.MaxDate = new DateTime(2090, 12, 31);
 
@@ -174,7 +173,7 @@ namespace Organizer
             else
                 addHolyday.AccessibleName = "Remove";
 
-            addHolyday.Text = Head.Translations[Head.ActiveLanguage][addHolyday.AccessibleName];
+            addHolyday.Text = Program.Translate(addHolyday.AccessibleName);
         }
 
         private string HolydayToAdd()
@@ -217,15 +216,15 @@ namespace Organizer
 
         private void AddLanguage_Click(object sender, EventArgs e)
         {
-            File.AppendAllText("Translations\\Languages.txt", Environment.NewLine + languageName.Text, Encoding.UTF8);
+            /*File.AppendAllText("Translations\\Languages.txt", Environment.NewLine + languageName.Text, Encoding.UTF8);
             
-            File.WriteAllLines("Translations\\" + languageName.Text + ".txt", File.ReadAllLines("Translations\\" + Head.ActiveLanguage + ".txt", Encoding.UTF8));
+            File.WriteAllLines("Translations\\" + languageName.Text + ".txt", File.ReadAllLines("Translations\\" + Program.Language + ".txt", Encoding.UTF8));
 
             Head.Languages.Add(languageName.Text);
 
-            MessageBox.Show(Head.Translations[Head.ActiveLanguage]["The language file"] + "Translations\\" + languageName.Text + ".txt");
+            MessageBox.Show(Head.Translations[Program.Language]["The language file"] + "Translations\\" + languageName.Text + ".txt");
 
-            languageName.Text = "";
+            languageName.Text = "";*/
         }
 
         private void ThemeCheckBox_CheckedChanged(object sender, EventArgs e)

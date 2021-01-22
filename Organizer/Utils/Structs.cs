@@ -19,13 +19,13 @@ namespace Organizer
         {
             Num = num;
 
-            Date = new DateTime(2000 + Head.YEAR, 9, 1).AddDays(Num);
+            Date = new DateTime(Program.Year, 9, 1).AddDays(Num);
             generalViewDate = new DateTime(4, Date.Month, Date.Day);
 
             Lessons = new List<Lesson>();
 
             for (int i = 0; i < Head.Schelude[(int)Date.DayOfWeek].Length; i++)
-                Lessons.Add(new Lesson(i + 1, Schelude.CellSize, Head.Color, Head.Schelude[(int)Date.DayOfWeek][i]));
+                Lessons.Add(new Lesson(i + 1, Schelude.CellSize, Program.Color, Head.Schelude[(int)Date.DayOfWeek][i]));
         }
 
         public Day(int num, List<Lesson> lessons)
@@ -196,7 +196,7 @@ namespace Organizer
 
             if (TitleLabel == null) TitleLabel = new Label();
             TitleLabel.AccessibleName = Title;
-            TitleLabel.Text = Head.Translations[Head.ActiveLanguage][TitleLabel.AccessibleName];
+            TitleLabel.Text = Program.Translate(TitleLabel.AccessibleName);
 
             if (WorkLabel == null) WorkLabel = new Label();
             WorkLabel.Text = lesson.WorkLabel.Text;
@@ -226,16 +226,16 @@ namespace Organizer
             Title = title;
             
             TitleLabel.AccessibleName = Title;
-            TitleLabel.Text = Head.Translations[Head.ActiveLanguage][TitleLabel.AccessibleName];
+            TitleLabel.Text = Program.Translate(TitleLabel.AccessibleName);
 
             try { WorkList["Default"][0] = Head.LessonsDefaultWork[Title]; }
-            catch { WorkList["Default"][0] = "Isn't set"; }
+            catch { WorkList["Default"][0] = "Isn*t set"; }
 
             if (WorkList.Count == 1)
             {
                 WorkLabel.AccessibleName = WorkList["Default"][0];
 
-                WorkLabel.Text = Head.Translations[Head.ActiveLanguage][WorkLabel.AccessibleName];
+                WorkLabel.Text = Program.Translate(WorkLabel.AccessibleName);
             }
 
             else
@@ -273,7 +273,7 @@ namespace Organizer
             for (int i = 3; i < splited.Length - 1; i += 2)
                 workList.Add(splited[i], new List<string>(splited[i + 1].Split('◘')));
 
-            return new Lesson(int.Parse(splited[0]), Schelude.CellSize, Head.Color, splited[1], bool.Parse(splited[2]), workList);
+            return new Lesson(int.Parse(splited[0]), Schelude.CellSize, Program.Color, splited[1], bool.Parse(splited[2]), workList);
         }
     }
 }

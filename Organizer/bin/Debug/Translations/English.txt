@@ -31,7 +31,7 @@ Life safety;Life safety
 Music;Music
 Native language;Native language
 Informatics;Informatics
-Isn't set;Isn't set
+Isn*t set;Isn*t set
 Sports form;Sports form
 Repeat the last §;Repeat the last §
 Repeat the rules;Repeat the rules
@@ -41,7 +41,7 @@ Other;Other
 On pages;On pages
 Numbers;Numbers
 Paragraphs;Paragraphs
-Doesn't work in edit mode;Doesn't work in edit mode
+Doesn*t work in edit mode;Doesn*t work in edit mode
 In the develop;In the develop
 Save changes;Save changes?
 Topic;Topic

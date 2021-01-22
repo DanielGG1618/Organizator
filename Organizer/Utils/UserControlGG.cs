@@ -31,12 +31,16 @@ namespace Organizer
 
         public virtual void SetLanguage(string language)
         {
+            List<string> transList = Program.Select($"SELECT TransKey, TransValue FROM Translations WHERE Language = '{language}'");
+
+            Dictionary<string, string> translations = new Dictionary<string, string>();
+
+            for (int i = 0; i < transList.Count; i += 2)
+                translations.Add(transList[i], transList[i + 1]);
+
             foreach (var control in LocalizationControls)
-                try
-                {
-                    control.Text = Head.Translations[language][control.AccessibleName];
-                }
-                catch { }
+                if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
+                    control.Text = translations[control.AccessibleName];
         }
     }
 }

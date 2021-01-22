@@ -29,9 +29,9 @@ namespace Organizer
         {
             LoadDays();
 
-            firstDay = new DateTime(2000 + Head.YEAR, 9, 1).ToLocalTime().Date;
+            firstDay = new DateTime(Program.Year, 9, 1).ToLocalTime().Date;
 
-            lastDay = new DateTime(2001 + Head.YEAR, 5, 31).ToLocalTime().Date;
+            lastDay = new DateTime(Program.Year + 1, 5, 31).ToLocalTime().Date;
 
             date = DateTime.Today;
 
@@ -46,7 +46,7 @@ namespace Organizer
 
             editModeLessonsBackup = new Lesson[Head.MaxLessonsCount];
             for (int i = 0; i < Head.MaxLessonsCount; i++)
-                editModeLessonsBackup[i] = new Lesson(i + 1, CellSize, Head.Color);
+                editModeLessonsBackup[i] = new Lesson(i + 1, CellSize, Program.Color);
 
             InitializeComponent();
         }
@@ -60,7 +60,7 @@ namespace Organizer
 
             for (int i = 0; i < Head.MaxLessonsCount; i++)
             {
-                Lessons[i] = new Lesson(i + 1, CellSize, Head.Color);
+                Lessons[i] = new Lesson(i + 1, CellSize, Program.Color);
 
                 Lessons[i].TitleLabel.Click += TitleClick;
                 Lessons[i].TitleLabel.MouseMove += TitleMouseMove;
@@ -81,8 +81,8 @@ namespace Organizer
 
             LessonsRefresh();
 
-            SetColor(Head.Color);
-            SetTheme(Head.DarkTheme);
+            SetColor(Program.Color);
+            SetTheme(Program.DarkTheme);
         }
 
         public void DateMinusPlus()
@@ -141,7 +141,7 @@ namespace Organizer
 
             else
             {
-                YesNoCancelDialog dialog = new YesNoCancelDialog(Head.Translations[Head.ActiveLanguage]["Edit mode"]);
+                YesNoCancelDialog dialog = new YesNoCancelDialog(Program.Translate("Edit mode"));
 
                 DialogResult result = dialog.ShowDialog();
 
@@ -246,7 +246,7 @@ namespace Organizer
         {
             for (int i = 0; i < Days[date].Lessons.Count; i++)
             {
-                Lessons[i].NumLabel.ForeColor = Head.Color;
+                Lessons[i].NumLabel.ForeColor = Program.Color;
                 Lessons[i].DoneCheckBox.Visible = true;
                 Lessons[i].CopyFrom(Days[date].Lessons[i]);
                 WorkRefresh(i);
@@ -257,7 +257,7 @@ namespace Organizer
             for (int i = Head.MaxLessonsCount - 1; i >= LessonsCount; i--)
                 Lessons[i].TurnOff();
 
-            dateText.Text = $"{date.Day.ToString("00")}.{date.Month.ToString("00")}.{date.Year} - {Head.Translations[Head.ActiveLanguage][date.DayOfWeek.ToString()]}";
+            dateText.Text = $"{date.Day.ToString("00")}.{date.Month.ToString("00")}.{date.Year} - {Program.Translate(date.DayOfWeek.ToString())}";
         }
 
         private void CopyScreen_Click(object sender, EventArgs e)
@@ -306,14 +306,14 @@ namespace Organizer
                 for (int i = 0; i < 273; i++)
                     Days.Add(firstDay.AddDays(i), new Day(i));
 
-                if (DateTime.IsLeapYear(2001 + Head.YEAR))
+                if (DateTime.IsLeapYear(Program.Year + 1))
                     Days.Add(firstDay.AddDays(273), new Day(273));
             }
         }
 
         private static void NoEditMode()
         {
-            MessageBox.Show(Head.Translations[Head.ActiveLanguage]["Doesn't work in edit mode"], "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(Program.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         public void SaveFiles(object sender, FormClosingEventArgs e)

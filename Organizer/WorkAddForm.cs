@@ -43,9 +43,9 @@ namespace Organizer
 
             RefreshResult();
 
-            ForeColor = Head.Color;
+            ForeColor = Program.Color;
 
-            SetLanguage(Head.ActiveLanguage);
+            SetLanguage(Program.Language);
         }
 
         private void SetLanguage(string language)
@@ -54,19 +54,19 @@ namespace Organizer
 
             foreach (var type in Types)
                 if (type.Key != "Default")
-                    typeSelector.Items.Add(Head.Translations[language][type.Key]);
+                    typeSelector.Items.Add(Program.Translate(type.Key));
 
             typeSelector.SelectedIndex = 0;
 
             foreach (var control in LocalizationControls)
-                control.Text = Head.Translations[language][control.AccessibleName];
+                control.Text = Program.Translate(control.AccessibleName);
         }
 
         private void SetDefaultResult()
         {
             resultPanel.Controls.Clear();
 
-            resultPanel.Controls.Add(ResultLabelSample(Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]], "Default"));
+            resultPanel.Controls.Add(ResultLabelSample(Program.Translate(WorkList["Default"][0]), "Default"));
         }
 
         private void RefreshResult()
@@ -182,7 +182,7 @@ namespace Organizer
 
             foreach (var type in Types)
                 if (type.Key != "Default")
-                    if (typeSelector.Text == Head.Translations[Head.ActiveLanguage][type.Key])
+                    if (typeSelector.Text == Program.Translate(type.Key))
                         typeSelector.AccessibleName = type.Key;
 
             if (!removeMode || b)
@@ -204,7 +204,7 @@ namespace Organizer
             {
                 typeSelector.SelectedIndex = lastSelectedType;
 
-                MessageBox.Show(Head.Translations[Head.ActiveLanguage]["This task has already been added"],
+                MessageBox.Show(Program.Translate("This task has already been added"),
                                 "",
                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 b = false;
@@ -243,7 +243,7 @@ namespace Organizer
         {
             Label label = (Label)sender;
 
-            if (label.Text == Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]])
+            if (label.Text == Program.Translate(WorkList["Default"][0]))
                 return;
 
             SetSelectedLabel(label);
@@ -253,7 +253,7 @@ namespace Organizer
         {
             Label label = (Label)sender;
 
-            if (label.Text == Head.Translations[Head.ActiveLanguage][WorkList["Default"][0]])
+            if (label.Text == Program.Translate(WorkList["Default"][0]))
                 return;
 
             Cursor.Current = Cursors.Hand;
@@ -270,7 +270,7 @@ namespace Organizer
 
                 selectedLabel = label;
 
-                typeSelector.Text = Head.Translations[Head.ActiveLanguage][label.AccessibleName];
+                typeSelector.Text = Program.Translate(label.AccessibleName);
 
                 addTextBox.Text = selectedLabel.Text;
 
@@ -280,7 +280,7 @@ namespace Organizer
                 if (typeSelector.AccessibleName != "Other")
                     addTextBox.Text = addTextBox.Text.Remove(0, 2);
 
-                selectedLabel.ForeColor = Head.Color;
+                selectedLabel.ForeColor = Program.Color;
                 selectedLabel.Location = new Point(selectedLabel.Location.X, 3);
 
                 SetRemoveMode(true);
@@ -304,8 +304,8 @@ namespace Organizer
             {
                 if (string.IsNullOrWhiteSpace(addTextBox.Text))
                 {
-                    MessageBox.Show(Head.Translations[Head.ActiveLanguage]["Enter the task"],
-                                    Head.Translations[Head.ActiveLanguage]["Empty task"],
+                    MessageBox.Show(Program.Translate("Enter the task"),
+                                    Program.Translate("Empty task"),
                                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
@@ -316,7 +316,7 @@ namespace Organizer
                     {
                         if (addTextBox.Text == str && typeSelector.AccessibleName == strList.Key)
                         {
-                            MessageBox.Show(Head.Translations[Head.ActiveLanguage]["This task has already been added"],
+                            MessageBox.Show(Program.Translate("This task has already been added"),
                                             "",
                                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
@@ -387,7 +387,7 @@ namespace Organizer
                         {
                             selectedLabel = label;
 
-                            selectedLabel.ForeColor = Head.Color;
+                            selectedLabel.ForeColor = Program.Color;
                             selectedLabel.Location = new Point(selectedLabel.Location.X, 3);
                         }
                     }

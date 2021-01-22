@@ -1,0 +1,27 @@
+Work time;Работа*s time
+Rest time;Отдых*s time
+Timer settings;Hello, my name is timer
+Сycle;Сайкл
+Lesson;Тот, у которого
+Error;Страшна, ашибка
+Review;Так вот, слушай, тут у тебя такое
+I want to talk;Мiне скушнааа
+Yes;Нет(да)
+No;Да(нет)
+The language file;Файл с языками успешно родился. Ты там это, найди его вот тут 
+Language name;Добавить язык
+Add language;Название языка
+Enter the task;Напиши чё-нить, по-братски
+Empty task;Пустовато как-то
+This task has already been added;Напиши чё-нить другое, это уже занято
+Attachments;Файловые прикрепления
+Attach the file;Зафайлить прикрепление
+ToDoList;Списака заданий
+Copy screen;Вырезать экранвыстрел
+Monday;Мондень
+Tuesday;Туэсдень
+Wednesday;ВВэднесдень
+Thursday;Тхурсдень
+Friday;Фридень
+Saturday;Сатурндень
+Sunday;Солнцедень

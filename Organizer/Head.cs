@@ -16,8 +16,6 @@ namespace Organizer
 {
     public partial class Head : FormGG
     {
-        public static bool DarkTheme = true;
-        public static Color Color { get; private set; }
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
         public static List<DateTime> PrimaryHolydays = new List<DateTime>();
@@ -29,12 +27,7 @@ namespace Organizer
         public static string[][] Schelude;
         public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
 
-        public static Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>();
-
-        public static string ActiveLanguage;
-        public static List<string> Languages;
-        
-        public static int YEAR = 20;
+        //public static Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>();
 
         public List<Control> LocalizationControls = new List<Control>();
 
@@ -52,8 +45,10 @@ namespace Organizer
                     MaxLessonsCount = lessons.Length;
 
             schelude = new Schelude();
-            options = new Options();
-            options.Location = new Point(175, 24);
+            options = new Options
+            {
+                Location = new Point(175, 24)
+            };
 
             userControls.Add("schelude", schelude);
             userControls.Add("options", options);
@@ -68,9 +63,9 @@ namespace Organizer
         {
             LocalizationControls.Add(this);
 
-            SetColor(Color);
-            SetTheme(DarkTheme);
-            SetLanguage(ActiveLanguage);
+            SetColor(Program.Color);
+            SetTheme(Program.DarkTheme);
+            SetLanguage();
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(schelude);
@@ -80,10 +75,6 @@ namespace Organizer
 
         private void LoadFiles()
         {
-            LoadSave();
-
-            LoadTranslations();
-
             LoadSchedule();
 
             LoadHolydays();
@@ -91,7 +82,7 @@ namespace Organizer
             LoadDefaultWorks();
         }
 
-        private void LoadTranslations()
+        /*private void LoadTranslations()
         {
             Languages = new List<string>(File.ReadAllLines("Translations\\Languages.txt", Encoding.UTF8));
 
@@ -112,19 +103,7 @@ namespace Organizer
 
                 Translations.Add(language, langDict);
             }
-        }
-
-        private void LoadSave()
-        {
-            string[] save = File.ReadAllLines("Save.txt", Encoding.UTF8);
-
-            ActiveLanguage = save[0];
-
-            string[] color = save[1].Split(';');
-            Color = Color.FromArgb(int.Parse(color[0]), int.Parse(color[1]), int.Parse(color[2]));
-
-            DarkTheme = bool.Parse(save[2]);
-        }
+        }*/
 
         private void LoadDefaultWorks()
         {
@@ -206,11 +185,11 @@ namespace Organizer
             }
         }
 
-        public void SetLanguage(string language)
+        public void SetLanguage()
         {
             foreach (var control in LocalizationControls)
                 if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
-                    control.Text = Translations[language][control.AccessibleName];
+                    control.Text = Program.Translate(control.AccessibleName);
 
             for (int i = 0; i < schelude.LessonsCount; i++)
                 schelude.WorkRefresh(i);
@@ -218,26 +197,22 @@ namespace Organizer
 
         public void SetColor(Color color)
         {
-            Color = color;
-
-            ForeColor = Color;
+            ForeColor = Program.Color;
         }
 
         public void SetTheme(bool darkTheme)
         {
-            DarkTheme = darkTheme;
-
             BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
         }
 
         private void InDevelop()
         {
-            MessageBox.Show(Translations[ActiveLanguage]["In the develop"], "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(Program.Translate("In the develop"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private static void NoEditMode()
         {
-            MessageBox.Show(Translations[ActiveLanguage]["Doesn't work in edit mode"], "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(Program.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -251,16 +226,15 @@ namespace Organizer
             if (activeUserControl == options)
             {
                 LoadHolydays();
-                LoadTranslations();
 
                 schelude.DateMinusPlus();
             }
 
             UserControlGG userControl = userControls[e.Node.Tag.ToString()];
 
-            userControl.SetColor(Color);
-            userControl.SetTheme(DarkTheme);
-            userControl.SetLanguage(ActiveLanguage);
+            userControl.SetColor(Program.Color);
+            userControl.SetTheme(Program.DarkTheme);
+            userControl.SetLanguage(Program.Language);
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(userControl);

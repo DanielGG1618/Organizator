@@ -74,3 +74,5 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.pdb
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Schelude.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.UserControlGG.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Options.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\MySql.Data.dll
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.CopyComplete

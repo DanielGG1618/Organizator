@@ -31,7 +31,7 @@ Life safety;ОБЖ
 Music;Музыка
 Native language;Родной язык
 Informatics;Информатика
-Isn't set;Не задано
+Isn*t set;Не задано
 Sports form;Спортивная форма
 Repeat the last §;Повторить последний §
 Repeat the rules;Повтрорить правила
@@ -41,7 +41,7 @@ Other;Другое
 On pages;На страницах
 Numbers;Номера
 Paragraphs;Параграфы
-Doesn't work in edit mode;Не работает в режиме редактирования
+Doesn*t work in edit mode;Не работает в режиме редактирования
 In the develop;В разработке
 Save changes;Сохранить изменения?
 Topic;Тема
