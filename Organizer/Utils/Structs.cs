@@ -24,8 +24,8 @@ namespace Organizer
 
             Lessons = new List<Lesson>();
 
-            for (int i = 0; i < Head.Schelude[(int)Date.DayOfWeek].Length; i++)
-                Lessons.Add(new Lesson(i + 1, Schelude.CellSize, Program.Color, Head.Schelude[(int)Date.DayOfWeek][i]));
+            for (int i = 0; i < Main.Schelude[(int)Date.DayOfWeek].Length; i++)
+                Lessons.Add(new Lesson(i + 1, Schelude.CellSize, Program.Color, Main.Schelude[(int)Date.DayOfWeek][i]));
         }
 
         public Day(int num, List<Lesson> lessons)
@@ -41,15 +41,15 @@ namespace Organizer
         public bool IsWorking()
         {
             return Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
-                    !(Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
 
-                    (!Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
-                    (Head.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
-                    Head.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+                    (!Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
+                    (Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
 
-                    Head.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
 
-                    Head.ThisYearHolydays.Contains<DateTime>(Date));
+                    Main.ThisYearHolydays.Contains<DateTime>(Date));
         }
 
         public static string Totxt(Day day)
@@ -138,16 +138,16 @@ namespace Organizer
             LoadWithSamples(cellSize, color);
 
             NumLabel.Text = Num.ToString();
-            NumLabel.BackColor = Head.GRAY[Num % 2];
+            NumLabel.BackColor = Main.GRAY[Num % 2];
 
             TitleLabel.Tag = Num.ToString();
-            TitleLabel.BackColor = Head.GRAY[(Num + 1) % 2];
+            TitleLabel.BackColor = Main.GRAY[(Num + 1) % 2];
 
             WorkLabel.Tag = Num.ToString();
-            WorkLabel.BackColor = Head.GRAY[(Num + 1) % 2];
+            WorkLabel.BackColor = Main.GRAY[(Num + 1) % 2];
 
             AddWorkButton.Tag = Num.ToString();
-            AddWorkButton.BackColor = Head.GRAY[(Num + 1) % 2];
+            AddWorkButton.BackColor = Main.GRAY[(Num + 1) % 2];
 
             DoneCheckBox.Text = "";
             DoneCheckBox.AutoSize = true;
@@ -213,7 +213,7 @@ namespace Organizer
 
         public void TurnOff()
         {
-            NumLabel.ForeColor = Head.GRAY[(Num + 1) % 2];
+            NumLabel.ForeColor = Main.GRAY[(Num + 1) % 2];
 
             TitleLabel.Text = "";
             WorkLabel.Text = "";
@@ -228,7 +228,7 @@ namespace Organizer
             TitleLabel.AccessibleName = Title;
             TitleLabel.Text = Program.Translate(TitleLabel.AccessibleName);
 
-            try { WorkList["Default"][0] = Head.LessonsDefaultWork[Title]; }
+            try { WorkList["Default"][0] = Main.LessonsDefaultWork[Title]; }
             catch { WorkList["Default"][0] = "Isn*t set"; }
 
             if (WorkList.Count == 1)

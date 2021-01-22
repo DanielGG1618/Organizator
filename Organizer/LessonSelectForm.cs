@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Organizer
 {
-    public partial class LessonSelectForm : FormGG
+    public partial class LessonSelectForm : Form
     {
         public List<Control> LocalizationControls = new List<Control>();
 

@@ -63,7 +63,6 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Organizer.exe
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Organizer.pdb
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csprojAssemblyReference.cache
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.LessonSelectForm.resources
-C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Head.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.YesNoCancelDialog.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Properties.Resources.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.WorkAddForm.resources
@@ -76,3 +75,4 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Use
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Options.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\MySql.Data.dll
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.CopyComplete
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Main.resources

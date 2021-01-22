@@ -52,7 +52,7 @@ namespace Organizer
             ForeColor = color;
             colorPanel.BackColor = color;
 
-            ((Head)Form.ActiveForm).SetColor(color);
+            ((Main)Form.ActiveForm).SetColor();
         }
 
         public override void SetTheme(bool darkTheme)
@@ -61,7 +61,7 @@ namespace Organizer
 
             BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
 
-            ((Head)Form.ActiveForm).SetTheme(darkTheme);
+            ((Main)Form.ActiveForm).SetTheme(darkTheme);
         }
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -89,7 +89,7 @@ namespace Organizer
             foreach (var control in LocalizationControls)
                 control.Text = Program.Translate(control.AccessibleName);
 
-            ((Head)Form.ActiveForm).SetLanguage();
+            ((Main)Form.ActiveForm).SetLanguage();
         }
 
         private void AddHolyday_Click(object sender, EventArgs e)

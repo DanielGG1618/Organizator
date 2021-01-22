@@ -38,7 +38,7 @@ namespace Organizer
             LoadYear();
             LoadTranslations();
 
-            Application.Run(new Head());
+            Application.Run(new Main());
 
             Connection.Close();
         }

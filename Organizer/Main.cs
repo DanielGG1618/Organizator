@@ -14,7 +14,7 @@ using System.Media;
 
 namespace Organizer
 {
-    public partial class Head : FormGG
+    public partial class Main : Form
     {
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
@@ -27,8 +27,6 @@ namespace Organizer
         public static string[][] Schelude;
         public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
 
-        //public static Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>();
-
         public List<Control> LocalizationControls = new List<Control>();
 
         private UserControlGG activeUserControl;
@@ -36,7 +34,10 @@ namespace Organizer
         private Options options;
         private Dictionary<string, UserControlGG> userControls = new Dictionary<string, UserControlGG>();
 
-        public Head()
+        private List<UserControlGG> navigation = new List<UserControlGG>();
+        private int navigationPos = 0;
+
+        public Main()
         {
             LoadFiles();
 
@@ -63,7 +64,7 @@ namespace Organizer
         {
             LocalizationControls.Add(this);
 
-            SetColor(Program.Color);
+            SetColor();
             SetTheme(Program.DarkTheme);
             SetLanguage();
 
@@ -71,6 +72,9 @@ namespace Organizer
             mainPanel.Controls.Add(schelude);
 
             activeUserControl = schelude;
+
+            navigation.Add(schelude);
+            navigationPos++;
         }
 
         private void LoadFiles()
@@ -81,29 +85,6 @@ namespace Organizer
 
             LoadDefaultWorks();
         }
-
-        /*private void LoadTranslations()
-        {
-            Languages = new List<string>(File.ReadAllLines("Translations\\Languages.txt", Encoding.UTF8));
-
-            foreach (var language in Languages)
-            {
-                if (Translations.ContainsKey(language))
-                    continue;
-
-                Dictionary<string, string> langDict = new Dictionary<string, string>();
-
-                string[] langStr = File.ReadAllLines("Translations\\" + language + ".txt", Encoding.UTF8);
-
-                for (int i = 0; i < langStr.Length; i++)
-                {
-                    string[] langWord = langStr[i].Split(';');
-                    langDict.Add(langWord[0], langWord[1]);
-                }
-
-                Translations.Add(language, langDict);
-            }
-        }*/
 
         private void LoadDefaultWorks()
         {
@@ -195,7 +176,7 @@ namespace Organizer
                 schelude.WorkRefresh(i);
         }
 
-        public void SetColor(Color color)
+        public void SetColor()
         {
             ForeColor = Program.Color;
         }
@@ -239,6 +220,40 @@ namespace Organizer
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(userControl);
             activeUserControl = userControl;
+
+            if (navigation.Last() != userControl)
+            {
+                navigation.Insert(navigationPos + 1, userControl);
+                navigationPos++;
+            }
+        }
+
+        private void BackButton_Click(object sender, EventArgs e)
+        {
+            if (navigationPos < 1)
+                return;
+
+            navigationPos--;
+
+            mainPanel.Controls.Clear();
+            mainPanel.Controls.Add(navigation[navigationPos]);
+        }
+
+        private void FrontButton_Click(object sender, EventArgs e)
+        {
+            if (navigationPos > navigation.Count - 2)
+                return;
+
+            navigationPos++;
+
+            mainPanel.Controls.Clear();
+            mainPanel.Controls.Add(navigation[navigationPos]);
+        }
+
+        private void ButtonsTimer_Tick(object sender, EventArgs e)
+        {
+            backButton.Enabled = navigationPos > 0;
+            frontButton.Enabled = navigationPos < navigation.Count - 2;
         }
     }
 }

@@ -44,8 +44,8 @@ namespace Organizer
             }
             while (!Days[date].IsWorking());
 
-            editModeLessonsBackup = new Lesson[Head.MaxLessonsCount];
-            for (int i = 0; i < Head.MaxLessonsCount; i++)
+            editModeLessonsBackup = new Lesson[Main.MaxLessonsCount];
+            for (int i = 0; i < Main.MaxLessonsCount; i++)
                 editModeLessonsBackup[i] = new Lesson(i + 1, CellSize, Program.Color);
 
             InitializeComponent();
@@ -56,9 +56,9 @@ namespace Organizer
             lessonsPanel.Controls.Clear();
             lessonsPanel.MouseWheel += LessonsPanelMouseWheel;
 
-            Lessons = new Lesson[Head.MaxLessonsCount];
+            Lessons = new Lesson[Main.MaxLessonsCount];
 
-            for (int i = 0; i < Head.MaxLessonsCount; i++)
+            for (int i = 0; i < Main.MaxLessonsCount; i++)
             {
                 Lessons[i] = new Lesson(i + 1, CellSize, Program.Color);
 
@@ -254,7 +254,7 @@ namespace Organizer
 
             LessonsCount = Days[date].Lessons.Count;
 
-            for (int i = Head.MaxLessonsCount - 1; i >= LessonsCount; i--)
+            for (int i = Main.MaxLessonsCount - 1; i >= LessonsCount; i--)
                 Lessons[i].TurnOff();
 
             dateText.Text = $"{date.Day.ToString("00")}.{date.Month.ToString("00")}.{date.Year} - {Program.Translate(date.DayOfWeek.ToString())}";
