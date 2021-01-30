@@ -13,7 +13,6 @@ namespace Organizer
 {
     public partial class Schelude : UserControlGG
     {
-        public static int CellSize = 70;
         public static int MaxLessonsCount = 8; 
 
         public static Lesson[] Lessons;
@@ -46,7 +45,7 @@ namespace Organizer
 
             editModeLessonsBackup = new Lesson[Main.MaxLessonsCount];
             for (int i = 0; i < Main.MaxLessonsCount; i++)
-                editModeLessonsBackup[i] = new Lesson(i + 1, CellSize, Program.Color);
+                editModeLessonsBackup[i] = new Lesson(i + 1);
 
             InitializeComponent();
         }
@@ -60,23 +59,21 @@ namespace Organizer
 
             for (int i = 0; i < Main.MaxLessonsCount; i++)
             {
-                Lessons[i] = new Lesson(i + 1, CellSize, Program.Color);
+                Lessons[i] = new Lesson(i + 1);
+                Lesson lesson = Lessons[i];
 
-                Lessons[i].TitleLabel.Click += TitleClick;
-                Lessons[i].TitleLabel.MouseMove += TitleMouseMove;
+                lesson.TitleLabel.Click += TitleClick;
+                lesson.TitleLabel.MouseMove += TitleMouseMove;
 
-                Lessons[i].AddWorkButton.Click += AddWorkButtonClick;
+                lesson.AddWorkButton.Click += AddWorkButtonClick;
 
-                Lessons[i].DoneCheckBox.CheckStateChanged += DoneCheckedChanged;
+                lesson.DoneCheckBox.CheckStateChanged += DoneCheckedChanged;
 
-                lessonsPanel.Controls.Add(Lessons[i].DoneCheckBox);
-                lessonsPanel.Controls.Add(Lessons[i].AddWorkButton);
-                lessonsPanel.Controls.Add(Lessons[i].NumLabel);
-                lessonsPanel.Controls.Add(Lessons[i].TitleLabel);
-                lessonsPanel.Controls.Add(Lessons[i].WorkLabel);
+                lesson.Location = new Point(0, 70 * i);
+                lessonsPanel.Controls.Add(lesson);
 
-                LocalizationControls.Add(Lessons[i].TitleLabel);
-                LocalizationControls.Add(Lessons[i].WorkLabel);
+                LocalizationControls.Add(lesson);
+                LocalizationControls.Add(lesson);
             }
 
             LessonsRefresh();
@@ -159,7 +156,14 @@ namespace Organizer
                 else
                 {
                     for (int i = 0; i < Days[date].Lessons.Count; i++)
+                    {
                         Days[date].Lessons[i].CopyFrom(Lessons[i]);
+
+                        Lesson lesson = Days[date].Lessons[i];
+                        Program.Insert($"INSERT INTO Lessons(Title, Num, Date, Class, Homework) VALUES" +
+                            $"('{lesson.Title}', '{(i + 1).ToString()}', '{date.ToString("yyyy-MM-dd")}'," +
+                            $"'25;9В', '{lesson.Homework.ToString()}')");
+                    }
 
                     LessonsRefresh();
                 }
@@ -169,9 +173,6 @@ namespace Organizer
 
             for (int i = 0; i < LessonsCount; i++)
                 Lessons[i].AddWorkButton.Visible = EditMode;
-
-            for (int i = 0; i < LessonsCount; i++)
-                Lessons[i].UpdateSizes(CellSize, EditMode);
         }
 
         private void LessonsPanelMouseWheel(object sender, MouseEventArgs e)
@@ -185,16 +186,16 @@ namespace Organizer
 
         private void AddWorkButtonClick(object sender, EventArgs e)
         {
-            int num = Convert.ToInt32(((Button)sender).Tag);
+            /*int num = Convert.ToInt32(((Button)sender).Tag);
 
             WorkAddForm form = new WorkAddForm(num);
 
             if (form.ShowDialog() == DialogResult.OK)
             {
-                Lessons[num - 1].WorkList = form.WorkList;
+                Lessons[num - 1].Homework = form.Homework;
 
                 WorkRefresh(num - 1);
-            }
+            }*/
         }
 
         private void DoneCheckedChanged(object sender, EventArgs e)
@@ -226,20 +227,11 @@ namespace Organizer
 
         public void WorkRefresh(int num)
         {
-            if (Lessons[num].WorkList.Count > 1)
-            {
-                Lessons[num].WorkLabel.Text = "";
-
-                foreach (var work in Lessons[num].WorkList)
-                    if (work.Key != "Default")
-                        foreach (var text in work.Value)
-                            Lessons[num].WorkLabel.Text += WorkAddForm.Types[work.Key] + text + ", ";
-
-                Lessons[num].WorkLabel.Text = Lessons[num].WorkLabel.Text.Remove(Lessons[num].WorkLabel.Text.Length - 2, 2);
-            }
+            if (Lessons[num].Homework == "Default")
+                Lessons[num].SetTitle(Lessons[num].Title);
 
             else
-                Lessons[num].SetTitle(Lessons[num].Title);
+                Lessons[num].WorkLabel.Text = Lessons[num].Homework;
         }
 
         private void LessonsRefresh()

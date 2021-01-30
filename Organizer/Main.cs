@@ -32,6 +32,7 @@ namespace Organizer
         private UserControlGG activeUserControl;
         private Schelude schelude;
         private Options options;
+        private UnknownUserControl unknown;
         private Dictionary<string, UserControlGG> userControls = new Dictionary<string, UserControlGG>();
 
         private List<UserControlGG> navigation = new List<UserControlGG>();
@@ -50,9 +51,11 @@ namespace Organizer
             {
                 Location = new Point(175, 24)
             };
+            unknown = new UnknownUserControl();
 
             userControls.Add("schelude", schelude);
             userControls.Add("options", options);
+            userControls.Add("unknown", unknown);
 
             FormClosing += schelude.SaveFiles;
             FormClosing += options.SaveOptions;
@@ -74,7 +77,6 @@ namespace Organizer
             activeUserControl = schelude;
 
             navigation.Add(schelude);
-            navigationPos++;
         }
 
         private void LoadFiles()
@@ -221,9 +223,12 @@ namespace Organizer
             mainPanel.Controls.Add(userControl);
             activeUserControl = userControl;
 
-            if (navigation.Last() != userControl)
+            if (navigation[navigationPos] != userControl)
             {
-                navigation.Insert(navigationPos + 1, userControl);
+                if(navigationPos < navigation.Count - 2)
+                    navigation.RemoveRange(navigationPos, navigation.Count - navigationPos);
+
+                navigation.Add(userControl);
                 navigationPos++;
             }
         }
@@ -253,7 +258,7 @@ namespace Organizer
         private void ButtonsTimer_Tick(object sender, EventArgs e)
         {
             backButton.Enabled = navigationPos > 0;
-            frontButton.Enabled = navigationPos < navigation.Count - 2;
+            frontButton.Enabled = navigationPos < navigation.Count - 1;
         }
     }
 }

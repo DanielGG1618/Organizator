@@ -25,7 +25,7 @@ namespace Organizer
             Lessons = new List<Lesson>();
 
             for (int i = 0; i < Main.Schelude[(int)Date.DayOfWeek].Length; i++)
-                Lessons.Add(new Lesson(i + 1, Schelude.CellSize, Program.Color, Main.Schelude[(int)Date.DayOfWeek][i]));
+                Lessons.Add(new Lesson(i + 1, Main.Schelude[(int)Date.DayOfWeek][i]));
         }
 
         public Day(int num, List<Lesson> lessons)
@@ -83,7 +83,7 @@ namespace Organizer
         }
     }
 
-    public struct Lesson
+    /*public struct Lesson
     {
         public Label NumLabel, TitleLabel, WorkLabel;
         public Button AddWorkButton;
@@ -91,10 +91,12 @@ namespace Organizer
 
         public int Num;
         public string Title;
-        public Dictionary<string, List<string>> WorkList;
+        public string Homework;
 
         public bool Enabled;
         public bool Done { get => DoneCheckBox.Checked; }
+
+        private string defaultHomework;
 
         public void LoadWithSamples(int cellSize, Color color)
         {
@@ -131,9 +133,10 @@ namespace Organizer
             WorkLabel = new Label();
             AddWorkButton = new Button();
             DoneCheckBox = new CheckBox();
-            WorkList = new Dictionary<string, List<string>> { { "Default", new List<string>(new string[1] { "" }) } };
+            Homework = "Default";
             Enabled = true;
             Title = "";
+            defaultHomework = "";
 
             LoadWithSamples(cellSize, color);
 
@@ -165,11 +168,11 @@ namespace Organizer
             SetTitle(title);
         }
 
-        public Lesson(int num, int cellSize, Color color, string title, bool done, Dictionary<string, List<string>> workList)
+        public Lesson(int num, int cellSize, Color color, string title, bool done, string homework)
         {
             this = new Lesson(num, cellSize, color, title, done);
 
-            WorkList = workList;
+            Homework = homework;
         }
 
         public void UpdateLocation(int cellSize)
@@ -179,20 +182,21 @@ namespace Organizer
             NumLabel.Location = new Point(0, cellSize * positionCoef);
             TitleLabel.Location = new Point(50, cellSize * positionCoef);
             WorkLabel.Location = new Point(50, cellSize * positionCoef + (int)(cellSize * 2 / 7f));
-            AddWorkButton.Location = new Point(700 - cellSize + 10, cellSize * positionCoef + 10);
+            AddWorkButton.Location = new Point(750 - cellSize + 10, cellSize * positionCoef + 10);
             DoneCheckBox.Location = new Point(0, cellSize * positionCoef);
         }
 
         public void UpdateSizes(int cellSize, bool editMode)
         {
-            TitleLabel.Size = new Size(650 - (editMode ? cellSize : 0), (int)(cellSize * 2 / 7f));
+            TitleLabel.Size = new Size(700 - (editMode ? cellSize : 0), (int)(cellSize * 2 / 7f));
 
-            WorkLabel.Size = new Size(650 - (editMode ? cellSize : 0), (int)(cellSize * 5 / 7f));
+            WorkLabel.Size = new Size(700 - (editMode ? cellSize : 0), (int)(cellSize * 5 / 7f));
         }
 
         public void CopyFrom(Lesson lesson)
         {
             Title = lesson.Title;
+            Homework = lesson.Homework;
 
             if (TitleLabel == null) TitleLabel = new Label();
             TitleLabel.AccessibleName = Title;
@@ -201,14 +205,8 @@ namespace Organizer
             if (WorkLabel == null) WorkLabel = new Label();
             WorkLabel.Text = lesson.WorkLabel.Text;
 
-            if (WorkList == null) WorkList = new Dictionary<string, List<string>>();
-            WorkList.Clear();
-
             if (DoneCheckBox == null) DoneCheckBox = new CheckBox();
-            DoneCheckBox.Checked = lesson.Done;
-
-            foreach (var workList in lesson.WorkList)
-                WorkList.Add(workList.Key, new List<string>(workList.Value.ToArray()));
+            DoneCheckBox.Checked = lesson.Done;   
         }
 
         public void TurnOff()
@@ -228,12 +226,12 @@ namespace Organizer
             TitleLabel.AccessibleName = Title;
             TitleLabel.Text = Program.Translate(TitleLabel.AccessibleName);
 
-            try { WorkList["Default"][0] = Main.LessonsDefaultWork[Title]; }
-            catch { WorkList["Default"][0] = "Isn*t set"; }
+            try { defaultHomework = Main.LessonsDefaultWork[Title]; }
+            catch { defaultHomework = "Isn*t set"; }
 
-            if (WorkList.Count == 1)
+            if (Homework == "Default")
             {
-                WorkLabel.AccessibleName = WorkList["Default"][0];
+                WorkLabel.AccessibleName = defaultHomework;
 
                 WorkLabel.Text = Program.Translate(WorkLabel.AccessibleName);
             }
@@ -249,17 +247,7 @@ namespace Organizer
 
         public static string Totxt(Lesson lesson)
         {
-            string txt = lesson.Num + "╫ " + lesson.Title + "╫ " + lesson.Done;
-
-            foreach (var work in lesson.WorkList)
-            {
-                txt += "╫ " + work.Key + "╫ ";
-
-                foreach (var str in work.Value)
-                    txt += str + '◘';
-
-                txt = txt.Remove(txt.Length - 1);
-            }
+            string txt = lesson.Num + "╫ " + lesson.Title + "╫ " + lesson.Done + "╫ " + lesson.Homework;
 
             return txt;
         }
@@ -268,12 +256,7 @@ namespace Organizer
         {
             string[] splited = txt.Split(new string[1] { "╫ " }, StringSplitOptions.None);
 
-            Dictionary<string, List<string>> workList = new Dictionary<string, List<string>>();
-
-            for (int i = 3; i < splited.Length - 1; i += 2)
-                workList.Add(splited[i], new List<string>(splited[i + 1].Split('◘')));
-
-            return new Lesson(int.Parse(splited[0]), Schelude.CellSize, Program.Color, splited[1], bool.Parse(splited[2]), workList);
+            return new Lesson(int.Parse(splited[0]), Schelude.CellSize, Program.Color, splited[1], bool.Parse(splited[2]), splited[3]);
         }
-    }
+    }*/
 }

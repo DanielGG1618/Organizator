@@ -8,7 +8,7 @@ namespace Organizer
 {
     public partial class WorkAddForm : Form
     {
-        public Dictionary<string, List<string>> WorkList = new Dictionary<string, List<string>>();
+        /*public string Homework;
         public List<Control> LocalizationControls = new List<Control>();
 
         private Label selectedLabel = new Label();
@@ -17,19 +17,9 @@ namespace Organizer
         private bool b = false;
         private int lastSelectedType = 0;
 
-        public static Dictionary<string, string> Types = new Dictionary<string, string>
-        {
-            { "Default", "" },
-            { "Other", "" },
-            { "On pages", "C " },
-            { "Paragraphs", "§ " },
-            { "Numbers", "№ " }
-        };
-
         public WorkAddForm(int num)
         {
-            foreach (var workList in Schelude.Lessons[num - 1].WorkList)
-                WorkList.Add(workList.Key, new List<string>(workList.Value));
+            Homework = Schelude.Lessons[num - 1].Homework;
 
             InitializeComponent();
         }
@@ -41,7 +31,7 @@ namespace Organizer
 
             LocalizationControls.AddRange(new Control[2] { cancel, done });
 
-            RefreshResult();
+            //RefreshResult();
 
             ForeColor = Program.Color;
 
@@ -50,14 +40,6 @@ namespace Organizer
 
         private void SetLanguage(string language)
         {
-            typeSelector.Items.Clear();
-
-            foreach (var type in Types)
-                if (type.Key != "Default")
-                    typeSelector.Items.Add(Program.Translate(type.Key));
-
-            typeSelector.SelectedIndex = 0;
-
             foreach (var control in LocalizationControls)
                 control.Text = Program.Translate(control.AccessibleName);
         }
@@ -66,19 +48,15 @@ namespace Organizer
         {
             resultPanel.Controls.Clear();
 
-            resultPanel.Controls.Add(ResultLabelSample(Program.Translate(WorkList["Default"][0]), "Default"));
+            resultPanel.Controls.Add(ResultLabelSample(Program.Translate(Homework["Default"][0]), "Default"));
         }
 
         private void RefreshResult()
         {
             resultPanel.Controls.Clear();
 
-            if (WorkList.Count > 1)
+            if (Homework == "Default")
             {
-                foreach (var works in WorkList)
-                    if (works.Key != "Default")
-                        resultPanel.Controls.AddRange(ResultLabelSampleList(works.Value.ToArray(), works.Key).ToArray());
-
                 int previousX = 0;
 
                 foreach (Label label in resultPanel.Controls)
@@ -177,7 +155,7 @@ namespace Organizer
 
         private void TypeSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lastSelectedType == typeSelector.SelectedIndex)
+            /*if (lastSelectedType == typeSelector.SelectedIndex)
                 return;
 
             foreach (var type in Types)
@@ -200,7 +178,7 @@ namespace Organizer
             if (labelType != "Other")
                 textToRemoveAdd = textToRemoveAdd.Remove(0, 2);
 
-            if (WorkList.Keys.Contains(currentType) && WorkList[currentType].Contains(textToRemoveAdd))
+            if (Homework.Keys.Contains(currentType) && Homework[currentType].Contains(textToRemoveAdd))
             {
                 typeSelector.SelectedIndex = lastSelectedType;
 
@@ -213,15 +191,15 @@ namespace Organizer
                 return;
             }
 
-            WorkList[labelType].Remove(textToRemoveAdd);
-            if (WorkList[labelType].Count == 0)
-                WorkList.Remove(labelType);
+            Homework[labelType].Remove(textToRemoveAdd);
+            if (Homework[labelType].Count == 0)
+                Homework.Remove(labelType);
 
-            if (WorkList.Keys.Contains(currentType))
-                WorkList[currentType].Add(textToRemoveAdd);
+            if (Homework.Keys.Contains(currentType))
+                Homework[currentType].Add(textToRemoveAdd);
 
             else
-                WorkList.Add(currentType, new List<string>(new string[] { textToRemoveAdd }));
+                Homework.Add(currentType, new List<string>(new string[] { textToRemoveAdd }));
 
             RefreshResult();
             
@@ -243,7 +221,7 @@ namespace Organizer
         {
             Label label = (Label)sender;
 
-            if (label.Text == Program.Translate(WorkList["Default"][0]))
+            if (label.Text == Program.Translate(Homework["Default"][0]))
                 return;
 
             SetSelectedLabel(label);
@@ -253,7 +231,7 @@ namespace Organizer
         {
             Label label = (Label)sender;
 
-            if (label.Text == Program.Translate(WorkList["Default"][0]))
+            if (label.Text == Program.Translate(Homework["Default"][0]))
                 return;
 
             Cursor.Current = Cursors.Hand;
@@ -310,7 +288,7 @@ namespace Organizer
                     return;
                 }
 
-                foreach (var strList in WorkList)
+                foreach (var strList in Homework)
                 {
                     foreach(string str in strList.Value)
                     {
@@ -324,11 +302,11 @@ namespace Organizer
                     }
                 }
 
-                if (WorkList.ContainsKey(typeSelector.AccessibleName))
-                    WorkList[typeSelector.AccessibleName].Add(addTextBox.Text);
+                if (Homework.ContainsKey(typeSelector.AccessibleName))
+                    Homework[typeSelector.AccessibleName].Add(addTextBox.Text);
 
                 else
-                    WorkList.Add(typeSelector.AccessibleName, new List<string>(new string[1] { addTextBox.Text }));
+                    Homework.Add(typeSelector.AccessibleName, new List<string>(new string[1] { addTextBox.Text }));
 
                 RefreshResult();
                 addTextBox.Text = "";
@@ -336,10 +314,10 @@ namespace Organizer
 
             else
             {
-                WorkList[typeSelector.AccessibleName].Remove(addTextBox.Text);
+                Homework[typeSelector.AccessibleName].Remove(addTextBox.Text);
 
-                if (WorkList[typeSelector.AccessibleName].Count == 0)
-                    WorkList.Remove(typeSelector.AccessibleName);
+                if (Homework[typeSelector.AccessibleName].Count == 0)
+                    Homework.Remove(typeSelector.AccessibleName);
 
                 if (resultPanel.Controls.Count <= 1)
                 {
@@ -373,11 +351,11 @@ namespace Organizer
                 return;
             }
 
-            for (int i = 0; i < WorkList[typeSelector.AccessibleName].Count; i++)
+            for (int i = 0; i < Homework[typeSelector.AccessibleName].Count; i++)
             {
-                if (WorkList[typeSelector.AccessibleName][i] == selectedLabel.Text.Remove(selectedLabel.Text.Length - 1, haveComma ? 1 : 0).Remove(0, Types[selectedLabel.AccessibleName].Length))
+                if (Homework[typeSelector.AccessibleName][i] == selectedLabel.Text.Remove(selectedLabel.Text.Length - 1, haveComma ? 1 : 0).Remove(0, Types[selectedLabel.AccessibleName].Length))
                 {
-                    WorkList[typeSelector.AccessibleName][i] = addTextBox.Text;
+                    Homework[typeSelector.AccessibleName][i] = addTextBox.Text;
 
                     RefreshResult();
 
@@ -415,6 +393,6 @@ namespace Organizer
 
             try { SetSelectedLabel(resultPanel.Controls[selectedLabel.TabIndex + 1] as Label); }
             catch { SetSelectedLabel(resultPanel.Controls[0] as Label); }
-        }
+        }*/
     }
 }

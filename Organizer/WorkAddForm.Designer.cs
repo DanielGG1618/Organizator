@@ -1,7 +1,7 @@
 ﻿namespace Organizer
 {
 partial class WorkAddForm
-{
+{/*
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -222,6 +222,6 @@ partial class WorkAddForm
         private System.Windows.Forms.Button leftButton;
         private System.Windows.Forms.Button rightButton;
         private System.Windows.Forms.Panel resultPanel;
-        private System.Windows.Forms.Label attachmentsLabel;
+        private System.Windows.Forms.Label attachmentsLabel;*/
     }
 }

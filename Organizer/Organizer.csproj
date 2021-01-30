@@ -54,11 +54,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Lesson.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Lesson.Designer.cs">
+      <DependentUpon>Lesson.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Schelude.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\Schelude.Designer.cs">
       <DependentUpon>Schelude.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UnknownUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UnknownUserControl.Designer.cs">
+      <DependentUpon>UnknownUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\UserControlGG.cs">
       <SubType>UserControl</SubType>
@@ -107,8 +119,14 @@
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Lesson.resx">
+      <DependentUpon>Lesson.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Schelude.resx">
       <DependentUpon>Schelude.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UnknownUserControl.resx">
+      <DependentUpon>UnknownUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utils\UserControlGG.resx">
       <DependentUpon>UserControlGG.cs</DependentUpon>
