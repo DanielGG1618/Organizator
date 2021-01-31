@@ -155,7 +155,7 @@ namespace Organizer
 
                 else
                 {
-                    for (int i = 0; i < Lessons.Length; i++)
+                    for (int i = 0; i < LessonsCount; i++)
                     {
                         Lesson lesson = Lessons[i];
 
@@ -279,6 +279,8 @@ namespace Organizer
                 }
                 catch
                 {
+                    MessageBox.Show(((int)date.DayOfWeek).ToString());
+
                     string title = Program.Select("SELECT Lesson FROM Schelude " +
                         $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Num = '{i + 1}' AND Class = '{"25;9В"}'")[0];
 
