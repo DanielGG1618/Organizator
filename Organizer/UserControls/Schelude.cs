@@ -155,14 +155,24 @@ namespace Organizer
 
                 else
                 {
-                    for (int i = 0; i < Days[date].Lessons.Count; i++)
+                    for (int i = 0; i < Lessons.Length; i++)
                     {
-                        Days[date].Lessons[i].CopyFrom(Lessons[i]);
+                        Lesson lesson = Lessons[i];
 
-                        Lesson lesson = Days[date].Lessons[i];
-                        Program.Insert($"INSERT INTO Lessons(Title, Num, Date, Class, Homework) VALUES" +
-                            $"('{lesson.Title}', '{(i + 1).ToString()}', '{date.ToString("yyyy-MM-dd")}'," +
-                            $"'25;9В', '{lesson.Homework.ToString()}')");
+                        lesson.Homework = lesson.HomeworkTextBox.Text == "" ? "Default" : lesson.HomeworkTextBox.Text;
+
+                        try
+                        {
+                            Program.Insert($"INSERT INTO Lessons (Homework, Title, Num, Date, Class) VALUES " +
+                                $"('{lesson.Homework.ToString()}', '{lesson.Title}', '{(i + 1).ToString()}', " +
+                                $"'{date.ToString("yyyy-MM-dd")}', '25;9В')");
+                        }
+                        
+                        catch
+                        {
+                            Program.Insert($"UPDATE Lessons SET Homework = '{lesson.Homework}', Title = '{lesson.Title}' " +
+                                $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'");
+                        }
                     }
 
                     LessonsRefresh();
@@ -172,7 +182,10 @@ namespace Organizer
             editModeButton.ForeColor = EditMode ? Color.LimeGreen : new Color();
 
             for (int i = 0; i < LessonsCount; i++)
+            {
                 Lessons[i].AddWorkButton.Visible = EditMode;
+                Lessons[i].HomeworkTextBox.Visible = EditMode;
+            }
         }
 
         private void LessonsPanelMouseWheel(object sender, MouseEventArgs e)
@@ -228,28 +241,63 @@ namespace Organizer
         public void WorkRefresh(int num)
         {
             if (Lessons[num].Homework == "Default")
+            {
                 Lessons[num].SetTitle(Lessons[num].Title);
+                Lessons[num].HomeworkTextBox.Text = "";
+            }
 
             else
+            {
                 Lessons[num].WorkLabel.Text = Lessons[num].Homework;
+                Lessons[num].HomeworkTextBox.Text = Lessons[num].Homework;
+            }
         }
 
         private void LessonsRefresh()
         {
-            for (int i = 0; i < Days[date].Lessons.Count; i++)
+            LessonsCount = int.Parse(Program.Select("SELECT COUNT(Title) FROM Lessons " +
+                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'")[0]);
+
+            if (LessonsCount == 0)
+            {
+                LessonsCount = int.Parse(Program.Select("SELECT COUNT(Lesson) FROM Schelude " +
+                        $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Class = '{"25;9В"}'")[0]);
+            }
+
+            for (int i = 0; i < LessonsCount; i++)
             {
                 Lessons[i].NumLabel.ForeColor = Program.Color;
                 Lessons[i].DoneCheckBox.Visible = true;
-                Lessons[i].CopyFrom(Days[date].Lessons[i]);
+
+                try
+                {
+                    List<string> titleHomework = Program.Select("SELECT Title, Homework FROM Lessons " +
+                        $"WHERE Num = '{i + 1}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'");
+
+                    Lessons[i].SetTitle(titleHomework[0]);
+                    Lessons[i].Homework = titleHomework[1];
+                }
+                catch
+                {
+                    string title = Program.Select("SELECT Lesson FROM Schelude " +
+                        $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Num = '{i + 1}' AND Class = '{"25;9В"}'")[0];
+
+                    Program.Insert("INSERT INTO Lessons (Title, Homework, Num, Date, Class) " + 
+                        $"VALUES ('{title}', 'Default', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{"25;9В"}')");
+
+                    Lessons[i].SetTitle(title);
+                    Lessons[i].Homework = "Default";
+                }
+
+                Lessons[i].Done = Days[date].Lessons[i].Done;
+                
                 WorkRefresh(i);
             }
-
-            LessonsCount = Days[date].Lessons.Count;
 
             for (int i = Main.MaxLessonsCount - 1; i >= LessonsCount; i--)
                 Lessons[i].TurnOff();
 
-            dateText.Text = $"{date.Day.ToString("00")}.{date.Month.ToString("00")}.{date.Year} - {Program.Translate(date.DayOfWeek.ToString())}";
+            dateText.Text = $"{date.ToString("dd.MM.yyyy")} - {Program.Translate(date.DayOfWeek.ToString())}";
         }
 
         private void CopyScreen_Click(object sender, EventArgs e)

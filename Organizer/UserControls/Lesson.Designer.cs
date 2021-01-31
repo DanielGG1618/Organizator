@@ -33,6 +33,7 @@
             this.WorkLabel = new System.Windows.Forms.Label();
             this.AddWorkButton = new System.Windows.Forms.Button();
             this.DoneCheckBox = new System.Windows.Forms.CheckBox();
+            this.HomeworkTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // NumLabel
@@ -94,9 +95,25 @@
             this.DoneCheckBox.TabIndex = 4;
             this.DoneCheckBox.UseVisualStyleBackColor = false;
             // 
+            // HomeworkTextBox
+            // 
+            this.HomeworkTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.HomeworkTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HomeworkTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.HomeworkTextBox.ForeColor = System.Drawing.Color.White;
+            this.HomeworkTextBox.Location = new System.Drawing.Point(50, 25);
+            this.HomeworkTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.HomeworkTextBox.MaxLength = 200;
+            this.HomeworkTextBox.Multiline = true;
+            this.HomeworkTextBox.Name = "HomeworkTextBox";
+            this.HomeworkTextBox.Size = new System.Drawing.Size(630, 45);
+            this.HomeworkTextBox.TabIndex = 5;
+            this.HomeworkTextBox.Visible = false;
+            // 
             // Lesson
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.HomeworkTextBox);
             this.Controls.Add(this.DoneCheckBox);
             this.Controls.Add(this.AddWorkButton);
             this.Controls.Add(this.WorkLabel);
@@ -116,5 +133,6 @@
         public System.Windows.Forms.Label WorkLabel;
         public System.Windows.Forms.Button AddWorkButton;
         public System.Windows.Forms.CheckBox DoneCheckBox;
+        public System.Windows.Forms.TextBox HomeworkTextBox;
     }
 }

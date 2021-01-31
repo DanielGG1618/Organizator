@@ -161,10 +161,14 @@ namespace Organizer
 
             for (int i = 0; i < schedule.Length; i++)
             {
-                List<string> array = new List<string>(schedule[i].Split(new string[2] { ", ", ": " }, StringSplitOptions.RemoveEmptyEntries));
-                array.RemoveAt(0);
+                List<string> list = new List<string>(schedule[i].Split(new string[2] { ", ", ": " }, StringSplitOptions.RemoveEmptyEntries));
+                list.RemoveAt(0);
 
-                Schelude[i] = array.ToArray();
+                Schelude[i] = list.ToArray();
+
+                /*for(int j = 0; j < list.Count; j++)
+                    Program.Insert("INSERT INTO Schelude (`DayOfWeek`, `Num`, `Lesson`, `Class`) " +
+                        $"VALUES ('{i}', '{j + 1}', '{list[j]}', '{"25;9В"}')");*/
             }
         }
 

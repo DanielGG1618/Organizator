@@ -16,8 +16,8 @@ namespace Organizer
         public string Title = "";
         public string Homework = "Default";
 
-        public bool Enabledd = true;
-        public bool Done { get => DoneCheckBox.Checked; }
+        public new bool Enabled = true;
+        public bool Done { get => DoneCheckBox.Checked; set => DoneCheckBox.Checked = value; }
 
         private string defaultHomework;
 
@@ -58,19 +58,21 @@ namespace Organizer
             Num = num;
 
             NumLabel.Text = Num.ToString();
-            NumLabel.BackColor = Main.GRAY[Num % 2];
-
-            TitleLabel.Tag = Num.ToString();
-            TitleLabel.BackColor = Main.GRAY[(Num + 1) % 2];
-
-            WorkLabel.Tag = Num.ToString();
-            WorkLabel.BackColor = Main.GRAY[(Num + 1) % 2];
-
-            AddWorkButton.Tag = Num.ToString();
-            AddWorkButton.BackColor = Main.GRAY[(Num + 1) % 2];
-
-            DoneCheckBox.Tag = Num.ToString();
+            TitleLabel.Tag = Num;
+            AddWorkButton.Tag = Num;
+            DoneCheckBox.Tag = Num;
             DoneCheckBox.Checked = done;
+
+            UpdateTheme();
+        }
+
+        private void UpdateTheme()
+        {
+            NumLabel.BackColor = Main.GRAY[Num % 2];
+            TitleLabel.BackColor = Main.GRAY[(Num + 1) % 2];
+            HomeworkTextBox.BackColor = Main.GRAY[(Num + 1) % 2];
+            WorkLabel.BackColor = Main.GRAY[(Num + 1) % 2];
+            AddWorkButton.BackColor = Main.GRAY[Num % 2];
         }
 
         public void CopyFrom(Lesson lesson)
@@ -83,7 +85,7 @@ namespace Organizer
             TitleLabel.Text = Program.Translate(TitleLabel.AccessibleName);
 
             if (WorkLabel == null) WorkLabel = new Label();
-            WorkLabel.Text = lesson.WorkLabel.Text;
+            WorkLabel.Text = lesson.Homework;
 
             if (DoneCheckBox == null) DoneCheckBox = new CheckBox();
             DoneCheckBox.Checked = lesson.Done;
@@ -96,7 +98,7 @@ namespace Organizer
             TitleLabel.Text = "";
             WorkLabel.Text = "";
             DoneCheckBox.Visible = false;
-            Enabledd = false;
+            Enabled = false;
         }
 
         public void SetTitle(string title)
