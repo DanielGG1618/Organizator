@@ -44,6 +44,7 @@
             this.comboBox.FormattingEnabled = true;
             this.comboBox.IntegralHeight = false;
             this.comboBox.Items.AddRange(new object[] {
+            "-",
             "Algebra",
             "Biology",
             "Chemistry",

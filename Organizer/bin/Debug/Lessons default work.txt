@@ -9,3 +9,4 @@ Russian language: Repeat the rules
 Physics: Repeat the last §
 Physical education: Sports form
 Chemistry: Repeat the last §
+-: -

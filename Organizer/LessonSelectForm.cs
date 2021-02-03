@@ -14,8 +14,6 @@ namespace Organizer
     {
         public List<Control> LocalizationControls = new List<Control>();
 
-        private List<string> items = new List<string>();
-
         public string Lesson;
 
         public LessonSelectForm(int num)
@@ -26,9 +24,6 @@ namespace Organizer
 
         private void LessonSelectForm_Load(object sender, EventArgs e)
         {
-            foreach (string item in comboBox.Items)
-                items.Add(item);
-
             LocalizationControls.AddRange(new Control[] { done, cancel });
 
             SetColor(Program.Color);
@@ -54,7 +49,7 @@ namespace Organizer
 
         private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Lesson = items[comboBox.SelectedIndex];
+            Lesson = comboBox.SelectedItem.ToString();
         }
 
         private void LessonLabel_Click(object sender, EventArgs e)

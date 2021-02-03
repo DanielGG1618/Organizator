@@ -34,8 +34,8 @@ namespace Organizer
             Connection = new MySqlConnection(connectionString);
             Connection.Open();
 
-            LoadOptions();
             LoadYear();
+            LoadOptions();
             LoadTranslations();
 
             Application.Run(new Main());
@@ -116,7 +116,7 @@ namespace Organizer
 
         private static void LoadYear()
         {
-            Year = 9 <= DateTime.Today.Month && DateTime.Today.Month <= 12 ? DateTime.Today.Year : DateTime.Today.Year - 1;
+            Year = DateTime.Today.Year - (9 <= DateTime.Today.Month && DateTime.Today.Month <= 12 ? 0 : 1);
         }
 
         private static void LoadTranslations()

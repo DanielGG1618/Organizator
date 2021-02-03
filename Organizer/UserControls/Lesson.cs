@@ -106,7 +106,7 @@ namespace Organizer
             Title = title;
 
             TitleLabel.AccessibleName = Title;
-            TitleLabel.Text = Program.Translate(TitleLabel.AccessibleName);
+            TitleLabel.Text = Program.Translate(Title);
 
             try { defaultHomework = Main.LessonsDefaultWork[Title]; }
             catch { defaultHomework = "Isn*t set"; }
