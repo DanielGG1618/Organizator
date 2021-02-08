@@ -61,6 +61,8 @@ namespace Organizer
 
             reader.Close();
 
+            command.Dispose();
+
             return results;
         }
 
@@ -89,6 +91,8 @@ namespace Organizer
             }
             catch { }
 
+            command.Dispose();
+
             return img;
         }
 
@@ -97,6 +101,8 @@ namespace Organizer
             MySqlCommand command = new MySqlCommand(Text, Connection);
 
             command.ExecuteNonQuery();
+
+            command.Dispose();
         }
 
         public static string Translate(string key)

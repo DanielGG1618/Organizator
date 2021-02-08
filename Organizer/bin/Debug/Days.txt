@@ -155,11 +155,11 @@
 154░ 1╫ Russian language╫ True╫ Default░ 2╫ Chemistry╫ True╫ Default░ 3╫ Biology╫ True╫ Default░ 4╫ Native language╫ True╫ Default░ 5╫ Physics╫ True╫ Default░ 6╫ Social studies╫ True╫ Default░ 7╫ English language╫ True╫ Default
 155░ 1╫ Physical education╫ True╫ Default░ 2╫ Literature╫ True╫ Default░ 3╫ Algebra╫ True╫ Default░ 4╫ Geometry╫ True╫ Default░ 5╫ English language╫ True╫ Default░ 6╫ History╫ True╫ Default░ 7╫ Chemistry╫ True╫ Default
 156░ 1╫ Geometry╫ True╫ Default░ 2╫ Russian language╫ True╫ Default░ 3╫ Physical education╫ True╫ Default░ 4╫ German language╫ False╫ Default░ 5╫ Geography╫ False╫ Default░ 6╫ Physics╫ False╫ Default
-157░ 1╫ Life safety╫ True╫ Default░ 2╫ Informatics╫ False╫ Default░ 3╫ Physical education╫ True╫ Default░ 4╫ English language╫ True╫ Default░ 5╫ Algebra╫ True╫ Default░ 6╫ Literature╫ False╫ Default░ 7╫ Biology╫ False╫ Default
+157░ 1╫ Life safety╫ True╫ Default░ 2╫ Informatics╫ True╫ Default░ 3╫ Physical education╫ True╫ Default░ 4╫ English language╫ True╫ Default░ 5╫ Algebra╫ True╫ Default░ 6╫ Literature╫ True╫ Default░ 7╫ Biology╫ False╫ Default
 158
 159
-160░ 1╫ Literature╫ False╫ Default░ 2╫ Russian language╫ False╫ Default░ 3╫ Algebra╫ False╫ Default░ 4╫ Geography╫ False╫ Default░ 5╫ Physics╫ False╫ Default░ 6╫ History╫ False╫ Default
-161░ 1╫ Russian language╫ False╫ Default░ 2╫ Chemistry╫ False╫ Default░ 3╫ Biology╫ False╫ Default░ 4╫ Native language╫ False╫ Default░ 5╫ Physics╫ False╫ Default░ 6╫ Social studies╫ False╫ Default░ 7╫ English language╫ False╫ Default
+160░ 1╫ Literature╫ True╫ Default░ 2╫ Russian language╫ False╫ Default░ 3╫ Algebra╫ True╫ Default░ 4╫ Geography╫ True╫ Default░ 5╫ Physics╫ True╫ Default░ 6╫ History╫ False╫ Default
+161░ 1╫ Russian language╫ False╫ Default░ 2╫ Chemistry╫ True╫ Default░ 3╫ Biology╫ True╫ Default░ 4╫ Native language╫ False╫ Default░ 5╫ Physics╫ True╫ Default░ 6╫ Social studies╫ False╫ Default░ 7╫ English language╫ True╫ Default
 162░ 1╫ Physical education╫ False╫ Default░ 2╫ Literature╫ False╫ Default░ 3╫ Algebra╫ False╫ Default░ 4╫ Geometry╫ False╫ Default░ 5╫ English language╫ False╫ Default░ 6╫ History╫ False╫ Default░ 7╫ Chemistry╫ False╫ Default
 163░ 1╫ Geometry╫ False╫ Default░ 2╫ Russian language╫ False╫ Default░ 3╫ Physical education╫ False╫ Default░ 4╫ German language╫ False╫ Default░ 5╫ Geography╫ False╫ Default░ 6╫ Physics╫ False╫ Default
 164░ 1╫ Life safety╫ False╫ Default░ 2╫ Informatics╫ False╫ Default░ 3╫ Physical education╫ False╫ Default░ 4╫ English language╫ False╫ Default░ 5╫ Algebra╫ False╫ Default░ 6╫ Literature╫ False╫ Default░ 7╫ Biology╫ False╫ Default
