@@ -264,5 +264,10 @@ namespace Organizer
             backButton.Enabled = navigationPos > 0;
             frontButton.Enabled = navigationPos < navigation.Count - 1;
         }
+
+        private void SqlUpdater_Tick(object sender, EventArgs e)
+        {
+            _ = Program.Select("SELECT IsAdmin FROM Users Where Login = 'Admin'");
+        }
     }
 }

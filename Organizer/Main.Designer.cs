@@ -38,6 +38,7 @@
             this.backButton = new System.Windows.Forms.Button();
             this.frontButton = new System.Windows.Forms.Button();
             this.buttonsTimer = new System.Windows.Forms.Timer(this.components);
+            this.sqlUpdater = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // mainPanel
@@ -109,6 +110,12 @@
             this.buttonsTimer.Interval = 1000;
             this.buttonsTimer.Tick += new System.EventHandler(this.ButtonsTimer_Tick);
             // 
+            // sqlUpdater
+            // 
+            this.sqlUpdater.Enabled = true;
+            this.sqlUpdater.Interval = 60000;
+            this.sqlUpdater.Tick += new System.EventHandler(this.SqlUpdater_Tick);
+            // 
             // Main
             // 
             this.AccessibleName = "ToDoList";
@@ -138,6 +145,7 @@
         private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.Button frontButton;
         private System.Windows.Forms.Timer buttonsTimer;
+        private System.Windows.Forms.Timer sqlUpdater;
     }
 }
 
