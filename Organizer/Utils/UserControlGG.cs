@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Organizer.Properties;
 
 namespace Organizer
 {
@@ -19,28 +20,21 @@ namespace Organizer
             InitializeComponent();
         }
 
-        public virtual void SetColor(Color color)
+        public virtual void ApplyColor()
         {
-            ForeColor = color;
+            ForeColor = Settings.Default.Color;
         }
 
-        public virtual void SetTheme(bool darkTheme)
+        public virtual void ApplyTheme()
         {
-            BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
+            BackColor = Settings.Default.DarkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
         }
 
-        public virtual void SetLanguage(string language)
+        public virtual void ApplyLocalization()
         {
-            List<string> transList = Program.Select($"SELECT TransKey, TransValue FROM Translations WHERE Language = '{language}'");
-
-            Dictionary<string, string> translations = new Dictionary<string, string>();
-
-            for (int i = 0; i < transList.Count; i += 2)
-                translations.Add(transList[i], transList[i + 1]);
-
             foreach (var control in LocalizationControls)
                 if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
-                    control.Text = translations[control.AccessibleName];
+                    control.Text = Localization.Translate(control.AccessibleName);
         }
     }
 }

@@ -8,14 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Organizer.Properties;
 
 namespace Organizer
 {
     public partial class Options : UserControlGG
     {
-        public Color Color;
-        public bool DarkTheme = true;
-
         public Options()
         {
             InitializeComponent();
@@ -24,9 +22,9 @@ namespace Organizer
         private void Settings_Load(object sender, EventArgs e)
         {
             languageSelector.Items.Clear();
-            languageSelector.Items.AddRange(Program.Select("SELECT Name FROM Languages").ToArray());
+            languageSelector.Items.AddRange(SQL.Select("SELECT Name FROM Languages").ToArray());
 
-            languageSelector.Text = Program.Language;
+            languageSelector.Text = Settings.Default.Language;
 
             fromLabel.Visible = false;
             toLabel.Visible = false;
@@ -35,59 +33,46 @@ namespace Organizer
 
             holydayStartPicker.Location = new Point(0, 13);
 
-            LocalizationControls.AddRange(new Control[] { addHolyday, fromLabel, toLabel, colorLabel, holyLabel, languageNameLabel, addLanguage, this });
+            LocalizationControls.AddRange(new Control[] { addHolyday, fromLabel, toLabel, colorLabel, holyLabel, this });
 
-            SetColor(Program.Color);
-            SetTheme(Program.DarkTheme);
-            SetLanguage(Program.Language);
+            ApplyColor();
+            ApplyTheme();
+            ApplyLocalization();
 
             holydayTypeComboBox.SelectedIndex = 0;
-            themeCheckBox.Checked = Program.DarkTheme;
-        }
-
-        public override void SetColor(Color color)
-        {
-            Color = color;
-
-            ForeColor = color;
-            colorPanel.BackColor = color;
-
-            ((Main)Form.ActiveForm).SetColor();
-        }
-
-        public override void SetTheme(bool darkTheme)
-        {
-            DarkTheme = darkTheme;
-
-            BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
-
-            ((Main)Form.ActiveForm).SetTheme(darkTheme);
+            themeCheckBox.Checked = Settings.Default.DarkTheme;
         }
 
         private void LanguageSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.Language = languageSelector.Text;
+            Settings.Default.Language = languageSelector.Text;
 
-            languagePict.Image = Program.SelectImage($"SELECT Image FROM Languages WHERE Name = '{Program.Language}'");
+            languagePict.Image = SQL.SelectImage($"SELECT Image FROM Languages WHERE Name = '{Settings.Default.Language}'");
 
-            SetLanguage(Program.Language);
+            ApplyLocalization();
         }
 
-        public void SaveOptions(object sender, EventArgs e)
+        public void SaveSettings(object sender, EventArgs e)
         {
-            Program.Insert($"UPDATE `Users` SET `Language` = '{Program.Language}', `Color` = '{Program.Color.ToArgb()}', `DarkTheme` = '{(Program.DarkTheme ? 1 : 0)}' WHERE `Login` = '{Program.Login}'");
+            Settings.Default.Save();
+            //SQL.Insert($"UPDATE `Users` SET `Language` = '{Settings.Default.Language}', `Color` = '{Settings.Default.Color.ToArgb()}', `DarkTheme` = '{(Settings.Default.DarkTheme ? 1 : 0)}' WHERE `Login` = '{Settings.Default.Login}'");
         }
 
-        public override void SetLanguage(string language)
+        public override void ApplyColor()
+        {
+            base.ApplyColor();
+            colorPanel.BackColor = Settings.Default.Color;
+        }
+
+        public override void ApplyLocalization()
         {
             int holydayTypeIndex = holydayTypeComboBox.SelectedIndex;
 
             holydayTypeComboBox.Items.Clear();
-            holydayTypeComboBox.Items.AddRange(new string[3] { Program.Translate("Primary"), Program.Translate("Secondary"), Program.Translate("This year") });
+            holydayTypeComboBox.Items.AddRange(new string[3] { Localization.Translate("Primary"), Localization.Translate("Secondary"), Localization.Translate("This year") });
             holydayTypeComboBox.SelectedIndex = holydayTypeIndex;
 
-            foreach (var control in LocalizationControls)
-                control.Text = Program.Translate(control.AccessibleName);
+            base.ApplyLocalization();
 
             ((Main)Form.ActiveForm).SetLanguage();
         }
@@ -115,7 +100,7 @@ namespace Organizer
         {
             UpdateAddHolydayButtonStatus();
 
-            if (holydayTypeComboBox.Text != Program.Translate("Primary"))
+            if (holydayTypeComboBox.Text != Localization.Translate("Primary"))
                 holydayFinishPicker.MinDate = DateTime.Parse(holydayStartPicker.Text);
         }
 
@@ -130,7 +115,7 @@ namespace Organizer
         {
             UpdateAddHolydayButtonStatus();
 
-            if (holydayTypeComboBox.Text == Program.Translate("Primary"))
+            if (holydayTypeComboBox.Text == Localization.Translate("Primary"))
             {
                 holydayStartPicker.MaxDate = new DateTime(2090, 12, 31);
 
@@ -173,7 +158,7 @@ namespace Organizer
             else
                 addHolyday.AccessibleName = "Remove";
 
-            addHolyday.Text = Program.Translate(addHolyday.AccessibleName);
+            addHolyday.Text = Localization.Translate(addHolyday.AccessibleName);
         }
 
         private string HolydayToAdd()
@@ -211,25 +196,15 @@ namespace Organizer
         {
             colorDialog.ShowDialog();
 
-            SetColor(colorDialog.Color);
-        }
-
-        private void AddLanguage_Click(object sender, EventArgs e)
-        {
-            /*File.AppendAllText("Translations\\Languages.txt", Environment.NewLine + languageName.Text, Encoding.UTF8);
-            
-            File.WriteAllLines("Translations\\" + languageName.Text + ".txt", File.ReadAllLines("Translations\\" + Program.Language + ".txt", Encoding.UTF8));
-
-            Head.Languages.Add(languageName.Text);
-
-            MessageBox.Show(Head.Translations[Program.Language]["The language file"] + "Translations\\" + languageName.Text + ".txt");
-
-            languageName.Text = "";*/
+            Settings.Default.Color = colorDialog.Color;
+            ApplyColor();
+            ((Main)Form.ActiveForm).ApplyColor();
         }
 
         private void ThemeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            SetTheme(((CheckBox)sender).Checked);
+            Settings.Default.DarkTheme = ((CheckBox)sender).Checked;
+            ApplyTheme();
         }
     }
 }

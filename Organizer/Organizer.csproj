@@ -72,6 +72,7 @@
     <Compile Include="UserControls\UnknownUserControl.Designer.cs">
       <DependentUpon>UnknownUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Localization.cs" />
     <Compile Include="Utils\UserControlGG.cs">
       <SubType>UserControl</SubType>
     </Compile>

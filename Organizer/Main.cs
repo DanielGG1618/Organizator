@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Media;
+using Organizer.Properties;
 
 namespace Organizer
 {
@@ -58,7 +59,7 @@ namespace Organizer
             userControls.Add("unknown", unknown);
 
             FormClosing += schelude.SaveFiles;
-            FormClosing += options.SaveOptions;
+            FormClosing += options.SaveSettings;
 
             InitializeComponent();
         }
@@ -67,8 +68,8 @@ namespace Organizer
         {
             LocalizationControls.Add(this);
 
-            SetColor();
-            SetTheme(Program.DarkTheme);
+            ApplyColor();
+            SetTheme(Settings.Default.DarkTheme);
             SetLanguage();
 
             mainPanel.Controls.Clear();
@@ -167,7 +168,7 @@ namespace Organizer
                 Schelude[i] = list.ToArray();
 
                 /*for(int j = 0; j < list.Count; j++)
-                    Program.Insert("INSERT INTO Schelude (`DayOfWeek`, `Num`, `Lesson`, `Class`) " +
+                    SQL.Insert("INSERT INTO Schelude (`DayOfWeek`, `Num`, `Lesson`, `Class`) " +
                         $"VALUES ('{i}', '{j + 1}', '{list[j]}', '{"25;9В"}')");*/
             }
         }
@@ -176,15 +177,15 @@ namespace Organizer
         {
             foreach (var control in LocalizationControls)
                 if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
-                    control.Text = Program.Translate(control.AccessibleName);
+                    control.Text = Localization.Translate(control.AccessibleName);
 
             for (int i = 0; i < schelude.LessonsCount; i++)
                 schelude.WorkRefresh(i);
         }
 
-        public void SetColor()
+        public void ApplyColor()
         {
-            ForeColor = Program.Color;
+            ForeColor = Settings.Default.Color;
         }
 
         public void SetTheme(bool darkTheme)
@@ -194,12 +195,12 @@ namespace Organizer
 
         private void InDevelop()
         {
-            MessageBox.Show(Program.Translate("In the develop"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(Localization.Translate("In the develop"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private static void NoEditMode()
         {
-            MessageBox.Show(Program.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(Localization.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -219,9 +220,9 @@ namespace Organizer
 
             UserControlGG userControl = userControls[e.Node.Tag.ToString()];
 
-            userControl.SetColor(Program.Color);
-            userControl.SetTheme(Program.DarkTheme);
-            userControl.SetLanguage(Program.Language);
+            userControl.ApplyColor();
+            userControl.ApplyTheme();
+            userControl.ApplyLocalization();
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(userControl);
@@ -267,7 +268,7 @@ namespace Organizer
 
         private void SqlUpdater_Tick(object sender, EventArgs e)
         {
-            _ = Program.Select("SELECT IsAdmin FROM Users Where Login = 'Admin'");
+            _ = SQL.Select("SELECT IsAdmin FROM Users Where Login = 'Admin'");
         }
     }
 }

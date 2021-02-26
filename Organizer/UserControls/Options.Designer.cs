@@ -42,9 +42,6 @@
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.holyLabel = new System.Windows.Forms.Label();
             this.languagePict = new System.Windows.Forms.PictureBox();
-            this.addLanguage = new System.Windows.Forms.Button();
-            this.languageName = new System.Windows.Forms.TextBox();
-            this.languageNameLabel = new System.Windows.Forms.Label();
             this.themeCheckBox = new System.Windows.Forms.CheckBox();
             this.addHolydayPanel.SuspendLayout();
             this.pickersPanel.SuspendLayout();
@@ -241,45 +238,6 @@
             this.languagePict.TabIndex = 1;
             this.languagePict.TabStop = false;
             // 
-            // addLanguage
-            // 
-            this.addLanguage.AccessibleDescription = "";
-            this.addLanguage.AccessibleName = "Add language";
-            this.addLanguage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.addLanguage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.addLanguage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addLanguage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.addLanguage.Location = new System.Drawing.Point(203, 99);
-            this.addLanguage.Margin = new System.Windows.Forms.Padding(10);
-            this.addLanguage.Name = "addLanguage";
-            this.addLanguage.Size = new System.Drawing.Size(169, 58);
-            this.addLanguage.TabIndex = 4;
-            this.addLanguage.Text = "Добавить язык";
-            this.addLanguage.UseVisualStyleBackColor = false;
-            this.addLanguage.Click += new System.EventHandler(this.AddLanguage_Click);
-            // 
-            // languageName
-            // 
-            this.languageName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            this.languageName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.languageName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.languageName.ForeColor = System.Drawing.Color.White;
-            this.languageName.Location = new System.Drawing.Point(15, 170);
-            this.languageName.Name = "languageName";
-            this.languageName.Size = new System.Drawing.Size(358, 34);
-            this.languageName.TabIndex = 15;
-            // 
-            // languageNameLabel
-            // 
-            this.languageNameLabel.AccessibleName = "Language name";
-            this.languageNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.languageNameLabel.Location = new System.Drawing.Point(15, 99);
-            this.languageNameLabel.Name = "languageNameLabel";
-            this.languageNameLabel.Size = new System.Drawing.Size(175, 58);
-            this.languageNameLabel.TabIndex = 16;
-            this.languageNameLabel.Text = "Название языка";
-            this.languageNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // themeCheckBox
             // 
             this.themeCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -298,12 +256,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.Controls.Add(this.themeCheckBox);
-            this.Controls.Add(this.languageNameLabel);
-            this.Controls.Add(this.languageName);
             this.Controls.Add(this.holyLabel);
             this.Controls.Add(this.colorLabel);
             this.Controls.Add(this.colorPanel);
-            this.Controls.Add(this.addLanguage);
             this.Controls.Add(this.addHolydayPanel);
             this.Controls.Add(this.languagePict);
             this.Controls.Add(this.languageSelector);
@@ -336,9 +291,6 @@
         private System.Windows.Forms.Label colorLabel;
         private System.Windows.Forms.ColorDialog colorDialog;
         private System.Windows.Forms.Label holyLabel;
-        private System.Windows.Forms.Button addLanguage;
-        private System.Windows.Forms.TextBox languageName;
-        private System.Windows.Forms.Label languageNameLabel;
         private System.Windows.Forms.CheckBox themeCheckBox;
     }
 }

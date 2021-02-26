@@ -41,14 +41,14 @@ namespace Organizer
         private void SetLanguage(string language)
         {
             foreach (var control in LocalizationControls)
-                control.Text = Program.Translate(control.AccessibleName);
+                control.Text = Localization.Translate(control.AccessibleName);
         }
 
         private void SetDefaultResult()
         {
             resultPanel.Controls.Clear();
 
-            resultPanel.Controls.Add(ResultLabelSample(Program.Translate(Homework["Default"][0]), "Default"));
+            resultPanel.Controls.Add(ResultLabelSample(Localization.Translate(Homework["Default"][0]), "Default"));
         }
 
         private void RefreshResult()
@@ -160,7 +160,7 @@ namespace Organizer
 
             foreach (var type in Types)
                 if (type.Key != "Default")
-                    if (typeSelector.Text == Program.Translate(type.Key))
+                    if (typeSelector.Text == Localization.Translate(type.Key))
                         typeSelector.AccessibleName = type.Key;
 
             if (!removeMode || b)
@@ -182,7 +182,7 @@ namespace Organizer
             {
                 typeSelector.SelectedIndex = lastSelectedType;
 
-                MessageBox.Show(Program.Translate("This task has already been added"),
+                MessageBox.Show(Localization.Translate("This task has already been added"),
                                 "",
                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 b = false;
@@ -221,7 +221,7 @@ namespace Organizer
         {
             Label label = (Label)sender;
 
-            if (label.Text == Program.Translate(Homework["Default"][0]))
+            if (label.Text == Localization.Translate(Homework["Default"][0]))
                 return;
 
             SetSelectedLabel(label);
@@ -231,7 +231,7 @@ namespace Organizer
         {
             Label label = (Label)sender;
 
-            if (label.Text == Program.Translate(Homework["Default"][0]))
+            if (label.Text == Localization.Translate(Homework["Default"][0]))
                 return;
 
             Cursor.Current = Cursors.Hand;
@@ -248,7 +248,7 @@ namespace Organizer
 
                 selectedLabel = label;
 
-                typeSelector.Text = Program.Translate(label.AccessibleName);
+                typeSelector.Text = Localization.Translate(label.AccessibleName);
 
                 addTextBox.Text = selectedLabel.Text;
 
@@ -282,8 +282,8 @@ namespace Organizer
             {
                 if (string.IsNullOrWhiteSpace(addTextBox.Text))
                 {
-                    MessageBox.Show(Program.Translate("Enter the task"),
-                                    Program.Translate("Empty task"),
+                    MessageBox.Show(Localization.Translate("Enter the task"),
+                                    Localization.Translate("Empty task"),
                                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
@@ -294,7 +294,7 @@ namespace Organizer
                     {
                         if (addTextBox.Text == str && typeSelector.AccessibleName == strList.Key)
                         {
-                            MessageBox.Show(Program.Translate("This task has already been added"),
+                            MessageBox.Show(Localization.Translate("This task has already been added"),
                                             "",
                                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;

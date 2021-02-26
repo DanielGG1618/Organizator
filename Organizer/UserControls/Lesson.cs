@@ -82,7 +82,7 @@ namespace Organizer
 
             if (TitleLabel == null) TitleLabel = new Label();
             TitleLabel.AccessibleName = Title;
-            TitleLabel.Text = Program.Translate(TitleLabel.AccessibleName);
+            TitleLabel.Text = Localization.Translate(TitleLabel.AccessibleName);
 
             if (WorkLabel == null) WorkLabel = new Label();
             WorkLabel.Text = lesson.Homework;
@@ -106,7 +106,7 @@ namespace Organizer
             Title = title;
 
             TitleLabel.AccessibleName = Title;
-            TitleLabel.Text = Program.Translate(Title);
+            TitleLabel.Text = Localization.Translate(Title);
 
             try { defaultHomework = Main.LessonsDefaultWork[Title]; }
             catch { defaultHomework = "Isn*t set"; }
@@ -115,7 +115,7 @@ namespace Organizer
             {
                 WorkLabel.AccessibleName = defaultHomework;
 
-                WorkLabel.Text = Program.Translate(WorkLabel.AccessibleName);
+                WorkLabel.Text = Localization.Translate(WorkLabel.AccessibleName);
             }
 
             else

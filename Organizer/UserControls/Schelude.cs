@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Organizer.Properties;
 
 namespace Organizer
 {
@@ -78,8 +79,8 @@ namespace Organizer
 
             LessonsRefresh();
 
-            SetColor(Program.Color);
-            SetTheme(Program.DarkTheme);
+            ApplyColor();
+            ApplyTheme();
         }
 
         public void DateMinusPlus()
@@ -138,7 +139,7 @@ namespace Organizer
 
             else
             {
-                YesNoCancelDialog dialog = new YesNoCancelDialog(Program.Translate("Edit mode"));
+                YesNoCancelDialog dialog = new YesNoCancelDialog(Localization.Translate("Edit mode"));
 
                 DialogResult result = dialog.ShowDialog();
 
@@ -163,14 +164,14 @@ namespace Organizer
 
                         try
                         {
-                            Program.Insert($"INSERT INTO Lessons (Homework, Title, Num, Date, Class) VALUES " +
+                            SQL.Insert($"INSERT INTO Lessons (Homework, Title, Num, Date, Class) VALUES " +
                                 $"('{lesson.Homework.ToString()}', '{lesson.Title}', '{(i + 1).ToString()}', " +
                                 $"'{date.ToString("yyyy-MM-dd")}', '25;9В')");
                         }
                         
                         catch
                         {
-                            Program.Insert($"UPDATE Lessons SET Homework = '{lesson.Homework}', Title = '{lesson.Title}' " +
+                            SQL.Insert($"UPDATE Lessons SET Homework = '{lesson.Homework}', Title = '{lesson.Title}' " +
                                 $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'");
                         }
                     }
@@ -255,23 +256,23 @@ namespace Organizer
 
         private void LessonsRefresh()
         {
-            LessonsCount = int.Parse(Program.Select("SELECT COUNT(Title) FROM Lessons " +
+            LessonsCount = int.Parse(SQL.Select("SELECT COUNT(Title) FROM Lessons " +
                 $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'")[0]);
 
             if (LessonsCount == 0)
             {
-                LessonsCount = int.Parse(Program.Select("SELECT COUNT(Lesson) FROM Schelude " +
+                LessonsCount = int.Parse(SQL.Select("SELECT COUNT(Lesson) FROM Schelude " +
                         $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Class = '{"25;9В"}'")[0]);
             }
 
             for (int i = 0; i < LessonsCount; i++)
             {
-                Lessons[i].NumLabel.ForeColor = Program.Color;
+                Lessons[i].NumLabel.ForeColor = Settings.Default.Color;
                 Lessons[i].DoneCheckBox.Visible = true;
 
                 try
                 {
-                    List<string> titleHomework = Program.Select("SELECT Title, Homework FROM Lessons " +
+                    List<string> titleHomework = SQL.Select("SELECT Title, Homework FROM Lessons " +
                         $"WHERE Num = '{i + 1}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'");
 
                     Lessons[i].SetTitle(titleHomework[0]);
@@ -281,10 +282,10 @@ namespace Organizer
                 {
                     MessageBox.Show(((int)date.DayOfWeek).ToString());
 
-                    string title = Program.Select("SELECT Lesson FROM Schelude " +
+                    string title = SQL.Select("SELECT Lesson FROM Schelude " +
                         $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Num = '{i + 1}' AND Class = '{"25;9В"}'")[0];
 
-                    Program.Insert("INSERT INTO Lessons (Title, Homework, Num, Date, Class) " + 
+                    SQL.Insert("INSERT INTO Lessons (Title, Homework, Num, Date, Class) " + 
                         $"VALUES ('{title}', 'Default', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{"25;9В"}')");
 
                     Lessons[i].SetTitle(title);
@@ -299,7 +300,7 @@ namespace Organizer
             for (int i = Main.MaxLessonsCount - 1; i >= LessonsCount; i--)
                 Lessons[i].TurnOff();
 
-            dateText.Text = $"{date.ToString("dd.MM.yyyy")} - {Program.Translate(date.DayOfWeek.ToString())}";
+            dateText.Text = $"{date.ToString("dd.MM.yyyy")} - {Localization.Translate(date.DayOfWeek.ToString())}";
         }
 
         private void CopyScreen_Click(object sender, EventArgs e)
@@ -319,13 +320,13 @@ namespace Organizer
             dateText.Font = new Font(dateText.Font.FontFamily, 12);
         }
 
-        public override void SetColor(Color color)
+        public override void ApplyColor()
         {
-            ForeColor = color;
+            base.ApplyColor();
 
             foreach (var lesson in Lessons)
                 if (lesson.Enabled)
-                    lesson.NumLabel.ForeColor = color;
+                    lesson.NumLabel.ForeColor = Settings.Default.Color;
         }
 
         private void LoadDays()
@@ -355,7 +356,7 @@ namespace Organizer
 
         private static void NoEditMode()
         {
-            MessageBox.Show(Program.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show(Localization.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         public void SaveFiles(object sender, FormClosingEventArgs e)

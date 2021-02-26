@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Organizer.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,8 +26,8 @@ namespace Organizer
         {
             LocalizationControls.AddRange(new Control[] { yes, no, cancel, saveChanges });
 
-            SetColor(Program.Color);
-            SetLanguage(Program.Language);
+            SetColor(Settings.Default.Color);
+            SetLanguage(Settings.Default.Language);
         }
 
         private void SetColor(Color color)
@@ -37,7 +38,7 @@ namespace Organizer
         private void SetLanguage(string language)
         {
             foreach (var control in LocalizationControls)
-                control.Text = Program.Translate(control.AccessibleName);
+                control.Text = Localization.Translate(control.AccessibleName);
         }
     }
 }
