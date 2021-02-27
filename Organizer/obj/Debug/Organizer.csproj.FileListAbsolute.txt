@@ -76,5 +76,5 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Opt
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\MySql.Data.dll
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.CopyComplete
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Main.resources
-C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.UnknownUserControl.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Lesson.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.AdminPanel.resources

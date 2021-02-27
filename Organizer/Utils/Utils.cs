@@ -20,6 +20,16 @@ namespace Organizer
 
             return bmp;
         }
+
+        public static void InDevelop()
+        {
+            MessageBox.Show(Localization.Translate("In the develop"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        public static void NoEditMode()
+        {
+            MessageBox.Show(Localization.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
     }
 
     static class SQL

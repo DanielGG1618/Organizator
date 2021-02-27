@@ -33,7 +33,7 @@ namespace Organizer
         private UserControlGG activeUserControl;
         private Schelude schelude;
         private Options options;
-        private UnknownUserControl unknown;
+        private AdminPanel adminPanel;
         private Dictionary<string, UserControlGG> userControls = new Dictionary<string, UserControlGG>();
 
         private List<UserControlGG> navigation = new List<UserControlGG>();
@@ -50,13 +50,16 @@ namespace Organizer
             schelude = new Schelude();
             options = new Options
             {
-                Location = new Point(175, 24)
+                Location = new Point(175, 100)
             };
-            unknown = new UnknownUserControl();
+            adminPanel = new AdminPanel
+            {
+                Location = new Point(175, 100)
+            };
 
             userControls.Add("schelude", schelude);
             userControls.Add("options", options);
-            userControls.Add("unknown", unknown);
+            userControls.Add("adminPanel", adminPanel);
 
             FormClosing += schelude.SaveFiles;
             FormClosing += options.SaveSettings;
@@ -166,10 +169,6 @@ namespace Organizer
                 list.RemoveAt(0);
 
                 Schelude[i] = list.ToArray();
-
-                /*for(int j = 0; j < list.Count; j++)
-                    SQL.Insert("INSERT INTO Schelude (`DayOfWeek`, `Num`, `Lesson`, `Class`) " +
-                        $"VALUES ('{i}', '{j + 1}', '{list[j]}', '{"25;9В"}')");*/
             }
         }
 
@@ -193,21 +192,11 @@ namespace Organizer
             BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
         }
 
-        private void InDevelop()
-        {
-            MessageBox.Show(Localization.Translate("In the develop"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
-        private static void NoEditMode()
-        {
-            MessageBox.Show(Localization.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
         private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (schelude.EditMode)
             {
-                NoEditMode();
+                Utils.NoEditMode();
                 return;
             }
 

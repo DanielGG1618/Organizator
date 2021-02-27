@@ -36,5 +36,12 @@ namespace Organizer
                 if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
                     control.Text = Localization.Translate(control.AccessibleName);
         }
+
+        public void ApplyAll()
+        {
+            ApplyColor();
+            ApplyTheme();
+            ApplyLocalization();
+        }
     }
 }

@@ -66,11 +66,11 @@
     <Compile Include="UserControls\Schelude.Designer.cs">
       <DependentUpon>Schelude.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UnknownUserControl.cs">
+    <Compile Include="UserControls\AdminPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\UnknownUserControl.Designer.cs">
-      <DependentUpon>UnknownUserControl.cs</DependentUpon>
+    <Compile Include="UserControls\AdminPanel.Designer.cs">
+      <DependentUpon>AdminPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\Localization.cs" />
     <Compile Include="Utils\UserControlGG.cs">
@@ -126,8 +126,8 @@
     <EmbeddedResource Include="UserControls\Schelude.resx">
       <DependentUpon>Schelude.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UnknownUserControl.resx">
-      <DependentUpon>UnknownUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\AdminPanel.resx">
+      <DependentUpon>AdminPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utils\UserControlGG.resx">
       <DependentUpon>UserControlGG.cs</DependentUpon>

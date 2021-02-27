@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Рассписание");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Настройки");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Неизвестный");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Админка");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.mainPanel = new System.Windows.Forms.Panel();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -65,9 +65,9 @@
             treeNode2.Name = "options";
             treeNode2.Tag = "options";
             treeNode2.Text = "Настройки";
-            treeNode3.Name = "unknown";
-            treeNode3.Tag = "unknown";
-            treeNode3.Text = "Неизвестный";
+            treeNode3.Name = "adminPanel";
+            treeNode3.Tag = "adminPanel";
+            treeNode3.Text = "Админка";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
