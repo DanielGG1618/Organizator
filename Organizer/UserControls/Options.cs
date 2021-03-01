@@ -57,7 +57,7 @@ namespace Organizer
         {
             base.ApplyLocalization();
 
-            ((Main)Form.ActiveForm).SetLanguage();
+            ((Main)Form.ActiveForm).ApplyLocalization();
         }
 
         private void ColorPanel_Click(object sender, EventArgs e)

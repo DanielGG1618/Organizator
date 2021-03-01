@@ -54,7 +54,7 @@ namespace Organizer
             };
             adminPanel = new AdminPanel
             {
-                Location = new Point(175, 100)
+                Location = new Point(0, 100)
             };
 
             userControls.Add("schelude", schelude);
@@ -69,11 +69,11 @@ namespace Organizer
 
         private void Head_Load(object sender, EventArgs e)
         {
-            LocalizationControls.Add(this);
+            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton });
 
             ApplyColor();
-            SetTheme(Settings.Default.DarkTheme);
-            SetLanguage();
+            ApplyTheme();
+            ApplyLocalization();
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(schelude);
@@ -81,6 +81,8 @@ namespace Organizer
             activeUserControl = schelude;
 
             navigation.Add(schelude);
+
+            TryLogIn("Admin", "Admin");
         }
 
         private void LoadFiles()
@@ -172,7 +174,7 @@ namespace Organizer
             }
         }
 
-        public void SetLanguage()
+        public void ApplyLocalization()
         {
             foreach (var control in LocalizationControls)
                 if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
@@ -187,43 +189,39 @@ namespace Organizer
             ForeColor = Settings.Default.Color;
         }
 
-        public void SetTheme(bool darkTheme)
+        public void ApplyTheme()
         {
-            BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
+            BackColor = Settings.Default.DarkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
         }
 
-        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TryLogIn(string login, string password)
         {
-            if (schelude.EditMode)
+            List<string> user = SQL.Select($"SELECT Class, Role FROM Users WHERE `Login` = '{login}' AND `Password` = '{password}'");
+
+            if (user.Count == 0)
+                MessageBox.Show(Localization.Translate("Login or password is wrong"));
+
+            else
             {
-                Utils.NoEditMode();
-                return;
-            }
+                Settings.Default.Login = login;
+                Settings.Default.Role = (Roles)Enum.Parse(typeof(Roles), user[1]);
 
-            if (activeUserControl == options)
-            {
-                LoadHolydays();
+                switch(Settings.Default.Role)
+                {
+                    case Roles.Admin:
+                        adminButton.Visible = true;
+                        break;
 
-                schelude.DateMinusPlus();
-            }
+                    case Roles.Moderator:
+                        adminButton.Visible = false;
+                        break;
 
-            UserControlGG userControl = userControls[e.Node.Tag.ToString()];
+                    case Roles.Regular:
+                        adminButton.Visible = false;
+                        break;
+                }
 
-            userControl.ApplyColor();
-            userControl.ApplyTheme();
-            userControl.ApplyLocalization();
-
-            mainPanel.Controls.Clear();
-            mainPanel.Controls.Add(userControl);
-            activeUserControl = userControl;
-
-            if (navigation[navigationPos] != userControl)
-            {
-                if(navigationPos < navigation.Count - 2)
-                    navigation.RemoveRange(navigationPos, navigation.Count - navigationPos);
-
-                navigation.Add(userControl);
-                navigationPos++;
+                MessageBox.Show(Localization.Translate("Succesful login"));
             }
         }
 
@@ -257,7 +255,64 @@ namespace Organizer
 
         private void SqlUpdater_Tick(object sender, EventArgs e)
         {
-            _ = SQL.Select("SELECT IsAdmin FROM Users Where Login = 'Admin'");
+            _ = SQL.Select("SELECT Role FROM Users Where Login = 'Admin'");
+        }
+
+        private void ScheludeButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            if (activeUserControl == options)
+            {
+                LoadHolydays();
+                schelude.DateMinusPlus();
+            }
+
+            SetPanel(userControls["schelude"]);
+        }
+
+        private void OptionsButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            SetPanel(userControls["options"]);
+        }
+
+        private void AdminButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            SetPanel(userControls["adminPanel"]);
+        }
+
+        private void SetPanel(UserControlGG userControl)
+        {
+            userControl.ApplyAll();
+
+            mainPanel.Controls.Clear();
+            mainPanel.Controls.Add(userControl);
+            activeUserControl = userControl;
+
+            if (navigation[navigationPos] != userControl)
+            {
+                if (navigationPos < navigation.Count - 2)
+                    navigation.RemoveRange(navigationPos, navigation.Count - navigationPos);
+
+                navigation.Add(userControl);
+                navigationPos++;
+            }
         }
     }
 }

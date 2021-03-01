@@ -82,4 +82,6 @@ namespace Organizer
             return day;
         }
     }
+
+    public enum Roles { NotLogedIn, Regular, Moderator, Admin }
 }

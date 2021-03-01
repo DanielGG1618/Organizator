@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Language" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Русский</Value>
     </Setting>
     <Setting Name="Color" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">White</Value>
@@ -11,8 +11,8 @@
     <Setting Name="Login" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="IsAdmin" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="Role" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Regular</Value>
     </Setting>
     <Setting Name="DarkTheme" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

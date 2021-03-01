@@ -13,7 +13,8 @@ namespace Organizer
 
         public static string Translate(string key)
         {
-            return translations[Settings.Default.Language][key];
+            try { return translations[Settings.Default.Language][key]; }
+            catch { return "ошибка перевода, пж, сообщите"; }
         }
 
         public static void Load()

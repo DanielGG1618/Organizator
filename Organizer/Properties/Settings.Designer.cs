@@ -25,7 +25,7 @@ namespace Organizer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Русский")]
         public string Language {
             get {
                 return ((string)(this["Language"]));
@@ -61,13 +61,13 @@ namespace Organizer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsAdmin {
+        [global::System.Configuration.DefaultSettingValueAttribute("Regular")]
+        public Roles Role {
             get {
-                return ((bool)(this["IsAdmin"]));
+                return ((Roles)(this["Role"]));
             }
             set {
-                this["IsAdmin"] = value;
+                this["Role"] = value;
             }
         }
         
