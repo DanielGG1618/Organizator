@@ -36,11 +36,11 @@ namespace Organizer
     {
         public static MySqlConnection Connection;
 
-        public static List<string> Select(string Text, Dictionary<string, string> parameters = null)
+        public static List<string> Select(string text, Dictionary<string, string> parameters = null)
         {
             List<string> results = new List<string>();
 
-            MySqlCommand command = new MySqlCommand(Text, Connection);
+            MySqlCommand command = new MySqlCommand(text, Connection);
 
             if (parameters != null)
                 foreach (var pair in parameters)

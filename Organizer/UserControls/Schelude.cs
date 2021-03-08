@@ -165,13 +165,15 @@ namespace Organizer
                         try
                         {
                             SQL.Insert($"INSERT INTO Lessons (Homework, Title, Num, Date, Class) VALUES " +
-                                $"('{lesson.Homework.ToString()}', '{lesson.Title}', '{(i + 1).ToString()}', " +
+                                $"('{lesson.Homework.ToString().Replace("'"[0], '"').Replace('`', '"')}', " +
+                                $"'{lesson.Title}', '{(i + 1).ToString()}', " +
                                 $"'{date.ToString("yyyy-MM-dd")}', '25;9В')");
                         }
                         
                         catch
                         {
-                            SQL.Insert($"UPDATE Lessons SET Homework = '{lesson.Homework}', Title = '{lesson.Title}' " +
+                            SQL.Insert($"UPDATE Lessons SET Homework = '{lesson.Homework.Replace("'"[0], '"').Replace('`', '"')}', " +
+                                $"Title = '{lesson.Title}' " +
                                 $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'");
                         }
                     }
@@ -228,7 +230,7 @@ namespace Organizer
             LessonSelectForm form = new LessonSelectForm(num);
 
             if (form.ShowDialog() == DialogResult.OK)
-                Lessons[num - 1].SetTitle(form.Lesson);
+                    Lessons[num - 1].SetTitle(form.Lesson);
         }
 
         private void TitleMouseMove(object sender, EventArgs e)
@@ -280,8 +282,6 @@ namespace Organizer
                 }
                 catch
                 {
-                    MessageBox.Show(((int)date.DayOfWeek).ToString());
-
                     string title = SQL.Select("SELECT Lesson FROM Schelude " +
                         $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Num = '{i + 1}' AND Class = '{"25;9В"}'")[0];
 

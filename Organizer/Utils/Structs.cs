@@ -40,16 +40,26 @@ namespace Organizer
 
         public bool IsWorking()
         {
-            return Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
+            bool isWorking = Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
                     !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
-
-                    (!Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
-                    (Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
-                    Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
 
                     Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
 
                     Main.ThisYearHolydays.Contains<DateTime>(Date));
+
+            if (isWorking)
+                isWorking = (!Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
+                     (Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
+                     Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+
+                     Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
+                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                    Main.ThisYearHolydays.Contains<DateTime>(Date));
+
+            return isWorking;
         }
 
         public static string Totxt(Day day)

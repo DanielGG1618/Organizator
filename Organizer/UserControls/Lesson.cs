@@ -105,21 +105,27 @@ namespace Organizer
         {
             Title = title;
 
-            TitleLabel.AccessibleName = Title;
-            TitleLabel.Text = Localization.Translate(Title);
-
-            try { defaultHomework = Main.LessonsDefaultWork[Title]; }
-            catch { defaultHomework = "Isn*t set"; }
-
-            if (Homework == "Default")
-            {
-                WorkLabel.AccessibleName = defaultHomework;
-
-                WorkLabel.Text = Localization.Translate(WorkLabel.AccessibleName);
-            }
+            if (Title == "-")
+                TurnOff();
 
             else
-                WorkLabel.AccessibleName = "";
+            {
+                TitleLabel.AccessibleName = Title;
+                TitleLabel.Text = Localization.Translate(Title);
+
+                try { defaultHomework = Main.LessonsDefaultWork[Title]; }
+                catch { defaultHomework = "Isn*t set"; }
+
+                if (Homework == "Default")
+                {
+                    WorkLabel.AccessibleName = defaultHomework;
+
+                    WorkLabel.Text = Localization.Translate(WorkLabel.AccessibleName);
+                }
+
+                else
+                    WorkLabel.AccessibleName = "";
+            }
         }
 
         public void SetDone(bool done)
