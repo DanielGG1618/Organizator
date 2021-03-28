@@ -61,18 +61,6 @@ namespace Organizer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Regular")]
-        public Roles Role {
-            get {
-                return ((Roles)(this["Role"]));
-            }
-            set {
-                this["Role"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool DarkTheme {
             get {
@@ -80,6 +68,30 @@ namespace Organizer.Properties {
             }
             set {
                 this["DarkTheme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25;9В")]
+        public string Class {
+            get {
+                return ((string)(this["Class"]));
+            }
+            set {
+                this["Class"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Regular")]
+        public Roles Role {
+            get {
+                return ((Roles)(this["Role"]));
+            }
+            set {
+                this["Role"] = value;
             }
         }
     }

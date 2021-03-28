@@ -253,6 +253,7 @@
             this.addTranslationKeyGridView.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.addTranslationKeyGridView.Size = new System.Drawing.Size(750, 188);
             this.addTranslationKeyGridView.TabIndex = 18;
+            this.addTranslationKeyGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AddTranslationKeyGridView_CellClick);
             // 
             // KeyColumn
             // 
@@ -297,11 +298,11 @@
             // AddButton
             // 
             this.AddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AddButton.HeaderText = "";
+            this.AddButton.HeaderText = "Add";
             this.AddButton.MinimumWidth = 6;
             this.AddButton.Name = "AddButton";
             this.AddButton.Text = "+";
-            this.AddButton.UseColumnTextForButtonValue = true;
+            this.AddButton.ToolTipText = "+";
             this.AddButton.Width = 59;
             // 
             // AdminPanel

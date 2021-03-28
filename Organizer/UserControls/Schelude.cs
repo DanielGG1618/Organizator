@@ -23,6 +23,7 @@ namespace Organizer
         public bool EditMode;
 
         private Lesson[] editModeLessonsBackup;
+        private string[] attachments;
         private DateTime date, firstDay, lastDay;
 
         public Schelude()
@@ -44,9 +45,13 @@ namespace Organizer
             }
             while (!Days[date].IsWorking());
 
+            attachments = new string[Main.MaxLessonsCount];
             editModeLessonsBackup = new Lesson[Main.MaxLessonsCount];
             for (int i = 0; i < Main.MaxLessonsCount; i++)
+            {
+                attachments[i] = "";
                 editModeLessonsBackup[i] = new Lesson(i + 1);
+            }
 
             InitializeComponent();
         }
@@ -66,7 +71,7 @@ namespace Organizer
                 lesson.TitleLabel.Click += TitleClick;
                 lesson.TitleLabel.MouseMove += TitleMouseMove;
 
-                lesson.AddWorkButton.Click += AddWorkButtonClick;
+                lesson.AddAttachmentButton.Click += AddAttachmentClick;
 
                 lesson.DoneCheckBox.CheckStateChanged += DoneCheckedChanged;
 
@@ -167,17 +172,33 @@ namespace Organizer
                             SQL.Insert($"INSERT INTO Lessons (Homework, Title, Num, Date, Class) VALUES " +
                                 $"('{lesson.Homework.ToString().Replace("'"[0], '"').Replace('`', '"')}', " +
                                 $"'{lesson.Title}', '{(i + 1).ToString()}', " +
-                                $"'{date.ToString("yyyy-MM-dd")}', '25;9В')");
+                                $"'{date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')");
                         }
                         
                         catch
                         {
-                            SQL.Insert($"UPDATE Lessons SET Homework = '{lesson.Homework.Replace("'"[0], '"').Replace('`', '"')}', " +
+                            SQL.Insert($"UPDATE Lessons SET " +
+                                $"Homework = '{lesson.Homework.Replace("'"[0], '"').Replace('`', '"')}', " +
                                 $"Title = '{lesson.Title}' " +
-                                $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'");
+                                $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND " +
+                                $"Class = '{Settings.Default.Class}'");
+                        }
+
+                        if (attachments[i] != "")
+                        {
+                            try
+                            {
+                                SQL.UpdateFile($"UPDATE Lessons SET Attachments = @File " +
+                                    $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND " +
+                                    $"Class = '{Settings.Default.Class}'", attachments[i]);
+                            }
+                            catch (Exception exeption)
+                            {
+                                MessageBox.Show(exeption.Message, Localization.Translate("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
-
+                        
                     LessonsRefresh();
                 }
             }
@@ -186,7 +207,7 @@ namespace Organizer
 
             for (int i = 0; i < LessonsCount; i++)
             {
-                Lessons[i].AddWorkButton.Visible = EditMode;
+                Lessons[i].AddAttachmentButton.Visible = EditMode;
                 Lessons[i].HomeworkTextBox.Visible = EditMode;
             }
         }
@@ -200,18 +221,18 @@ namespace Organizer
                 DateMinusButton_Click(sender, e);
         }
 
-        private void AddWorkButtonClick(object sender, EventArgs e)
+        private void AddAttachmentClick(object sender, EventArgs e)
         {
-            /*int num = Convert.ToInt32(((Button)sender).Tag);
+            int num = Convert.ToInt32(((Button)sender).Tag);
 
-            WorkAddForm form = new WorkAddForm(num);
+            DialogResult result = openAttacmentDialog.ShowDialog();
 
-            if (form.ShowDialog() == DialogResult.OK)
+            if (result == DialogResult.OK)
             {
-                Lessons[num - 1].Homework = form.Homework;
-
-                WorkRefresh(num - 1);
-            }*/
+                attachments[num - 1] = openAttacmentDialog.FileName;
+                Lessons[num - 1].Attachment = Image.FromFile(attachments[num - 1]);
+                Lessons[num - 1].UpdateAttachmentLink();
+            }
         }
 
         private void DoneCheckedChanged(object sender, EventArgs e)
@@ -259,41 +280,45 @@ namespace Organizer
         private void LessonsRefresh()
         {
             LessonsCount = int.Parse(SQL.Select("SELECT COUNT(Title) FROM Lessons " +
-                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'")[0]);
+                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'")[0]);
 
             if (LessonsCount == 0)
             {
                 LessonsCount = int.Parse(SQL.Select("SELECT COUNT(Lesson) FROM Schelude " +
-                        $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Class = '{"25;9В"}'")[0]);
+                        $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Class = '{Settings.Default.Class}'")[0]);
             }
 
             for (int i = 0; i < LessonsCount; i++)
             {
                 Lessons[i].NumLabel.ForeColor = Settings.Default.Color;
                 Lessons[i].DoneCheckBox.Visible = true;
-
+                
                 try
                 {
                     List<string> titleHomework = SQL.Select("SELECT Title, Homework FROM Lessons " +
-                        $"WHERE Num = '{i + 1}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{"25;9В"}'");
+                        $"WHERE Num = '{i + 1}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'");
 
                     Lessons[i].SetTitle(titleHomework[0]);
                     Lessons[i].Homework = titleHomework[1];
+
+                    Lessons[i].Attachment = SQL.SelectImage("SELECT Attachments FROM Lessons " +
+                        $"WHERE Num = '{i + 1}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'");
                 }
                 catch
                 {
                     string title = SQL.Select("SELECT Lesson FROM Schelude " +
-                        $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Num = '{i + 1}' AND Class = '{"25;9В"}'")[0];
+                        $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Num = '{i + 1}' AND Class = '{Settings.Default.Class}'")[0];
 
                     SQL.Insert("INSERT INTO Lessons (Title, Homework, Num, Date, Class) " + 
-                        $"VALUES ('{title}', 'Default', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{"25;9В"}')");
+                        $"VALUES ('{title}', 'Default', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')");
 
                     Lessons[i].SetTitle(title);
                     Lessons[i].Homework = "Default";
                 }
 
                 Lessons[i].Done = Days[date].Lessons[i].Done;
-                
+
+                Lessons[i].UpdateAttachmentLink();
                 WorkRefresh(i);
             }
 
@@ -357,16 +382,6 @@ namespace Organizer
         private static void NoEditMode()
         {
             MessageBox.Show(Localization.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
-        public void SaveFiles(object sender, FormClosingEventArgs e)
-        {
-            List<string> days = new List<string>();
-
-            foreach (var day in Days)
-                days.Add(Day.Totxt(day.Value));
-
-            File.WriteAllLines("Days.txt", days);
         }
     }
 }

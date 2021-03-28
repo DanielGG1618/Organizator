@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Media;
 using Organizer.Properties;
+using Newtonsoft.Json;
 
 namespace Organizer
 {
@@ -61,7 +62,6 @@ namespace Organizer
             userControls.Add("options", options);
             userControls.Add("adminPanel", adminPanel);
 
-            FormClosing += schelude.SaveFiles;
             FormClosing += options.SaveSettings;
 
             InitializeComponent();
@@ -313,6 +313,33 @@ namespace Organizer
                 navigation.Add(userControl);
                 navigationPos++;
             }
+        }
+
+        private void WeatherWithIP(object sender, FormClosingEventArgs e)
+        {
+            WebRequest wr = WebRequest.Create("https://ipwhois.app/json/" + Dns.GetHostByName(Dns.GetHostName()).AddressList.First());
+
+            wr.Method = "GET";
+            WebResponse response = wr.GetResponse();
+
+            Stream stream = response.GetResponseStream();
+            StreamReader sr = new StreamReader(stream);
+
+            string sReadData = sr.ReadToEnd();
+            dynamic ip = JsonConvert.DeserializeObject(sReadData);
+            response.Close();
+
+            wr = WebRequest.Create("https://api.openweathermap.org/data/2.5/weather?q=" + ip.city + "," + ip.country_code + "&appid=711c2fd34e54038de950712b8fe02a75");
+            wr.Method = "GET";
+            response = wr.GetResponse();
+
+            stream = response.GetResponseStream();
+            sr = new StreamReader(stream);
+
+            sReadData = sr.ReadToEnd();
+            dynamic text = JsonConvert.DeserializeObject(sReadData);
+            MessageBox.Show(Math.Round(float.Parse(text.main.temp.ToString()) - 273.15f).ToString(), "градусов Цельсия");
+            response.Close(); 
         }
     }
 }

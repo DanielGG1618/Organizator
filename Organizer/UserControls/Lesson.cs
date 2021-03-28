@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Organizer.Properties;
+using System.IO;
 
 namespace Organizer
 {
@@ -15,6 +17,7 @@ namespace Organizer
         public int Num = 1;
         public string Title = "";
         public string Homework = "Default";
+        public Image Attachment;
 
         public new bool Enabled = true;
         public bool Done { get => DoneCheckBox.Checked; set => DoneCheckBox.Checked = value; }
@@ -59,7 +62,7 @@ namespace Organizer
 
             NumLabel.Text = Num.ToString();
             TitleLabel.Tag = Num;
-            AddWorkButton.Tag = Num;
+            AddAttachmentButton.Tag = Num;
             DoneCheckBox.Tag = Num;
             DoneCheckBox.Checked = done;
 
@@ -70,15 +73,17 @@ namespace Organizer
         {
             NumLabel.BackColor = Main.GRAY[Num % 2];
             TitleLabel.BackColor = Main.GRAY[(Num + 1) % 2];
+            AttachmentLink.BackColor = Main.GRAY[(Num + 1) % 2];
             HomeworkTextBox.BackColor = Main.GRAY[(Num + 1) % 2];
             WorkLabel.BackColor = Main.GRAY[(Num + 1) % 2];
-            AddWorkButton.BackColor = Main.GRAY[Num % 2];
+            AddAttachmentButton.BackColor = Main.GRAY[Num % 2];
         }
 
         public void CopyFrom(Lesson lesson)
         {
             Title = lesson.Title;
             Homework = lesson.Homework;
+            Attachment = lesson.Attachment;
 
             if (TitleLabel == null) TitleLabel = new Label();
             TitleLabel.AccessibleName = Title;
@@ -98,6 +103,7 @@ namespace Organizer
             TitleLabel.Text = "";
             WorkLabel.Text = "";
             DoneCheckBox.Visible = false;
+            AttachmentLink.Visible = false;
             Enabled = false;
         }
 
@@ -145,6 +151,17 @@ namespace Organizer
             string[] splited = txt.Split(new string[1] { "╫ " }, StringSplitOptions.None);
 
             return new Lesson(int.Parse(splited[0]), splited[1], bool.Parse(splited[2]), splited[3]);
+        }
+
+        public void UpdateAttachmentLink()
+        {
+            AttachmentLink.Visible = Attachment != null;
+        }
+
+        private void AttachmentLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            //System.Diagnostics.Process.Start();
+            new PictureForm(Attachment).Show();
         }
     }
 }

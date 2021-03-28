@@ -166,5 +166,40 @@ namespace Organizer
         {
             Utils.InDevelop();
         }
+
+        private void AddTranslationKeyGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4 && e.RowIndex != -1)
+            {
+                string key = addTranslationKeyGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
+                string russian = addTranslationKeyGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
+                string whoAmI = addTranslationKeyGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
+                string english = addTranslationKeyGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
+
+                if (SQL.Select($"SELECT TransValue FROM Translations WHERE TransKey = '{key}'").Count > 0)
+                {
+                    DialogResult result = MessageBox.Show("Такой ключ уже есть в словаре. Заменить?", "Ошибка",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        SQL.Insert($"UPDATE Translations SET TransValue = '{russian}' " +
+                                $"WHERE TransKey = '{key}' AND Language = 'Русский'");
+                        SQL.Insert($"UPDATE Translations SET TransValue = '{whoAmI}' " +
+                                $"WHERE TransKey = '{key}' AND Language = 'Кто am я'");
+                        SQL.Insert($"UPDATE Translations SET TransValue = '{english}' " +
+                                $"WHERE TransKey = '{key}' AND Language = 'English'");
+                    }
+                }
+
+                else
+                {
+                    SQL.Insert($"INSERT INTO Translations (Language, TransKey, TransValue) VALUES " +
+                        $"('Русский', '{key}', '{russian}'), " +
+                        $"('Кто am я', '{key}', '{whoAmI}'), " +
+                        $"('English', '{key}', '{english}')");
+                }
+            }
+        }
     }
 }

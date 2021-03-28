@@ -31,9 +31,10 @@
             this.NumLabel = new System.Windows.Forms.Label();
             this.TitleLabel = new System.Windows.Forms.Label();
             this.WorkLabel = new System.Windows.Forms.Label();
-            this.AddWorkButton = new System.Windows.Forms.Button();
+            this.AddAttachmentButton = new System.Windows.Forms.Button();
             this.DoneCheckBox = new System.Windows.Forms.CheckBox();
             this.HomeworkTextBox = new System.Windows.Forms.TextBox();
+            this.AttachmentLink = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // NumLabel
@@ -71,19 +72,19 @@
             this.WorkLabel.Text = "workworkworkworkworkworkworkworkworkworkwork";
             this.WorkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // AddWorkButton
+            // AddAttachmentButton
             // 
-            this.AddWorkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AddWorkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AddWorkButton.ForeColor = System.Drawing.Color.LimeGreen;
-            this.AddWorkButton.Location = new System.Drawing.Point(690, 10);
-            this.AddWorkButton.Margin = new System.Windows.Forms.Padding(0);
-            this.AddWorkButton.Name = "AddWorkButton";
-            this.AddWorkButton.Size = new System.Drawing.Size(50, 50);
-            this.AddWorkButton.TabIndex = 3;
-            this.AddWorkButton.Text = "+";
-            this.AddWorkButton.UseVisualStyleBackColor = true;
-            this.AddWorkButton.Visible = false;
+            this.AddAttachmentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AddAttachmentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AddAttachmentButton.ForeColor = System.Drawing.Color.LimeGreen;
+            this.AddAttachmentButton.Location = new System.Drawing.Point(690, 10);
+            this.AddAttachmentButton.Margin = new System.Windows.Forms.Padding(0);
+            this.AddAttachmentButton.Name = "AddAttachmentButton";
+            this.AddAttachmentButton.Size = new System.Drawing.Size(50, 50);
+            this.AddAttachmentButton.TabIndex = 3;
+            this.AddAttachmentButton.Text = "+";
+            this.AddAttachmentButton.UseVisualStyleBackColor = true;
+            this.AddAttachmentButton.Visible = false;
             // 
             // DoneCheckBox
             // 
@@ -110,12 +111,31 @@
             this.HomeworkTextBox.TabIndex = 5;
             this.HomeworkTextBox.Visible = false;
             // 
+            // AttachmentLink
+            // 
+            this.AttachmentLink.ActiveLinkColor = System.Drawing.Color.White;
+            this.AttachmentLink.BackColor = System.Drawing.Color.Transparent;
+            this.AttachmentLink.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.AttachmentLink.DisabledLinkColor = System.Drawing.Color.White;
+            this.AttachmentLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AttachmentLink.LinkColor = System.Drawing.Color.White;
+            this.AttachmentLink.Location = new System.Drawing.Point(630, -20);
+            this.AttachmentLink.Name = "AttachmentLink";
+            this.AttachmentLink.Size = new System.Drawing.Size(50, 40);
+            this.AttachmentLink.TabIndex = 6;
+            this.AttachmentLink.TabStop = true;
+            this.AttachmentLink.Text = "...";
+            this.AttachmentLink.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.AttachmentLink.VisitedLinkColor = System.Drawing.Color.White;
+            this.AttachmentLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AttachmentLink_LinkClicked);
+            // 
             // Lesson
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.AttachmentLink);
             this.Controls.Add(this.HomeworkTextBox);
             this.Controls.Add(this.DoneCheckBox);
-            this.Controls.Add(this.AddWorkButton);
+            this.Controls.Add(this.AddAttachmentButton);
             this.Controls.Add(this.WorkLabel);
             this.Controls.Add(this.TitleLabel);
             this.Controls.Add(this.NumLabel);
@@ -131,8 +151,9 @@
         public System.Windows.Forms.Label NumLabel;
         public System.Windows.Forms.Label TitleLabel;
         public System.Windows.Forms.Label WorkLabel;
-        public System.Windows.Forms.Button AddWorkButton;
+        public System.Windows.Forms.Button AddAttachmentButton;
         public System.Windows.Forms.CheckBox DoneCheckBox;
         public System.Windows.Forms.TextBox HomeworkTextBox;
+        public System.Windows.Forms.LinkLabel AttachmentLink;
     }
 }

@@ -78,3 +78,6 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csp
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Main.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Lesson.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.AdminPanel.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.PictureForm.resources

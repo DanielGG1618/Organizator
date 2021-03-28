@@ -59,10 +59,10 @@ namespace Organizer
             return results;
         }
 
-        public static Image SelectImage(string Text)
+        public static Image SelectImage(string text)
         {
             Image img = null;
-            MySqlCommand command = new MySqlCommand(Text, Connection);
+            MySqlCommand command = new MySqlCommand(text, Connection);
 
             try
             {
@@ -89,13 +89,34 @@ namespace Organizer
             return img;
         }
 
-        public static void Insert(string Text)
+        public static void Insert(string text)
         {
-            MySqlCommand command = new MySqlCommand(Text, Connection);
+            MySqlCommand command = new MySqlCommand(text, Connection);
 
             command.ExecuteNonQuery();
 
             command.Dispose();
+        }
+
+        public static void UpdateFile(string text, string address)
+        {
+            using (FileStream pgFileStream = new FileStream(address, FileMode.Open, FileAccess.Read))
+            {
+                using (BinaryReader pgReader = new BinaryReader(new BufferedStream(pgFileStream)))
+                {
+                    MySqlCommand command = new MySqlCommand(text, Connection);
+
+                    byte[] blob = pgReader.ReadBytes(Convert.ToInt32(pgFileStream.Length));
+
+                    MySqlParameter param = command.CreateParameter();
+                    param.ParameterName = "@File";
+                    param.MySqlDbType = MySqlDbType.Blob;
+                    param.Value = blob;
+                    command.Parameters.Add(param);
+
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
