@@ -143,6 +143,8 @@
             // openAttacmentDialog
             // 
             this.openAttacmentDialog.FileName = "Attachment";
+            this.openAttacmentDialog.Filter = "(*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.bmp) | *.jpg; *.jpeg; *.jpe; *.jfif; *.pn" +
+    "g; *.bmp";
             // 
             // Schelude
             // 

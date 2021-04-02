@@ -106,9 +106,11 @@ namespace Organizer
                 return;
             }
 
+            int step = ModifierKeys == Keys.Shift ? 7 : 1;
+
             do
             {
-                date = date.AddDays(1);
+                date = date.AddDays(step);
 
                 if (date >= lastDay)
                     date = firstDay;
@@ -126,9 +128,11 @@ namespace Organizer
                 return;
             }
 
+            int step = ModifierKeys == Keys.Shift ? 7 : 1;
+
             do
             {
-                date = date.AddDays(-1);
+                date = date.AddDays(-step);
 
                 if (date <= firstDay)
                     date = lastDay;
