@@ -156,12 +156,14 @@ namespace Organizer
         public void UpdateAttachmentLink()
         {
             AttachmentLink.Visible = Attachment != null;
+
+            if (Schelude.Instance.EditMode && Attachment == null)
+                Schelude.Instance.RemoveAttachment(Num - 1);
         }
 
         private void AttachmentLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //System.Diagnostics.Process.Start();
-            new PictureForm(Attachment).Show();
+            new PictureForm(this).Show();
         }
     }
 }

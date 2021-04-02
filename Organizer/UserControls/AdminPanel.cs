@@ -189,6 +189,9 @@ namespace Organizer
                                 $"WHERE TransKey = '{key}' AND Language = 'Кто am я'");
                         SQL.Insert($"UPDATE Translations SET TransValue = '{english}' " +
                                 $"WHERE TransKey = '{key}' AND Language = 'English'");
+
+                        MessageBox.Show("Успешно добавлено");
+                        addTranslationKeyGridView.Rows.Remove(addTranslationKeyGridView.Rows[e.RowIndex]);
                     }
                 }
 
@@ -198,8 +201,16 @@ namespace Organizer
                         $"('Русский', '{key}', '{russian}'), " +
                         $"('Кто am я', '{key}', '{whoAmI}'), " +
                         $"('English', '{key}', '{english}')");
+
+                    MessageBox.Show("Успешно добавлено");
+                    addTranslationKeyGridView.Rows.Remove(addTranslationKeyGridView.Rows[e.RowIndex]);
                 }
             }
+        }
+
+        private void UpdateDictionary_Click(object sender, EventArgs e)
+        {
+            Localization.Load();
         }
     }
 }

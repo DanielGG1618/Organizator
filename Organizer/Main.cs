@@ -18,6 +18,8 @@ namespace Organizer
 {
     public partial class Main : Form
     {
+        public static Main Instance;
+
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
         public static List<DateTime> PrimaryHolydays = new List<DateTime>();
@@ -26,7 +28,6 @@ namespace Organizer
 
         public static int MaxLessonsCount;
 
-        public static string[][] Schelude;
         public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
 
         public List<Control> LocalizationControls = new List<Control>();
@@ -42,11 +43,13 @@ namespace Organizer
 
         public Main()
         {
+            Instance = this;
+
+            //MessageBox.Show(Holydays.Method()[0].InnerText);
+
             LoadFiles();
 
-            foreach (var lessons in Schelude)
-                if (lessons.Length > MaxLessonsCount)
-                    MaxLessonsCount = lessons.Length;
+            MaxLessonsCount = 7;////////////
 
             schelude = new Schelude();
             options = new Options
@@ -82,13 +85,11 @@ namespace Organizer
 
             navigation.Add(schelude);
 
-            TryLogIn("Admin", "Admin");
+            TryLogIn("Admin", "Admin");///////////////////
         }
 
         private void LoadFiles()
         {
-            LoadSchedule();
-
             LoadHolydays();
 
             LoadDefaultWorks();
@@ -156,21 +157,6 @@ namespace Organizer
                         ThisYearHolydays.Add(dayToAdd);
                     }
                 }
-            }
-        }
-
-        private void LoadSchedule()
-        {
-            string[] schedule = File.ReadAllLines("Lessons.txt", Encoding.UTF8);
-
-            Schelude = new string[schedule.Length][];
-
-            for (int i = 0; i < schedule.Length; i++)
-            {
-                List<string> list = new List<string>(schedule[i].Split(new string[2] { ", ", ": " }, StringSplitOptions.RemoveEmptyEntries));
-                list.RemoveAt(0);
-
-                Schelude[i] = list.ToArray();
             }
         }
 

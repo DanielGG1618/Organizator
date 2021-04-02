@@ -14,6 +14,8 @@ namespace Organizer
 {
     public partial class Schelude : UserControlGG
     {
+        public static Schelude Instance;
+
         public static int MaxLessonsCount = 8; 
 
         public static Lesson[] Lessons;
@@ -28,6 +30,8 @@ namespace Organizer
 
         public Schelude()
         {
+            Instance = this;
+
             LoadDays();
 
             firstDay = new DateTime(Program.Year, 9, 1).ToLocalTime().Date;
@@ -184,7 +188,21 @@ namespace Organizer
                                 $"Class = '{Settings.Default.Class}'");
                         }
 
-                        if (attachments[i] != "")
+                        if (attachments[i] == "remove")
+                        {
+                            try
+                            {
+                                SQL.Insert($"UPDATE Lessons SET Attachments = '' " +
+                                    $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND " +
+                                    $"Class = '{Settings.Default.Class}'");
+                            }
+                            catch (Exception exeption)
+                            {
+                                MessageBox.Show(exeption.Message, Localization.Translate("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+
+                        else if (attachments[i] != "")
                         {
                             try
                             {
@@ -233,6 +251,11 @@ namespace Organizer
                 Lessons[num - 1].Attachment = Image.FromFile(attachments[num - 1]);
                 Lessons[num - 1].UpdateAttachmentLink();
             }
+        }
+
+        public void RemoveAttachment(int i)
+        {
+            attachments[i] = "remove";
         }
 
         private void DoneCheckedChanged(object sender, EventArgs e)

@@ -81,3 +81,6 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Adm
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.PictureForm.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.xml

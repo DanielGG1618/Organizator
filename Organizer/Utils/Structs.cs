@@ -23,9 +23,6 @@ namespace Organizer
             generalViewDate = new DateTime(4, Date.Month, Date.Day);
 
             Lessons = new List<Lesson>();
-
-            for (int i = 0; i < Main.Schelude[(int)Date.DayOfWeek].Length; i++)
-                Lessons.Add(new Lesson(i + 1, Main.Schelude[(int)Date.DayOfWeek][i]));
         }
 
         public Day(int num, List<Lesson> lessons)

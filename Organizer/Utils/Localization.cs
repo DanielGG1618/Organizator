@@ -9,7 +9,7 @@ namespace Organizer
 {
     static class Localization
     {
-        private static Dictionary<string, Dictionary<string, string>> translations = new Dictionary<string, Dictionary<string, string>>();
+        private static Dictionary<string, Dictionary<string, string>> translations;
 
         public static string Translate(string key)
         {
@@ -19,6 +19,8 @@ namespace Organizer
 
         public static void Load()
         {
+            translations = new Dictionary<string, Dictionary<string, string>>();
+
             List<string> languages = SQL.Select($"SELECT Name FROM Languages");
 
             foreach (var language in languages)
