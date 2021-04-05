@@ -36,6 +36,7 @@ namespace Organizer
         private Schelude schelude;
         private Options options;
         private AdminPanel adminPanel;
+        private UndoneHomework undoneHomework;
         private Dictionary<string, UserControlGG> userControls = new Dictionary<string, UserControlGG>();
 
         private List<UserControlGG> navigation = new List<UserControlGG>();
@@ -60,10 +61,12 @@ namespace Organizer
             {
                 Location = new Point(0, 100)
             };
+            undoneHomework = new UndoneHomework();
 
             userControls.Add("schelude", schelude);
             userControls.Add("options", options);
             userControls.Add("adminPanel", adminPanel);
+            userControls.Add("undoneHomework", undoneHomework);
 
             FormClosing += options.SaveSettings;
 
@@ -72,7 +75,7 @@ namespace Organizer
 
         private void Head_Load(object sender, EventArgs e)
         {
-            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton });
+            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton });
 
             ApplyColor();
             ApplyTheme();
@@ -192,7 +195,7 @@ namespace Organizer
                 Settings.Default.Login = login;
                 Settings.Default.Role = (Roles)Enum.Parse(typeof(Roles), user[1]);
 
-                switch(Settings.Default.Role)
+                switch (Settings.Default.Role)
                 {
                     case Roles.Admin:
                         adminButton.Visible = true;
@@ -283,6 +286,17 @@ namespace Organizer
             SetPanel(userControls["adminPanel"]);
         }
 
+        private void UndoneButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            SetPanel(userControls["undoneHomework"]);
+        }
+
         private void SetPanel(UserControlGG userControl)
         {
             userControl.ApplyAll();
@@ -325,7 +339,7 @@ namespace Organizer
             sReadData = sr.ReadToEnd();
             dynamic text = JsonConvert.DeserializeObject(sReadData);
             MessageBox.Show(Math.Round(float.Parse(text.main.temp.ToString()) - 273.15f).ToString(), "градусов Цельсия");
-            response.Close(); 
+            response.Close();
         }
     }
 }

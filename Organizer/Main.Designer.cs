@@ -38,6 +38,7 @@
             this.scheludeButton = new System.Windows.Forms.Button();
             this.optionsButton = new System.Windows.Forms.Button();
             this.adminButton = new System.Windows.Forms.Button();
+            this.undoneButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // mainPanel
@@ -111,7 +112,7 @@
             this.optionsButton.AccessibleName = "";
             this.optionsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.optionsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.optionsButton.Location = new System.Drawing.Point(12, 214);
+            this.optionsButton.Location = new System.Drawing.Point(12, 329);
             this.optionsButton.Name = "optionsButton";
             this.optionsButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
             this.optionsButton.Size = new System.Drawing.Size(186, 109);
@@ -127,7 +128,7 @@
             this.adminButton.AccessibleName = "";
             this.adminButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.adminButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.adminButton.Location = new System.Drawing.Point(12, 329);
+            this.adminButton.Location = new System.Drawing.Point(12, 444);
             this.adminButton.Name = "adminButton";
             this.adminButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
             this.adminButton.Size = new System.Drawing.Size(186, 109);
@@ -137,12 +138,29 @@
             this.adminButton.UseVisualStyleBackColor = true;
             this.adminButton.Click += new System.EventHandler(this.AdminButton_Click);
             // 
+            // undoneButton
+            // 
+            this.undoneButton.AccessibleDescription = "";
+            this.undoneButton.AccessibleName = "Homework";
+            this.undoneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.undoneButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.undoneButton.Location = new System.Drawing.Point(12, 214);
+            this.undoneButton.Name = "undoneButton";
+            this.undoneButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
+            this.undoneButton.Size = new System.Drawing.Size(186, 109);
+            this.undoneButton.TabIndex = 12;
+            this.undoneButton.Text = "Задания";
+            this.undoneButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.undoneButton.UseVisualStyleBackColor = true;
+            this.undoneButton.Click += new System.EventHandler(this.UndoneButton_Click);
+            // 
             // Main
             // 
             this.AccessibleName = "ToDoList";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(978, 603);
+            this.Controls.Add(this.undoneButton);
             this.Controls.Add(this.adminButton);
             this.Controls.Add(this.optionsButton);
             this.Controls.Add(this.scheludeButton);
@@ -171,6 +189,7 @@
         private System.Windows.Forms.Button scheludeButton;
         private System.Windows.Forms.Button optionsButton;
         private System.Windows.Forms.Button adminButton;
+        private System.Windows.Forms.Button undoneButton;
     }
 }
 

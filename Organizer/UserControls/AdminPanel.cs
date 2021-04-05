@@ -171,10 +171,18 @@ namespace Organizer
         {
             if (e.ColumnIndex == 4 && e.RowIndex != -1)
             {
-                string key = addTranslationKeyGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
-                string russian = addTranslationKeyGridView.Rows[e.RowIndex].Cells[1].Value.ToString();
-                string whoAmI = addTranslationKeyGridView.Rows[e.RowIndex].Cells[2].Value.ToString();
-                string english = addTranslationKeyGridView.Rows[e.RowIndex].Cells[3].Value.ToString();
+                var cells = addTranslationKeyGridView.Rows[e.RowIndex].Cells;
+
+                if(cells[0].Value == null)
+                {
+                    MessageBox.Show("Бан за пустой ключ", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string key = cells[0].Value.ToString();
+                string russian = cells[1].Value == null ? "" : cells[1].Value.ToString();
+                string whoAmI = cells[2].Value == null ? "" : cells[2].Value.ToString(); 
+                string english = cells[3].Value == null ? "" : cells[3].Value.ToString();
 
                 if (SQL.Select($"SELECT TransValue FROM Translations WHERE TransKey = '{key}'").Count > 0)
                 {
@@ -214,6 +222,7 @@ namespace Organizer
         private void UpdateDictionary_Click(object sender, EventArgs e)
         {
             Localization.Load();
+            Main.Instance.ApplyLocalization();
         }
     }
 }
