@@ -72,6 +72,12 @@
     <Compile Include="UserControls\Lesson.Designer.cs">
       <DependentUpon>Lesson.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UndoneHomework.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UndoneHomework.Designer.cs">
+      <DependentUpon>UndoneHomework.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Schelude.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Lesson.resx">
       <DependentUpon>Lesson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UndoneHomework.resx">
+      <DependentUpon>UndoneHomework.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Schelude.resx">
       <DependentUpon>Schelude.cs</DependentUpon>

@@ -84,3 +84,4 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Pic
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.dll
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.pdb
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.UndoneHomework.resources

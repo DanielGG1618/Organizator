@@ -183,12 +183,15 @@ namespace Organizer
 
                     if (result == DialogResult.Yes)
                     {
-                        SQL.Insert($"UPDATE Translations SET TransValue = '{russian}' " +
-                                $"WHERE TransKey = '{key}' AND Language = 'Русский'");
-                        SQL.Insert($"UPDATE Translations SET TransValue = '{whoAmI}' " +
-                                $"WHERE TransKey = '{key}' AND Language = 'Кто am я'");
-                        SQL.Insert($"UPDATE Translations SET TransValue = '{english}' " +
-                                $"WHERE TransKey = '{key}' AND Language = 'English'");
+                        if(!string.IsNullOrEmpty(russian))
+                            SQL.Insert($"UPDATE Translations SET TransValue = '{russian}' " +
+                            $"WHERE TransKey = '{key}' AND Language = 'Русский'");
+                        if (!string.IsNullOrEmpty(whoAmI))
+                            SQL.Insert($"UPDATE Translations SET TransValue = '{whoAmI}' " +
+                            $"WHERE TransKey = '{key}' AND Language = 'Кто am я'");
+                        if (!string.IsNullOrEmpty(english))
+                            SQL.Insert($"UPDATE Translations SET TransValue = '{english}' " +
+                            $"WHERE TransKey = '{key}' AND Language = 'English'");
 
                         MessageBox.Show("Успешно добавлено");
                         addTranslationKeyGridView.Rows.Remove(addTranslationKeyGridView.Rows[e.RowIndex]);
