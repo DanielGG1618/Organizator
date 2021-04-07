@@ -66,6 +66,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UndoneLesson.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UndoneLesson.Designer.cs">
+      <DependentUpon>UndoneLesson.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Lesson.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PictureForm.resx">
       <DependentUpon>PictureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UndoneLesson.resx">
+      <DependentUpon>UndoneLesson.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Lesson.resx">
       <DependentUpon>Lesson.cs</DependentUpon>

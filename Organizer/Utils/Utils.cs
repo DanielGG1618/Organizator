@@ -30,6 +30,32 @@ namespace Organizer
         {
             MessageBox.Show(Localization.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
+
+        public static bool IsWorking(DateTime date)
+        {
+            DateTime generalViewDate = new DateTime(4, date.Month, date.Day);
+
+            bool isWorking = date.DayOfWeek != DayOfWeek.Sunday && date.DayOfWeek != DayOfWeek.Saturday &&
+                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                    Main.ThisYearHolydays.Contains<DateTime>(date));
+
+            if (isWorking)
+                isWorking = (!Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
+                     (Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
+                     Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+
+                     date.DayOfWeek != DayOfWeek.Sunday && date.DayOfWeek != DayOfWeek.Saturday &&
+                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+
+                    Main.ThisYearHolydays.Contains<DateTime>(date));
+
+            return isWorking;
+        }
     }
 
     static class SQL
@@ -59,6 +85,32 @@ namespace Organizer
             return results;
         }
 
+        public static List<bool> SelectBools(string text, Dictionary<string, string> parameters = null)
+        {
+            List<string> listString = Select(text, parameters);
+            List<bool> list = new List<bool>();
+
+            foreach(var one in listString)
+            {
+                list.Add(bool.Parse(one));
+            }
+
+            return list;
+        }
+
+        /*public static List<bool> Select<Type>(string text, Dictionary<string, string> parameters = null)
+        {
+            List<string> listString = Select(text, parameters);
+            List<Type> list = new List<Type>();
+
+            foreach (var one in listString)
+            {
+                list.Add(Type.Parse(one));
+            }
+
+            return list;
+        }*/
+
         public static Image SelectImage(string text)
         {
             Image img = null;
@@ -83,6 +135,37 @@ namespace Organizer
                 reader.Close();
             }
             catch { }
+
+            command.Dispose();
+
+            return img;
+        }
+
+        public static List<Image> SelectImages(string text)
+        {
+            List<Image> img = new List<Image>();
+            MySqlCommand command = new MySqlCommand(text, Connection);
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    byte[] data = (byte[])reader.GetValue(0);
+                    try
+                    {
+                        MemoryStream ms = new MemoryStream(data, 0, data.Length);
+                        ms.Write(data, 0, data.Length);
+                        img.Add(Image.FromStream(ms, true));
+                    }
+                    catch
+                    {
+                        img.Add(null);
+                    }
+                }
+            }
+            reader.Close();
 
             command.Dispose();
 

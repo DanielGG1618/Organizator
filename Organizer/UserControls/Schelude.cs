@@ -19,7 +19,7 @@ namespace Organizer
         public static int MaxLessonsCount = 8; 
 
         public static Lesson[] Lessons;
-        public static Dictionary<DateTime, Day> Days = new Dictionary<DateTime, Day>();
+        //public static Dictionary<DateTime, Day> Days = new Dictionary<DateTime, Day>();
 
         public int LessonsCount;
         public bool EditMode;
@@ -32,7 +32,7 @@ namespace Organizer
         {
             Instance = this;
 
-            LoadDays();
+            //LoadDays();
 
             firstDay = new DateTime(Program.Year, 9, 1).ToLocalTime().Date;
 
@@ -47,7 +47,7 @@ namespace Organizer
                 if (date >= lastDay)
                     date = firstDay;
             }
-            while (!Days[date].IsWorking());
+            while (!Utils.IsWorking(date));
 
             attachments = new string[Main.MaxLessonsCount];
             editModeLessonsBackup = new Lesson[Main.MaxLessonsCount];
@@ -115,7 +115,7 @@ namespace Organizer
                 if (date >= lastDay)
                     date = firstDay;
             }
-            while (!Days[date].IsWorking());
+            while (!Utils.IsWorking(date));
 
             LessonsRefresh();
         }
@@ -137,7 +137,7 @@ namespace Organizer
                 if (date <= firstDay)
                     date = lastDay;
             }
-            while (!Days[date].IsWorking());
+            while (!Utils.IsWorking(date));
 
             LessonsRefresh();
         }
@@ -262,11 +262,22 @@ namespace Organizer
             attachments[i] = "remove";
         }
 
-        private void DoneCheckedChanged(object sender, EventArgs e)
+        private void DoneCheckedChanged(object sender, EventArgs e)//////////////////////////////////////////
         {
             int num = Convert.ToInt32(((CheckBox)sender).Tag);
+            bool done = ((CheckBox)sender).Checked;
 
-            Days[date].Lessons[num - 1].SetDone(((CheckBox)sender).Checked);
+            if (SQL.Select($"SELECT COUNT(*) FROM `DoneStatus` " +
+                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Num = '{num}' AND User = '{Settings.Default.Login}'")[0] == "0")
+            {
+                SQL.Insert("INSERT INTO DoneStatus (Done, Date, Num, User) " +
+                    $"VALUES ('{(done ? 1 : 0)}', '{date.ToString("yyyy-MM-dd")}', '{num}', '{Settings.Default.Login}')");
+            }
+            else
+            {
+                SQL.Insert($"UPDATE DoneStatus SET Done = '{(done ? 1 : 0)}' " +
+                    $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Num = '{num}' AND User = '{Settings.Default.Login}'");
+            }
         }
 
         private void TitleClick(object sender, EventArgs e)
@@ -306,46 +317,60 @@ namespace Organizer
 
         private void LessonsRefresh()
         {
-            LessonsCount = int.Parse(SQL.Select("SELECT COUNT(Title) FROM Lessons " +
+            LessonsCount = int.Parse(SQL.Select("SELECT COUNT(*) FROM Lessons " +
                 $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'")[0]);
+
+            List<string> titleHomework;
+            List<Image> attachments = SQL.SelectImages($"SELECT Attachments FROM Lessons " +
+                    $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
+            List<bool> doneStatuses = SQL.SelectBools($"SELECT Done FROM `DoneStatus` " +
+                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND User = '{Settings.Default.Login}' ORDER BY Num");
 
             if (LessonsCount == 0)
             {
                 LessonsCount = int.Parse(SQL.Select("SELECT COUNT(Lesson) FROM Schelude " +
                         $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Class = '{Settings.Default.Class}'")[0]);
+
+                titleHomework = SQL.Select("SELECT Lesson, 'Default' FROM Schelude " +
+                            $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
+
+                string values = "";
+                string doneValues = "";
+
+                for (int i = 0; i < LessonsCount; i++)
+                {
+                    values += $", ('{titleHomework[2 * i]}', 'Default', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')";
+                    doneValues += $", ('0', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{Settings.Default.Login}')";
+                }
+
+                values = values.Remove(0, 1);
+                doneValues = doneValues.Remove(0, 1);
+
+                SQL.Insert("INSERT INTO Lessons (Title, Homework, Num, Date, Class) VALUES" + values);
+                SQL.Insert("INSERT INTO DoneStatus (Done, Num, Date, User) VALUES" + doneValues);
+            }
+
+            else
+            {
+                titleHomework = SQL.Select("SELECT Title, Homework FROM Lessons " +
+                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
+
+                for (int i = 0; i < LessonsCount; i++)
+                {
+                    Lessons[i].Attachment = attachments[i];
+                    Lessons[i].Done = doneStatuses[i];
+                    Lessons[i].UpdateAttachmentLink();
+                }
             }
 
             for (int i = 0; i < LessonsCount; i++)
             {
                 Lessons[i].NumLabel.ForeColor = Settings.Default.Color;
                 Lessons[i].DoneCheckBox.Visible = true;
+
+                Lessons[i].SetTitle(titleHomework[2 * i]);
+                Lessons[i].Homework = titleHomework[2 * i + 1];
                 
-                try
-                {
-                    List<string> titleHomework = SQL.Select("SELECT Title, Homework FROM Lessons " +
-                        $"WHERE Num = '{i + 1}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'");
-
-                    Lessons[i].SetTitle(titleHomework[0]);
-                    Lessons[i].Homework = titleHomework[1];
-
-                    Lessons[i].Attachment = SQL.SelectImage("SELECT Attachments FROM Lessons " +
-                        $"WHERE Num = '{i + 1}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'");
-                }
-                catch
-                {
-                    string title = SQL.Select("SELECT Lesson FROM Schelude " +
-                        $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Num = '{i + 1}' AND Class = '{Settings.Default.Class}'")[0];
-
-                    SQL.Insert("INSERT INTO Lessons (Title, Homework, Num, Date, Class) " + 
-                        $"VALUES ('{title}', 'Default', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')");
-
-                    Lessons[i].SetTitle(title);
-                    Lessons[i].Homework = "Default";
-                }
-
-                Lessons[i].Done = Days[date].Lessons[i].Done;
-
-                Lessons[i].UpdateAttachmentLink();
                 WorkRefresh(i);
             }
 
@@ -379,31 +404,6 @@ namespace Organizer
             foreach (var lesson in Lessons)
                 if (lesson.Enabled)
                     lesson.NumLabel.ForeColor = Settings.Default.Color;
-        }
-
-        private void LoadDays()
-        {
-            if (File.Exists("Days.txt") && !string.IsNullOrEmpty(File.ReadAllText("Days.txt")))
-            {
-                string[] days = File.ReadAllLines("Days.txt");
-
-                Days.Clear();
-
-                for (int i = 0; i < days.Length; i++)
-                {
-                    Day day = Day.Fromtxt(days[i]);
-                    Days.Add(day.Date, day);
-                }
-            }
-
-            else
-            {
-                for (int i = 0; i < 273; i++)
-                    Days.Add(firstDay.AddDays(i), new Day(i));
-
-                if (DateTime.IsLeapYear(Program.Year + 1))
-                    Days.Add(firstDay.AddDays(273), new Day(273));
-            }
         }
 
         private static void NoEditMode()

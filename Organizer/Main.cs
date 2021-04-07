@@ -288,6 +288,9 @@ namespace Organizer
 
         private void UndoneButton_Click(object sender, EventArgs e)
         {
+            Utils.InDevelop();
+            return;
+
             if (schelude.EditMode)
             {
                 Utils.NoEditMode();

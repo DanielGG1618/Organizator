@@ -27,6 +27,15 @@ namespace Organizer
             deleteButton.Visible = Schelude.Instance.EditMode;
         }
 
+        public PictureForm(UndoneLesson _lesson)
+        {
+            BackgroundImage = _lesson.Attachment;
+
+            InitializeComponent();
+
+            deleteButton.Visible = false;
+        }
+
         private void CopyButton_Click(object sender, EventArgs e)
         {
             Clipboard.SetImage(BackgroundImage);
