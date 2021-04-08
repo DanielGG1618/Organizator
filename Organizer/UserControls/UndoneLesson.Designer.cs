@@ -28,47 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.NumLabel = new System.Windows.Forms.Label();
-            this.TitleLabel = new System.Windows.Forms.Label();
-            this.WorkLabel = new System.Windows.Forms.Label();
+            this.titleLabel = new System.Windows.Forms.Label();
+            this.workLabel = new System.Windows.Forms.Label();
             this.DoneCheckBox = new System.Windows.Forms.CheckBox();
-            this.AttachmentLink = new System.Windows.Forms.LinkLabel();
+            this.attachmentLink = new System.Windows.Forms.LinkLabel();
+            this.dateLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // NumLabel
+            // titleLabel
             // 
-            this.NumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NumLabel.Location = new System.Drawing.Point(0, 0);
-            this.NumLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.NumLabel.Name = "NumLabel";
-            this.NumLabel.Size = new System.Drawing.Size(50, 70);
-            this.NumLabel.TabIndex = 0;
-            this.NumLabel.Text = "0";
-            this.NumLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.titleLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
+            this.titleLabel.Location = new System.Drawing.Point(0, 0);
+            this.titleLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.titleLabel.Name = "titleLabel";
+            this.titleLabel.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.titleLabel.Size = new System.Drawing.Size(380, 20);
+            this.titleLabel.TabIndex = 1;
+            this.titleLabel.Text = "Title";
+            this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // TitleLabel
+            // workLabel
             // 
-            this.TitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TitleLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
-            this.TitleLabel.Location = new System.Drawing.Point(50, 0);
-            this.TitleLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.TitleLabel.Name = "TitleLabel";
-            this.TitleLabel.Size = new System.Drawing.Size(700, 20);
-            this.TitleLabel.TabIndex = 1;
-            this.TitleLabel.Text = "Title";
-            this.TitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // WorkLabel
-            // 
-            this.WorkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.WorkLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
-            this.WorkLabel.Location = new System.Drawing.Point(50, 20);
-            this.WorkLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.WorkLabel.Name = "WorkLabel";
-            this.WorkLabel.Size = new System.Drawing.Size(700, 50);
-            this.WorkLabel.TabIndex = 2;
-            this.WorkLabel.Text = "workworkworkworkworkworkworkworkworkworkwork";
-            this.WorkLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.workLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.workLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
+            this.workLabel.Location = new System.Drawing.Point(0, 20);
+            this.workLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.workLabel.Name = "workLabel";
+            this.workLabel.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.workLabel.Size = new System.Drawing.Size(720, 50);
+            this.workLabel.TabIndex = 2;
+            this.workLabel.Text = "workworkworkworkworkworkworkworkworkworkwork";
+            this.workLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // DoneCheckBox
             // 
@@ -80,45 +71,59 @@
             this.DoneCheckBox.TabIndex = 4;
             this.DoneCheckBox.UseVisualStyleBackColor = false;
             // 
-            // AttachmentLink
+            // attachmentLink
             // 
-            this.AttachmentLink.ActiveLinkColor = System.Drawing.Color.White;
-            this.AttachmentLink.BackColor = System.Drawing.Color.Transparent;
-            this.AttachmentLink.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.AttachmentLink.DisabledLinkColor = System.Drawing.Color.White;
-            this.AttachmentLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.AttachmentLink.LinkColor = System.Drawing.Color.White;
-            this.AttachmentLink.Location = new System.Drawing.Point(630, -20);
-            this.AttachmentLink.Name = "AttachmentLink";
-            this.AttachmentLink.Size = new System.Drawing.Size(50, 40);
-            this.AttachmentLink.TabIndex = 6;
-            this.AttachmentLink.TabStop = true;
-            this.AttachmentLink.Text = "...";
-            this.AttachmentLink.TextAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.AttachmentLink.VisitedLinkColor = System.Drawing.Color.White;
-            this.AttachmentLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AttachmentLink_LinkClicked);
+            this.attachmentLink.ActiveLinkColor = System.Drawing.Color.White;
+            this.attachmentLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.attachmentLink.BackColor = System.Drawing.Color.Transparent;
+            this.attachmentLink.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.attachmentLink.DisabledLinkColor = System.Drawing.Color.White;
+            this.attachmentLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.attachmentLink.LinkColor = System.Drawing.Color.White;
+            this.attachmentLink.Location = new System.Drawing.Point(677, -22);
+            this.attachmentLink.Name = "attachmentLink";
+            this.attachmentLink.Size = new System.Drawing.Size(50, 40);
+            this.attachmentLink.TabIndex = 6;
+            this.attachmentLink.TabStop = true;
+            this.attachmentLink.Text = "...";
+            this.attachmentLink.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.attachmentLink.VisitedLinkColor = System.Drawing.Color.White;
+            this.attachmentLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AttachmentLink_LinkClicked);
+            // 
+            // dateLabel
+            // 
+            this.dateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
+            this.dateLabel.Location = new System.Drawing.Point(299, -2);
+            this.dateLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.dateLabel.Name = "dateLabel";
+            this.dateLabel.Padding = new System.Windows.Forms.Padding(0, 0, 50, 0);
+            this.dateLabel.Size = new System.Drawing.Size(428, 72);
+            this.dateLabel.TabIndex = 7;
+            this.dateLabel.Text = "dd-mm-yy-weekday";
+            this.dateLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // UndoneLesson
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.AttachmentLink);
+            this.Controls.Add(this.attachmentLink);
             this.Controls.Add(this.DoneCheckBox);
-            this.Controls.Add(this.WorkLabel);
-            this.Controls.Add(this.TitleLabel);
-            this.Controls.Add(this.NumLabel);
-            this.Name = "UndoneUndoneLesson";
-            this.Size = new System.Drawing.Size(750, 70);
+            this.Controls.Add(this.workLabel);
+            this.Controls.Add(this.titleLabel);
+            this.Controls.Add(this.dateLabel);
+            this.Name = "UndoneLesson";
+            this.Size = new System.Drawing.Size(730, 70);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        public System.Windows.Forms.Label NumLabel;
-        public System.Windows.Forms.Label TitleLabel;
-        public System.Windows.Forms.Label WorkLabel;
         public System.Windows.Forms.CheckBox DoneCheckBox;
-        public System.Windows.Forms.LinkLabel AttachmentLink;
+        private System.Windows.Forms.Label titleLabel;
+        private System.Windows.Forms.Label workLabel;
+        private System.Windows.Forms.LinkLabel attachmentLink;
+        private System.Windows.Forms.Label dateLabel;
     }
 }

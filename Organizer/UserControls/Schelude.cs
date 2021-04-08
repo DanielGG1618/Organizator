@@ -273,7 +273,7 @@ namespace Organizer
             doneStatuses[num - 1] = done;
         }
 
-        private void SaveDoneStatuses()
+        public void SaveDoneStatuses()
         {
             for (int i = 0; i < LessonsCount; i++)
             {
@@ -317,7 +317,7 @@ namespace Organizer
             }
         }
 
-        private void LessonsRefresh()
+        public void LessonsRefresh()
         {
             LessonsCount = int.Parse(SQL.Select("SELECT COUNT(*) FROM Lessons " +
                 $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'")[0]);

@@ -223,6 +223,9 @@ namespace Organizer
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(navigation[navigationPos]);
+
+            backButton.Enabled = navigationPos > 0;
+            frontButton.Enabled = navigationPos < navigation.Count - 1;
         }
 
         private void FrontButton_Click(object sender, EventArgs e)
@@ -234,6 +237,9 @@ namespace Organizer
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(navigation[navigationPos]);
+
+            backButton.Enabled = navigationPos > 0;
+            frontButton.Enabled = navigationPos < navigation.Count - 1;
         }
 
         private void ButtonsTimer_Tick(object sender, EventArgs e)
@@ -261,6 +267,7 @@ namespace Organizer
                 schelude.DateMinusPlus();
             }
 
+            schelude.LessonsRefresh();
             SetPanel(userControls["schelude"]);
         }
 
@@ -288,15 +295,14 @@ namespace Organizer
 
         private void UndoneButton_Click(object sender, EventArgs e)
         {
-            Utils.InDevelop();
-            return;
-
             if (schelude.EditMode)
             {
                 Utils.NoEditMode();
                 return;
             }
 
+            schelude.SaveDoneStatuses();
+            undoneHomework.UpdatePanel();
             SetPanel(userControls["undoneHomework"]);
         }
 

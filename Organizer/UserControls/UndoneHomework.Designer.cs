@@ -28,27 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lessonsPanel = new System.Windows.Forms.Panel();
             this.topPanel = new System.Windows.Forms.Panel();
-            this.titleText = new System.Windows.Forms.Label();
+            this.deleteDone = new System.Windows.Forms.Button();
             this.copyScreen = new System.Windows.Forms.Button();
+            this.titleText = new System.Windows.Forms.Label();
+            this.lessonsPanel = new System.Windows.Forms.Panel();
             this.topPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lessonsPanel
-            // 
-            this.lessonsPanel.AutoScroll = true;
-            this.lessonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.lessonsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lessonsPanel.Location = new System.Drawing.Point(0, 90);
-            this.lessonsPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
-            this.lessonsPanel.Name = "lessonsPanel";
-            this.lessonsPanel.Size = new System.Drawing.Size(750, 490);
-            this.lessonsPanel.TabIndex = 3;
             // 
             // topPanel
             // 
             this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.topPanel.Controls.Add(this.deleteDone);
             this.topPanel.Controls.Add(this.copyScreen);
             this.topPanel.Controls.Add(this.titleText);
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -57,19 +48,22 @@
             this.topPanel.Size = new System.Drawing.Size(750, 70);
             this.topPanel.TabIndex = 1;
             // 
-            // titleText
+            // deleteDone
             // 
-            this.titleText.AccessibleName = "Undone homework";
-            this.titleText.Dock = System.Windows.Forms.DockStyle.Left;
-            this.titleText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.titleText.Location = new System.Drawing.Point(0, 0);
-            this.titleText.Margin = new System.Windows.Forms.Padding(70, 0, 70, 0);
-            this.titleText.Name = "titleText";
-            this.titleText.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
-            this.titleText.Size = new System.Drawing.Size(611, 70);
-            this.titleText.TabIndex = 4;
-            this.titleText.Text = "Невыполненные задания";
-            this.titleText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.deleteDone.AccessibleName = "";
+            this.deleteDone.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.deleteDone.Cursor = System.Windows.Forms.Cursors.Default;
+            this.deleteDone.Dock = System.Windows.Forms.DockStyle.Right;
+            this.deleteDone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deleteDone.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.deleteDone.Location = new System.Drawing.Point(540, 0);
+            this.deleteDone.Margin = new System.Windows.Forms.Padding(0, 10, 0, 10);
+            this.deleteDone.Name = "deleteDone";
+            this.deleteDone.Size = new System.Drawing.Size(70, 70);
+            this.deleteDone.TabIndex = 5;
+            this.deleteDone.Text = "☼";
+            this.deleteDone.UseVisualStyleBackColor = false;
+            this.deleteDone.Click += new System.EventHandler(this.DeleteDone_Click);
             // 
             // copyScreen
             // 
@@ -88,12 +82,38 @@
             this.copyScreen.UseVisualStyleBackColor = false;
             this.copyScreen.Click += new System.EventHandler(this.CopyScreen_Click);
             // 
+            // titleText
+            // 
+            this.titleText.AccessibleName = "Undone homework";
+            this.titleText.Dock = System.Windows.Forms.DockStyle.Left;
+            this.titleText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.titleText.Location = new System.Drawing.Point(0, 0);
+            this.titleText.Margin = new System.Windows.Forms.Padding(70, 0, 70, 0);
+            this.titleText.Name = "titleText";
+            this.titleText.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
+            this.titleText.Size = new System.Drawing.Size(611, 70);
+            this.titleText.TabIndex = 4;
+            this.titleText.Text = "Невыполненные задания";
+            this.titleText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lessonsPanel
+            // 
+            this.lessonsPanel.AutoScroll = true;
+            this.lessonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.lessonsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lessonsPanel.Location = new System.Drawing.Point(0, 90);
+            this.lessonsPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            this.lessonsPanel.Name = "lessonsPanel";
+            this.lessonsPanel.Size = new System.Drawing.Size(750, 490);
+            this.lessonsPanel.TabIndex = 4;
+            // 
             // UndoneHomework
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.Controls.Add(this.topPanel);
             this.Controls.Add(this.lessonsPanel);
+            this.Controls.Add(this.topPanel);
             this.Name = "UndoneHomework";
             this.Size = new System.Drawing.Size(750, 580);
             this.Load += new System.EventHandler(this.UndoneHomework_Load);
@@ -103,9 +123,10 @@
         }
 
         #endregion
-        private System.Windows.Forms.Panel lessonsPanel;
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Button copyScreen;
         private System.Windows.Forms.Label titleText;
+        private System.Windows.Forms.Button deleteDone;
+        private System.Windows.Forms.Panel lessonsPanel;
     }
 }

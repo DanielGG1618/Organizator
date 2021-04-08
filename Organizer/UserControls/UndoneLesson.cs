@@ -16,61 +16,43 @@ namespace Organizer
     {
         public int Num = 1;
         public string Title = "";
-        public string Homework = "Default";
         public Image Attachment;
 
-        public bool Done { get => DoneCheckBox.Checked; set => DoneCheckBox.Checked = value; }
-
-        public UndoneLesson(int num, string title, bool done, string homework)
+        public UndoneLesson(string title, string homework, DateTime date, int num, Image attachment, int i)
         {
-            Homework = homework;
-
             InitializeComponent();
 
-            Initialize(num, done);
-
+            UpdateTheme(i);
             SetTitle(title);
+
+            DoneCheckBox.Tag = num;
+            DoneCheckBox.AccessibleDescription = date.ToString("yyyy-MM-dd");
+
+            workLabel.Text = homework;
+            dateLabel.Text = $"{date.ToString("dd.MM.yyyy")} - {Localization.Translate(date.DayOfWeek.ToString())}";
+            Attachment = attachment; 
+            UpdateAttachmentLink();
         }
 
-        private void Initialize(int num, bool done)
+        private void UpdateTheme(int i)
         {
-            Num = num;
-
-            NumLabel.Text = Num.ToString();
-            TitleLabel.Tag = Num;
-            DoneCheckBox.Tag = Num;
-            DoneCheckBox.Checked = done;
-
-            UpdateTheme();
-        }
-
-        private void UpdateTheme()
-        {
-            NumLabel.BackColor = Main.GRAY[Num % 2];
-            TitleLabel.BackColor = Main.GRAY[(Num + 1) % 2];
-            AttachmentLink.BackColor = Main.GRAY[(Num + 1) % 2];
-            WorkLabel.BackColor = Main.GRAY[(Num + 1) % 2];
+            titleLabel.BackColor = Main.GRAY[(i + 1) % 2];
+            dateLabel.BackColor = Main.GRAY[(i + 1) % 2];
+            attachmentLink.BackColor = Main.GRAY[(i + 1) % 2];
+            workLabel.BackColor = Main.GRAY[(i + 1) % 2];
         }
 
         public void SetTitle(string title)
         {
             Title = title;
 
-            TitleLabel.AccessibleName = Title;
-            TitleLabel.Text = Localization.Translate(Title);
-        }
-
-        public void SetDone(bool done)
-        {
-            DoneCheckBox.Checked = done;
+            titleLabel.AccessibleName = Title;
+            titleLabel.Text = Localization.Translate(Title);
         }
 
         public void UpdateAttachmentLink()
         {
-            AttachmentLink.Visible = Attachment != null;
-
-            if (Schelude.Instance.EditMode && Attachment == null)
-                Schelude.Instance.RemoveAttachment(Num - 1);
+            attachmentLink.Visible = Attachment != null;
         }
 
         private void AttachmentLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

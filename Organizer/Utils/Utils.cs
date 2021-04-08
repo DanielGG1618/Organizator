@@ -98,7 +98,7 @@ namespace Organizer
             return list;
         }
 
-        /*public static List<bool> Select<Type>(string text, Dictionary<string, string> parameters = null)
+        /*public static List<Type> Select<Type>(string text, Dictionary<string, string> parameters = null)
         {
             List<string> listString = Select(text, parameters);
             List<Type> list = new List<Type>();
