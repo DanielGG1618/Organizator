@@ -19,20 +19,18 @@ namespace Organizer
         public static int MaxLessonsCount = 8; 
 
         public static Lesson[] Lessons;
-        //public static Dictionary<DateTime, Day> Days = new Dictionary<DateTime, Day>();
 
         public int LessonsCount;
         public bool EditMode;
 
         private Lesson[] editModeLessonsBackup;
         private string[] attachments;
+        private bool[] doneStatuses;
         private DateTime date, firstDay, lastDay;
 
         public Schelude()
         {
             Instance = this;
-
-            //LoadDays();
 
             firstDay = new DateTime(Program.Year, 9, 1).ToLocalTime().Date;
 
@@ -50,6 +48,7 @@ namespace Organizer
             while (!Utils.IsWorking(date));
 
             attachments = new string[Main.MaxLessonsCount];
+            doneStatuses = new bool[Main.MaxLessonsCount];
             editModeLessonsBackup = new Lesson[Main.MaxLessonsCount];
             for (int i = 0; i < Main.MaxLessonsCount; i++)
             {
@@ -106,6 +105,8 @@ namespace Organizer
                 return;
             }
 
+            SaveDoneStatuses();
+
             int step = ModifierKeys == Keys.Shift ? 7 : 1;
 
             do
@@ -127,6 +128,8 @@ namespace Organizer
                 NoEditMode();
                 return;
             }
+
+            SaveDoneStatuses();
 
             int step = ModifierKeys == Keys.Shift ? 7 : 1;
 
@@ -262,21 +265,20 @@ namespace Organizer
             attachments[i] = "remove";
         }
 
-        private void DoneCheckedChanged(object sender, EventArgs e)//////////////////////////////////////////
+        private void DoneCheckedChanged(object sender, EventArgs e)
         {
             int num = Convert.ToInt32(((CheckBox)sender).Tag);
             bool done = ((CheckBox)sender).Checked;
 
-            if (SQL.Select($"SELECT COUNT(*) FROM `DoneStatus` " +
-                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Num = '{num}' AND User = '{Settings.Default.Login}'")[0] == "0")
+            doneStatuses[num - 1] = done;
+        }
+
+        private void SaveDoneStatuses()
+        {
+            for (int i = 0; i < LessonsCount; i++)
             {
-                SQL.Insert("INSERT INTO DoneStatus (Done, Date, Num, User) " +
-                    $"VALUES ('{(done ? 1 : 0)}', '{date.ToString("yyyy-MM-dd")}', '{num}', '{Settings.Default.Login}')");
-            }
-            else
-            {
-                SQL.Insert($"UPDATE DoneStatus SET Done = '{(done ? 1 : 0)}' " +
-                    $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Num = '{num}' AND User = '{Settings.Default.Login}'");
+                SQL.Insert($"UPDATE DoneStatus SET Done = '{(doneStatuses[i] ? 1 : 0)}' " +
+                    $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Num = '{i + 1}' AND User = '{Settings.Default.Login}'");
             }
         }
 
