@@ -350,5 +350,10 @@ namespace Organizer
             MessageBox.Show(Math.Round(float.Parse(text.main.temp.ToString()) - 273.15f).ToString(), "градусов Цельсия");
             response.Close();
         }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            schelude.SaveDoneStatuses();
+        }
     }
 }

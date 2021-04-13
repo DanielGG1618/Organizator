@@ -399,6 +399,11 @@ namespace Organizer
             dateText.Font = new Font(dateText.Font.FontFamily, 12);
         }
 
+        private void Schelude_Leave(object sender, EventArgs e)
+        {
+            MessageBox.Show("1243213");
+        }
+
         public override void ApplyColor()
         {
             base.ApplyColor();
