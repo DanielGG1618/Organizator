@@ -147,6 +147,8 @@ namespace Organizer
 
         private void EditModeButton_Click(object sender, EventArgs e)
         {
+            SaveDoneStatuses();
+
             EditMode = !EditMode;
 
             if (EditMode)
