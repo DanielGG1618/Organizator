@@ -46,8 +46,6 @@ namespace Organizer
         {
             Instance = this;
 
-            //MessageBox.Show(Holydays.Method()[0].InnerText);
-
             LoadFiles();
 
             MaxLessonsCount = 7;////////////
@@ -93,7 +91,7 @@ namespace Organizer
 
         private void LoadFiles()
         {
-            LoadHolydays();
+            Holidays.Load();
 
             LoadDefaultWorks();
         }

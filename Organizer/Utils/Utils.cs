@@ -31,7 +31,7 @@ namespace Organizer
             MessageBox.Show(Localization.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
-        public static bool IsWorking(DateTime date)
+        public static bool IsWorkingOLD(DateTime date)
         {
             DateTime generalViewDate = new DateTime(4, date.Month, date.Day);
 
@@ -55,6 +55,11 @@ namespace Organizer
                     Main.ThisYearHolydays.Contains<DateTime>(date));
 
             return isWorking;
+        }
+
+        public static bool IsWorking(DateTime day)
+        {
+            return !Holidays.Days.Contains(day);
         }
     }
 
