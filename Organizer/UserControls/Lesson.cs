@@ -24,36 +24,11 @@ namespace Organizer
 
         private string defaultHomework;
 
-        public Lesson()
-        {
-            InitializeComponent();
-        }
-
         public Lesson(int num, bool done = false)
         {
             InitializeComponent();
 
             Initialize(num, done);
-        }
-
-        public Lesson(int num, string title, bool done = false)
-        {
-            InitializeComponent();
-
-            Initialize(num, done);
-
-            SetTitle(title);
-        }
-
-        public Lesson(int num, string title, bool done, string homework)
-        {
-            Homework = homework;
-
-            InitializeComponent();
-
-            Initialize(num, done);
-
-            SetTitle(title);
         }
 
         private void Initialize(int num, bool done)
@@ -104,6 +79,7 @@ namespace Organizer
             WorkLabel.Text = "";
             DoneCheckBox.Visible = false;
             AttachmentLink.Visible = false;
+            copyToNearest.Visible = false;
             Enabled = false;
         }
 
@@ -139,20 +115,6 @@ namespace Organizer
             DoneCheckBox.Checked = done;
         }
 
-        public static string Totxt(Lesson lesson)
-        {
-            string txt = lesson.Num + "╫ " + lesson.Title + "╫ " + lesson.Done + "╫ " + lesson.Homework;
-
-            return txt;
-        }
-
-        public static Lesson Fromtxt(string txt)
-        {
-            string[] splited = txt.Split(new string[1] { "╫ " }, StringSplitOptions.None);
-
-            return new Lesson(int.Parse(splited[0]), splited[1], bool.Parse(splited[2]), splited[3]);
-        }
-
         public void UpdateAttachmentLink()
         {
             AttachmentLink.Visible = Attachment != null;
@@ -161,9 +123,44 @@ namespace Organizer
                 Schelude.Instance.RemoveAttachment(Num - 1);
         }
 
+        public void SetMode(bool mode)
+        {
+            AddAttachmentButton.Visible = mode;
+            HomeworkTextBox.Visible = mode;
+            copyToNearest.Visible = mode;
+        }
+
         private void AttachmentLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             new PictureForm(this).Show();
+        }
+
+        private void CopyToNearest_Click(object sender, EventArgs e)
+        {
+            DateTime date = Schelude.Instance.Date;
+
+            var dateNum = SQL.Select("SELECT Date, Num FROM Lessons WHERE Homework = 'Default' AND " +
+                $"Date > '{date.ToString("yyyy-MM-dd")}' AND Title = '{Title}' AND Class = '{Settings.Default.Class}' ORDER BY Date");
+
+            if (dateNum.Count == 0)
+            {
+                dateNum = SQL.Select("SELECT DayOfWeek, Num FROM Schelude " +
+                    $"WHERE DayOfWeek > '{(int)date.DayOfWeek}' AND Class = '{Settings.Default.Class}' AND Lesson = '{Title}' ORDER BY DayOfWeek");
+
+                if (dateNum.Count == 0)
+                {
+                    dateNum = SQL.Select("SELECT DayOfWeek, Num FROM Schelude " +
+                        $"WHERE Class = '{Settings.Default.Class}' AND Lesson = '{Title}' ORDER BY DayOfWeek DESC");
+                }
+
+                do
+                    date = date.AddDays(1);
+                while ((int)date.DayOfWeek != int.Parse(dateNum[0]));
+
+                dateNum[0] = date.ToString();
+            }
+
+            MessageBox.Show("Успешно скопировано в " + dateNum[0] + "   " + dateNum[1] + "(нет)");
         }
     }
 }

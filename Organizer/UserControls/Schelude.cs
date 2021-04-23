@@ -23,10 +23,12 @@ namespace Organizer
         public int LessonsCount;
         public bool EditMode;
 
+        public DateTime Date;
+
         private Lesson[] editModeLessonsBackup;
         private string[] attachments;
         private bool[] doneStatuses;
-        private DateTime date, firstDay, lastDay;
+        private DateTime firstDay, lastDay;
 
         public Schelude()
         {
@@ -36,16 +38,16 @@ namespace Organizer
 
             lastDay = new DateTime(Program.Year + 1, 5, 31).ToLocalTime().Date;
 
-            date = DateTime.Today;
+            Date = DateTime.Today;
 
             do
             {
-                date = date.AddDays(1);
+                Date = Date.AddDays(1);
 
-                if (date >= lastDay)
-                    date = firstDay;
+                if (Date >= lastDay)
+                    Date = firstDay;
             }
-            while (!Utils.IsWorking(date));
+            while (!Utils.IsWorking(Date));
 
             attachments = new string[Main.MaxLessonsCount];
             doneStatuses = new bool[Main.MaxLessonsCount];
@@ -111,12 +113,12 @@ namespace Organizer
 
             do
             {
-                date = date.AddDays(step);
+                Date = Date.AddDays(step);
 
-                if (date >= lastDay)
-                    date = firstDay;
+                if (Date >= lastDay)
+                    Date = firstDay;
             }
-            while (!Utils.IsWorking(date));
+            while (!Utils.IsWorking(Date));
 
             LessonsRefresh();
         }
@@ -135,12 +137,12 @@ namespace Organizer
 
             do
             {
-                date = date.AddDays(-step);
+                Date = Date.AddDays(-step);
 
-                if (date <= firstDay)
-                    date = lastDay;
+                if (Date <= firstDay)
+                    Date = lastDay;
             }
-            while (!Utils.IsWorking(date));
+            while (!Utils.IsWorking(Date));
 
             LessonsRefresh();
         }
@@ -185,7 +187,7 @@ namespace Organizer
                             SQL.Insert($"INSERT INTO Lessons (Homework, Title, Num, Date, Class) VALUES " +
                                 $"('{lesson.Homework.ToString().Replace("'"[0], '"').Replace('`', '"')}', " +
                                 $"'{lesson.Title}', '{(i + 1).ToString()}', " +
-                                $"'{date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')");
+                                $"'{Date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')");
                         }
                         
                         catch
@@ -193,7 +195,7 @@ namespace Organizer
                             SQL.Insert($"UPDATE Lessons SET " +
                                 $"Homework = '{lesson.Homework.Replace("'"[0], '"').Replace('`', '"')}', " +
                                 $"Title = '{lesson.Title}' " +
-                                $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND " +
+                                $"WHERE Num = '{lesson.Num}' AND Date = '{Date.ToString("yyyy-MM-dd")}' AND " +
                                 $"Class = '{Settings.Default.Class}'");
                         }
 
@@ -202,7 +204,7 @@ namespace Organizer
                             try
                             {
                                 SQL.Insert($"UPDATE Lessons SET Attachments = '' " +
-                                    $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND " +
+                                    $"WHERE Num = '{lesson.Num}' AND Date = '{Date.ToString("yyyy-MM-dd")}' AND " +
                                     $"Class = '{Settings.Default.Class}'");
                             }
                             catch (Exception exeption)
@@ -216,7 +218,7 @@ namespace Organizer
                             try
                             {
                                 SQL.UpdateFile($"UPDATE Lessons SET Attachments = @File " +
-                                    $"WHERE Num = '{lesson.Num}' AND Date = '{date.ToString("yyyy-MM-dd")}' AND " +
+                                    $"WHERE Num = '{lesson.Num}' AND Date = '{Date.ToString("yyyy-MM-dd")}' AND " +
                                     $"Class = '{Settings.Default.Class}'", attachments[i]);
                             }
                             catch (Exception exeption)
@@ -232,11 +234,9 @@ namespace Organizer
 
             editModeButton.ForeColor = EditMode ? Color.LimeGreen : new Color();
 
-            for (int i = 0; i < LessonsCount; i++)
-            {
-                Lessons[i].AddAttachmentButton.Visible = EditMode;
-                Lessons[i].HomeworkTextBox.Visible = EditMode;
-            }
+            for (int i = 0; i < LessonsCount; i++)            
+                Lessons[i].SetMode(EditMode);
+ 
         }
 
         private void LessonsPanelMouseWheel(object sender, MouseEventArgs e)
@@ -280,7 +280,7 @@ namespace Organizer
             for (int i = 0; i < LessonsCount; i++)
             {
                 SQL.Insert($"UPDATE DoneStatus SET Done = '{(doneStatuses[i] ? 1 : 0)}' " +
-                    $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Num = '{i + 1}' AND User = '{Settings.Default.Login}'");
+                    $"WHERE Date = '{Date.ToString("yyyy-MM-dd")}' AND Num = '{i + 1}' AND User = '{Settings.Default.Login}'");
             }
         }
 
@@ -322,29 +322,29 @@ namespace Organizer
         public void LessonsRefresh()
         {
             LessonsCount = int.Parse(SQL.Select("SELECT COUNT(*) FROM Lessons " +
-                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'")[0]);
+                $"WHERE Date = '{Date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'")[0]);
 
             List<string> titleHomework;
             List<Image> attachments = SQL.SelectImages($"SELECT Attachments FROM Lessons " +
-                    $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
+                    $"WHERE Date = '{Date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
             List<bool> doneStatuses = SQL.SelectBools($"SELECT Done FROM `DoneStatus` " +
-                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND User = '{Settings.Default.Login}' ORDER BY Num");
+                $"WHERE Date = '{Date.ToString("yyyy-MM-dd")}' AND User = '{Settings.Default.Login}' ORDER BY Num");
 
             if (LessonsCount == 0)
             {
                 LessonsCount = int.Parse(SQL.Select("SELECT COUNT(Lesson) FROM Schelude " +
-                        $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Class = '{Settings.Default.Class}'")[0]);
+                        $"WHERE DayOfWeek = '{(int)Date.DayOfWeek}' AND Class = '{Settings.Default.Class}'")[0]);
 
                 titleHomework = SQL.Select("SELECT Lesson, 'Default' FROM Schelude " +
-                            $"WHERE DayOfWeek = '{(int)date.DayOfWeek}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
+                            $"WHERE DayOfWeek = '{(int)Date.DayOfWeek}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
 
                 string values = "";
                 string doneValues = "";
 
                 for (int i = 0; i < LessonsCount; i++)
                 {
-                    values += $", ('{titleHomework[2 * i]}', 'Default', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')";
-                    doneValues += $", ('0', '{i + 1}', '{date.ToString("yyyy-MM-dd")}', '{Settings.Default.Login}')";
+                    values += $", ('{titleHomework[2 * i]}', 'Default', '{i + 1}', '{Date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')";
+                    doneValues += $", ('0', '{i + 1}', '{Date.ToString("yyyy-MM-dd")}', '{Settings.Default.Login}')";
                 }
 
                 values = values.Remove(0, 1);
@@ -357,7 +357,7 @@ namespace Organizer
             else
             {
                 titleHomework = SQL.Select("SELECT Title, Homework FROM Lessons " +
-                $"WHERE Date = '{date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
+                $"WHERE Date = '{Date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
 
                 for (int i = 0; i < LessonsCount; i++)
                 {
@@ -381,7 +381,7 @@ namespace Organizer
             for (int i = Main.MaxLessonsCount - 1; i >= LessonsCount; i--)
                 Lessons[i].TurnOff();
 
-            dateText.Text = $"{date.ToString("dd.MM.yyyy")} - {Localization.Translate(date.DayOfWeek.ToString())}";
+            dateText.Text = $"{Date.ToString("dd.MM.yyyy")} - {Localization.Translate(Date.DayOfWeek.ToString())}";
         }
 
         private void CopyScreen_Click(object sender, EventArgs e)

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Organizer
 {
-    public struct Day
+    /*public struct Day
     {
         public DateTime Date;
         private readonly DateTime generalViewDate;
@@ -58,37 +58,7 @@ namespace Organizer
 
             return isWorking;
         }
-
-        public static string Totxt(Day day)
-        {
-            string txt = day.Num.ToString();
-
-            foreach (var lesson in day.Lessons)
-                txt += "░ " + Lesson.Totxt(lesson);
-
-            return txt;
-        }
-
-        public static Day Fromtxt(string txt)
-        {
-            Day day;
-
-            string[] dayLessons = txt.Split(new string[1] { "░ " }, StringSplitOptions.None);
-            string[] splited = dayLessons[0].Split(new string[1] { "╫ " }, StringSplitOptions.None);
-
-            List<Lesson> lessons = new List<Lesson>();
-
-            for (int i = 1; i < dayLessons.Length; i++)
-                lessons.Add(Lesson.Fromtxt(dayLessons[i]));
-
-            for (int i = 2; i < splited.Length - 1; i++)
-                lessons.Add(Lesson.Fromtxt(splited[i]));
-
-            day = new Day(int.Parse(splited[0]), lessons);
-
-            return day;
-        }
-    }
+    }*/
 
     public enum Roles { NotLogedIn, Regular, Moderator, Admin }
 }

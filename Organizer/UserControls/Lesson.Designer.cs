@@ -35,6 +35,7 @@
             this.DoneCheckBox = new System.Windows.Forms.CheckBox();
             this.HomeworkTextBox = new System.Windows.Forms.TextBox();
             this.AttachmentLink = new System.Windows.Forms.LinkLabel();
+            this.copyToNearest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // NumLabel
@@ -129,11 +130,27 @@
             this.AttachmentLink.VisitedLinkColor = System.Drawing.Color.White;
             this.AttachmentLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.AttachmentLink_LinkClicked);
             // 
+            // copyToNearest
+            // 
+            this.copyToNearest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.copyToNearest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.copyToNearest.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.copyToNearest.Location = new System.Drawing.Point(570, -16);
+            this.copyToNearest.Name = "copyToNearest";
+            this.copyToNearest.Size = new System.Drawing.Size(65, 47);
+            this.copyToNearest.TabIndex = 7;
+            this.copyToNearest.Text = "→";
+            this.copyToNearest.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.copyToNearest.UseVisualStyleBackColor = false;
+            this.copyToNearest.Visible = false;
+            this.copyToNearest.Click += new System.EventHandler(this.CopyToNearest_Click);
+            // 
             // Lesson
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.AttachmentLink);
             this.Controls.Add(this.HomeworkTextBox);
+            this.Controls.Add(this.copyToNearest);
+            this.Controls.Add(this.AttachmentLink);
             this.Controls.Add(this.DoneCheckBox);
             this.Controls.Add(this.AddAttachmentButton);
             this.Controls.Add(this.WorkLabel);
@@ -155,5 +172,6 @@
         public System.Windows.Forms.CheckBox DoneCheckBox;
         public System.Windows.Forms.TextBox HomeworkTextBox;
         public System.Windows.Forms.LinkLabel AttachmentLink;
+        private System.Windows.Forms.Button copyToNearest;
     }
 }
