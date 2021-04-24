@@ -108,7 +108,7 @@
             this.HomeworkTextBox.MaxLength = 200;
             this.HomeworkTextBox.Multiline = true;
             this.HomeworkTextBox.Name = "HomeworkTextBox";
-            this.HomeworkTextBox.Size = new System.Drawing.Size(630, 45);
+            this.HomeworkTextBox.Size = new System.Drawing.Size(585, 45);
             this.HomeworkTextBox.TabIndex = 5;
             this.HomeworkTextBox.Visible = false;
             // 
@@ -132,15 +132,14 @@
             // 
             // copyToNearest
             // 
-            this.copyToNearest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.copyToNearest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.copyToNearest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.copyToNearest.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.copyToNearest.Location = new System.Drawing.Point(570, -16);
+            this.copyToNearest.Location = new System.Drawing.Point(635, 25);
             this.copyToNearest.Name = "copyToNearest";
-            this.copyToNearest.Size = new System.Drawing.Size(65, 47);
+            this.copyToNearest.Size = new System.Drawing.Size(45, 45);
             this.copyToNearest.TabIndex = 7;
             this.copyToNearest.Text = "→";
-            this.copyToNearest.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.copyToNearest.UseVisualStyleBackColor = false;
             this.copyToNearest.Visible = false;
             this.copyToNearest.Click += new System.EventHandler(this.CopyToNearest_Click);

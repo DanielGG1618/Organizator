@@ -50,6 +50,7 @@ namespace Organizer
             TitleLabel.BackColor = Main.GRAY[(Num + 1) % 2];
             AttachmentLink.BackColor = Main.GRAY[(Num + 1) % 2];
             HomeworkTextBox.BackColor = Main.GRAY[(Num + 1) % 2];
+            copyToNearest.BackColor = Main.GRAY[Num % 2];
             WorkLabel.BackColor = Main.GRAY[(Num + 1) % 2];
             AddAttachmentButton.BackColor = Main.GRAY[Num % 2];
         }
@@ -110,11 +111,6 @@ namespace Organizer
             }
         }
 
-        public void SetDone(bool done)
-        {
-            DoneCheckBox.Checked = done;
-        }
-
         public void UpdateAttachmentLink()
         {
             AttachmentLink.Visible = Attachment != null;
@@ -125,9 +121,20 @@ namespace Organizer
 
         public void SetMode(bool mode)
         {
+            if (!Enabled)
+                return;
+
             AddAttachmentButton.Visible = mode;
             HomeworkTextBox.Visible = mode;
-            copyToNearest.Visible = mode;
+
+            if (mode)
+            {
+                copyToNearest.Visible = Homework != "Default";
+                HomeworkTextBox.Size = new Size(Homework != "Default" ? 585 : 630, 45);
+            }
+
+            else
+                copyToNearest.Visible = false;
         }
 
         private void AttachmentLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -137,15 +144,18 @@ namespace Organizer
 
         private void CopyToNearest_Click(object sender, EventArgs e)
         {
-            DateTime date = Schelude.Instance.Date;
+            DoneCheckBox.Checked = true;
+
+            DateTime currentDate = Schelude.Instance.Date;
+            DateTime nearestDate;
 
             var dateNum = SQL.Select("SELECT Date, Num FROM Lessons WHERE Homework = 'Default' AND " +
-                $"Date > '{date.ToString("yyyy-MM-dd")}' AND Title = '{Title}' AND Class = '{Settings.Default.Class}' ORDER BY Date");
+                $"Date > '{currentDate.ToString("yyyy-MM-dd")}' AND Title = '{Title}' AND Class = '{Settings.Default.Class}' ORDER BY Date");
 
             if (dateNum.Count == 0)
             {
                 dateNum = SQL.Select("SELECT DayOfWeek, Num FROM Schelude " +
-                    $"WHERE DayOfWeek > '{(int)date.DayOfWeek}' AND Class = '{Settings.Default.Class}' AND Lesson = '{Title}' ORDER BY DayOfWeek");
+                    $"WHERE DayOfWeek > '{(int)currentDate.DayOfWeek}' AND Class = '{Settings.Default.Class}' AND Lesson = '{Title}' ORDER BY DayOfWeek");
 
                 if (dateNum.Count == 0)
                 {
@@ -153,14 +163,29 @@ namespace Organizer
                         $"WHERE Class = '{Settings.Default.Class}' AND Lesson = '{Title}' ORDER BY DayOfWeek DESC");
                 }
 
-                do
-                    date = date.AddDays(1);
-                while ((int)date.DayOfWeek != int.Parse(dateNum[0]));
+                SQL.Insert($"INSERT INTO Lessons (Date, Num, Homework, Class) VALUES ('{dateNum[0]}', '{dateNum[1]}', " +
+                    $"'{Homework}', '{Settings.Default.Class}')");
 
-                dateNum[0] = date.ToString();
+                nearestDate = currentDate.AddDays(1);
+
+                int dayOfWeek = int.Parse(dateNum[0]);
+                while ((int)currentDate.DayOfWeek != dayOfWeek)
+                    currentDate = currentDate.AddDays(1);
+
+                dateNum[0] = nearestDate.ToString("yyyy-MM-dd");
             }
 
-            MessageBox.Show("Успешно скопировано в " + dateNum[0] + "   " + dateNum[1] + "(нет)");
+            else
+            {
+                dateNum[0] = DateTime.Parse(dateNum[0]).ToString("yyyy-MM-dd");
+                SQL.Insert($"UPDATE Lessons SET Homework = '{Homework}' WHERE Date = '{dateNum[0]}' AND Num = '{dateNum[1]}' AND Class = '{Settings.Default.Class}'");
+                nearestDate = DateTime.Parse(dateNum[0]);
+            }
+
+            string isNext = currentDate.DayOfWeek > nearestDate.DayOfWeek ? " " + Localization.Translate("Next").ToLower() : "";
+
+            MessageBox.Show($"{Localization.Translate("Successfully copied to")}{isNext} " +
+                $"{Localization.Translate(DateTime.Parse(dateNum[0]).DayOfWeek.ToString()).ToLower()}");
         }
     }
 }

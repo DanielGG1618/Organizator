@@ -369,6 +369,7 @@ namespace Organizer
 
             for (int i = 0; i < LessonsCount; i++)
             {
+                Lessons[i].Enabled = true;
                 Lessons[i].NumLabel.ForeColor = Settings.Default.Color;
                 Lessons[i].DoneCheckBox.Visible = true;
 
