@@ -14,6 +14,7 @@ namespace Organizer
     public partial class UserControlGG : UserControl
     {
         public List<Control> LocalizationControls = new List<Control>();
+        public List<List<Control>> ThemedControls = new List<List<Control>>();
 
         public UserControlGG()
         {

@@ -22,9 +22,9 @@ namespace Organizer
 
         public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
 
-        public static List<DateTime> PrimaryHolydays = new List<DateTime>();
-        public static List<DateTime> SecondaryHolydays = new List<DateTime>();
-        public static List<DateTime> ThisYearHolydays = new List<DateTime>();
+        //public static List<DateTime> PrimaryHolidays = new List<DateTime>();
+        //public static List<DateTime> SecondaryHolidays = new List<DateTime>();
+        //public static List<DateTime> ThisYearHolidays = new List<DateTime>();
 
         public static int MaxLessonsCount;
 
@@ -36,6 +36,7 @@ namespace Organizer
         private Schelude schelude;
         private Options options;
         private AdminPanel adminPanel;
+        private ModerPanel moderPanel;
         private UndoneHomework undoneHomework;
         private Dictionary<string, UserControlGG> userControls = new Dictionary<string, UserControlGG>();
 
@@ -59,12 +60,17 @@ namespace Organizer
             {
                 Location = new Point(0, 100)
             };
+            moderPanel = new ModerPanel
+            {
+                Location = new Point(0, 100)
+            };
             undoneHomework = new UndoneHomework();
 
             userControls.Add("schelude", schelude);
-            userControls.Add("options", options);
-            userControls.Add("adminPanel", adminPanel);
             userControls.Add("undoneHomework", undoneHomework);
+            userControls.Add("options", options);
+            userControls.Add("moderPanel", moderPanel);
+            userControls.Add("adminPanel", adminPanel);
 
             FormClosing += options.SaveSettings;
 
@@ -110,13 +116,13 @@ namespace Organizer
             }
         }
 
-        private void LoadHolydays()
+        /*private void LoadHolidays()
         {
-            PrimaryHolydays.Clear();
-            SecondaryHolydays.Clear();
-            ThisYearHolydays.Clear();
+            PrimaryHolidays.Clear();
+            SecondaryHolidays.Clear();
+            ThisYearHolidays.Clear();
 
-            string[] holydays = File.ReadAllLines("Holydays.txt");
+            string[] holydays = File.ReadAllLines("Holidays.txt");
 
             foreach (var day in holydays)
             {
@@ -126,7 +132,7 @@ namespace Organizer
                 {
                     string[] dayMonth = holyday[0].Split('.');
 
-                    PrimaryHolydays.Add(new DateTime(4, Convert.ToInt32(dayMonth[1]), Convert.ToInt32(dayMonth[0])));
+                    PrimaryHolidays.Add(new DateTime(4, Convert.ToInt32(dayMonth[1]), Convert.ToInt32(dayMonth[0])));
                 }
 
                 else if (holyday[1] == "secondary")
@@ -140,7 +146,7 @@ namespace Organizer
                         dayToAdd <= new DateTime(4, Convert.ToInt32(finishDayMonth[1]), Convert.ToInt32(finishDayMonth[0]));
                         dayToAdd = dayToAdd.AddDays(1))
                     {
-                        SecondaryHolydays.Add(dayToAdd);
+                        SecondaryHolidays.Add(dayToAdd);
                     }
                 }
 
@@ -155,11 +161,11 @@ namespace Organizer
                         dayToAdd <= new DateTime(2000 + Convert.ToInt32(finishDayMonthYear[2]), Convert.ToInt32(finishDayMonthYear[1]), Convert.ToInt32(finishDayMonthYear[0]));
                         dayToAdd = dayToAdd.AddDays(1))
                     {
-                        ThisYearHolydays.Add(dayToAdd);
+                        ThisYearHolidays.Add(dayToAdd);
                     }
                 }
             }
-        }
+        }*/
 
         public void ApplyLocalization()
         {
@@ -223,10 +229,10 @@ namespace Organizer
             mainPanel.Controls.Add(navigation[navigationPos]);
 
             backButton.Enabled = navigationPos > 0;
-            frontButton.Enabled = navigationPos < navigation.Count - 1;
+            forwardButton.Enabled = navigationPos < navigation.Count - 1;
         }
 
-        private void FrontButton_Click(object sender, EventArgs e)
+        private void ForwardButton_Click(object sender, EventArgs e)
         {
             if (navigationPos > navigation.Count - 2)
                 return;
@@ -237,13 +243,13 @@ namespace Organizer
             mainPanel.Controls.Add(navigation[navigationPos]);
 
             backButton.Enabled = navigationPos > 0;
-            frontButton.Enabled = navigationPos < navigation.Count - 1;
+            forwardButton.Enabled = navigationPos < navigation.Count - 1;
         }
 
         private void ButtonsTimer_Tick(object sender, EventArgs e)
         {
             backButton.Enabled = navigationPos > 0;
-            frontButton.Enabled = navigationPos < navigation.Count - 1;
+            forwardButton.Enabled = navigationPos < navigation.Count - 1;
         }
 
         private void SqlUpdater_Tick(object sender, EventArgs e)
@@ -261,7 +267,7 @@ namespace Organizer
 
             if (activeUserControl == options)
             {
-                LoadHolydays();
+                //LoadHolidays();
                 schelude.DateMinusPlus();
             }
 
@@ -302,6 +308,17 @@ namespace Organizer
             schelude.SaveDoneStatuses();
             undoneHomework.UpdatePanel();
             SetPanel(userControls["undoneHomework"]);
+        }
+
+        private void ModerButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            SetPanel(userControls["moderPanel"]);
         }
 
         private void SetPanel(UserControlGG userControl)

@@ -38,23 +38,23 @@ namespace Organizer
         public bool IsWorking()
         {
             bool isWorking = Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
-                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    !(Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    Main.SecondaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.ThisYearHolydays.Contains<DateTime>(Date));
+                    Main.ThisYearHolidays.Contains<DateTime>(Date));
 
             if (isWorking)
-                isWorking = (!Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
-                     (Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
-                     Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+                isWorking = (!Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) &&
+                     (Main.PrimaryHolidays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
+                     Main.PrimaryHolidays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
 
                      Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
-                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    !(Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    Main.SecondaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.ThisYearHolydays.Contains<DateTime>(Date));
+                    Main.ThisYearHolidays.Contains<DateTime>(Date));
 
             return isWorking;
         }

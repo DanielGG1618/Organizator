@@ -7,12 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Organizer.Properties;
 
 namespace Organizer
 {
     static class Holidays
     {
         public static List<DateTime> Days = new List<DateTime>();
+
+        private static int firstDBindex;
 
         public static void Load()
         {
@@ -26,6 +29,19 @@ namespace Organizer
 
             else
                 Days.AddRange(GetHolidays(year - 1));
+
+            firstDBindex = Days.Count;
+
+            List<string> dbHolidays = SQL.Select($"SELECT DateFrom, DateTo FROM Holidays WHERE Class = '{Settings.Default.Class}'");
+
+            for (int i = 0; i < dbHolidays.Count; i += 2)
+            {
+                DateTime dateFrom = DateTime.Parse(dbHolidays[i]);
+                DateTime dateTo = DateTime.Parse(dbHolidays[i + 1]);
+
+                for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
+                    Days.Add(date);
+            }
         }
 
         public static List<DateTime> GetHolidays(int year)
@@ -97,6 +113,40 @@ namespace Organizer
             }
 
             return days;
+        }
+
+        public static void Add(DateTime dateFrom, DateTime dateTo)
+        {
+            SQL.Insert($"INSERT INTO Holidays (DateFrom, DateTo, Class) " +
+                $"VALUES ('{dateFrom.ToString("yyyy-MM-dd")}', '{dateTo.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')");
+        }
+
+        public static void Delete(DateTime dateFrom, DateTime dateTo)
+        {
+            SQL.Insert($"DELETE FROM Holidays WHERE DateFrom = '{dateFrom.ToString("yyyy-MM-dd")}' AND " +
+                $"DateTo = '{dateTo.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'");
+        }
+
+        public static bool AlreadyHasBeenAdded(DateTime dateFrom, DateTime dateTo)
+        {
+            return SQL.Select($"SELECT Class FROM Holidays WHERE DateFrom = '{dateFrom.ToString("yyyy-MM-dd")}' AND " +
+                $"DateTo = '{dateTo.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'").Count == 1;
+        }
+
+        public static void ReloadDBHolidays()
+        {
+            Days.RemoveRange(firstDBindex, Days.Count - firstDBindex);
+            
+            List<string> dbHolidays = SQL.Select($"SELECT DateFrom, DateTo FROM Holidays WHERE Class = '{Settings.Default.Class}'");
+
+            for (int i = 0; i < dbHolidays.Count; i += 2)
+            {
+                DateTime dateFrom = DateTime.Parse(dbHolidays[i]);
+                DateTime dateTo = DateTime.Parse(dbHolidays[i + 1]);
+
+                for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
+                    Days.Add(date);
+            }
         }
     }
 }

@@ -31,31 +31,31 @@ namespace Organizer
             MessageBox.Show(Localization.Translate("Doesn*t work in edit mode"), "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
-        public static bool IsWorkingOLD(DateTime date)
+        /*public static bool IsWorkingOLD(DateTime date)
         {
             DateTime generalViewDate = new DateTime(4, date.Month, date.Day);
 
             bool isWorking = date.DayOfWeek != DayOfWeek.Sunday && date.DayOfWeek != DayOfWeek.Saturday &&
-                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    !(Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    Main.SecondaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.ThisYearHolydays.Contains<DateTime>(date));
+                    Main.ThisYearHolidays.Contains<DateTime>(date));
 
             if (isWorking)
-                isWorking = (!Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
-                     (Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
-                     Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+                isWorking = (!Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) &&
+                     (Main.PrimaryHolidays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
+                     Main.PrimaryHolidays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
 
                      date.DayOfWeek != DayOfWeek.Sunday && date.DayOfWeek != DayOfWeek.Saturday &&
-                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    !(Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    Main.SecondaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.ThisYearHolydays.Contains<DateTime>(date));
+                    Main.ThisYearHolidays.Contains<DateTime>(date));
 
             return isWorking;
-        }
+        }*/
 
         public static bool IsWorking(DateTime day)
         {

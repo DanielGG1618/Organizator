@@ -86,3 +86,4 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPa
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.xml
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.UndoneHomework.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.UndoneLesson.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.ModerPanel.resources
