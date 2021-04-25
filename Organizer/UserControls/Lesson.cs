@@ -41,18 +41,17 @@ namespace Organizer
             DoneCheckBox.Tag = Num;
             DoneCheckBox.Checked = done;
 
-            UpdateTheme();
+            Setheme();
         }
 
-        private void UpdateTheme()
+        private void Setheme()
         {
-            NumLabel.BackColor = Main.GRAY[Num % 2];
-            TitleLabel.BackColor = Main.GRAY[(Num + 1) % 2];
-            AttachmentLink.BackColor = Main.GRAY[(Num + 1) % 2];
-            HomeworkTextBox.BackColor = Main.GRAY[(Num + 1) % 2];
-            copyToNearest.BackColor = Main.GRAY[Num % 2];
-            WorkLabel.BackColor = Main.GRAY[(Num + 1) % 2];
-            AddAttachmentButton.BackColor = Main.GRAY[Num % 2];
+            Theme.GrayControls[Num % 2 + 1].AddRange(new Control[] { NumLabel, copyToNearest, AddAttachmentButton });
+            Theme.GrayControls[(Num + 1) % 2 + 1].AddRange(new Control[] { TitleLabel, AttachmentLink, HomeworkTextBox, WorkLabel });
+
+            Theme.GrayControls[3].Add(this);
+
+            Theme.BlackWhiteForeControls.AddRange(new Control[] { TitleLabel, AttachmentLink, HomeworkTextBox, WorkLabel, copyToNearest} );
         }
 
         public void CopyFrom(Lesson lesson)
@@ -74,7 +73,7 @@ namespace Organizer
 
         public void TurnOff()
         {
-            NumLabel.ForeColor = Main.GRAY[(Num + 1) % 2];
+            NumLabel.ForeColor = Theme.Gray[Settings.Default.DarkTheme][(Num + 1) % 2];
 
             TitleLabel.Text = "";
             WorkLabel.Text = "";

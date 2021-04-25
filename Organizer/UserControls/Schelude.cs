@@ -35,7 +35,6 @@ namespace Organizer
             Instance = this;
 
             firstDay = new DateTime(Program.Year, 9, 1).ToLocalTime().Date;
-
             lastDay = new DateTime(Program.Year + 1, 5, 31).ToLocalTime().Date;
 
             Date = DateTime.Today;
@@ -63,6 +62,10 @@ namespace Organizer
 
         private void Schelude_Load(object sender, EventArgs e)
         {
+            Theme.GrayControls[0].AddRange(new Control[] { dateMinusButton, datePlusButton });
+            Theme.GrayControls[2].AddRange(new Control[] { editModeButton, copyScreen, dateText });
+            Theme.GrayControls[3].Add(this);
+
             lessonsPanel.Controls.Clear();
             lessonsPanel.MouseWheel += LessonsPanelMouseWheel;
 

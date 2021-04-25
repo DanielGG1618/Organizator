@@ -27,6 +27,8 @@ namespace Organizer
             languageSelector.Text = Settings.Default.Language;
 
             LocalizationControls.Add(colorLabel);
+            Theme.GrayControls[3].Add(this);
+            Theme.BlackWhiteForeControls.AddRange(new Control[] { themeCheckBox, colorLabel });
 
             ApplyAll();
 
@@ -72,7 +74,7 @@ namespace Organizer
         private void ThemeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.DarkTheme = ((CheckBox)sender).Checked;
-            ApplyTheme();
+            Theme.Apply();
         }
     }
 }

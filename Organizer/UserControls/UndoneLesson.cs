@@ -36,10 +36,10 @@ namespace Organizer
 
         private void UpdateTheme(int i)
         {
-            titleLabel.BackColor = Main.GRAY[(i + 1) % 2];
-            dateLabel.BackColor = Main.GRAY[(i + 1) % 2];
-            attachmentLink.BackColor = Main.GRAY[(i + 1) % 2];
-            workLabel.BackColor = Main.GRAY[(i + 1) % 2];
+            titleLabel.BackColor = Theme.Gray[Settings.Default.DarkTheme][(i + 1) % 2];
+            dateLabel.BackColor = Theme.Gray[Settings.Default.DarkTheme][(i + 1) % 2];
+            attachmentLink.BackColor = Theme.Gray[Settings.Default.DarkTheme][(i + 1) % 2];
+            workLabel.BackColor = Theme.Gray[Settings.Default.DarkTheme][(i + 1) % 2];
         }
 
         public void SetTitle(string title)

@@ -20,12 +20,6 @@ namespace Organizer
     {
         public static Main Instance;
 
-        public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
-
-        //public static List<DateTime> PrimaryHolidays = new List<DateTime>();
-        //public static List<DateTime> SecondaryHolidays = new List<DateTime>();
-        //public static List<DateTime> ThisYearHolidays = new List<DateTime>();
-
         public static int MaxLessonsCount;
 
         public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
@@ -80,9 +74,10 @@ namespace Organizer
         private void Head_Load(object sender, EventArgs e)
         {
             LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton });
+            Theme.GrayControls[2].AddRange(new Control[] { backButton, forwardButton });
+            Theme.GrayControls[3].Add(this);
 
             ApplyColor();
-            ApplyTheme();
             ApplyLocalization();
 
             mainPanel.Controls.Clear();
@@ -93,11 +88,14 @@ namespace Organizer
             navigation.Add(schelude);
 
             TryLogIn("Admin", "Admin");///////////////////
+
+            Theme.Apply();
         }
 
         private void LoadFiles()
         {
             Holidays.Load();
+            Theme.InitializeGray();
 
             LoadDefaultWorks();
         }
@@ -116,57 +114,6 @@ namespace Organizer
             }
         }
 
-        /*private void LoadHolidays()
-        {
-            PrimaryHolidays.Clear();
-            SecondaryHolidays.Clear();
-            ThisYearHolidays.Clear();
-
-            string[] holydays = File.ReadAllLines("Holidays.txt");
-
-            foreach (var day in holydays)
-            {
-                string[] holyday = day.Split(new string[1] { " type: " }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (holyday[1] == "primary")
-                {
-                    string[] dayMonth = holyday[0].Split('.');
-
-                    PrimaryHolidays.Add(new DateTime(4, Convert.ToInt32(dayMonth[1]), Convert.ToInt32(dayMonth[0])));
-                }
-
-                else if (holyday[1] == "secondary")
-                {
-                    string[] startFinish = holyday[0].Split('-');
-
-                    string[] startDayMonth = startFinish[0].Split('.');
-                    string[] finishDayMonth = startFinish.Length > 1 ? startFinish[1].Split('.') : startDayMonth;
-
-                    for (DateTime dayToAdd = new DateTime(4, Convert.ToInt32(startDayMonth[1]), Convert.ToInt32(startDayMonth[0]));
-                        dayToAdd <= new DateTime(4, Convert.ToInt32(finishDayMonth[1]), Convert.ToInt32(finishDayMonth[0]));
-                        dayToAdd = dayToAdd.AddDays(1))
-                    {
-                        SecondaryHolidays.Add(dayToAdd);
-                    }
-                }
-
-                else if (holyday[1] == "this year")
-                {
-                    string[] startFinish = holyday[0].Split('-');
-
-                    string[] startDayMonthYear = startFinish[0].Split('.');
-                    string[] finishDayMonthYear = startFinish.Length > 1 ? startFinish[1].Split('.') : startDayMonthYear;
-
-                    for (DateTime dayToAdd = new DateTime(2000 + Convert.ToInt32(startDayMonthYear[2]), Convert.ToInt32(startDayMonthYear[1]), Convert.ToInt32(startDayMonthYear[0]));
-                        dayToAdd <= new DateTime(2000 + Convert.ToInt32(finishDayMonthYear[2]), Convert.ToInt32(finishDayMonthYear[1]), Convert.ToInt32(finishDayMonthYear[0]));
-                        dayToAdd = dayToAdd.AddDays(1))
-                    {
-                        ThisYearHolidays.Add(dayToAdd);
-                    }
-                }
-            }
-        }*/
-
         public void ApplyLocalization()
         {
             foreach (var control in LocalizationControls)
@@ -180,11 +127,6 @@ namespace Organizer
         public void ApplyColor()
         {
             ForeColor = Settings.Default.Color;
-        }
-
-        public void ApplyTheme()
-        {
-            BackColor = Settings.Default.DarkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
         }
 
         private void TryLogIn(string login, string password)
