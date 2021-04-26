@@ -16,12 +16,11 @@ namespace Organizer
         public AdminPanel()
         {
             InitializeComponent();
+
+            Theme.GrayControls[2].AddRange(new Control[] { updateDictionary, reference, addTranslationKeyGridView });
+            Theme.GrayControls[3].Add(this);
         }
 
-        private void AdminPanel_Load(object sender, EventArgs e)
-        {
-            ApplyAll();
-        }
 
         private void Reference_Click(object sender, EventArgs e)
         {

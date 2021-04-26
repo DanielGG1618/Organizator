@@ -31,7 +31,23 @@ namespace Organizer
                     GrayControls[i][j].BackColor = Gray[Settings.Default.DarkTheme][i];
 
             foreach (var control in BlackWhiteForeControls)
-                control.ForeColor = Settings.Default.DarkTheme ? Color.White : Color.FromArgb(64, 64, 64);
+            {
+                Color blackWhite = Settings.Default.DarkTheme ? Color.White : Color.FromArgb(64, 64, 64);
+
+                control.ForeColor = blackWhite;
+
+                if (control is LinkLabel link)
+                {
+                    link.LinkColor = blackWhite;
+                    link.VisitedLinkColor = blackWhite;
+                }
+            }
+        }
+
+        public static void Apply(Control[] controls, int i)
+        {
+            for (int j = 0; j < controls.Length; j++)
+                GrayControls[i][j].BackColor = Gray[Settings.Default.DarkTheme][i];
         }
     }
 }

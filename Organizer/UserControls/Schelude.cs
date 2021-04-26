@@ -58,14 +58,14 @@ namespace Organizer
             }
 
             InitializeComponent();
+
+            Theme.GrayControls[0].AddRange(new Control[] { dateMinusButton, datePlusButton });
+            Theme.GrayControls[2].AddRange(new Control[] { editModeButton, copyScreen, dateText });
+            Theme.GrayControls[3].Add(this);
         }
 
         private void Schelude_Load(object sender, EventArgs e)
         {
-            Theme.GrayControls[0].AddRange(new Control[] { dateMinusButton, datePlusButton });
-            Theme.GrayControls[2].AddRange(new Control[] { editModeButton, copyScreen, dateText });
-            Theme.GrayControls[3].Add(this);
-
             lessonsPanel.Controls.Clear();
             lessonsPanel.MouseWheel += LessonsPanelMouseWheel;
 
@@ -93,7 +93,6 @@ namespace Organizer
             LessonsRefresh();
 
             ApplyColor();
-            ApplyTheme();
         }
 
         public void DateMinusPlus()

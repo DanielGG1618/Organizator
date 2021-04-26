@@ -17,6 +17,9 @@ namespace Organizer
         public Options()
         {
             InitializeComponent();
+
+            Theme.GrayControls[3].Add(this);
+            Theme.BlackWhiteForeControls.AddRange(new Control[] { themeCheckBox, colorLabel });
         }
 
         private void Settings_Load(object sender, EventArgs e)
@@ -27,9 +30,7 @@ namespace Organizer
             languageSelector.Text = Settings.Default.Language;
 
             LocalizationControls.Add(colorLabel);
-            Theme.GrayControls[3].Add(this);
-            Theme.BlackWhiteForeControls.AddRange(new Control[] { themeCheckBox, colorLabel });
-
+            
             ApplyAll();
 
             themeCheckBox.Checked = Settings.Default.DarkTheme;

@@ -15,6 +15,10 @@ namespace Organizer
         public ModerPanel()
         {
             InitializeComponent();
+
+            Theme.GrayControls[2].Add(addHoliday);
+            Theme.GrayControls[3].Add(this);
+            Theme.BlackWhiteForeControls.AddRange(new Control[] { fromLabel, toLabel });
         }
 
         private void ModerPanel_Load(object sender, EventArgs e)

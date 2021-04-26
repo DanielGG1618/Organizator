@@ -22,7 +22,7 @@ namespace Organizer
         {
             InitializeComponent();
 
-            UpdateTheme(i);
+            SetTheme(i);
             SetTitle(title);
 
             DoneCheckBox.Tag = num;
@@ -32,14 +32,13 @@ namespace Organizer
             dateLabel.Text = $"{date.ToString("dd.MM.yyyy")} - {Localization.Translate(date.DayOfWeek.ToString())}";
             Attachment = attachment; 
             UpdateAttachmentLink();
+
+            Theme.BlackWhiteForeControls.AddRange(new Control[] { titleLabel, dateLabel, attachmentLink, workLabel });
         }
 
-        private void UpdateTheme(int i)
+        private void SetTheme(int i)
         {
-            titleLabel.BackColor = Theme.Gray[Settings.Default.DarkTheme][(i + 1) % 2];
-            dateLabel.BackColor = Theme.Gray[Settings.Default.DarkTheme][(i + 1) % 2];
-            attachmentLink.BackColor = Theme.Gray[Settings.Default.DarkTheme][(i + 1) % 2];
-            workLabel.BackColor = Theme.Gray[Settings.Default.DarkTheme][(i + 1) % 2];
+            Theme.GrayControls[(i + 1) % 2 + 1].AddRange(new Control[] { titleLabel, dateLabel, attachmentLink, workLabel });
         }
 
         public void SetTitle(string title)

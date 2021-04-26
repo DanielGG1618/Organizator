@@ -99,7 +99,6 @@
             // lessonsPanel
             // 
             this.lessonsPanel.AutoScroll = true;
-            this.lessonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.lessonsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lessonsPanel.Location = new System.Drawing.Point(0, 90);
             this.lessonsPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);

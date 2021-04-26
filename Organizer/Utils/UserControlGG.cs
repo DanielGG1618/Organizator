@@ -26,11 +26,6 @@ namespace Organizer
             ForeColor = Settings.Default.Color;
         }
 
-        public virtual void ApplyTheme()
-        {
-            BackColor = Settings.Default.DarkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
-        }
-
         public virtual void ApplyLocalization()
         {
             foreach (var control in LocalizationControls)
@@ -41,7 +36,6 @@ namespace Organizer
         public void ApplyAll()
         {
             ApplyColor();
-            ApplyTheme();
             ApplyLocalization();
         }
     }

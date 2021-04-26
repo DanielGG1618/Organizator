@@ -23,6 +23,8 @@ namespace Organizer
             InitializeComponent();
 
             LocalizationControls.AddRange(new Control[] { titleText, copyScreen });
+            Theme.GrayControls[3].Add(this);
+            Theme.GrayControls[2].AddRange(new Control[] { copyScreen, deleteDone, titleText });
         }
 
         private void UndoneHomework_Load(object sender, EventArgs e)
@@ -30,7 +32,8 @@ namespace Organizer
             UpdatePanel();
 
             ApplyColor();
-            ApplyTheme();
+
+            Theme.Apply();
         }
 
         public void UpdatePanel()
