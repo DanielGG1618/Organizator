@@ -44,10 +44,16 @@ namespace Organizer
             }
         }
 
+        public static void ApplyBlackWhiteFore(Control[] controls)
+        {
+            foreach (Control control in controls)
+                control.ForeColor = Settings.Default.DarkTheme ? Color.White : Color.FromArgb(64, 64, 64);
+        }
+
         public static void Apply(Control[] controls, int i)
         {
-            for (int j = 0; j < controls.Length; j++)
-                GrayControls[i][j].BackColor = Gray[Settings.Default.DarkTheme][i];
+            foreach (Control control in controls)
+                control.BackColor = Gray[Settings.Default.DarkTheme][i];
         }
     }
 }

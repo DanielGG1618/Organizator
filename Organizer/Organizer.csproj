@@ -139,12 +139,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkAddForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WorkAddForm.Designer.cs">
-      <DependentUpon>WorkAddForm.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="LessonSelectForm.resx">
       <DependentUpon>LessonSelectForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -186,9 +180,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WorkAddForm.resx">
-      <DependentUpon>WorkAddForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

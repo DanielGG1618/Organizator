@@ -32,8 +32,6 @@ namespace Organizer
             UpdatePanel();
 
             ApplyColor();
-
-            Theme.Apply();
         }
 
         public void UpdatePanel()
@@ -50,15 +48,15 @@ namespace Organizer
 
             for (int i = 0; i < undoneLessons.Count; i += 4)
             {
-                UndoneLesson lesson = new UndoneLesson(undoneLessons[i], undoneLessons[i + 1],
+                UndoneLesson lesson = new UndoneLesson (undoneLessons[i], undoneLessons[i + 1],
                     DateTime.Parse(undoneLessons[i + 2]), int.Parse(undoneLessons[i + 3]), attachments[i/4], i/4);
                 Lessons.Add(lesson);
 
                 lesson.DoneCheckBox.CheckStateChanged += DoneCheckedChanged;
-
                 lesson.Location = new Point(0, 70*i/4);
+                lesson.UpdateTheme(i/4);
+
                 lessonsPanel.Controls.Add(lesson);
-                LocalizationControls.Add(lesson);
             }
         }
 

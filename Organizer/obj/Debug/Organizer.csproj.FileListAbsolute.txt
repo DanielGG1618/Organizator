@@ -65,7 +65,6 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csp
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.LessonSelectForm.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.YesNoCancelDialog.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Properties.Resources.resources
-C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.WorkAddForm.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.GenerateResource.cache
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.CoreCompileInputs.cache
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.exe

@@ -32,7 +32,6 @@ namespace Organizer
         private AdminPanel adminPanel;
         private ModerPanel moderPanel;
         private UndoneHomework undoneHomework;
-        private Dictionary<string, UserControlGG> userControls = new Dictionary<string, UserControlGG>();
 
         private List<UserControlGG> navigation = new List<UserControlGG>();
         private int navigationPos = 0;
@@ -59,12 +58,6 @@ namespace Organizer
                 Location = new Point(0, 100)
             };
             undoneHomework = new UndoneHomework();
-
-            userControls.Add("schelude", schelude);
-            userControls.Add("undoneHomework", undoneHomework);
-            userControls.Add("options", options);
-            userControls.Add("moderPanel", moderPanel);
-            userControls.Add("adminPanel", adminPanel);
 
             FormClosing += options.SaveSettings;
 
@@ -207,14 +200,14 @@ namespace Organizer
                 return;
             }
 
-            if (activeUserControl == options)
+            if (activeUserControl == moderPanel)
             {
                 //LoadHolidays();
                 schelude.DateMinusPlus();
             }
 
             schelude.LessonsRefresh();
-            SetPanel(userControls["schelude"]);
+            SetPanel(schelude);
         }
 
         private void OptionsButton_Click(object sender, EventArgs e)
@@ -225,7 +218,7 @@ namespace Organizer
                 return;
             }
 
-            SetPanel(userControls["options"]);
+            SetPanel(options);
         }
 
         private void AdminButton_Click(object sender, EventArgs e)
@@ -236,7 +229,7 @@ namespace Organizer
                 return;
             }
 
-            SetPanel(userControls["adminPanel"]);
+            SetPanel(adminPanel);
         }
 
         private void UndoneButton_Click(object sender, EventArgs e)
@@ -249,7 +242,7 @@ namespace Organizer
 
             schelude.SaveDoneStatuses();
             undoneHomework.UpdatePanel();
-            SetPanel(userControls["undoneHomework"]);
+            SetPanel(undoneHomework);
         }
 
         private void ModerButton_Click(object sender, EventArgs e)
@@ -260,7 +253,7 @@ namespace Organizer
                 return;
             }
 
-            SetPanel(userControls["moderPanel"]);
+            SetPanel(moderPanel);
         }
 
         private void SetPanel(UserControlGG userControl)

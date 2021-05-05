@@ -46,7 +46,7 @@
             this.attachmentLink.LinkColor = System.Drawing.Color.White;
             this.attachmentLink.Location = new System.Drawing.Point(677, -22);
             this.attachmentLink.Name = "attachmentLink";
-            this.attachmentLink.Size = new System.Drawing.Size(50, 40);
+            this.attachmentLink.Size = new System.Drawing.Size(53, 40);
             this.attachmentLink.TabIndex = 6;
             this.attachmentLink.TabStop = true;
             this.attachmentLink.Text = "...";
@@ -72,7 +72,7 @@
             this.workLabel.Margin = new System.Windows.Forms.Padding(0);
             this.workLabel.Name = "workLabel";
             this.workLabel.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.workLabel.Size = new System.Drawing.Size(720, 50);
+            this.workLabel.Size = new System.Drawing.Size(730, 50);
             this.workLabel.TabIndex = 2;
             this.workLabel.Text = "workworkworkworkworkworkworkworkworkworkwork";
             this.workLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -99,7 +99,7 @@
             this.dateLabel.Margin = new System.Windows.Forms.Padding(0);
             this.dateLabel.Name = "dateLabel";
             this.dateLabel.Padding = new System.Windows.Forms.Padding(0, 0, 50, 0);
-            this.dateLabel.Size = new System.Drawing.Size(428, 72);
+            this.dateLabel.Size = new System.Drawing.Size(431, 72);
             this.dateLabel.TabIndex = 7;
             this.dateLabel.Text = "dd-mm-yy-weekday";
             this.dateLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;

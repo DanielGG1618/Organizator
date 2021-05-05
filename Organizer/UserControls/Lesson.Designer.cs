@@ -88,7 +88,7 @@
             // DoneCheckBox
             // 
             this.DoneCheckBox.AutoSize = true;
-            this.DoneCheckBox.BackColor = System.Drawing.Color.Transparent;
+            this.DoneCheckBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.DoneCheckBox.Location = new System.Drawing.Point(50, 0);
             this.DoneCheckBox.Name = "DoneCheckBox";
             this.DoneCheckBox.Size = new System.Drawing.Size(18, 17);

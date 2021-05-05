@@ -29,18 +29,24 @@ namespace Organizer
             DoneCheckBox.AccessibleDescription = date.ToString("yyyy-MM-dd");
 
             workLabel.Text = homework;
-            dateLabel.Text = $"{date.ToString("dd.MM.yyyy")} - {Localization.Translate(date.DayOfWeek.ToString())}";
-            Attachment = attachment; 
+            dateLabel.Text = $"{date:dd.MM.yyyy} - {Localization.Translate(date.DayOfWeek.ToString())}";
+            Attachment = attachment;
             UpdateAttachmentLink();
 
-            Theme.BlackWhiteForeControls.AddRange(new Control[] { titleLabel, dateLabel, attachmentLink, workLabel });
+            Theme.BlackWhiteForeControls.AddRange(new Control[] { titleLabel, dateLabel, attachmentLink, workLabel, DoneCheckBox });
         }
 
         private void SetTheme(int i)
         {
-            Theme.GrayControls[(i + 1) % 2 + 1].AddRange(new Control[] { titleLabel, dateLabel, attachmentLink, workLabel });
+            Theme.GrayControls[(i + 1) % 2 + 1].AddRange(new Control[] { titleLabel, dateLabel, attachmentLink, workLabel, DoneCheckBox });
         }
 
+        public void UpdateTheme(int i)
+        {
+            Theme.Apply(new Control[] { titleLabel, dateLabel, attachmentLink, workLabel, DoneCheckBox }, (i + 1) % 2 + 1);
+            Theme.ApplyBlackWhiteFore(new Control[] { titleLabel, dateLabel, attachmentLink, workLabel, DoneCheckBox });
+        }
+        
         public void SetTitle(string title)
         {
             Title = title;

@@ -47,7 +47,7 @@ namespace Organizer
         private void Setheme()
         {
             Theme.GrayControls[Num % 2 + 1].AddRange(new Control[] { NumLabel, copyToNearest, AddAttachmentButton });
-            Theme.GrayControls[(Num + 1) % 2 + 1].AddRange(new Control[] { TitleLabel, AttachmentLink, HomeworkTextBox, WorkLabel });
+            Theme.GrayControls[(Num + 1) % 2 + 1].AddRange(new Control[] { TitleLabel, AttachmentLink, HomeworkTextBox, WorkLabel, DoneCheckBox });
 
             Theme.GrayControls[3].Add(this);
 
