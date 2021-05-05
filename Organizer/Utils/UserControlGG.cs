@@ -14,6 +14,7 @@ namespace Organizer
     public partial class UserControlGG : UserControl
     {
         public List<Control> LocalizationControls = new List<Control>();
+        public List<List<Control>> ThemedControls = new List<List<Control>>();
 
         public UserControlGG()
         {
@@ -23,11 +24,6 @@ namespace Organizer
         public virtual void ApplyColor()
         {
             ForeColor = Settings.Default.Color;
-        }
-
-        public virtual void ApplyTheme()
-        {
-            BackColor = Settings.Default.DarkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
         }
 
         public virtual void ApplyLocalization()
@@ -40,7 +36,6 @@ namespace Organizer
         public void ApplyAll()
         {
             ApplyColor();
-            ApplyTheme();
             ApplyLocalization();
         }
     }

@@ -14,8 +14,6 @@ namespace Organizer
         [STAThread]
         static void Main()
         {
-            Settings.Default.Login = "Admin";//////////\\\\\\\\\\\\\\\
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

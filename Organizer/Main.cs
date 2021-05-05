@@ -12,20 +12,16 @@ using System.Windows.Forms;
 using System.IO;
 using System.Media;
 using Organizer.Properties;
+using Newtonsoft.Json;
 
 namespace Organizer
 {
     public partial class Main : Form
     {
-        public static Color[] GRAY = new Color[2] { Color.FromArgb(56, 56, 56), Color.FromArgb(48, 48, 48) };
-
-        public static List<DateTime> PrimaryHolydays = new List<DateTime>();
-        public static List<DateTime> SecondaryHolydays = new List<DateTime>();
-        public static List<DateTime> ThisYearHolydays = new List<DateTime>();
+        public static Main Instance;
 
         public static int MaxLessonsCount;
 
-        public static string[][] Schelude;
         public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
 
         public List<Control> LocalizationControls = new List<Control>();
@@ -34,18 +30,19 @@ namespace Organizer
         private Schelude schelude;
         private Options options;
         private AdminPanel adminPanel;
-        private Dictionary<string, UserControlGG> userControls = new Dictionary<string, UserControlGG>();
+        private ModerPanel moderPanel;
+        private UndoneHomework undoneHomework;
 
         private List<UserControlGG> navigation = new List<UserControlGG>();
         private int navigationPos = 0;
 
         public Main()
         {
+            Instance = this;
+
             LoadFiles();
 
-            foreach (var lessons in Schelude)
-                if (lessons.Length > MaxLessonsCount)
-                    MaxLessonsCount = lessons.Length;
+            MaxLessonsCount = 7;////////////
 
             schelude = new Schelude();
             options = new Options
@@ -54,14 +51,14 @@ namespace Organizer
             };
             adminPanel = new AdminPanel
             {
-                Location = new Point(175, 100)
+                Location = new Point(0, 100)
             };
+            moderPanel = new ModerPanel
+            {
+                Location = new Point(0, 100)
+            };
+            undoneHomework = new UndoneHomework();
 
-            userControls.Add("schelude", schelude);
-            userControls.Add("options", options);
-            userControls.Add("adminPanel", adminPanel);
-
-            FormClosing += schelude.SaveFiles;
             FormClosing += options.SaveSettings;
 
             InitializeComponent();
@@ -69,11 +66,12 @@ namespace Organizer
 
         private void Head_Load(object sender, EventArgs e)
         {
-            LocalizationControls.Add(this);
+            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton });
+            Theme.GrayControls[2].AddRange(new Control[] { backButton, forwardButton });
+            Theme.GrayControls[3].Add(this);
 
             ApplyColor();
-            SetTheme(Settings.Default.DarkTheme);
-            SetLanguage();
+            ApplyLocalization();
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(schelude);
@@ -81,13 +79,16 @@ namespace Organizer
             activeUserControl = schelude;
 
             navigation.Add(schelude);
+
+            TryLogIn("Admin", "Admin");///////////////////
+
+            Theme.Apply();
         }
 
         private void LoadFiles()
         {
-            LoadSchedule();
-
-            LoadHolydays();
+            Holidays.Load();
+            Theme.InitializeGray();
 
             LoadDefaultWorks();
         }
@@ -106,73 +107,7 @@ namespace Organizer
             }
         }
 
-        private void LoadHolydays()
-        {
-            PrimaryHolydays.Clear();
-            SecondaryHolydays.Clear();
-            ThisYearHolydays.Clear();
-
-            string[] holydays = File.ReadAllLines("Holydays.txt");
-
-            foreach (var day in holydays)
-            {
-                string[] holyday = day.Split(new string[1] { " type: " }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (holyday[1] == "primary")
-                {
-                    string[] dayMonth = holyday[0].Split('.');
-
-                    PrimaryHolydays.Add(new DateTime(4, Convert.ToInt32(dayMonth[1]), Convert.ToInt32(dayMonth[0])));
-                }
-
-                else if (holyday[1] == "secondary")
-                {
-                    string[] startFinish = holyday[0].Split('-');
-
-                    string[] startDayMonth = startFinish[0].Split('.');
-                    string[] finishDayMonth = startFinish.Length > 1 ? startFinish[1].Split('.') : startDayMonth;
-
-                    for (DateTime dayToAdd = new DateTime(4, Convert.ToInt32(startDayMonth[1]), Convert.ToInt32(startDayMonth[0]));
-                        dayToAdd <= new DateTime(4, Convert.ToInt32(finishDayMonth[1]), Convert.ToInt32(finishDayMonth[0]));
-                        dayToAdd = dayToAdd.AddDays(1))
-                    {
-                        SecondaryHolydays.Add(dayToAdd);
-                    }
-                }
-
-                else if (holyday[1] == "this year")
-                {
-                    string[] startFinish = holyday[0].Split('-');
-
-                    string[] startDayMonthYear = startFinish[0].Split('.');
-                    string[] finishDayMonthYear = startFinish.Length > 1 ? startFinish[1].Split('.') : startDayMonthYear;
-
-                    for (DateTime dayToAdd = new DateTime(2000 + Convert.ToInt32(startDayMonthYear[2]), Convert.ToInt32(startDayMonthYear[1]), Convert.ToInt32(startDayMonthYear[0]));
-                        dayToAdd <= new DateTime(2000 + Convert.ToInt32(finishDayMonthYear[2]), Convert.ToInt32(finishDayMonthYear[1]), Convert.ToInt32(finishDayMonthYear[0]));
-                        dayToAdd = dayToAdd.AddDays(1))
-                    {
-                        ThisYearHolydays.Add(dayToAdd);
-                    }
-                }
-            }
-        }
-
-        private void LoadSchedule()
-        {
-            string[] schedule = File.ReadAllLines("Lessons.txt", Encoding.UTF8);
-
-            Schelude = new string[schedule.Length][];
-
-            for (int i = 0; i < schedule.Length; i++)
-            {
-                List<string> list = new List<string>(schedule[i].Split(new string[2] { ", ", ": " }, StringSplitOptions.RemoveEmptyEntries));
-                list.RemoveAt(0);
-
-                Schelude[i] = list.ToArray();
-            }
-        }
-
-        public void SetLanguage()
+        public void ApplyLocalization()
         {
             foreach (var control in LocalizationControls)
                 if (!string.IsNullOrEmpty(control.Text) && !string.IsNullOrEmpty(control.AccessibleName))
@@ -187,43 +122,34 @@ namespace Organizer
             ForeColor = Settings.Default.Color;
         }
 
-        public void SetTheme(bool darkTheme)
+        private void TryLogIn(string login, string password)
         {
-            BackColor = darkTheme ? Color.FromArgb(32, 32, 32) : Color.FromArgb(255, 255, 255);
-        }
+            List<string> user = SQL.Select($"SELECT Class, Role FROM Users WHERE `Login` = '{login}' AND `Password` = '{password}'");
 
-        private void TreeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (schelude.EditMode)
+            if (user.Count == 0)
+                MessageBox.Show(Localization.Translate("Login or password is wrong"));
+
+            else
             {
-                Utils.NoEditMode();
-                return;
-            }
+                Settings.Default.Login = login;
+                Settings.Default.Role = (Roles)Enum.Parse(typeof(Roles), user[1]);
 
-            if (activeUserControl == options)
-            {
-                LoadHolydays();
+                switch (Settings.Default.Role)
+                {
+                    case Roles.Admin:
+                        adminButton.Visible = true;
+                        break;
 
-                schelude.DateMinusPlus();
-            }
+                    case Roles.Moderator:
+                        adminButton.Visible = false;
+                        break;
 
-            UserControlGG userControl = userControls[e.Node.Tag.ToString()];
+                    case Roles.Regular:
+                        adminButton.Visible = false;
+                        break;
+                }
 
-            userControl.ApplyColor();
-            userControl.ApplyTheme();
-            userControl.ApplyLocalization();
-
-            mainPanel.Controls.Clear();
-            mainPanel.Controls.Add(userControl);
-            activeUserControl = userControl;
-
-            if (navigation[navigationPos] != userControl)
-            {
-                if(navigationPos < navigation.Count - 2)
-                    navigation.RemoveRange(navigationPos, navigation.Count - navigationPos);
-
-                navigation.Add(userControl);
-                navigationPos++;
+                MessageBox.Show(Localization.Translate("Succesful login"));
             }
         }
 
@@ -236,9 +162,12 @@ namespace Organizer
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(navigation[navigationPos]);
+
+            backButton.Enabled = navigationPos > 0;
+            forwardButton.Enabled = navigationPos < navigation.Count - 1;
         }
 
-        private void FrontButton_Click(object sender, EventArgs e)
+        private void ForwardButton_Click(object sender, EventArgs e)
         {
             if (navigationPos > navigation.Count - 2)
                 return;
@@ -247,17 +176,134 @@ namespace Organizer
 
             mainPanel.Controls.Clear();
             mainPanel.Controls.Add(navigation[navigationPos]);
+
+            backButton.Enabled = navigationPos > 0;
+            forwardButton.Enabled = navigationPos < navigation.Count - 1;
         }
 
         private void ButtonsTimer_Tick(object sender, EventArgs e)
         {
             backButton.Enabled = navigationPos > 0;
-            frontButton.Enabled = navigationPos < navigation.Count - 1;
+            forwardButton.Enabled = navigationPos < navigation.Count - 1;
         }
 
         private void SqlUpdater_Tick(object sender, EventArgs e)
         {
-            _ = SQL.Select("SELECT IsAdmin FROM Users Where Login = 'Admin'");
+            _ = SQL.Select("SELECT Role FROM Users Where Login = 'Admin'");
+        }
+
+        private void ScheludeButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            if (activeUserControl == moderPanel)
+            {
+                //LoadHolidays();
+                schelude.DateMinusPlus();
+            }
+
+            schelude.LessonsRefresh();
+            SetPanel(schelude);
+        }
+
+        private void OptionsButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            SetPanel(options);
+        }
+
+        private void AdminButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            SetPanel(adminPanel);
+        }
+
+        private void UndoneButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            schelude.SaveDoneStatuses();
+            undoneHomework.UpdatePanel();
+            SetPanel(undoneHomework);
+        }
+
+        private void ModerButton_Click(object sender, EventArgs e)
+        {
+            if (schelude.EditMode)
+            {
+                Utils.NoEditMode();
+                return;
+            }
+
+            SetPanel(moderPanel);
+        }
+
+        private void SetPanel(UserControlGG userControl)
+        {
+            userControl.ApplyAll();
+
+            mainPanel.Controls.Clear();
+            mainPanel.Controls.Add(userControl);
+            activeUserControl = userControl;
+
+            if (navigation[navigationPos] != userControl)
+            {
+                if (navigationPos < navigation.Count - 2)
+                    navigation.RemoveRange(navigationPos, navigation.Count - navigationPos);
+
+                navigation.Add(userControl);
+                navigationPos++;
+            }
+        }
+
+        private void WeatherWithIP(object sender, FormClosingEventArgs e)
+        {
+            WebRequest wr = WebRequest.Create("https://ipwhois.app/json/" + Dns.GetHostByName(Dns.GetHostName()).AddressList.First());
+
+            wr.Method = "GET";
+            WebResponse response = wr.GetResponse();
+
+            Stream stream = response.GetResponseStream();
+            StreamReader sr = new StreamReader(stream);
+
+            string sReadData = sr.ReadToEnd();
+            dynamic ip = JsonConvert.DeserializeObject(sReadData);
+            response.Close();
+
+            wr = WebRequest.Create("https://api.openweathermap.org/data/2.5/weather?q=" + ip.city + "," + ip.country_code + "&appid=711c2fd34e54038de950712b8fe02a75");
+            wr.Method = "GET";
+            response = wr.GetResponse();
+
+            stream = response.GetResponseStream();
+            sr = new StreamReader(stream);
+
+            sReadData = sr.ReadToEnd();
+            dynamic text = JsonConvert.DeserializeObject(sReadData);
+            MessageBox.Show(Math.Round(float.Parse(text.main.temp.ToString()) - 273.15f).ToString(), "градусов Цельсия");
+            response.Close();
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            schelude.SaveDoneStatuses();
         }
     }
 }
