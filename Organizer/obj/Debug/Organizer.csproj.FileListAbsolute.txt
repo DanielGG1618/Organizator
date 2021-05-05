@@ -65,7 +65,6 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csp
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.LessonSelectForm.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.YesNoCancelDialog.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Properties.Resources.resources
-C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.WorkAddForm.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.GenerateResource.cache
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csproj.CoreCompileInputs.cache
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.exe
@@ -78,3 +77,12 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.csp
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Main.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Lesson.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.AdminPanel.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.PictureForm.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.UndoneHomework.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.UndoneLesson.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.ModerPanel.resources

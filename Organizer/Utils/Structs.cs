@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Organizer
 {
-    public struct Day
+    /*public struct Day
     {
         public DateTime Date;
         private readonly DateTime generalViewDate;
@@ -23,9 +23,6 @@ namespace Organizer
             generalViewDate = new DateTime(4, Date.Month, Date.Day);
 
             Lessons = new List<Lesson>();
-
-            for (int i = 0; i < Main.Schelude[(int)Date.DayOfWeek].Length; i++)
-                Lessons.Add(new Lesson(i + 1, Main.Schelude[(int)Date.DayOfWeek][i]));
         }
 
         public Day(int num, List<Lesson> lessons)
@@ -40,46 +37,28 @@ namespace Organizer
 
         public bool IsWorking()
         {
-            return Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
-                    !(Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
+            bool isWorking = Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
+                    !(Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    (!Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) &&
-                    (Main.PrimaryHolydays.Contains<DateTime>(generalViewDate) ||
-                    Main.PrimaryHolydays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+                    Main.SecondaryHolidays.Contains<DateTime>(generalViewDate) ||
 
-                    Main.SecondaryHolydays.Contains<DateTime>(generalViewDate) ||
+                    Main.ThisYearHolidays.Contains<DateTime>(Date));
 
-                    Main.ThisYearHolydays.Contains<DateTime>(Date));
+            if (isWorking)
+                isWorking = (!Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) &&
+                     (Main.PrimaryHolidays.Contains<DateTime>(generalViewDate.AddDays(1)) ||
+                     Main.PrimaryHolidays.Contains<DateTime>(generalViewDate.AddDays(-1)))) ||
+
+                     Date.DayOfWeek != DayOfWeek.Sunday && Date.DayOfWeek != DayOfWeek.Saturday &&
+                    !(Main.PrimaryHolidays.Contains<DateTime>(generalViewDate) ||
+
+                    Main.SecondaryHolidays.Contains<DateTime>(generalViewDate) ||
+
+                    Main.ThisYearHolidays.Contains<DateTime>(Date));
+
+            return isWorking;
         }
+    }*/
 
-        public static string Totxt(Day day)
-        {
-            string txt = day.Num.ToString();
-
-            foreach (var lesson in day.Lessons)
-                txt += "░ " + Lesson.Totxt(lesson);
-
-            return txt;
-        }
-
-        public static Day Fromtxt(string txt)
-        {
-            Day day;
-
-            string[] dayLessons = txt.Split(new string[1] { "░ " }, StringSplitOptions.None);
-            string[] splited = dayLessons[0].Split(new string[1] { "╫ " }, StringSplitOptions.None);
-
-            List<Lesson> lessons = new List<Lesson>();
-
-            for (int i = 1; i < dayLessons.Length; i++)
-                lessons.Add(Lesson.Fromtxt(dayLessons[i]));
-
-            for (int i = 2; i < splited.Length - 1; i++)
-                lessons.Add(Lesson.Fromtxt(splited[i]));
-
-            day = new Day(int.Parse(splited[0]), lessons);
-
-            return day;
-        }
-    }
+    public enum Roles { NotLogedIn, Regular, Moderator, Admin }
 }

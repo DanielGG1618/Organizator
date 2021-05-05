@@ -35,6 +35,7 @@
             this.datePlusButton = new System.Windows.Forms.Button();
             this.dateMinusButton = new System.Windows.Forms.Button();
             this.lessonsPanel = new System.Windows.Forms.Panel();
+            this.openAttacmentDialog = new System.Windows.Forms.OpenFileDialog();
             this.topPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,6 +140,12 @@
             this.lessonsPanel.Size = new System.Drawing.Size(750, 490);
             this.lessonsPanel.TabIndex = 3;
             // 
+            // openAttacmentDialog
+            // 
+            this.openAttacmentDialog.FileName = "Attachment";
+            this.openAttacmentDialog.Filter = "(*.jpg, *.jpeg, *.jpe, *.jfif, *.png, *.bmp) | *.jpg; *.jpeg; *.jpe; *.jfif; *.pn" +
+    "g; *.bmp";
+            // 
             // Schelude
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -161,5 +168,6 @@
         public System.Windows.Forms.Button datePlusButton;
         public System.Windows.Forms.Button dateMinusButton;
         private System.Windows.Forms.Panel lessonsPanel;
+        private System.Windows.Forms.OpenFileDialog openAttacmentDialog;
     }
 }
