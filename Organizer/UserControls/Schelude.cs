@@ -295,7 +295,7 @@ namespace Organizer
             LessonSelectForm form = new LessonSelectForm(num);
 
             if (form.ShowDialog() == DialogResult.OK)
-                    Lessons[num - 1].SetTitle(form.Lesson);
+                Lessons[num - 1].SetTitle(form.Lesson);
         }
 
         private void TitleMouseMove(object sender, EventArgs e)

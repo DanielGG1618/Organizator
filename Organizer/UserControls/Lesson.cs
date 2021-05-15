@@ -120,7 +120,7 @@ namespace Organizer
 
         public void SetMode(bool mode)
         {
-            if (!Enabled)
+            if (!Enabled && mode)
                 return;
 
             AddAttachmentButton.Visible = mode;
