@@ -41,10 +41,10 @@ namespace Organizer
             DoneCheckBox.Tag = Num;
             DoneCheckBox.Checked = done;
 
-            Setheme();
+            SetTheme();
         }
 
-        private void Setheme()
+        private void SetTheme()
         {
             Theme.GrayControls[Num % 2 + 1].AddRange(new Control[] { NumLabel, copyToNearest, AddAttachmentButton });
             Theme.GrayControls[(Num + 1) % 2 + 1].AddRange(new Control[] { TitleLabel, AttachmentLink, HomeworkTextBox, WorkLabel, DoneCheckBox });
@@ -81,10 +81,15 @@ namespace Organizer
             AttachmentLink.Visible = false;
             copyToNearest.Visible = false;
             Enabled = false;
+
+            SetMode(false);
         }
 
         public void SetTitle(string title)
-        {
+        {   ///////////////////
+            //if (Title == "-")////////////////////////////
+            //    SetMode(true);///////////////////
+
             Title = title;
 
             if (Title == "-")
@@ -96,7 +101,7 @@ namespace Organizer
                 TitleLabel.Text = Localization.Translate(Title);
 
                 try { defaultHomework = Main.LessonsDefaultWork[Title]; }
-                catch { defaultHomework = "Isn*t set"; }
+                catch { defaultHomework = "Isn't set"; }
 
                 if (Homework == "Default")
                 {

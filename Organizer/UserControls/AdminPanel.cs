@@ -84,5 +84,10 @@ namespace Organizer
             Localization.Load();
             Main.Instance.ApplyLocalization();
         }
+
+        private void RunBot_Click(object sender, EventArgs e)
+        {
+            Bot.Initialize(textBox1.Text);
+        }
     }
 }

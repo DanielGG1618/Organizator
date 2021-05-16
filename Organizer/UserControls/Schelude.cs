@@ -15,6 +15,7 @@ namespace Organizer
     public partial class Schelude : UserControlGG
     {
         public static Schelude Instance;
+        public static Bitmap Screenshot;
 
         public static int MaxLessonsCount = 8; 
 
@@ -238,7 +239,6 @@ namespace Organizer
 
             for (int i = 0; i < LessonsCount; i++)            
                 Lessons[i].SetMode(EditMode);
- 
         }
 
         private void LessonsPanelMouseWheel(object sender, MouseEventArgs e)
@@ -308,6 +308,9 @@ namespace Organizer
 
         public void WorkRefresh(int num)
         {
+            if (!Lessons[num].Enabled)
+                return;
+
             if (Lessons[num].Homework == "Default")
             {
                 Lessons[num].SetTitle(Lessons[num].Title);
@@ -395,18 +398,14 @@ namespace Organizer
             editModeButton.Visible = false;
             dateText.Font = new Font(dateText.Font.FontFamily, 20);
 
-            Clipboard.SetImage(Utils.GetControlScreenshot(this));
+            Screenshot = Utils.GetControlScreenshot(this);
+            Clipboard.SetImage(Screenshot);
 
             dateMinusButton.Visible = true;
             datePlusButton.Visible = true;
             copyScreen.Visible = true;
             editModeButton.Visible = true;
             dateText.Font = new Font(dateText.Font.FontFamily, 12);
-        }
-
-        private void Schelude_Leave(object sender, EventArgs e)
-        {
-            MessageBox.Show("1243213");
         }
 
         public override void ApplyColor()

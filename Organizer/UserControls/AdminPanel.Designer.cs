@@ -38,6 +38,8 @@
             this.English = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.updateDictionary = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.runBot = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.addTranslationKeyGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,9 +48,9 @@
             this.reference.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             this.reference.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.reference.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
-            this.reference.Location = new System.Drawing.Point(9, 142);
+            this.reference.Location = new System.Drawing.Point(207, 142);
             this.reference.Name = "reference";
-            this.reference.Size = new System.Drawing.Size(354, 64);
+            this.reference.Size = new System.Drawing.Size(156, 64);
             this.reference.TabIndex = 17;
             this.reference.Text = "Справка";
             this.reference.UseVisualStyleBackColor = false;
@@ -170,17 +172,40 @@
             this.updateDictionary.UseVisualStyleBackColor = false;
             this.updateDictionary.Click += new System.EventHandler(this.UpdateDictionary_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(9, 102);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(738, 34);
+            this.textBox1.TabIndex = 19;
+            // 
+            // runBot
+            // 
+            this.runBot.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.runBot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.runBot.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.runBot.Location = new System.Drawing.Point(9, 142);
+            this.runBot.Name = "runBot";
+            this.runBot.Size = new System.Drawing.Size(192, 64);
+            this.runBot.TabIndex = 17;
+            this.runBot.Text = "Запуск бота";
+            this.runBot.UseVisualStyleBackColor = false;
+            this.runBot.Click += new System.EventHandler(this.RunBot_Click);
+            // 
             // AdminPanel
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.addTranslationKeyGridView);
             this.Controls.Add(this.updateDictionary);
+            this.Controls.Add(this.runBot);
             this.Controls.Add(this.reference);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "AdminPanel";
             this.Size = new System.Drawing.Size(750, 400);
             ((System.ComponentModel.ISupportInitialize)(this.addTranslationKeyGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -192,5 +217,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn English;
         private System.Windows.Forms.DataGridViewButtonColumn AddButton;
         private System.Windows.Forms.Button updateDictionary;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button runBot;
     }
 }
