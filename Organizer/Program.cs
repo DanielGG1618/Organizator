@@ -12,7 +12,7 @@ namespace Organizer
         public static int Year;
 
         [STAThread]
-        static void Main()
+        static void Main() 
         {
             Settings.Default.Role = Roles.Guest;
             Settings.Default.Login = "Admin";

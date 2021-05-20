@@ -43,6 +43,8 @@
             this.moderButton = new System.Windows.Forms.Button();
             this.loginButton = new System.Windows.Forms.Button();
             this.signinButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.mainPanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,6 +52,7 @@
             // 
             this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainPanel.Controls.Add(this.label1);
             this.mainPanel.Location = new System.Drawing.Point(219, 12);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(750, 580);
@@ -244,6 +247,15 @@
             this.signinButton.UseVisualStyleBackColor = true;
             this.signinButton.Click += new System.EventHandler(this.SigninButton_Click);
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(155, 217);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(374, 159);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "просто подсказачка, Вход логин Admin, пароль Admin, чтобы все заработало\r\n";
+            // 
             // Main
             // 
             this.AccessibleName = "ToDoList";
@@ -266,6 +278,7 @@
             this.Text = "Список ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
+            this.mainPanel.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -285,6 +298,7 @@
         private System.Windows.Forms.Button moderButton;
         private System.Windows.Forms.Button loginButton;
         private System.Windows.Forms.Button signinButton;
+        private System.Windows.Forms.Label label1;
     }
 }
 
