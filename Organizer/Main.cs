@@ -64,9 +64,9 @@ namespace Organizer
             InitializeComponent();
         }
 
-        private void Head_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
-            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton });
+            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton, loginButton, signinButton });
             Theme.GrayControls[2].AddRange(new Control[] { backButton, forwardButton });
             Theme.GrayControls[3].Add(this);
 
@@ -74,13 +74,28 @@ namespace Organizer
             ApplyLocalization();
 
             mainPanel.Controls.Clear();
-            mainPanel.Controls.Add(schelude);
+            if (Settings.Default.Role != Roles.Guest)
+            {
+                tableLayoutPanel1.Visible = true;
+                backButton.Visible = true;
+                forwardButton.Visible = true;
+                loginButton.Visible = false;
+                signinButton.Visible = false;
 
-            activeUserControl = schelude;
+                mainPanel.Controls.Add(schelude);
 
-            navigation.Add(schelude);
+                activeUserControl = schelude;
 
-            TryLogIn("Admin", "Admin");///////////////////
+                navigation.Add(schelude);
+            }
+            else
+            {
+                tableLayoutPanel1.Visible = false;
+                backButton.Visible = false;
+                forwardButton.Visible = false;
+                loginButton.Visible = true;
+                signinButton.Visible = true;
+            }
 
             Theme.Apply();
         }
@@ -122,34 +137,24 @@ namespace Organizer
             ForeColor = Settings.Default.Color;
         }
 
-        private void TryLogIn(string login, string password)
+        public void UpdateRole(Roles role)
         {
-            List<string> user = SQL.Select($"SELECT Class, Role FROM Users WHERE `Login` = '{login}' AND `Password` = '{password}'");
-
-            if (user.Count == 0)
-                MessageBox.Show(Localization.Translate("Login or password is wrong"));
-
-            else
+            switch (role)
             {
-                Settings.Default.Login = login;
-                Settings.Default.Role = (Roles)Enum.Parse(typeof(Roles), user[1]);
+                case Roles.Admin:
+                    moderButton.Visible = true;
+                    adminButton.Visible = true;
+                    break;
 
-                switch (Settings.Default.Role)
-                {
-                    case Roles.Admin:
-                        adminButton.Visible = true;
-                        break;
+                case Roles.Moderator:
+                    moderButton.Visible = true;
+                    adminButton.Visible = false;
+                    break;
 
-                    case Roles.Moderator:
-                        adminButton.Visible = false;
-                        break;
-
-                    case Roles.Regular:
-                        adminButton.Visible = false;
-                        break;
-                }
-
-                MessageBox.Show(Localization.Translate("Succesful login"));
+                case Roles.Regular:
+                    moderButton.Visible = false;
+                    adminButton.Visible = false;
+                    break;
             }
         }
 
@@ -202,7 +207,6 @@ namespace Organizer
 
             if (activeUserControl == moderPanel)
             {
-                //LoadHolidays();
                 schelude.DateMinusPlus();
             }
 
@@ -304,6 +308,50 @@ namespace Organizer
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             schelude.SaveDoneStatuses();
+        }
+
+        private void LoginButton_Click(object sender, EventArgs e)
+        {
+            Autorization autorization = new Autorization(false);
+
+            if(autorization.ShowDialog() == DialogResult.Yes)
+            {
+                tableLayoutPanel1.Visible = true;
+                backButton.Visible = true;
+                forwardButton.Visible = true;
+                loginButton.Visible = false;
+                signinButton.Visible = false;
+
+                mainPanel.Controls.Add(schelude);
+
+                activeUserControl = schelude;
+
+                navigation.Add(schelude);
+
+                Theme.Apply();
+            }
+        }
+
+        private void SigninButton_Click(object sender, EventArgs e)
+        {
+            Autorization autorization = new Autorization(true);
+
+            if (autorization.ShowDialog() == DialogResult.Yes)
+            {
+                tableLayoutPanel1.Visible = true;
+                backButton.Visible = true;
+                forwardButton.Visible = true;
+                loginButton.Visible = false;
+                signinButton.Visible = false;
+
+                mainPanel.Controls.Add(schelude);
+
+                activeUserControl = schelude;
+
+                navigation.Add(schelude);
+
+                Theme.Apply();
+            }
         }
     }
 }

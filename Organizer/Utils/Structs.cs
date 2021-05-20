@@ -60,5 +60,5 @@ namespace Organizer
         }
     }*/
 
-    public enum Roles { NotLogedIn, Regular, Moderator, Admin }
+    public enum Roles { Guest, Regular, Moderator, Admin }
 }

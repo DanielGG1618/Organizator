@@ -88,3 +88,4 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Und
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.ModerPanel.resources
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Telegram.Bot.dll
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Telegram.Bot.xml
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Autorization.resources

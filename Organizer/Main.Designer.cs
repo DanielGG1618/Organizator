@@ -41,6 +41,8 @@
             this.undoneButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.moderButton = new System.Windows.Forms.Button();
+            this.loginButton = new System.Windows.Forms.Button();
+            this.signinButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +67,7 @@
             this.backButton.TabIndex = 11;
             this.backButton.Text = "<=";
             this.backButton.UseVisualStyleBackColor = false;
+            this.backButton.Visible = false;
             this.backButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
             // forwardButton
@@ -80,6 +83,7 @@
             this.forwardButton.TabIndex = 11;
             this.forwardButton.Text = "=>";
             this.forwardButton.UseVisualStyleBackColor = false;
+            this.forwardButton.Visible = false;
             this.forwardButton.Click += new System.EventHandler(this.ForwardButton_Click);
             // 
             // buttonsTimer
@@ -170,7 +174,6 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.moderButton, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.scheludeButton, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.undoneButton, 0, 1);
@@ -184,8 +187,10 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 503);
             this.tableLayoutPanel1.TabIndex = 13;
+            this.tableLayoutPanel1.Visible = false;
             // 
             // moderButton
             // 
@@ -205,12 +210,48 @@
             this.moderButton.UseVisualStyleBackColor = true;
             this.moderButton.Click += new System.EventHandler(this.ModerButton_Click);
             // 
+            // loginButton
+            // 
+            this.loginButton.AccessibleDescription = "";
+            this.loginButton.AccessibleName = "LogIn";
+            this.loginButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.loginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.loginButton.Location = new System.Drawing.Point(12, 12);
+            this.loginButton.Margin = new System.Windows.Forms.Padding(0);
+            this.loginButton.Name = "loginButton";
+            this.loginButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
+            this.loginButton.Size = new System.Drawing.Size(200, 150);
+            this.loginButton.TabIndex = 14;
+            this.loginButton.Text = "Вход";
+            this.loginButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.LoginButton_Click);
+            // 
+            // signinButton
+            // 
+            this.signinButton.AccessibleDescription = "";
+            this.signinButton.AccessibleName = "SignIn";
+            this.signinButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.signinButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.signinButton.Location = new System.Drawing.Point(12, 170);
+            this.signinButton.Margin = new System.Windows.Forms.Padding(0);
+            this.signinButton.Name = "signinButton";
+            this.signinButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
+            this.signinButton.Size = new System.Drawing.Size(200, 150);
+            this.signinButton.TabIndex = 14;
+            this.signinButton.Text = "Регистрация";
+            this.signinButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.signinButton.UseVisualStyleBackColor = true;
+            this.signinButton.Click += new System.EventHandler(this.SigninButton_Click);
+            // 
             // Main
             // 
             this.AccessibleName = "ToDoList";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(981, 603);
+            this.Controls.Add(this.signinButton);
+            this.Controls.Add(this.loginButton);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.forwardButton);
@@ -224,7 +265,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Список ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
-            this.Load += new System.EventHandler(this.Head_Load);
+            this.Load += new System.EventHandler(this.Main_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -242,6 +283,8 @@
         private System.Windows.Forms.Button undoneButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button moderButton;
+        private System.Windows.Forms.Button loginButton;
+        private System.Windows.Forms.Button signinButton;
     }
 }
 

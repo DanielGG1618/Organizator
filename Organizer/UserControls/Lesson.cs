@@ -101,7 +101,7 @@ namespace Organizer
                 TitleLabel.Text = Localization.Translate(Title);
 
                 try { defaultHomework = Main.LessonsDefaultWork[Title]; }
-                catch { defaultHomework = "Isn't set"; }
+                catch { defaultHomework = "Isn*t set"; }
 
                 if (Homework == "Default")
                 {
