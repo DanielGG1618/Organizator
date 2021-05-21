@@ -79,6 +79,7 @@ namespace Organizer
             if (Settings.Default.Role != Roles.Guest)
             {
                 tableLayoutPanel1.Visible = true;
+                guestTable.Visible = false;
                 backButton.Visible = true;
                 forwardButton.Visible = true;
                 loginButton.Visible = false;
@@ -89,10 +90,13 @@ namespace Organizer
                 activeUserControl = schelude;
 
                 navigation.Add(schelude);
+
+                UpdateRole(Settings.Default.Role);
             }
             else
             {
                 tableLayoutPanel1.Visible = false;
+                guestTable.Visible = true;
                 backButton.Visible = false;
                 forwardButton.Visible = false;
                 loginButton.Visible = true;
@@ -364,7 +368,24 @@ namespace Organizer
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            Utils.InDevelop();
+            tableLayoutPanel1.Visible = false;
+            guestTable.Visible = true;
+            backButton.Visible = false;
+            forwardButton.Visible = false;
+            loginButton.Visible = true;
+            signinButton.Visible = true;
+
+            mainPanel.Controls.Clear();
+            mainPanel.Controls.Add(guestPanel);
+
+            activeUserControl = guestPanel;
+
+            navigation.Clear();
+            navigation.Add(guestPanel);
+
+            Settings.Default.Role = Roles.Guest;
+            Settings.Default.Login = "";
+            Settings.Default.Class = "";
         }
     }
 }
