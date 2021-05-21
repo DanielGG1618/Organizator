@@ -47,6 +47,7 @@ namespace Organizer
             this.confirmText.Name = "confirmText";
             this.confirmText.Size = new System.Drawing.Size(246, 38);
             this.confirmText.TabIndex = 0;
+            this.confirmText.UseSystemPasswordChar = true;
             // 
             // passwordText
             // 
@@ -54,6 +55,7 @@ namespace Organizer
             this.passwordText.Name = "passwordText";
             this.passwordText.Size = new System.Drawing.Size(246, 38);
             this.passwordText.TabIndex = 1;
+            this.passwordText.UseSystemPasswordChar = true;
             // 
             // loginText
             // 

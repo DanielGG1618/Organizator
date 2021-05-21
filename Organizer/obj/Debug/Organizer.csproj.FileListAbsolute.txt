@@ -89,3 +89,4 @@ C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Mod
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Telegram.Bot.dll
 C:\Users\Даниел\source\repos\Organizator\Organizer\bin\Debug\Telegram.Bot.xml
 C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.Autorization.resources
+C:\Users\Даниел\source\repos\Organizator\Organizer\obj\Debug\Organizer.GuestPanel.resources

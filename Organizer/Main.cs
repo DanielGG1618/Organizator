@@ -32,6 +32,7 @@ namespace Organizer
         private AdminPanel adminPanel;
         private ModerPanel moderPanel;
         private UndoneHomework undoneHomework;
+        private GuestPanel guestPanel;
 
         private List<UserControlGG> navigation = new List<UserControlGG>();
         private int navigationPos = 0;
@@ -58,6 +59,7 @@ namespace Organizer
                 Location = new Point(0, 100)
             };
             undoneHomework = new UndoneHomework();
+            guestPanel = new GuestPanel();
 
             FormClosing += options.SaveSettings;
 
@@ -66,7 +68,7 @@ namespace Organizer
 
         private void Main_Load(object sender, EventArgs e)
         {
-            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton, loginButton, signinButton });
+            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton, loginButton, signinButton, opoptionsButton });
             Theme.GrayControls[2].AddRange(new Control[] { backButton, forwardButton });
             Theme.GrayControls[3].Add(this);
 
@@ -95,6 +97,12 @@ namespace Organizer
                 forwardButton.Visible = false;
                 loginButton.Visible = true;
                 signinButton.Visible = true;
+
+                mainPanel.Controls.Add(guestPanel);
+
+                activeUserControl = guestPanel;
+
+                navigation.Add(guestPanel);
             }
 
             Theme.Apply();
@@ -319,9 +327,9 @@ namespace Organizer
                 tableLayoutPanel1.Visible = true;
                 backButton.Visible = true;
                 forwardButton.Visible = true;
-                loginButton.Visible = false;
-                signinButton.Visible = false;
+                guestTable.Visible = false;
 
+                mainPanel.Controls.Clear();
                 mainPanel.Controls.Add(schelude);
 
                 activeUserControl = schelude;
@@ -341,9 +349,9 @@ namespace Organizer
                 tableLayoutPanel1.Visible = true;
                 backButton.Visible = true;
                 forwardButton.Visible = true;
-                loginButton.Visible = false;
-                signinButton.Visible = false;
+                guestTable.Visible = false;
 
+                mainPanel.Controls.Clear();
                 mainPanel.Controls.Add(schelude);
 
                 activeUserControl = schelude;
@@ -352,6 +360,11 @@ namespace Organizer
 
                 Theme.Apply();
             }
+        }
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            Utils.InDevelop();
         }
     }
 }

@@ -94,6 +94,8 @@ namespace Organizer
             LessonsRefresh();
 
             ApplyColor();
+
+            UpdateRole(Settings.Default.Role);
         }
 
         public void DateMinusPlus()
@@ -324,6 +326,24 @@ namespace Organizer
             }
         }
 
+        public void UpdateRole(Roles role)
+        {
+            switch (role)
+            {
+                case Roles.Admin:
+                    editModeButton.Visible = true;
+                    break;
+
+                case Roles.Moderator:
+                    editModeButton.Visible = true;
+                    break;
+
+                case Roles.Regular:
+                    editModeButton.Visible = false;
+                    break;
+            }
+        }
+
         public void LessonsRefresh()
         {
             LessonsCount = int.Parse(SQL.Select("SELECT COUNT(*) FROM Lessons " +
@@ -339,6 +359,13 @@ namespace Organizer
             {
                 LessonsCount = int.Parse(SQL.Select("SELECT COUNT(Lesson) FROM Schelude " +
                         $"WHERE DayOfWeek = '{(int)Date.DayOfWeek}' AND Class = '{Settings.Default.Class}'")[0]);
+
+                if (LessonsCount == 0)
+                {
+                    MessageBox.Show(Localization.Translate("Schelude is not found"));
+                    Main.Instance.Close();
+                    return;
+                }
 
                 titleHomework = SQL.Select("SELECT Lesson, 'Default' FROM Schelude " +
                             $"WHERE DayOfWeek = '{(int)Date.DayOfWeek}' AND Class = '{Settings.Default.Class}' ORDER BY Num");

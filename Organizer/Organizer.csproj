@@ -76,6 +76,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Telegram\Bot.cs" />
+    <Compile Include="UserControls\GuestPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\GuestPanel.Designer.cs">
+      <DependentUpon>GuestPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ModerPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -161,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PictureForm.resx">
       <DependentUpon>PictureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\GuestPanel.resx">
+      <DependentUpon>GuestPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ModerPanel.resx">
       <DependentUpon>ModerPanel.cs</DependentUpon>
