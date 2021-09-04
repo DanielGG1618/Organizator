@@ -17,8 +17,6 @@ namespace Organizer
         public static Schelude Instance;
         public static Bitmap Screenshot;
 
-        public static int MaxLessonsCount = 8; 
-
         public static Lesson[] Lessons;
 
         public int LessonsCount;
@@ -26,17 +24,17 @@ namespace Organizer
 
         public DateTime Date;
 
-        private Lesson[] editModeLessonsBackup;
-        private string[] attachments;
-        private bool[] doneStatuses;
-        private DateTime firstDay, lastDay;
+        private Lesson[] _editModeLessonsBackup;
+        private string[] _attachments;
+        private bool[] _doneStatuses;
+        private DateTime _firstDay, _lastDay;
 
         public Schelude()
         {
             Instance = this;
 
-            firstDay = new DateTime(Program.Year, 9, 1).ToLocalTime().Date;
-            lastDay = new DateTime(Program.Year + 1, 5, 31).ToLocalTime().Date;
+            _firstDay = new DateTime(Program.Year, 9, 1).ToLocalTime().Date;
+            _lastDay = new DateTime(Program.Year + 1, 5, 31).ToLocalTime().Date;
 
             Date = DateTime.Today;
 
@@ -44,18 +42,18 @@ namespace Organizer
             {
                 Date = Date.AddDays(1);
 
-                if (Date >= lastDay)
-                    Date = firstDay;
+                if (Date >= _lastDay)
+                    Date = _firstDay;
             }
             while (!Utils.IsWorking(Date));
 
-            attachments = new string[Main.MaxLessonsCount];
-            doneStatuses = new bool[Main.MaxLessonsCount];
-            editModeLessonsBackup = new Lesson[Main.MaxLessonsCount];
-            for (int i = 0; i < Main.MaxLessonsCount; i++)
+            _attachments = new string[Main.MAX_LESSONS_COUNT];
+            _doneStatuses = new bool[Main.MAX_LESSONS_COUNT];
+            _editModeLessonsBackup = new Lesson[Main.MAX_LESSONS_COUNT];
+            for (int i = 0; i < Main.MAX_LESSONS_COUNT; i++)
             {
-                attachments[i] = "";
-                editModeLessonsBackup[i] = new Lesson(i + 1);
+                _attachments[i] = "";
+                _editModeLessonsBackup[i] = new Lesson(i + 1);
             }
 
             InitializeComponent();
@@ -70,9 +68,9 @@ namespace Organizer
             lessonsPanel.Controls.Clear();
             lessonsPanel.MouseWheel += LessonsPanelMouseWheel;
 
-            Lessons = new Lesson[Main.MaxLessonsCount];
+            Lessons = new Lesson[Main.MAX_LESSONS_COUNT];
 
-            for (int i = 0; i < Main.MaxLessonsCount; i++)
+            for (int i = 0; i < Main.MAX_LESSONS_COUNT; i++)
             {
                 Lessons[i] = new Lesson(i + 1);
                 Lesson lesson = Lessons[i];
@@ -120,8 +118,8 @@ namespace Organizer
             {
                 Date = Date.AddDays(step);
 
-                if (Date >= lastDay)
-                    Date = firstDay;
+                if (Date >= _lastDay)
+                    Date = _firstDay;
             }
             while (!Utils.IsWorking(Date));
 
@@ -144,8 +142,8 @@ namespace Organizer
             {
                 Date = Date.AddDays(-step);
 
-                if (Date <= firstDay)
-                    Date = lastDay;
+                if (Date <= _firstDay)
+                    Date = _lastDay;
             }
             while (!Utils.IsWorking(Date));
 
@@ -160,7 +158,7 @@ namespace Organizer
 
             if (EditMode)
                 for (int i = 0; i < LessonsCount; i++)
-                    editModeLessonsBackup[i].CopyFrom(Lessons[i]);
+                    _editModeLessonsBackup[i].CopyFrom(Lessons[i]);
 
             else
             {
@@ -171,7 +169,7 @@ namespace Organizer
                 if (result == DialogResult.No)
                 {
                     for (int i = 0; i < LessonsCount; i++)
-                        Lessons[i].CopyFrom(editModeLessonsBackup[i]);
+                        Lessons[i].CopyFrom(_editModeLessonsBackup[i]);
 
                     LessonsRefresh();
                 }
@@ -191,7 +189,7 @@ namespace Organizer
                         {
                             SQL.Insert($"INSERT INTO Lessons (Homework, Title, Num, Date, Class) VALUES " +
                                 $"('{lesson.Homework.ToString().Replace("'"[0], '"').Replace('`', '"')}', " +
-                                $"'{lesson.Title}', '{(i + 1).ToString()}', " +
+                                $"'{lesson.Title}', '{(i + 1)}', " +
                                 $"'{Date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')");
                         }
                         
@@ -204,7 +202,7 @@ namespace Organizer
                                 $"Class = '{Settings.Default.Class}'");
                         }
 
-                        if (attachments[i] == "remove")
+                        if (_attachments[i] == "remove")
                         {
                             try
                             {
@@ -218,13 +216,13 @@ namespace Organizer
                             }
                         }
 
-                        else if (attachments[i] != "")
+                        else if (_attachments[i] != "")
                         {
                             try
                             {
                                 SQL.UpdateFile($"UPDATE Lessons SET Attachments = @File " +
                                     $"WHERE Num = '{lesson.Num}' AND Date = '{Date.ToString("yyyy-MM-dd")}' AND " +
-                                    $"Class = '{Settings.Default.Class}'", attachments[i]);
+                                    $"Class = '{Settings.Default.Class}'", _attachments[i]);
                             }
                             catch (Exception exeption)
                             {
@@ -256,19 +254,55 @@ namespace Organizer
         {
             int num = Convert.ToInt32(((Button)sender).Tag);
 
+            DialogResult result;
+
+            if (Clipboard.ContainsImage())
+            {
+                result = MessageBox.Show(Localization.Translate("There is image in clipboard. Use it?"), "", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                    AddAttachmentViaClipboard(num);
+
+                else
+                    AddAttachmentViaFileDialog(num);
+            }
+            else
+
+            {
+                AddAttachmentViaFileDialog(num);
+            }
+        }
+
+        private void AddAttachmentViaFileDialog(int num)
+        {
             DialogResult result = openAttacmentDialog.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                attachments[num - 1] = openAttacmentDialog.FileName;
-                Lessons[num - 1].Attachment = Image.FromFile(attachments[num - 1]);
-                Lessons[num - 1].UpdateAttachmentLink();
+                _attachments[num - 1] = openAttacmentDialog.FileName;
+                AddAttachment(num, Image.FromFile(_attachments[num - 1]));
             }
+        }
+
+        private void AddAttachmentViaClipboard(int num)
+        {
+            Image attachment = Clipboard.GetImage();
+            string path = $"Temp/From clipboard{num}.bmp";
+
+            attachment.Save(path);
+            _attachments[num - 1] = path;
+            AddAttachment(num, attachment);
+        }
+
+        private void AddAttachment(int num, Image image)
+        {
+            Lessons[num - 1].Attachment = image;
+            Lessons[num - 1].UpdateAttachmentLink();
         }
 
         public void RemoveAttachment(int i)
         {
-            attachments[i] = "remove";
+            _attachments[i] = "remove";
         }
 
         private void DoneCheckedChanged(object sender, EventArgs e)
@@ -276,14 +310,14 @@ namespace Organizer
             int num = Convert.ToInt32(((CheckBox)sender).Tag);
             bool done = ((CheckBox)sender).Checked;
 
-            doneStatuses[num - 1] = done;
+            _doneStatuses[num - 1] = done;
         }
 
         public void SaveDoneStatuses()
         {
             for (int i = 0; i < LessonsCount; i++)
             {
-                SQL.Insert($"UPDATE DoneStatus SET Done = '{(doneStatuses[i] ? 1 : 0)}' " +
+                SQL.Insert($"UPDATE DoneStatus SET Done = '{(_doneStatuses[i] ? 1 : 0)}' " +
                     $"WHERE Date = '{Date.ToString("yyyy-MM-dd")}' AND Num = '{i + 1}' AND User = '{Settings.Default.Login}'");
             }
         }
@@ -349,7 +383,7 @@ namespace Organizer
             LessonsCount = int.Parse(SQL.Select("SELECT COUNT(*) FROM Lessons " +
                 $"WHERE Date = '{Date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}'")[0]);
 
-            List<string> titleHomework;
+            List<string> titleHomework = new List<string>();
             List<Image> attachments = SQL.SelectImages($"SELECT Attachments FROM Lessons " +
                     $"WHERE Date = '{Date.ToString("yyyy-MM-dd")}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
             List<bool> doneStatuses = SQL.SelectBools($"SELECT Done FROM `DoneStatus` " +
@@ -362,27 +396,42 @@ namespace Organizer
 
                 if (LessonsCount == 0)
                 {
-                    MessageBox.Show(Localization.Translate("Schelude is not found"));
-                    Main.Instance.Close();
-                    return;
+                    DialogResult result = MessageBox.Show(Localization.Translate("Schelude is not found. Load default?"), "", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        LessonsCount = Main.MAX_LESSONS_COUNT;
+                        for (int i = 1; i <= Main.MAX_LESSONS_COUNT; i++)
+                        {
+                            titleHomework.AddRange(new string[] { "Default", "Default" });
+                        }
+                    }
+                    else
+                    {
+                        Main.Instance.Close();
+                        return;
+                    }
                 }
 
-                titleHomework = SQL.Select("SELECT Lesson, 'Default' FROM Schelude " +
-                            $"WHERE DayOfWeek = '{(int)Date.DayOfWeek}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
+                else
+                {
+                    titleHomework = SQL.Select("SELECT Lesson, 'Default' FROM Schelude " +
+                                $"WHERE DayOfWeek = '{(int)Date.DayOfWeek}' AND Class = '{Settings.Default.Class}' ORDER BY Num");
+                }
 
                 string values = "";
                 string doneValues = "";
 
                 for (int i = 0; i < LessonsCount; i++)
                 {
-                    values += $", ('{titleHomework[2 * i]}', 'Default', '{i + 1}', '{Date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}')";
+                    values += $", ('{titleHomework[2 * i]}', 'Default', '{i + 1}', '{Date.ToString("yyyy-MM-dd")}', '{Settings.Default.Class}', '')";
                     doneValues += $", ('0', '{i + 1}', '{Date.ToString("yyyy-MM-dd")}', '{Settings.Default.Login}')";
                 }
 
                 values = values.Remove(0, 1);
                 doneValues = doneValues.Remove(0, 1);
 
-                SQL.Insert("INSERT INTO Lessons (Title, Homework, Num, Date, Class) VALUES" + values);
+                SQL.Insert("INSERT INTO Lessons (Title, Homework, Num, Date, Class, Attachments) VALUES" + values);
                 SQL.Insert("INSERT INTO DoneStatus (Done, Num, Date, User) VALUES" + doneValues);
             }
 
@@ -411,7 +460,7 @@ namespace Organizer
                 WorkRefresh(i);
             }
 
-            for (int i = Main.MaxLessonsCount - 1; i >= LessonsCount; i--)
+            for (int i = Main.MAX_LESSONS_COUNT - 1; i >= LessonsCount; i--)
                 Lessons[i].TurnOff();
 
             dateText.Text = $"{Date.ToString("dd.MM.yyyy")} - {Localization.Translate(Date.DayOfWeek.ToString())}";

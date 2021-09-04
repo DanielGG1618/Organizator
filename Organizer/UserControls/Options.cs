@@ -29,7 +29,9 @@ namespace Organizer
 
             languageSelector.Text = Settings.Default.Language;
 
-            LocalizationControls.Add(colorLabel);
+            LocalizationControls.AddRange(new Control[] { themeCheckBox, colorLabel, schoolLabel, classLabel, changeClassButton });
+
+            changeClassPanel.Visible = Settings.Default.Role != Roles.Guest;
             
             ApplyAll();
 
@@ -76,6 +78,23 @@ namespace Organizer
         {
             Settings.Default.DarkTheme = ((CheckBox)sender).Checked;
             Theme.Apply();
+        }
+
+        private void ChangeClassButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(schoolTextBox.Text) || string.IsNullOrWhiteSpace(classTextBox.Text))
+            {
+                MessageBox.Show(Localization.Translate("Empty field"), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string calssString = $"{schoolTextBox.Text};{classTextBox.Text}";
+
+            Settings.Default.Class = calssString;
+
+            SQL.Insert($"UPDATE Users SET Class = '{calssString}' WHERE Login = '{Settings.Default.Login}'");
+
+            MessageBox.Show(Localization.Translate("Class was successfully changed"));
         }
     }
 }

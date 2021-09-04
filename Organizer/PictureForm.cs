@@ -15,12 +15,12 @@ namespace Organizer
     {
         public List<Control> LocalizationControls = new List<Control>();
 
-        private Lesson lesson;
+        private Lesson _lesson;
 
-        public PictureForm(Lesson _lesson)
+        public PictureForm(Lesson lesson)
         {
-            lesson = _lesson;
-            BackgroundImage = lesson.Attachment;
+            _lesson = lesson;
+            base.BackgroundImage = _lesson.Attachment;
 
             InitializeComponent();
 
@@ -47,8 +47,8 @@ namespace Organizer
 
             if (result == DialogResult.OK)
             {
-                lesson.Attachment = null;
-                lesson.UpdateAttachmentLink();
+                _lesson.Attachment = null;
+                _lesson.UpdateAttachmentLink();
                 Close();
             }
         }

@@ -21,9 +21,7 @@ namespace Organizer
             Application.SetCompatibleTextRenderingDefault(false);
 
             SQL.Connection = new MySql.Data.MySqlClient.MySqlConnection(
-                "Server=VH287.spaceweb.ru;" +
-                ";Database= beavisabra_rasp" +
-                ";port=3306;User Id=beavisabra_rasp;password=Beavis1989");
+                "server=localhost;port=3306;uid=root;pwd=root;database=beavisabra_rasp;");
             SQL.Connection.Open();
 
             LoadYear();

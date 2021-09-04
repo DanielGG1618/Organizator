@@ -56,7 +56,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPanel.Location = new System.Drawing.Point(219, 12);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(750, 580);
+            this.mainPanel.Size = new System.Drawing.Size(750, 650);
             this.mainPanel.TabIndex = 9;
             // 
             // backButton
@@ -113,7 +113,7 @@
             this.scheludeButton.Margin = new System.Windows.Forms.Padding(0);
             this.scheludeButton.Name = "scheludeButton";
             this.scheludeButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.scheludeButton.Size = new System.Drawing.Size(200, 100);
+            this.scheludeButton.Size = new System.Drawing.Size(200, 114);
             this.scheludeButton.TabIndex = 12;
             this.scheludeButton.Text = "Расписание";
             this.scheludeButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -127,11 +127,11 @@
             this.optionsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.optionsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.optionsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.optionsButton.Location = new System.Drawing.Point(0, 200);
+            this.optionsButton.Location = new System.Drawing.Point(0, 228);
             this.optionsButton.Margin = new System.Windows.Forms.Padding(0);
             this.optionsButton.Name = "optionsButton";
             this.optionsButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.optionsButton.Size = new System.Drawing.Size(200, 100);
+            this.optionsButton.Size = new System.Drawing.Size(200, 114);
             this.optionsButton.TabIndex = 12;
             this.optionsButton.Text = "Настройки";
             this.optionsButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -145,11 +145,11 @@
             this.adminButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.adminButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.adminButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.adminButton.Location = new System.Drawing.Point(0, 400);
+            this.adminButton.Location = new System.Drawing.Point(0, 456);
             this.adminButton.Margin = new System.Windows.Forms.Padding(0);
             this.adminButton.Name = "adminButton";
             this.adminButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.adminButton.Size = new System.Drawing.Size(200, 50);
+            this.adminButton.Size = new System.Drawing.Size(200, 57);
             this.adminButton.TabIndex = 12;
             this.adminButton.Text = "Админка";
             this.adminButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -163,11 +163,11 @@
             this.undoneButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.undoneButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.undoneButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.undoneButton.Location = new System.Drawing.Point(0, 100);
+            this.undoneButton.Location = new System.Drawing.Point(0, 114);
             this.undoneButton.Margin = new System.Windows.Forms.Padding(0);
             this.undoneButton.Name = "undoneButton";
             this.undoneButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.undoneButton.Size = new System.Drawing.Size(200, 100);
+            this.undoneButton.Size = new System.Drawing.Size(200, 114);
             this.undoneButton.TabIndex = 12;
             this.undoneButton.Text = "Задания";
             this.undoneButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -193,22 +193,22 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 503);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 573);
             this.tableLayoutPanel1.TabIndex = 13;
             this.tableLayoutPanel1.Visible = false;
             // 
             // exitButton
             // 
             this.exitButton.AccessibleDescription = "";
-            this.exitButton.AccessibleName = "";
+            this.exitButton.AccessibleName = "Exit";
             this.exitButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.exitButton.Location = new System.Drawing.Point(0, 450);
+            this.exitButton.Location = new System.Drawing.Point(0, 513);
             this.exitButton.Margin = new System.Windows.Forms.Padding(0);
             this.exitButton.Name = "exitButton";
             this.exitButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.exitButton.Size = new System.Drawing.Size(200, 53);
+            this.exitButton.Size = new System.Drawing.Size(200, 60);
             this.exitButton.TabIndex = 14;
             this.exitButton.Text = "Выход";
             this.exitButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -222,11 +222,11 @@
             this.moderButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.moderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.moderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.moderButton.Location = new System.Drawing.Point(0, 300);
+            this.moderButton.Location = new System.Drawing.Point(0, 342);
             this.moderButton.Margin = new System.Windows.Forms.Padding(0);
             this.moderButton.Name = "moderButton";
             this.moderButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.moderButton.Size = new System.Drawing.Size(200, 100);
+            this.moderButton.Size = new System.Drawing.Size(200, 114);
             this.moderButton.TabIndex = 13;
             this.moderButton.Text = "Модерка";
             this.moderButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -244,7 +244,7 @@
             this.loginButton.Margin = new System.Windows.Forms.Padding(0);
             this.loginButton.Name = "loginButton";
             this.loginButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.loginButton.Size = new System.Drawing.Size(200, 193);
+            this.loginButton.Size = new System.Drawing.Size(200, 216);
             this.loginButton.TabIndex = 14;
             this.loginButton.Text = "Вход";
             this.loginButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -258,11 +258,11 @@
             this.signinButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.signinButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.signinButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.signinButton.Location = new System.Drawing.Point(0, 193);
+            this.signinButton.Location = new System.Drawing.Point(0, 216);
             this.signinButton.Margin = new System.Windows.Forms.Padding(0);
             this.signinButton.Name = "signinButton";
             this.signinButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.signinButton.Size = new System.Drawing.Size(200, 193);
+            this.signinButton.Size = new System.Drawing.Size(200, 216);
             this.signinButton.TabIndex = 14;
             this.signinButton.Text = "Регистрация";
             this.signinButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -282,7 +282,7 @@
             this.guestTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.guestTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.guestTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.guestTable.Size = new System.Drawing.Size(200, 579);
+            this.guestTable.Size = new System.Drawing.Size(200, 650);
             this.guestTable.TabIndex = 15;
             // 
             // opoptionsButton
@@ -292,11 +292,11 @@
             this.opoptionsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.opoptionsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.opoptionsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.opoptionsButton.Location = new System.Drawing.Point(0, 386);
+            this.opoptionsButton.Location = new System.Drawing.Point(0, 432);
             this.opoptionsButton.Margin = new System.Windows.Forms.Padding(0);
             this.opoptionsButton.Name = "opoptionsButton";
             this.opoptionsButton.Padding = new System.Windows.Forms.Padding(0, 8, 0, 8);
-            this.opoptionsButton.Size = new System.Drawing.Size(200, 193);
+            this.opoptionsButton.Size = new System.Drawing.Size(200, 218);
             this.opoptionsButton.TabIndex = 12;
             this.opoptionsButton.Text = "Настройки";
             this.opoptionsButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -308,7 +308,7 @@
             this.AccessibleName = "ToDoList";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(981, 603);
+            this.ClientSize = new System.Drawing.Size(981, 673);
             this.Controls.Add(this.guestTable);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.mainPanel);

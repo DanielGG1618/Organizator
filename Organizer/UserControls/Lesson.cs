@@ -22,7 +22,7 @@ namespace Organizer
         public new bool Enabled = true;
         public bool Done { get => DoneCheckBox.Checked; set => DoneCheckBox.Checked = value; }
 
-        private string defaultHomework;
+        private string _defaultHomework;
 
         public Lesson(int num, bool done = false)
         {
@@ -86,10 +86,7 @@ namespace Organizer
         }
 
         public void SetTitle(string title)
-        {   ///////////////////
-            //if (Title == "-")////////////////////////////
-            //    SetMode(true);///////////////////
-
+        { 
             Title = title;
 
             if (Title == "-")
@@ -100,12 +97,12 @@ namespace Organizer
                 TitleLabel.AccessibleName = Title;
                 TitleLabel.Text = Localization.Translate(Title);
 
-                try { defaultHomework = Main.LessonsDefaultWork[Title]; }
-                catch { defaultHomework = "Isn*t set"; }
+                try { _defaultHomework = Main.LessonsDefaultWork[Title]; }
+                catch { _defaultHomework = "Isn*t set"; }
 
                 if (Homework == "Default")
                 {
-                    WorkLabel.AccessibleName = defaultHomework;
+                    WorkLabel.AccessibleName = _defaultHomework;
 
                     WorkLabel.Text = Localization.Translate(WorkLabel.AccessibleName);
                 }

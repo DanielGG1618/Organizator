@@ -137,7 +137,7 @@
             this.lessonsPanel.Location = new System.Drawing.Point(0, 90);
             this.lessonsPanel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
             this.lessonsPanel.Name = "lessonsPanel";
-            this.lessonsPanel.Size = new System.Drawing.Size(750, 490);
+            this.lessonsPanel.Size = new System.Drawing.Size(750, 560);
             this.lessonsPanel.TabIndex = 3;
             // 
             // openAttacmentDialog
@@ -153,7 +153,7 @@
             this.Controls.Add(this.topPanel);
             this.Controls.Add(this.lessonsPanel);
             this.Name = "Schelude";
-            this.Size = new System.Drawing.Size(750, 580);
+            this.Size = new System.Drawing.Size(750, 650);
             this.Load += new System.EventHandler(this.Schelude_Load);
             this.topPanel.ResumeLayout(false);
             this.ResumeLayout(false);

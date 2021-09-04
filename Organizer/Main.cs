@@ -20,7 +20,7 @@ namespace Organizer
     {
         public static Main Instance;
 
-        public static int MaxLessonsCount;
+        public const int MAX_LESSONS_COUNT = 8;
 
         public static Dictionary<string, string> LessonsDefaultWork = new Dictionary<string, string>();
 
@@ -42,8 +42,6 @@ namespace Organizer
             Instance = this;
 
             LoadFiles();
-
-            MaxLessonsCount = 7;////////////
 
             schelude = new Schelude();
             options = new Options
@@ -68,7 +66,7 @@ namespace Organizer
 
         private void Main_Load(object sender, EventArgs e)
         {
-            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton, loginButton, signinButton, opoptionsButton });
+            LocalizationControls.AddRange(new Control[] { this, scheludeButton, optionsButton, undoneButton, loginButton, signinButton, opoptionsButton, exitButton });
             Theme.GrayControls[2].AddRange(new Control[] { backButton, forwardButton });
             Theme.GrayControls[3].Add(this);
 

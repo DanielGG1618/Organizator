@@ -15,7 +15,7 @@ namespace Organizer
     {
         public static List<DateTime> Days = new List<DateTime>();
 
-        private static int firstDBindex;
+        private static int _firstDBindex;
 
         public static void Load()
         {
@@ -30,7 +30,7 @@ namespace Organizer
             else
                 Days.AddRange(GetHolidays(year - 1));
 
-            firstDBindex = Days.Count;
+            _firstDBindex = Days.Count;
 
             List<string> dbHolidays = SQL.Select($"SELECT DateFrom, DateTo FROM Holidays WHERE Class = '{Settings.Default.Class}'");
 
@@ -135,7 +135,7 @@ namespace Organizer
 
         public static void ReloadDBHolidays()
         {
-            Days.RemoveRange(firstDBindex, Days.Count - firstDBindex);
+            Days.RemoveRange(_firstDBindex, Days.Count - _firstDBindex);
             
             List<string> dbHolidays = SQL.Select($"SELECT DateFrom, DateTo FROM Holidays WHERE Class = '{Settings.Default.Class}'");
 
